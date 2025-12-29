@@ -1254,7 +1254,11 @@ if (CuentaLogger.isDev) {
     showConnectionStatus: (msg, type) => showConnectionStatus(msg, type),
     clearMessages: clearMessages,
     logger: CuentaLogger,
-    forceLogin: async (email = "test@velvz.com", password = "123456") => {
+    forceLogin: async (email, password) => {
+      if (!email || !password) {
+        console.error("Usage: velvzCuentaDebug.forceLogin('email', 'password')");
+        return;
+      }
       document.getElementById("emailInput").value = email;
       document.getElementById("passwordInput").value = password;
       switchMode("login");
