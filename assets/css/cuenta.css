@@ -1,0 +1,976 @@
+/* =====================================================
+   CUENTA.CSS - PARTE 1/3
+   RESET, BASE Y ESTILOS PRINCIPALES DE CUENTA
+   ===================================================== */
+
+/* =====================================================
+   IMPORTS Y FONTS
+   ===================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* =====================================================
+   RESET Y BASE - SOLO PARA PÁGINA DE CUENTA
+   ===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background: #f5f7fa;
+    min-height: 100vh;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: transparent;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* =====================================================
+   MAIN CUENTA - CONTENIDO ESPECÍFICO
+   ===================================================== */
+.velvz-cuenta {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0 4rem;
+    overflow: hidden;
+    z-index: 10;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.velvz-cuenta__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.velvz-cuenta__header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.velvz-cuenta__title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.velvz-cuenta__subtitle {
+    font-size: 1.125rem;
+    color: #666;
+    max-width: 60ch;
+    margin: 0 auto;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+/* =====================================================
+   TOGGLE DE AUTENTICACIÓN
+   ===================================================== */
+.velvz-cuenta__toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.6s forwards;
+}
+
+.velvz-cuenta__toggle {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 60px;
+    display: flex;
+    padding: 0.4rem;
+    position: relative;
+    min-width: 400px;
+    height: 60px;
+    align-items: center;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.velvz-cuenta__toggle-slider {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    width: calc(50% - 0.4rem);
+    height: calc(100% - 0.8rem);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 56px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+    z-index: 1;
+}
+
+.velvz-cuenta__toggle--register .velvz-cuenta__toggle-slider {
+    transform: translateX(100%);
+}
+
+.velvz-cuenta__toggle-option {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 56px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+    color: #666;
+    font-size: 1rem;
+    font-family: inherit;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.velvz-cuenta__toggle-option--active {
+    color: white;
+}
+
+/* =====================================================
+   MENSAJES Y NOTIFICACIONES
+   ===================================================== */
+.velvz-cuenta__messages {
+    max-width: 480px;
+    margin: 0 auto 2rem;
+}
+
+.message {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.success-message {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.connection-status {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* =====================================================
+   AMBIENT ELEMENTS ESPECÍFICOS DE CUENTA
+   ===================================================== */
+.velvz-cuenta__ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.velvz-cuenta__ambient-pulse {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: velvzPulse 10s ease-in-out infinite;
+}
+
+.velvz-cuenta__ambient-pulse:nth-child(1) {
+    top: 10%;
+    left: -5%;
+    animation-delay: 0s;
+}
+
+.velvz-cuenta__ambient-pulse:nth-child(2) {
+    bottom: 10%;
+    right: -5%;
+    animation-delay: 3.3s;
+}
+
+.velvz-cuenta__ambient-pulse:nth-child(3) {
+    top: 50%;
+    left: 50%;
+    animation-delay: 6.6s;
+}
+
+@keyframes velvzPulse {
+    0%, 100% {
+        transform: scale(0.8) translate(-50%, -50%);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.2) translate(-50%, -50%);
+        opacity: 0.1;
+    }
+}
+
+/* =====================================================
+   CUENTA.CSS - PARTE 2/3
+   FORMULARIOS, INPUTS Y CONTROLES DE AUTENTICACIÓN
+   ===================================================== */
+
+/* =====================================================
+   FORM WRAPPER Y FORMULARIO PRINCIPAL
+   ===================================================== */
+.velvz-cuenta__form-wrapper {
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.8s forwards;
+}
+
+.velvz-cuenta__form {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* =====================================================
+   FORM ELEMENTS Y GRUPOS
+   ===================================================== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: white;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+/* =====================================================
+   PASSWORD INPUT CON TOGGLE
+   ===================================================== */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper .form-input {
+    padding-right: 5rem;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 2.2rem;
+    top: 11px; /* AJUSTADO: de 14px a 11px para centrar verticalmente */
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+    font-size: 1rem;
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: #667eea;
+}
+
+.password-toggle:focus {
+    outline: none;
+    color: #667eea;
+}
+
+/* =====================================================
+   CHECKBOX Y TÉRMINOS
+   ===================================================== */
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-top: 0.25rem;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    accent-color: #667eea;
+}
+
+.checkbox-text {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.checkbox-text a {
+    color: #667eea;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.checkbox-text a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* =====================================================
+   SUBMIT BUTTON
+   ===================================================== */
+.form-submit {
+    width: 100%;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-submit:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.form-submit:active {
+    transform: translateY(0);
+}
+
+.form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    background: #999;
+}
+
+.form-submit:disabled:hover {
+    background: #999;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =====================================================
+   AUTH LINKS Y NAVEGACIÓN
+   ===================================================== */
+.auth-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+}
+
+.auth-link {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.auth-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.auth-link:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* =====================================================
+   FIELD ERRORS (VALIDACIÓN EN TIEMPO REAL)
+   ===================================================== */
+.field-error {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 500;
+    display: block;
+    animation: slideInError 0.2s ease-out;
+    position: static; /* O absolute si prefieres */
+    margin-top: 4px;
+    display: block;
+}
+
+@keyframes slideInError {
+    from {
+        transform: translateY(-5px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Estados de validación para inputs */
+.form-input.valid {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-input.invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* =====================================================
+   FORM ELEMENTS ANIMATIONS
+   ===================================================== */
+.form-element {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.form-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animación escalonada para elementos del formulario */
+.form-element:nth-child(1) { animation-delay: 0.1s; }
+.form-element:nth-child(2) { animation-delay: 0.2s; }
+.form-element:nth-child(3) { animation-delay: 0.3s; }
+.form-element:nth-child(4) { animation-delay: 0.4s; }
+.form-element:nth-child(5) { animation-delay: 0.5s; }
+.form-element:nth-child(6) { animation-delay: 0.6s; }
+
+/* =====================================================
+   LOADING STATES Y FEEDBACK
+   ===================================================== */
+.form-submit.loading {
+    position: relative;
+    color: transparent;
+}
+
+.form-submit.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { 
+        transform: rotate(360deg); 
+    }
+}
+
+/* =====================================================
+   ANIMACIONES PRINCIPALES
+   ===================================================== */
+@keyframes velvzFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes velvzBadgePulse {
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: scale(1); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1); 
+    }
+}
+
+
+/* =====================================================
+   CUENTA.CSS - PARTE 3/3
+   RESPONSIVE DESIGN Y AJUSTES FINALES
+   ===================================================== */
+
+/* =====================================================
+   DESKTOP LARGE (1200px+)
+   ===================================================== */
+@media (min-width: 1200px) {
+    .velvz-cuenta__container {
+        max-width: 1200px;
+    }
+    
+    .velvz-cuenta__form {
+        max-width: 500px;
+        padding: 3.5rem;
+    }
+    
+    .velvz-cuenta__title {
+        font-size: 4rem;
+    }
+    
+    .velvz-cuenta__subtitle {
+        font-size: 1.25rem;
+    }
+}
+
+/* =====================================================
+   TABLET LANDSCAPE (1024px - 1199px)
+   ===================================================== */
+@media (max-width: 1199px) and (min-width: 1024px) {
+    .velvz-cuenta {
+        padding: 7rem 0 3rem;
+    }
+    
+    .velvz-cuenta__container {
+        padding: 0 3rem;
+    }
+    
+    .velvz-cuenta__form {
+        max-width: 460px;
+        padding: 2.5rem;
+    }
+}
+
+/* =====================================================
+   TABLET PORTRAIT (768px - 1023px)
+   ===================================================== */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .velvz-cuenta {
+        padding: 6rem 0 3rem;
+    }
+    
+    .velvz-cuenta__container {
+        padding: 0 2rem;
+    }
+    
+    .velvz-cuenta__header {
+        margin-bottom: 2.5rem;
+    }
+    
+    .velvz-cuenta__title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        margin-bottom: 1rem;
+    }
+    
+    .velvz-cuenta__subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .velvz-cuenta__toggle {
+        min-width: 380px;
+        height: 58px;
+    }
+    
+    .velvz-cuenta__toggle-option {
+        font-size: 0.95rem;
+        padding: 0.9rem 1.8rem;
+    }
+    
+    .velvz-cuenta__form {
+        padding: 2.5rem;
+        border-radius: 20px;
+    }
+}
+
+/* =====================================================
+   MOBILE LARGE (481px - 767px)  
+   ===================================================== */
+@media (max-width: 767px) {
+    .velvz-cuenta {
+        padding: 7rem 0 3rem;
+        align-items: flex-start;
+    }
+    
+    .velvz-cuenta__container {
+        padding: 0 1rem;
+    }
+    
+    .velvz-cuenta__header {
+        margin-bottom: 2rem;
+    }
+    
+    .velvz-cuenta__title {
+        font-size: clamp(2rem, 8vw, 3rem);
+        margin-bottom: 0.75rem;
+    }
+    
+    .velvz-cuenta__subtitle {
+        font-size: 1rem;
+    }
+    
+    .velvz-cuenta__toggle-container {
+        margin-bottom: 2rem;
+    }
+    
+    .velvz-cuenta__toggle {
+        flex-direction: column;
+        min-width: 300px;
+        max-width: 340px;
+        height: auto;
+        border-radius: 20px;
+        padding: 0.4rem;
+    }
+    
+    .velvz-cuenta__toggle-option {
+        width: 100%;
+        height: 50px;
+        padding: 1rem;
+        font-size: 0.9rem;
+        border-radius: 16px;
+        margin-bottom: 0;
+    }
+    
+    .velvz-cuenta__toggle-slider {
+        width: calc(100% - 0.8rem);
+        height: calc(50% - 0.6rem); /* CAMBIO: altura relativa en lugar de fija */
+        transform: translateY(0);
+        border-radius: 16px;
+        top: 0.4rem;
+        left: 0.4rem;
+    }
+    
+    .velvz-cuenta__toggle--register .velvz-cuenta__toggle-slider {
+        transform: translateY(calc(100% + 0.2rem)); /* CAMBIO: agregar pequeño espacio */
+    }
+    
+    .velvz-cuenta__form {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 1.25rem;
+        position: relative;
+    }
+    
+    .form-input {
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .form-submit {
+        padding: 1rem;
+        font-size: 1rem;
+        margin-top: 1.25rem;
+    }
+    
+    .auth-links {
+        margin-top: 1.25rem;
+    }
+    
+    /* Ajustar ambient elements para móvil */
+    .velvz-cuenta__ambient-pulse {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* =====================================================
+   MOBILE SMALL (320px - 480px)
+   ===================================================== */
+@media (max-width: 480px) {
+    .velvz-cuenta {
+        padding: 6rem 0 2rem;
+    }
+    
+    .velvz-cuenta__container {
+        padding: 0 0.75rem;
+    }
+    
+    .velvz-cuenta__title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .velvz-cuenta__subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .velvz-cuenta__toggle {
+        min-width: 280px;
+        max-width: 320px;
+    }
+    
+    .velvz-cuenta__toggle-option {
+        height: 48px;
+        font-size: 0.85rem;
+        padding: 0.75rem;
+    }
+    
+    .velvz-cuenta__toggle-slider {
+        height: calc(50% - 0.5rem); /* CAMBIO: también relativo en móviles pequeños */
+    }
+    
+    .velvz-cuenta__form {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+    
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .form-input {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+    
+    .form-submit {
+        padding: 0.875rem;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+    
+    .checkbox-text {
+        font-size: 0.85rem;
+    }
+    
+    .auth-links {
+        font-size: 0.85rem;
+    }
+    
+    .message {
+        padding: 0.875rem;
+        font-size: 0.9rem;
+        border-radius: 10px;
+    }
+    
+    /* Ambient elements más pequeños */
+    .velvz-cuenta__ambient-pulse {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* =====================================================
+   VERY SMALL MOBILE (< 320px)
+   ===================================================== */
+@media (max-width: 319px) {
+    .velvz-cuenta__container {
+        padding: 0 0.5rem;
+    }
+    
+    .velvz-cuenta__toggle {
+        min-width: 260px;
+        max-width: 280px;
+    }
+    
+    .velvz-cuenta__form {
+        padding: 1.25rem;
+    }
+    
+    .form-input {
+        padding: 0.625rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-submit {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* =====================================================
+   LANDSCAPE ORIENTATION (MOBILE)
+   ===================================================== */
+@media (max-height: 600px) and (orientation: landscape) {
+    .velvz-cuenta {
+        padding: 2rem 0 1rem;
+        align-items: flex-start;
+    }
+    
+    .velvz-cuenta__header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .velvz-cuenta__title {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .velvz-cuenta__subtitle {
+        font-size: 1rem;
+    }
+    
+    .velvz-cuenta__toggle-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    .velvz-cuenta__form {
+        padding: 1.5rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-submit {
+        margin-top: 1rem;
+    }
+    
+    /* Ocultar ambient elements en landscape */
+    .velvz-cuenta__ambient {
+        display: none;
+    }
+}
+
+/* =====================================================
+   HIGH DPI DISPLAYS
+   ===================================================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .velvz-cuenta__toggle {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    
+    .velvz-cuenta__form {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* =====================================================
+   REDUCED MOTION PREFERENCES
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .velvz-cuenta__ambient {
+        display: none;
+    }
+}
+
+/* =====================================================
+   DARK MODE SUPPORT (FUTURE READY)
+   ===================================================== */
+@media (prefers-color-scheme: dark) {
+    /* Variables preparadas para futuro dark mode */
+    :root {
+        --cuenta-bg: #1a1a1a;
+        --cuenta-text: #ffffff;
+        --cuenta-text-secondary: #a0a0a0;
+        --cuenta-input-bg: #2a2a2a;
+        --cuenta-input-border: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Implementación opcional - comentada por ahora */
+    /*
+    .velvz-cuenta {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+    }
+    
+    .velvz-cuenta__title {
+        color: var(--cuenta-text);
+    }
+    
+    .velvz-cuenta__subtitle {
+        color: var(--cuenta-text-secondary);
+    }
+    */
+}
+
+/* =====================================================
+   PRINT STYLES
+   ===================================================== */
+@media print {
+    .velvz-cuenta__ambient,
+    .velvz-cuenta__toggle-container,
+    .velvz-cuenta__form {
+        display: none;
+    }
+    
+    .velvz-cuenta {
+        background: white;
+    }
+    
+    .velvz-cuenta__header {
+        text-align: center;
+        margin: 2rem 0;
+    }
+    
+    .velvz-cuenta__title,
+    .velvz-cuenta__subtitle {
+        color: black;
+    }
+}

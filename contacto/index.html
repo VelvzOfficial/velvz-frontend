@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Contacto - Velvz AI Chatbot Solutions</title>
+    <link
+    rel="icon"
+    href="/svg/logoR.svg"
+    type="image/svg+xml"
+    />
+    <link
+    rel="alternate icon"
+    href="/svg/logoR.png"
+    type="image/png"
+    sizes="32x32"
+    />
+    <link rel="stylesheet" href="/assets/css/inicio.css">
+    <link rel="stylesheet" href="/assets/css/contacto.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="velvz-header">
+    <div class="velvz-header__container">
+        <div class="velvz-header__island velvz-header__island--brand">
+            <div class="velvz-header__logo">
+                <div class="velvz-header__logo-shape">
+                    <div class="velvz-header__logo-face">
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--left"></div>
+                        <div class="velvz-header__logo-mouth"></div>
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--nav">
+            <nav class="velvz-header__nav">
+                <a href="/" class="velvz-header__link">Inicio</a>
+                <a href="/servicios/" class="velvz-header__link">Servicios</a>
+                <a href="/precios/" class="velvz-header__link">Precios</a>
+                <a href="/contacto/" class="velvz-header__link  velvz-header__link--active">Contacto</a>
+            </nav>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--cta">
+            <button class="velvz-header__cta">
+                <span class="velvz-header__cta-text">Entrar</span>
+                <div class="velvz-header__cta-shine"></div>
+            </button>
+        </div>
+
+        <!-- MOBILE MENU TOGGLE -->
+        <div class="velvz-header__mobile-toggle">
+            <div class="velvz-header__hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE MENU -->
+    <div class="velvz-header__mobile-backdrop"></div>
+    <div class="velvz-header__mobile-menu">
+        <!-- CLOSE BUTTON -->
+        <button class="velvz-header__mobile-close"></button>
+        
+        <nav class="velvz-header__mobile-nav">
+            <a href="./" class="velvz-header__mobile-link">Inicio</a>
+            <a href="/servicios/" class="velvz-header__mobile-link">Servicios</a>
+            <a href="/precios/" class="velvz-header__mobile-link">Precios</a>
+            <a href="/contacto/" class="velvz-header__mobile-link velvz-header__mobile-link--active">Contacto</a>
+        </nav>
+        <button class="velvz-header__mobile-cta">
+            <span>Entrar</span>
+            <div class="velvz-header__mobile-cta-shine"></div>
+        </button>
+    </div>
+    
+    <div class="velvz-header__ambient">
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+    </div>
+</header>
+
+<!-- CONTACTO MAIN -->
+<main class="velvz-contact">
+    <div class="velvz-contact__container">
+        
+        <!-- HEADER -->
+        <div class="velvz-contact__header">
+            <div class="velvz-contact__badge">
+                <span>Contacto</span>
+                <div class="velvz-contact__badge-dot"></div>
+            </div>
+            
+            <h1 class="velvz-contact__title">
+                Hablemos de tu proyecto
+            </h1>
+            
+            <p class="velvz-contact__subtitle">
+                ¿Preparado para integrar IA en tu empresa? Cuéntanos qué necesitas 
+                y te ayudaremos a encontrar la solución perfecta.
+            </p>
+        </div>
+
+        <!-- TOGGLE PRINCIPAL -->
+        <div class="velvz-contact__toggle-container">
+            <div class="velvz-contact__toggle" id="contactToggle">
+                <div class="velvz-contact__toggle-slider"></div>
+                <button class="velvz-contact__toggle-option velvz-contact__toggle-option--email velvz-contact__toggle-option--active" 
+                        data-mode="email">
+                    ✉️ Enviar Email
+                </button>
+                <button class="velvz-contact__toggle-option velvz-contact__toggle-option--proposal" 
+                        data-mode="proposal">
+                    📋 Solicitar Propuesta
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="velvz-contact__content">
+            
+            <!-- FORMULARIO DE EMAIL -->
+            <div class="velvz-contact__form-island velvz-contact__form-island--email" id="emailForm">
+                <div class="velvz-contact__form-header">
+                    <h2 class="velvz-contact__form-title">Envíanos un mensaje</h2>
+                    <p class="velvz-contact__form-description">
+                        Te responderemos en menos de 24 horas para resolver todas tus dudas.
+                    </p>
+                </div>
+
+                <form class="velvz-contact__form" id="emailContactForm">
+                    <div class="velvz-contact__form-group">
+                        <label class="velvz-contact__form-label" for="email_name">Nombre completo</label>
+                        <input type="text" class="velvz-contact__form-input" id="email_name" name="name" required>
+                    </div>
+
+                    <div class="velvz-contact__form-group">
+                        <label class="velvz-contact__form-label" for="email_email">Email</label>
+                        <input type="email" class="velvz-contact__form-input" id="email_email" name="email" required>
+                    </div>
+
+                    <div class="velvz-contact__form-group">
+                        <label class="velvz-contact__form-label" for="email_company">Empresa (opcional)</label>
+                        <input type="text" class="velvz-contact__form-input" id="email_company" name="company">
+                    </div>
+
+                    <div class="velvz-contact__form-group">
+                        <label class="velvz-contact__form-label" for="email_message">Mensaje</label>
+                        <textarea class="velvz-contact__form-textarea" id="email_message" name="message" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="velvz-contact__form-submit">
+                        <span class="velvz-contact__form-submit-text">Enviar Mensaje</span>
+                        <div class="velvz-contact__form-submit-shine"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- FORMULARIO DE PROPUESTA -->
+            <div class="velvz-contact__form-island velvz-contact__form-island--proposal" id="proposalForm" style="display: none;">
+                
+                <!-- PASO 1: DATOS BÁSICOS -->
+                <div class="velvz-contact__proposal-step velvz-contact__proposal-step--active" id="proposalStep1">
+                    <div class="velvz-contact__form-header">
+                        <h2 class="velvz-contact__form-title">Datos de tu empresa</h2>
+                        <p class="velvz-contact__form-description">
+                            Cuéntanos un poco sobre tu empresa para personalizar nuestra propuesta.
+                        </p>
+                    </div>
+
+                    <div class="velvz-contact__step-indicator">
+                        <span class="velvz-contact__step-number velvz-contact__step-number--active">1</span>
+                        <span class="velvz-contact__step-label">Datos básicos</span>
+                    </div>
+
+                    <form class="velvz-contact__form" id="proposalStep1Form">
+                        <div class="velvz-contact__form-group">
+                            <label class="velvz-contact__form-label" for="company_name">Nombre de la empresa *</label>
+                            <input type="text" class="velvz-contact__form-input" id="company_name" name="company_name" required>
+                        </div>
+
+                        <div class="velvz-contact__form-group">
+                            <label class="velvz-contact__form-label" for="company_website">Página web (opcional)</label>
+                            <input type="url" class="velvz-contact__form-input" id="company_website" name="company_website" placeholder="https://tuempresa.com">
+                        </div>
+
+                        <div class="velvz-contact__form-group">
+                            <label class="velvz-contact__form-label" for="contact_email">Correo de contacto *</label>
+                            <input type="email" class="velvz-contact__form-input" id="contact_email" name="contact_email" required>
+                        </div>
+
+                        <button type="submit" class="velvz-contact__form-submit">
+                            <span class="velvz-contact__form-submit-text">Continuar</span>
+                            <div class="velvz-contact__form-submit-shine"></div>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- PASO 2: DETALLES DEL PROYECTO -->
+                <div class="velvz-contact__proposal-step" id="proposalStep2">
+                    <div class="velvz-contact__form-header">
+                        <h2 class="velvz-contact__form-title">Detalles del proyecto</h2>
+                        <p class="velvz-contact__form-description">
+                            Ayúdanos a entender mejor el alcance de tu proyecto.
+                        </p>
+                    </div>
+
+                    <div class="velvz-contact__step-indicator">
+                        <span class="velvz-contact__step-number velvz-contact__step-number--active">2</span>
+                        <span class="velvz-contact__step-label">Detalles del proyecto</span>
+                    </div>
+
+                    <form class="velvz-contact__form" id="proposalStep2Form">
+                        <div class="velvz-contact__form-group">
+                            <label class="velvz-contact__form-label" for="budget_range">Presupuesto orientativo (opcional)</label>
+                            <div class="velvz-contact__budget-slider">
+                                <input type="range" class="velvz-contact__slider" id="budget_range" name="budget_range" 
+                                       min="50" max="10000" value="50" step="50">
+                                <div class="velvz-contact__slider-value">
+                                    <span id="budgetValue">50€</span>
+                                </div>
+                                <div class="velvz-contact__slider-labels">
+                                    <span>50€</span>
+                                    <span>10.000€</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-contact__form-group">
+                            <label class="velvz-contact__form-label" for="project_description">Descripción del proyecto (opcional)</label>
+                            <textarea class="velvz-contact__form-textarea" id="project_description" name="project_description" 
+                                      rows="6" placeholder="Cuéntanos qué tipo de chatbot necesitas, para qué lo vas a usar, características especiales..."></textarea>
+                        </div>
+
+                        <div class="velvz-contact__form-buttons">
+                            <button type="button" class="velvz-contact__form-back" id="backToStep1">
+                                ← Atrás
+                            </button>
+                            <button type="submit" class="velvz-contact__form-submit">
+                                <span class="velvz-contact__form-submit-text">Continuar</span>
+                                <div class="velvz-contact__form-submit-shine"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- PASO 3: ESTUDIO PERSONALIZADO -->
+                <div class="velvz-contact__proposal-step" id="proposalStep3">
+                    <div class="velvz-contact__form-header">
+                        <h2 class="velvz-contact__form-title">¿Necesitas un estudio personalizado?</h2>
+                        <p class="velvz-contact__form-description">
+                            Nuestros expertos pueden crear un análisis detallado con soluciones específicas para tu empresa.
+                        </p>
+                    </div>
+
+                    <div class="velvz-contact__step-indicator">
+                        <span class="velvz-contact__step-number velvz-contact__step-number--active">3</span>
+                        <span class="velvz-contact__step-label">Estudio personalizado</span>
+                    </div>
+
+                    <div class="velvz-contact__study-options">
+                        <div class="velvz-contact__study-option" id="studyOption">
+                            <div class="velvz-contact__study-icon">📊</div>
+                            <h3 class="velvz-contact__study-title">Estudio Personalizado</h3>
+                            <div class="velvz-contact__study-price">100€</div>
+                            <ul class="velvz-contact__study-features">
+                                <li>✅ Análisis completo de tu negocio</li>
+                                <li>✅ Propuestas de IA personalizadas</li>
+                                <li>✅ ROI estimado y casos de uso</li>
+                                <li>✅ Roadmap de implementación</li>
+                                <li>✅ Reunión de 1 hora con expertos</li>
+                            </ul>
+                            <div class="velvz-contact__study-toggle">
+                                <label class="velvz-contact__checkbox-label">
+                                    <input type="checkbox" class="velvz-contact__checkbox" id="includeStudy" name="include_study">
+                                    <span class="velvz-contact__checkbox-custom"></span>
+                                    <span>Sí, quiero incluir el estudio personalizado</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="velvz-contact__form-buttons">
+                        <button type="button" class="velvz-contact__form-back" id="backToStep2">
+                            ← Atrás
+                        </button>
+                        <button type="button" class="velvz-contact__form-submit" id="submitProposal">
+                            <span class="velvz-contact__form-submit-text">Enviar Solicitud</span>
+                            <div class="velvz-contact__form-submit-shine"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PASO 4: CONFIRMACIÓN -->
+                <div class="velvz-contact__proposal-step" id="proposalStep4">
+                    <div class="velvz-contact__success">
+                        <div class="velvz-contact__success-icon">✅</div>
+                        <h2 class="velvz-contact__success-title">¡Solicitud enviada con éxito!</h2>
+                        <p class="velvz-contact__success-description">
+                            Hemos recibido tu solicitud de propuesta. Nuestro equipo la revisará y te contactaremos 
+                            en un plazo máximo de 48 horas con una propuesta personalizada.
+                        </p>
+                        <div class="velvz-contact__success-summary" id="proposalSummary">
+                            <!-- Se llenará dinámicamente con los datos -->
+                        </div>
+                        <button type="button" class="velvz-contact__form-submit" id="newProposal">
+                            <span class="velvz-contact__form-submit-text">Nueva Solicitud</span>
+                            <div class="velvz-contact__form-submit-shine"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFO LATERAL -->
+            <div class="velvz-contact__info-island">
+                <div class="velvz-contact__info-header">
+                    <h3 class="velvz-contact__info-title">¿Por qué elegir Velvz?</h3>
+                </div>
+
+                <div class="velvz-contact__info-features">
+                    <div class="velvz-contact__info-feature">
+                        <div class="velvz-contact__info-feature-icon">⚡</div>
+                        <div class="velvz-contact__info-feature-content">
+                            <h4 class="velvz-contact__info-feature-title">Implementación rápida</h4>
+                            <p class="velvz-contact__info-feature-text">
+                                Tu chatbot funcionando en menos de 2 semanas
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="velvz-contact__info-feature">
+                        <div class="velvz-contact__info-feature-icon">🎨</div>
+                        <div class="velvz-contact__info-feature-content">
+                            <h4 class="velvz-contact__info-feature-title">100% Personalizable</h4>
+                            <p class="velvz-contact__info-feature-text">
+                                Diseño y funcionalidades adaptadas a tu marca
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="velvz-contact__info-feature">
+                        <div class="velvz-contact__info-feature-icon">🛡️</div>
+                        <div class="velvz-contact__info-feature-content">
+                            <h4 class="velvz-contact__info-feature-title">Máxima seguridad</h4>
+                            <p class="velvz-contact__info-feature-text">
+                                Cumplimiento GDPR y cifrado de extremo a extremo
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="velvz-contact__info-feature">
+                        <div class="velvz-contact__info-feature-icon">📈</div>
+                        <div class="velvz-contact__info-feature-content">
+                            <h4 class="velvz-contact__info-feature-title">ROI garantizado</h4>
+                            <p class="velvz-contact__info-feature-text">
+                                Reduce costes operativos hasta un 60%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="velvz-contact__info-cta">
+                    <h4 class="velvz-contact__info-cta-title">¿Tienes prisa?</h4>
+                    <p class="velvz-contact__info-cta-text">
+                        Llámanos para una consulta inmediata
+                    </p>
+                    <a href="tel:+34689996452" class="velvz-contact__info-cta-phone">
+                        📞 +34 689 996 452
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AMBIENT ELEMENTS -->
+    <div class="velvz-contact__ambient">
+        <div class="velvz-contact__ambient-pulse"></div>
+        <div class="velvz-contact__ambient-pulse"></div>
+        <div class="velvz-contact__ambient-pulse"></div>
+        <div class="velvz-contact__ambient-pulse"></div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="velvz-footer">
+    <div class="velvz-footer__container">
+        <div class="velvz-footer__brand">
+            <a href="#" class="velvz-footer__logo-link">
+                <div class="velvz-footer__logo">
+                    <div class="velvz-footer__logo-shape">
+                        <div class="velvz-footer__logo-face">
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                            <div class="velvz-footer__logo-mouth"></div>
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="velvz-footer__brand-name">Velvz</span>
+            </a>
+            <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+        </div>
+        
+        <nav class="velvz-footer__links">
+            <a href="/" class="velvz-footer__link">Inicio</a>
+            <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+            <a href="/precios/" class="velvz-footer__link">Precios</a>
+            <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+            <a href="#" class="velvz-footer__link">Contacto</a>
+        </nav>
+        
+        <div class="velvz-footer__legal">
+            <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+            <div>
+                <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
+                <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
+                <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="velvz-footer__ambient">
+        <div class="velvz-footer__pulse"></div>
+        <div class="velvz-footer__pulse"></div>
+    </div>
+</footer>
+
+<!-- MODAL DE NOTIFICACIÓN PERSONALIZADO -->
+<div class="velvz-modal" id="notificationModal">
+    <div class="velvz-modal__backdrop"></div>
+    <div class="velvz-modal__container">
+        <div class="velvz-modal__icon" id="modalIcon">✅</div>
+        <h2 class="velvz-modal__title" id="modalTitle">Título</h2>
+        <p class="velvz-modal__message" id="modalMessage">Mensaje</p>
+        <button class="velvz-modal__button" id="modalButton">Aceptar</button>
+    </div>
+</div>
+
+<script src="/assets/js/inicio.js"></script>
+<script src="/assets/js/contacto.js"></script>
+<script src="/assets/js/public-pages.js"></script>
+<script src="/assets/js/error-cleanup.js"></script>
+</body>
+</html>

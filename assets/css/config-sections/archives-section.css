@@ -1,0 +1,439 @@
+/* =====================================================
+   ÁREA DE SUBIDA DE ARCHIVOS
+   ===================================================== */
+
+.velvz-upload-area {
+    border: 2px dashed var(--dark-border);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--dark-bg-tertiary);
+    margin-bottom: 2rem;
+    width: 100%; /* AÑADIR ESTA LÍNEA para ocupar todo el ancho */
+}
+
+.velvz-upload-area:hover,
+.velvz-upload-area--dragover {
+    border-color: var(--dark-accent);
+    background: rgba(116, 144, 255, 0.05);
+}
+
+.velvz-upload-area__icon {
+    font-size: 3rem;
+    color: var(--dark-accent);
+    margin-bottom: 1rem;
+}
+
+.velvz-upload-area__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.velvz-upload-area__description {
+    color: var(--dark-text-secondary);
+    margin-bottom: 1rem;
+}
+
+.velvz-upload-area__formats {
+    color: var(--dark-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+   LISTA DE ARCHIVOS
+   ===================================================== */
+
+.velvz-file-list__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: normal;
+}
+
+/* Contador de archivos sin espacios extra */
+.velvz-file-list__title #fileCount {
+    letter-spacing: normal;
+    margin: 0 -0.1em;
+}
+
+.velvz-file-list {
+    width: 100%; /* AÑADIR ESTA NUEVA REGLA COMPLETA para ocupar todo el ancho */
+}
+
+.velvz-file-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.velvz-file-item:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.velvz-file-item__icon {
+    width: 40px;
+    height: 40px;
+    background: var(--dark-bg-tertiary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--dark-accent);
+    flex-shrink: 0;
+}
+
+.velvz-file-item__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.velvz-file-item__name {
+    font-weight: 500;
+    color: var(--dark-text);
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.velvz-file-item__meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--dark-text-secondary);
+}
+
+.velvz-file-item__status {
+    flex-shrink: 0;
+}
+
+.velvz-file-item__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.velvz-btn-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    background: var(--dark-bg-tertiary);
+    color: var(--dark-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.velvz-btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.velvz-btn-icon:active {
+    transform: translateY(0);
+}
+
+.velvz-btn-icon--danger {
+    color: #ef4444;
+}
+
+.velvz-btn-icon--danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+/* =====================================================
+   DOCUMENTO MARCADO PARA ELIMINAR (PENDIENTE)
+   ===================================================== */
+
+.velvz-file-item--pending-delete {
+    opacity: 0.6;
+    background: rgba(239, 68, 68, 0.05) !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+    position: relative;
+}
+
+.velvz-file-item--pending-delete::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(239, 68, 68, 0.03) 10px,
+        rgba(239, 68, 68, 0.03) 20px
+    );
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+.velvz-file-item--pending-delete .velvz-file-item__name {
+    text-decoration: line-through;
+    color: var(--dark-text-secondary);
+}
+
+.velvz-file-item--pending-delete .velvz-file-item__icon {
+    opacity: 0.5;
+}
+
+/* Botón de restaurar */
+.velvz-btn-icon--restore {
+    color: #10b981 !important;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.velvz-btn-icon--restore:hover {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #059669 !important;
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   ESTADO VACÍO
+   ===================================================== */
+
+.velvz-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--dark-bg-tertiary);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+.velvz-empty-state__icon {
+    width: 80px;
+    height: 80px;
+    background: var(--dark-bg-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: var(--dark-text-secondary);
+}
+
+.velvz-empty-state__text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.velvz-empty-state__description {
+    font-size: 0.9rem;
+    color: var(--dark-text-secondary);
+    margin: 0;
+    max-width: 300px;
+}
+
+/* =====================================================
+   BADGES DE ESTADO (para documentos)
+   ===================================================== */
+
+.velvz-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.velvz-status--success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.velvz-status--warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.velvz-status--danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.velvz-status--secondary {
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* =====================================================
+   MENSAJE DE ERROR EN DOCUMENTO
+   ===================================================== */
+
+.velvz-file-item__error {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #ef4444;
+}
+
+/* =====================================================
+   HEADER DE LISTA DE ARCHIVOS CON ORDENACIÓN
+   ===================================================== */
+
+.velvz-file-list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.velvz-file-list__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.velvz-sort-select {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--dark-bg-tertiary);
+    border: 1px solid var(--dark-border);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    color: var(--dark-text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.velvz-sort-select:hover {
+    border-color: var(--dark-accent);
+    color: var(--dark-text);
+}
+
+.velvz-sort-select select {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    outline: none;
+    padding-right: 0.5rem;
+}
+
+.velvz-sort-select select option {
+    background: var(--dark-bg-secondary);
+    color: var(--dark-text);
+}
+
+/* =====================================================
+   BOTÓN ELIMINAR TODOS - Estilos específicos
+   ===================================================== */
+
+#deleteAllDocumentsBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+#deleteAllDocumentsBtn:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+#deleteAllDocumentsBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(239, 68, 68, 0.3);
+}
+
+#deleteAllDocumentsBtn i {
+    font-size: 0.75rem;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .velvz-file-item {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .velvz-file-item__info {
+        flex-basis: calc(100% - 56px);
+    }
+
+    .velvz-file-item__status,
+    .velvz-file-item__actions {
+        flex-basis: 100%;
+        justify-content: flex-end;
+    }
+
+    .velvz-file-list__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .velvz-file-list__controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .velvz-empty-state {
+        padding: 2rem 1rem;
+    }
+
+    .velvz-empty-state__icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}

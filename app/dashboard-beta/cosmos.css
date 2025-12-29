@@ -1,0 +1,986 @@
+/* =====================================================
+   COSMOS DASHBOARD - Velvz
+   Un dashboard galáctico con sistema solar de chatbots
+   ===================================================== */
+
+/* Variables */
+:root {
+    --cosmos-primary: #667eea;
+    --cosmos-secondary: #764ba2;
+    --cosmos-accent: #a78bfa;
+    --cosmos-glow: rgba(102, 126, 234, 0.6);
+    --cosmos-dark: #0a0a1a;
+    --cosmos-darker: #050510;
+    --cosmos-card: rgba(255, 255, 255, 0.03);
+    --cosmos-border: rgba(255, 255, 255, 0.08);
+    --cosmos-text: #ffffff;
+    --cosmos-text-muted: rgba(255, 255, 255, 0.6);
+    --sun-color: #fbbf24;
+    --sun-glow: rgba(251, 191, 36, 0.4);
+    --planet-active: #10b981;
+    --planet-inactive: #6b7280;
+}
+
+/* Reset y base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--cosmos-darker);
+    color: var(--cosmos-text);
+}
+
+/* Canvas de fondo */
+#cosmosCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* =====================================================
+   OVERLAY DE ENTRADA
+   ===================================================== */
+.entry-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #050510;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1.5s ease, visibility 1.5s ease;
+}
+
+.entry-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Canvas de la animación de entrada */
+#entryCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.entry-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Ya no necesitamos los estilos CSS de partículas individuales,
+   todo se hace en canvas ahora */
+
+.entry-text {
+    display: none; /* Ocultamos el texto, usamos partículas */
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.entry-welcome {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--cosmos-text-muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.entry-title {
+    font-size: 5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--cosmos-primary), var(--cosmos-accent), var(--cosmos-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 60px var(--cosmos-glow);
+    letter-spacing: 20px;
+}
+
+@keyframes textReveal {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+   ===================================================== */
+.cosmos-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.cosmos-container.visible {
+    opacity: 1;
+}
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+.cosmos-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    background: linear-gradient(180deg, rgba(10, 10, 26, 0.9) 0%, transparent 100%);
+    z-index: 100;
+}
+
+.header-left, .header-right {
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--cosmos-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    border-radius: 30px;
+    background: var(--cosmos-card);
+    border: 1px solid var(--cosmos-border);
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--cosmos-text);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--cosmos-primary);
+    transform: translateX(-5px);
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.cosmos-logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-orbit {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--cosmos-primary);
+    border-radius: 50%;
+    position: relative;
+    animation: logoSpin 8s linear infinite;
+}
+
+.logo-orbit::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--cosmos-accent);
+    border-radius: 50%;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--cosmos-accent);
+}
+
+.logo-orbit::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, var(--cosmos-primary), var(--cosmos-secondary));
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes logoSpin {
+    to { transform: rotate(360deg); }
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    background: linear-gradient(135deg, var(--cosmos-primary), var(--cosmos-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--cosmos-card);
+    border: 1px solid var(--cosmos-border);
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cosmos-text);
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cosmos-primary), var(--cosmos-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+   SISTEMA SOLAR
+   ===================================================== */
+.solar-system {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+}
+
+/* Sol central */
+.sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    z-index: 10;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.sun:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.sun-core {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #fef3c7 0%, var(--sun-color) 40%, #f59e0b 70%, #d97706 100%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 60px var(--sun-glow),
+        0 0 100px var(--sun-glow),
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
+    animation: sunPulse 4s ease-in-out infinite;
+}
+
+.sun-glow {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle, var(--sun-glow) 0%, transparent 70%);
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.sun-corona {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, transparent 30%, rgba(251, 191, 36, 0.1) 50%, transparent 70%);
+    animation: coronaRotate 20s linear infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes coronaRotate {
+    to { transform: rotate(360deg); }
+}
+
+.sun-label {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cosmos-text-muted);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Contenedor de planetas */
+.planets-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* Órbitas */
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.orbit.hidden {
+    opacity: 0;
+}
+
+/* Planetas (chatbots) */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 5;
+}
+
+.planet:hover {
+    transform: scale(1.3) !important;
+    z-index: 20;
+}
+
+.planet-core {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.planet-core::before {
+    content: '';
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    top: 15%;
+    left: 20%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    filter: blur(3px);
+}
+
+.planet-glow {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.planet:hover .planet-glow {
+    opacity: 1;
+}
+
+.planet-ring {
+    position: absolute;
+    width: 180%;
+    height: 40%;
+    top: 30%;
+    left: -40%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: rotateX(70deg);
+}
+
+.planet-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.planet-name {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--cosmos-text);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.planet:hover .planet-name {
+    opacity: 1;
+}
+
+/* Estados de planetas */
+.planet.active .planet-core {
+    box-shadow: 0 0 20px var(--planet-active), 0 0 40px rgba(16, 185, 129, 0.3);
+}
+
+.planet.active::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--planet-active);
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    box-shadow: 0 0 10px var(--planet-active);
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+/* Colores de planetas */
+.planet-color-1 .planet-core { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.planet-color-1 .planet-glow { background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, transparent 70%); }
+
+.planet-color-2 .planet-core { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.planet-color-2 .planet-glow { background: radial-gradient(circle, rgba(240, 147, 251, 0.4) 0%, transparent 70%); }
+
+.planet-color-3 .planet-core { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.planet-color-3 .planet-glow { background: radial-gradient(circle, rgba(79, 172, 254, 0.4) 0%, transparent 70%); }
+
+.planet-color-4 .planet-core { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.planet-color-4 .planet-glow { background: radial-gradient(circle, rgba(67, 233, 123, 0.4) 0%, transparent 70%); }
+
+.planet-color-5 .planet-core { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.planet-color-5 .planet-glow { background: radial-gradient(circle, rgba(250, 112, 154, 0.4) 0%, transparent 70%); }
+
+.planet-color-6 .planet-core { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+.planet-color-6 .planet-glow { background: radial-gradient(circle, rgba(168, 237, 234, 0.4) 0%, transparent 70%); }
+
+/* Animación orbital */
+@keyframes orbit {
+    from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
+}
+
+/* =====================================================
+   CONEXIONES SVG
+   ===================================================== */
+.connections-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.connection-line {
+    fill: none;
+    stroke: url(#connectionGradient);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.6;
+    filter: drop-shadow(0 0 4px var(--cosmos-glow));
+}
+
+.connection-line.active {
+    animation: connectionPulse 2s ease-in-out infinite;
+}
+
+@keyframes connectionPulse {
+    0%, 100% { stroke-width: 2; opacity: 0.6; }
+    50% { stroke-width: 3; opacity: 1; }
+}
+
+.connection-particle {
+    fill: var(--cosmos-accent);
+    filter: drop-shadow(0 0 4px var(--cosmos-accent));
+}
+
+/* =====================================================
+   PANEL DE ESTADÍSTICAS
+   ===================================================== */
+.stats-panel {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: var(--cosmos-card);
+    border: 1px solid var(--cosmos-border);
+    border-radius: 20px;
+    padding: 20px 24px;
+    backdrop-filter: blur(20px);
+    z-index: 50;
+}
+
+.stats-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--cosmos-border);
+    font-size: 0.9rem;
+    color: var(--cosmos-text-muted);
+}
+
+.stats-header i {
+    color: var(--cosmos-accent);
+}
+
+.stats-grid {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--cosmos-primary), var(--cosmos-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--cosmos-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-icon {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    font-size: 0.7rem;
+    color: var(--cosmos-text-muted);
+    opacity: 0.5;
+}
+
+.stat-icon.pulse {
+    color: var(--planet-active);
+    opacity: 1;
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* =====================================================
+   TOOLTIP
+   ===================================================== */
+.planet-tooltip {
+    position: fixed;
+    background: rgba(10, 10, 26, 0.95);
+    border: 1px solid var(--cosmos-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    backdrop-filter: blur(20px);
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    min-width: 220px;
+}
+
+.planet-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--cosmos-border);
+}
+
+.tooltip-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.tooltip-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cosmos-text);
+}
+
+.tooltip-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tooltip-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--cosmos-text-muted);
+}
+
+.tooltip-stat i {
+    width: 16px;
+    color: var(--cosmos-accent);
+}
+
+.tooltip-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--cosmos-border);
+    font-size: 0.8rem;
+    color: var(--cosmos-primary);
+}
+
+/* =====================================================
+   LEYENDA
+   ===================================================== */
+.cosmos-legend {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    gap: 20px;
+    background: var(--cosmos-card);
+    border: 1px solid var(--cosmos-border);
+    border-radius: 30px;
+    padding: 12px 20px;
+    backdrop-filter: blur(20px);
+    z-index: 50;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--cosmos-text-muted);
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.legend-dot.active {
+    background: var(--planet-active);
+    box-shadow: 0 0 8px var(--planet-active);
+}
+
+.legend-dot.inactive {
+    background: var(--planet-inactive);
+}
+
+.legend-line {
+    width: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cosmos-primary), var(--cosmos-accent));
+    border-radius: 2px;
+}
+
+/* =====================================================
+   CONTROLES
+   ===================================================== */
+.cosmos-controls {
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 50;
+}
+
+.control-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--cosmos-card);
+    border: 1px solid var(--cosmos-border);
+    color: var(--cosmos-text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--cosmos-text);
+    border-color: var(--cosmos-primary);
+    transform: scale(1.1);
+}
+
+.control-btn.active {
+    background: var(--cosmos-primary);
+    color: white;
+    border-color: var(--cosmos-primary);
+}
+
+/* =====================================================
+   EFECTO WARP
+   ===================================================== */
+.warp-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, var(--cosmos-darker) 100%);
+}
+
+.warp-effect.active {
+    animation: warpActivate 1s ease-in-out forwards;
+}
+
+@keyframes warpActivate {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+.warp-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 49%,
+            rgba(102, 126, 234, 0.1) 49%,
+            rgba(102, 126, 234, 0.1) 51%,
+            transparent 51%
+        );
+    animation: warpStretch 0.5s ease-in forwards;
+    transform-origin: center center;
+}
+
+@keyframes warpStretch {
+    0% { transform: scaleX(1); opacity: 0; }
+    50% { transform: scaleX(20); opacity: 1; }
+    100% { transform: scaleX(50); opacity: 0; }
+}
+
+/* =====================================================
+   ANIMACIONES DE ENTRADA
+   ===================================================== */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 1200px) {
+    .solar-system {
+        width: 600px;
+        height: 600px;
+    }
+
+    .sun {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 900px) {
+    .solar-system {
+        width: 450px;
+        height: 450px;
+    }
+
+    .sun {
+        width: 80px;
+        height: 80px;
+    }
+
+    .stats-panel {
+        bottom: 20px;
+        left: 20px;
+        padding: 16px;
+    }
+
+    .stats-grid {
+        gap: 20px;
+    }
+
+    .cosmos-legend {
+        bottom: 20px;
+        right: 20px;
+        gap: 15px;
+        padding: 10px 16px;
+    }
+
+    .cosmos-controls {
+        right: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .solar-system {
+        width: 350px;
+        height: 350px;
+    }
+
+    .sun {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cosmos-header {
+        padding: 0 15px;
+    }
+
+    .back-link span {
+        display: none;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+        letter-spacing: 4px;
+    }
+
+    .stats-panel {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .cosmos-legend {
+        display: none;
+    }
+
+    .entry-title {
+        font-size: 3rem;
+        letter-spacing: 10px;
+    }
+}
+
+/* =====================================================
+   UTILIDADES
+   ===================================================== */
+.hidden {
+    display: none !important;
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+}

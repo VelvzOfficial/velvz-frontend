@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Chatbots - Velvz Dashboard</title>
+
+    <!-- Estilos base del dashboard -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+
+    <!-- Estilos específicos de chatbots -->
+    <link rel="stylesheet" href="/assets/css/chatbots.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <!-- BRAND -->
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__brand">
+                    <div class="velvz-header__logo">
+                        <div class="velvz-header__logo-shape">
+                            <div class="velvz-header__logo-face">
+                                <div class="velvz-header__logo-eye"></div>
+                                <div class="velvz-header__logo-mouth"></div>
+                                <div class="velvz-header__logo-eye"></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- BÚSQUEDA -->
+            <div class="velvz-header__island velvz-header__island--search">
+                <div class="velvz-header__search">
+                    <input
+                        type="text"
+                        class="velvz-header__search-input"
+                        placeholder="Buscar chatbots, conversaciones..."
+                        id="headerSearchInput"
+                    >
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <!-- PERFIL -->
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        <span id="userInitials">A</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOGGLE MÓVIL -->
+            <div class="velvz-header__mobile-toggle" id="mobileMenuToggle">
+                <div class="velvz-header__hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENÚ MÓVIL -->
+        <div class="velvz-header__mobile-backdrop"></div>
+        <div class="velvz-header__mobile-menu" id="mobileMenu">
+            <button class="velvz-header__mobile-close"></button>
+
+            <div class="velvz-header__mobile-content">
+                <div class="velvz-header__mobile-search">
+                    <div class="velvz-header__mobile-search-container">
+                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
+                        <input type="text" class="velvz-header__mobile-search-input" placeholder="Buscar..." id="mobileSearchInput">
+                    </div>
+                </div>
+
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
+                    <a href="/app/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/app/chatbots/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
+                        <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
+                        <span>Mis Chatbots</span>
+                    </a>
+                    <a href="/app/analytics/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </div>
+
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Configuración</h3>
+                    <a href="/app/settings/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                    <a href="/app/billing/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
+                        <span>Facturación</span>
+                    </a>
+                </div>
+
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
+                    <a href="/app/profile/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </a>
+                    <a href="#" class="velvz-header__mobile-link" id="mobileLogout">
+                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="velvz-header__mobile-user-card">
+                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
+                    <span id="mobileUserInitials">A</span>
+                </div>
+                <div class="velvz-header__mobile-user-info">
+                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
+                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@email.com</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Principal</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/chatbots/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-robot"></i>
+                            <span>Mis Chatbots</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/analytics/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Configuración</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/billing/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-credit-card"></i>
+                            <span>Facturación</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/help/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-question-circle"></i>
+                            <span>Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/profile/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="#" class="velvz-sidebar__link" id="logoutLink">
+                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="velvz-main">
+            <div class="velvz-chatbots-page">
+                <!-- BREADCRUMBS -->
+                <nav class="velvz-breadcrumbs">
+                    <a href="/app/" class="velvz-breadcrumbs__link">Dashboard</a>
+                    <span class="velvz-breadcrumbs__separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                    <span class="velvz-breadcrumbs__current">Mis Chatbots</span>
+                </nav>
+
+                <!-- HERO HEADER -->
+                <div class="velvz-chatbots-hero">
+                    <div class="velvz-chatbots-hero__content">
+                        <div class="velvz-chatbots-hero__text">
+                            <h1 class="velvz-chatbots-hero__title">
+                                <span class="velvz-chatbots-hero__icon">
+                                    <i class="fas fa-robot"></i>
+                                </span>
+                                Mis Chatbots
+                            </h1>
+                            <p class="velvz-chatbots-hero__subtitle">
+                                Gestiona tus asistentes de IA y potencia la comunicación con tus clientes
+                            </p>
+                        </div>
+                        <button class="velvz-chatbots-hero__cta" id="createChatbotBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Crear Chatbot</span>
+                        </button>
+                    </div>
+
+                    <!-- ESTADÍSTICAS RÁPIDAS -->
+                    <div class="velvz-chatbots-stats">
+                        <div class="velvz-chatbots-stat">
+                            <div class="velvz-chatbots-stat__icon velvz-chatbots-stat__icon--primary">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="velvz-chatbots-stat__content">
+                                <span class="velvz-chatbots-stat__value" id="statTotalChatbots">0</span>
+                                <span class="velvz-chatbots-stat__label">Total Chatbots</span>
+                            </div>
+                        </div>
+                        <div class="velvz-chatbots-stat">
+                            <div class="velvz-chatbots-stat__icon velvz-chatbots-stat__icon--success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="velvz-chatbots-stat__content">
+                                <span class="velvz-chatbots-stat__value" id="statActiveChatbots">0</span>
+                                <span class="velvz-chatbots-stat__label">Activos</span>
+                            </div>
+                        </div>
+                        <div class="velvz-chatbots-stat">
+                            <div class="velvz-chatbots-stat__icon velvz-chatbots-stat__icon--info">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="velvz-chatbots-stat__content">
+                                <span class="velvz-chatbots-stat__value" id="statConversations">0</span>
+                                <span class="velvz-chatbots-stat__label">Conversaciones</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BARRA DE HERRAMIENTAS -->
+                <div class="velvz-chatbots-toolbar">
+                    <div class="velvz-chatbots-toolbar__left">
+                        <div class="velvz-chatbots-search">
+                            <i class="fas fa-search"></i>
+                            <input
+                                type="text"
+                                placeholder="Buscar chatbots..."
+                                id="chatbotSearch"
+                                class="velvz-chatbots-search__input"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="velvz-chatbots-toolbar__right">
+                        <div class="velvz-chatbots-filters">
+                            <button class="velvz-filter-pill velvz-filter-pill--active" data-filter="all">
+                                <span>Todos</span>
+                                <span class="velvz-filter-pill__count" id="allCount">0</span>
+                            </button>
+                            <button class="velvz-filter-pill" data-filter="active">
+                                <span class="velvz-filter-pill__dot velvz-filter-pill__dot--active"></span>
+                                <span>Activos</span>
+                                <span class="velvz-filter-pill__count" id="activeCount">0</span>
+                            </button>
+                            <button class="velvz-filter-pill" data-filter="inactive">
+                                <span class="velvz-filter-pill__dot velvz-filter-pill__dot--inactive"></span>
+                                <span>Inactivos</span>
+                                <span class="velvz-filter-pill__count" id="inactiveCount">0</span>
+                            </button>
+                        </div>
+
+                        <div class="velvz-chatbots-view-toggle">
+                            <button class="velvz-view-toggle__btn velvz-view-toggle__btn--active" id="gridViewBtn" data-view="grid" title="Vista de cuadrícula">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="velvz-view-toggle__btn" id="listViewBtn" data-view="list" title="Vista de lista">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENEDOR DE CHATBOTS -->
+                <div class="velvz-chatbots-container">
+                    <!-- Loading state -->
+                    <div class="velvz-chatbots-loading" id="chatbotsLoading">
+                        <div class="velvz-chatbots-loading__spinner"></div>
+                        <p class="velvz-chatbots-loading__text">Cargando tus chatbots...</p>
+                    </div>
+
+                    <!-- Estado vacío -->
+                    <div class="velvz-chatbots-empty" id="emptyChatbots" style="display: none;">
+                        <div class="velvz-chatbots-empty__illustration">
+                            <div class="velvz-chatbots-empty__robot">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="velvz-chatbots-empty__particles">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <h3 class="velvz-chatbots-empty__title">Crea tu primer chatbot</h3>
+                        <p class="velvz-chatbots-empty__description">
+                            Comienza a automatizar tus conversaciones y mejora la experiencia de tus clientes con IA
+                        </p>
+                        <button class="velvz-chatbots-empty__cta" id="createFirstChatbotBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Crear mi primer chatbot</span>
+                        </button>
+                    </div>
+
+                    <!-- Grid de chatbots -->
+                    <div class="velvz-chatbots-grid" id="chatbotsGrid">
+                        <!-- Los chatbots se cargan dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="velvz-footer__ambient">
+            <div class="velvz-footer__pulse"></div>
+            <div class="velvz-footer__pulse"></div>
+        </div>
+    </footer>
+
+    <!-- MODAL CREAR CHATBOT -->
+    <div class="velvz-modal" id="createChatbotModal">
+        <div class="velvz-modal__backdrop"></div>
+        <div class="velvz-modal__content">
+            <div class="velvz-modal__header">
+                <div class="velvz-modal__header-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="velvz-modal__header-text">
+                    <h2 class="velvz-modal__title">Crear Nuevo Chatbot</h2>
+                    <p class="velvz-modal__subtitle">Dale vida a tu nuevo asistente de IA</p>
+                </div>
+                <button class="velvz-modal__close" id="closeCreateModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="velvz-modal__body">
+                <form id="createChatbotForm">
+                    <div class="velvz-form-group">
+                        <label class="velvz-form-label" for="chatbotName">
+                            <i class="fas fa-pen"></i>
+                            Nombre del chatbot
+                        </label>
+                        <input
+                            type="text"
+                            id="chatbotName"
+                            class="velvz-form-input"
+                            placeholder="Ej: Asistente de Ventas"
+                            required
+                            maxlength="50"
+                        >
+                        <span class="velvz-form-hint">Elige un nombre descriptivo y fácil de recordar</span>
+                    </div>
+
+                    <div class="velvz-form-group">
+                        <label class="velvz-form-label" for="chatbotDescription">
+                            <i class="fas fa-align-left"></i>
+                            Descripción <span class="velvz-form-optional">(opcional)</span>
+                        </label>
+                        <textarea
+                            id="chatbotDescription"
+                            class="velvz-form-input velvz-form-textarea"
+                            placeholder="Describe brevemente la función de este chatbot..."
+                            maxlength="200"
+                        ></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="velvz-modal__footer">
+                <button type="button" class="velvz-btn velvz-btn--ghost" id="cancelCreateModal">
+                    Cancelar
+                </button>
+                <button type="submit" form="createChatbotForm" class="velvz-btn velvz-btn--primary" id="submitCreateChatbot">
+                    <i class="fas fa-magic"></i>
+                    <span>Crear Chatbot</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INDICADOR DE CARGA GLOBAL -->
+    <div class="velvz-loading-overlay" id="globalLoadingOverlay">
+        <div class="velvz-loading-overlay__content">
+            <div class="velvz-loading-overlay__spinner"></div>
+            <div class="velvz-loading-overlay__text" id="loadingText">
+                Creando tu chatbot...
+            </div>
+            <div class="velvz-loading-overlay__subtitle" id="loadingSubtitle">
+                Esto puede tardar unos segundos
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/error-cleanup.js"></script>
+    <script src="/assets/js/auth-config.js"></script>
+    <script src="/assets/js/notifications.js"></script>
+    <script src="/assets/js/dashboard-api.js"></script>
+    <script src="/assets/js/chatbots.js"></script>
+    <script src="/assets/js/private-app.js"></script>
+</body>
+</html>

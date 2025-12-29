@@ -1,0 +1,1098 @@
+/* =====================================================
+   CONFIGURACIÓN DEL CHATBOT - ESTILOS ESPECÍFICOS
+   ===================================================== */
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+   ===================================================== */
+
+.velvz-config {
+    width: 100%; /* CAMBIAR: ocupar todo el ancho disponible del contenedor padre */
+    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* =====================================================
+   HEADER DE CONFIGURACIÓN - REDISEÑO
+   ===================================================== */
+
+.velvz-config__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Fila superior: Breadcrumbs (solo en desktop) */
+.velvz-config__top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Fila del nombre: Nombre + Botones (siempre en la misma línea) */
+.velvz-config__chatbot-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out 0.2s forwards;
+}
+
+/* Botones de acción del header */
+.velvz-config__header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Breadcrumbs */
+.velvz-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: slideInUp 0.5s ease-out 0.1s forwards;
+    flex: 1;
+    min-width: 0;
+}
+
+.velvz-breadcrumbs__link {
+    color: var(--dark-text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.velvz-breadcrumbs__link:hover {
+    color: var(--dark-accent);
+}
+
+.velvz-breadcrumbs__separator {
+    color: var(--dark-text-secondary);
+    opacity: 0.5;
+}
+
+.velvz-breadcrumbs__current {
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+/* Título del chatbot - Nombre prominente */
+.velvz-config__title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin: 0;
+    background: linear-gradient(135deg, var(--dark-text) 0%, var(--dark-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
+    /* Limitar longitud del nombre */
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Barra de estado */
+.velvz-config__status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+}
+
+.velvz-config__status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.velvz-config__last-updated {
+    color: var(--dark-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+   CONTENIDO PRINCIPAL
+   ===================================================== */
+
+.velvz-config__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* =====================================================
+   MENÚ DE PESTAÑAS
+   ===================================================== */
+
+.velvz-config__tabs {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out 0.3s forwards;
+    margin-bottom: 2rem;
+}
+
+.velvz-config__tabs-nav {
+    display: flex;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+
+.velvz-config__tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: var(--dark-text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+.velvz-config__tab:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--dark-text);
+    transform: translateY(-1px);
+}
+
+.velvz-config__tab--active {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.velvz-config__tab--active:hover {
+    background: var(--primary-gradient);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.velvz-config__tab i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.velvz-config__tab:hover i {
+    transform: scale(1.1);
+}
+
+.velvz-config__tab span {
+    white-space: nowrap;
+}
+
+/* Efecto de onda al hacer click */
+.velvz-config__tab::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.velvz-config__tab:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Responsive para tablets */
+@media (max-width: 1024px) {
+    .velvz-config__tab {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .velvz-config__tab i {
+        font-size: 0.95rem;
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .velvz-config__tabs {
+        margin-bottom: 1.5rem;
+    }
+
+    .velvz-config__tabs-nav {
+        gap: 0.25rem;
+        padding: 0.375rem;
+    }
+
+    .velvz-config__tab {
+        padding: 0.625rem 0.5rem;
+        font-size: 0.85rem;
+        gap: 0.375rem;
+    }
+
+    .velvz-config__tab i {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ocultar texto en móviles - mostrar solo iconos */
+@media (max-width: 768px) {
+    .velvz-config__tab span {
+        display: none;
+    }
+
+    .velvz-config__tab {
+        padding: 0.75rem 1rem;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .velvz-config__tab i {
+        font-size: 1.2rem;
+    }
+}
+
+/* Ajustes adicionales para móviles muy pequeños */
+@media (max-width: 480px) {
+    .velvz-config__tab {
+        padding: 0.625rem 0.5rem;
+    }
+
+    .velvz-config__tab i {
+        font-size: 1.1rem;
+    }
+}
+
+/* =====================================================
+   SECCIONES DE CONFIGURACIÓN
+   ===================================================== */
+
+.velvz-config__section {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 20px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out forwards;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.velvz-config__section:hover {
+    border-color: rgba(102, 126, 234, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.velvz-config__section:nth-child(1) { animation-delay: 0.3s; }
+.velvz-config__section:nth-child(2) { animation-delay: 0.4s; }
+.velvz-config__section:nth-child(3) { animation-delay: 0.5s; }
+.velvz-config__section:nth-child(4) { animation-delay: 0.6s; }
+
+.velvz-config__section-header {
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--dark-border);
+    background: linear-gradient(180deg, rgba(102, 126, 234, 0.03) 0%, transparent 100%);
+}
+
+.velvz-config__section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.velvz-config__section-title i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-gradient);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.velvz-config__section-subtitle {
+    color: var(--dark-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-left: 52px;
+}
+
+.velvz-config__section-content {
+    padding: 2rem;
+    flex: 1; /* Añadir esta línea para que ocupe todo el espacio disponible */
+}
+
+/* =====================================================
+   ESTADOS Y STATUS
+   ===================================================== */
+
+.velvz-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.velvz-status--active {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.velvz-status--inactive {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.velvz-status--success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.velvz-status--warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.velvz-status--error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.velvz-status__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2s infinite;
+}
+
+/* =====================================================
+   FOOTER DE CONFIGURACIÓN
+   ===================================================== */
+
+.velvz-config__footer {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    margin-top: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out 0.7s forwards;
+}
+
+.velvz-config__footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+}
+
+.velvz-config__footer-text {
+    color: var(--dark-text-secondary);
+    margin: 0;
+}
+
+.velvz-config__footer-actions {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+/* =====================================================
+   LOADING OVERLAY
+   ===================================================== */
+
+.velvz-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.velvz-loading-overlay--visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.velvz-loading-spinner {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    max-width: 300px;
+}
+
+.velvz-loading-spinner__icon {
+    font-size: 2rem;
+    color: var(--dark-accent);
+    margin-bottom: 1rem;
+    animation: spin 1s linear infinite;
+}
+
+.velvz-loading-spinner__text {
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+/* =====================================================
+   ANIMACIONES
+   ===================================================== */
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .velvz-config__title {
+        font-size: 2rem;
+    }
+    
+    .velvz-config__title-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .velvz-config__title-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+    
+    .velvz-config__title-actions .velvz-btn {
+        flex: 1;
+    }
+    
+    .velvz-form__row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .velvz-config__footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .velvz-config__footer-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+    
+    .velvz-config__footer-actions .velvz-btn {
+        flex: 1;
+    }
+    
+    .velvz-file-item {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .velvz-file-item__actions {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .velvz-upload-area {
+        padding: 2rem 1rem;
+    }
+    
+    .velvz-config__section-content {
+        padding: 1.5rem;
+    }
+}
+
+/* =====================================================
+   BOTONES MEJORADOS - AGREGAR A chatbot-config.css
+   ===================================================== */
+
+/* Botón de guardar con efectos especiales */
+.velvz-btn--save {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.velvz-btn--save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.velvz-btn--save:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+/* Efecto de brillo en el botón */
+.velvz-btn__shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.velvz-btn--save:hover .velvz-btn__shine {
+    left: 100%;
+}
+
+/* Botón de vista previa mejorado */
+.velvz-btn--preview {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: var(--dark-text);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.velvz-btn--preview:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--dark-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Versión grande del botón (para el footer) */
+.velvz-btn--large {
+    padding: 16px 32px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+/* Animación de pulso cuando hay cambios */
+.velvz-btn--highlight {
+    animation: pulse-save 2s infinite;
+}
+
+@keyframes pulse-save {
+    0% {
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.6);
+    }
+    100% {
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+}
+
+/* Footer mejorado */
+.velvz-config__footer {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.velvz-config__footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.velvz-config__footer-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--dark-text-secondary);
+}
+
+.velvz-config__footer-info i {
+    color: var(--dark-accent);
+    font-size: 18px;
+}
+
+.velvz-config__footer-text {
+    margin: 0;
+    font-size: 14px;
+}
+
+.velvz-config__footer-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Estados de carga */
+.velvz-btn--loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.velvz-btn--loading .velvz-btn__text {
+    opacity: 0.7;
+}
+
+.velvz-btn--loading i {
+    animation: spin 1s linear infinite;
+}
+
+/* =====================================================
+   BOTONES DEL HEADER SÚPER ELEGANTES
+   ===================================================== */
+
+/* =====================================================
+   BOTONES HEADER - RESPONSIVE
+   ===================================================== */
+
+/* Ocultar texto en botones solo en móviles pequeños (< 550px) */
+@media (max-width: 550px) {
+    .velvz-btn-header__text {
+        display: none;
+    }
+
+    .velvz-btn-header {
+        padding: 10px 12px;
+        min-width: 40px;
+        justify-content: center;
+    }
+
+    .velvz-btn-header i {
+        font-size: 16px;
+    }
+}
+
+/* =====================================================
+   BOTONES ELEGANTES PARA DESKTOP - MEJORADOS
+   ===================================================== */
+
+.velvz-btn-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    outline: none;
+    white-space: nowrap;
+    min-height: 40px;
+}
+
+.velvz-btn-header i {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.velvz-btn-header__text {
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+/* Botón Vista Previa */
+.velvz-btn-header--preview {
+    background: rgba(139, 92, 246, 0.15);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    color: #8b5cf6;
+}
+
+.velvz-btn-header--preview:hover {
+    background: rgba(139, 92, 246, 0.25);
+    border-color: rgba(139, 92, 246, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.25);
+}
+
+.velvz-btn-header--preview:active {
+    transform: translateY(0);
+}
+
+/* Botón Guardar - Más llamativo */
+.velvz-btn-header--save {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: 2px solid transparent;
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.velvz-btn-header--save:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
+}
+
+.velvz-btn-header--save:hover .velvz-btn-header__icon {
+    transform: scale(1.1);
+}
+
+/* Efecto de brillo para el botón guardar */
+.velvz-btn-header__shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.velvz-btn-header--save:hover .velvz-btn-header__shine {
+    left: 100%;
+}
+
+/* Estado con cambios sin guardar */
+.velvz-btn-header--save.velvz-btn--highlight {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.8);
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN - NUEVO HEADER
+   ===================================================== */
+
+/* Tablets */
+@media (max-width: 900px) {
+    .velvz-config__title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .velvz-config__header {
+        gap: 0.75rem;
+    }
+
+    /* Ocultar breadcrumbs en móvil */
+    .velvz-config__top-row {
+        display: none;
+    }
+
+    .velvz-config__title {
+        font-size: 1.35rem;
+    }
+
+    .velvz-config__chatbot-name {
+        gap: 0.75rem;
+    }
+
+    /* Status bar compacta */
+    .velvz-config__status-bar {
+        padding: 0.625rem 0.875rem;
+        border-radius: 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .velvz-config__status {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .velvz-status {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .velvz-openai-status {
+        margin-left: 0;
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .velvz-config__last-updated {
+        font-size: 0.7rem;
+        width: 100%;
+        text-align: center;
+        padding-top: 0.4rem;
+        border-top: 1px solid var(--dark-border, rgba(255,255,255,0.1));
+        margin-top: 0.25rem;
+    }
+
+    /* Footer y otros */
+    .velvz-config__footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .velvz-config__footer-actions {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .velvz-config__footer-actions .velvz-btn {
+        flex: 1;
+    }
+
+    .velvz-file-item {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .velvz-file-item__actions {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .velvz-upload-area {
+        padding: 2rem 1rem;
+    }
+
+    .velvz-config__section-content {
+        padding: 1.5rem;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .velvz-config__title {
+        font-size: 1.15rem;
+    }
+
+    .velvz-config__chatbot-name {
+        gap: 0.5rem;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .velvz-config__title {
+        font-size: 1rem;
+    }
+}
+
+/* =====================================================
+   ESTADOS DE CARGA - MEJORADOS
+   ===================================================== */
+
+.velvz-btn-header--loading,
+.velvz-icon-btn--loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.velvz-btn-header--loading .velvz-btn-header__icon i,
+.velvz-icon-btn--loading i {
+    animation: spin 1s linear infinite;
+}
+
+
+/* =====================================================
+   ESTADO OPENAI - INDICADOR VISUAL
+   ===================================================== */
+
+.velvz-openai-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+}
+
+.velvz-openai-status--synced {
+  background: rgba(34, 197, 94, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.velvz-openai-status--error {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.velvz-openai-status--syncing {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.velvz-openai-status--unknown {
+  background: rgba(156, 163, 175, 0.1);
+  color: #9ca3af;
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+/* Animación de éxito para botones */
+.velvz-btn--success-pulse {
+  animation: successPulse 2s ease-in-out;
+}
+
+@keyframes successPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); 
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.6); 
+  }
+}
+
+/* Animaciones toast */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+
+/* =====================================================
+   FALTA ESTILO PARA DRAFT EN TARJETAS DE CHATBOTS
+   ===================================================== */
+
+.velvz-chatbot-card__status--draft {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.velvz-chatbot-card__status--warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+/* Estado borrador para las tarjetas */
+.velvz-chatbot-card__status--draft {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #f59e0b;
+}
+
+.velvz-chatbot-card__status--draft .velvz-chatbot-card__status-dot {
+    background: #f59e0b;
+}
+
+
+
+/* =====================================================
+   SIDEBAR FIJO COMO EN LA PÁGINA DE CHATBOTS
+   ===================================================== */
+
+.velvz-sidebar {
+    position: sticky !important;
+    top: 100px !important; /* Altura del header */
+    height: calc(100vh - 100px) !important;
+    overflow-y: hidden !important; /* Por defecto sin scroll */
+    transition: all 0.3s ease !important;
+}
+
+.velvz-sidebar:hover {
+    overflow-y: auto !important; /* Permitir scroll interno al hacer hover */
+}

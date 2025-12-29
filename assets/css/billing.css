@@ -1,0 +1,1296 @@
+/* =====================================================
+   BILLING PAGE - FACTURACIÓN
+   Diseño moderno y profesional
+   ===================================================== */
+
+/* =====================================================
+   ANIMACIONES
+   ===================================================== */
+
+@keyframes billingFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes billingPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes billingShine {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+   ===================================================== */
+
+.billing {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* =====================================================
+   BREADCRUMBS (igual que chatbots)
+   ===================================================== */
+
+.billing .velvz-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: billingFadeIn 0.5s ease-out forwards;
+    margin-bottom: 0;
+}
+
+.billing .velvz-breadcrumbs__link {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.billing .velvz-breadcrumbs__link:hover {
+    color: #667eea;
+}
+
+.billing .velvz-breadcrumbs__separator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.7rem;
+}
+
+.billing .velvz-breadcrumbs__current {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* =====================================================
+   HERO HEADER (igual que Mis Chatbots)
+   ===================================================== */
+
+.billing__hero {
+    background: linear-gradient(135deg,
+        rgba(102, 126, 234, 0.1) 0%,
+        rgba(118, 75, 162, 0.05) 50%,
+        transparent 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: billingFadeIn 0.6s ease-out forwards;
+}
+
+.billing__hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.billing__hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.billing__hero-text {
+    flex: 1;
+}
+
+.billing__hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.billing__hero-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.billing__hero-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    max-width: 500px;
+    margin: 0;
+}
+
+/* =====================================================
+   LAYOUT - FULL WIDTH CON SECCIONES
+   ===================================================== */
+
+.billing__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* Ocultamos el sidebar del HTML, usaremos grid para planes */
+.billing__sidebar {
+    display: none;
+}
+
+.billing__main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* =====================================================
+   SECCIÓN: TU PLAN ACTUAL (Hero Card)
+   ===================================================== */
+
+.billing__plan-card {
+    background: linear-gradient(135deg, #1e1e3f 0%, #2a2a5a 50%, #1e1e3f 100%);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    animation: billingFadeIn 0.5s ease-out;
+}
+
+.billing__plan-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at top right, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.billing__plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.billing__plan-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.billing__plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.billing__plan-badge--pro {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.billing__plan-badge--business {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.billing__plan-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.billing__plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.billing__plan-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.billing__plan-period {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+}
+
+/* Trial Banner */
+.billing__trial-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(249, 115, 22, 0.1) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 10px;
+    padding: 0.85rem 1.25rem;
+    margin-top: 1.5rem;
+    color: #fbbf24;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Next Billing */
+.billing__next-billing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.billing__next-billing-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.billing__next-billing-date {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* =====================================================
+   SECCIÓN: USO DEL MES
+   ===================================================== */
+
+.billing__card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.75rem;
+    animation: billingFadeIn 0.5s ease-out backwards;
+}
+
+.billing__card:nth-child(2) { animation-delay: 0.1s; }
+.billing__card:nth-child(3) { animation-delay: 0.2s; }
+.billing__card:nth-child(4) { animation-delay: 0.3s; }
+
+.billing__card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.billing__card-title i {
+    color: #667eea;
+    font-size: 1rem;
+}
+
+.billing__usage-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.billing__usage-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.billing__usage-item:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.billing__usage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.billing__usage-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+.billing__usage-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.billing__usage-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.billing__usage-progress {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+.billing__usage-progress--chatbots {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.billing__usage-progress--messages {
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+}
+
+.billing__usage-progress--docs {
+    background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.billing__usage-progress--exceeded {
+    background: linear-gradient(90deg, #ef4444 0%, #f87171 100%) !important;
+}
+
+.billing__usage-reset {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 1.25rem 0 0 0;
+    text-align: center;
+}
+
+/* =====================================================
+   SECCIÓN: PLANES DISPONIBLES (Grid de 3 columnas)
+   ===================================================== */
+
+.billing__plans-section {
+    animation: billingFadeIn 0.5s ease-out 0.2s backwards;
+}
+
+.billing__plans-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.billing__plans-title i {
+    color: #667eea;
+}
+
+.billing__plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding-top: 0.75rem; /* Espacio para el badge Recomendado */
+}
+
+/* Tarjeta de Plan */
+.billing__plan-option {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.billing__plan-option:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Plan actual */
+.billing__plan-option--current {
+    border-color: rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.billing__plan-option--current:hover {
+    border-color: rgba(102, 126, 234, 0.5);
+}
+
+/* Plan recomendado - PREMIUM STYLE */
+.billing__plan-option--recommended {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(135deg, #1a1a2e 0%, #16162a 100%) padding-box,
+        linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ec4899 100%) border-box;
+    position: relative;
+    transform: scale(1.02);
+    z-index: 1;
+}
+
+.billing__plan-option--recommended::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(236, 72, 153, 0.05) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+}
+
+.billing__plan-option--recommended::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ec4899 100%);
+    border-radius: 18px;
+    z-index: -1;
+    opacity: 0.3;
+    filter: blur(12px);
+}
+
+.billing__plan-option--recommended:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 40px rgba(245, 158, 11, 0.25);
+}
+
+/* Badge Recomendado - PREMIUM */
+.billing__plan-recommended-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ec4899 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 1.25rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    z-index: 2;
+}
+
+/* Header del plan */
+.billing__plan-option-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-top: 0.5rem;
+}
+
+.billing__plan-option--recommended .billing__plan-option-header {
+    padding-top: 1rem;
+}
+
+.billing__plan-option-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.billing__plan-option-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.billing__plan-option-price {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.billing__plan-option-price span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Badge de plan actual */
+.billing__plan-option-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+}
+
+.billing__plan-option-badge--current {
+    background: rgba(102, 126, 234, 0.2);
+    color: #8b9ff5;
+}
+
+/* Lista de features */
+.billing__plan-option-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.billing__plan-option-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.billing__plan-option-features li strong {
+    color: #fff;
+}
+
+.billing__plan-option-features li i {
+    font-size: 0.7rem;
+    width: 16px;
+    text-align: center;
+}
+
+.billing__plan-option-features li i.fa-check {
+    color: #10b981;
+}
+
+.billing__plan-option-features li i.fa-times {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.billing__feature--disabled {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Botón de plan */
+.billing__plan-option-btn {
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    margin-top: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.billing__plan-option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+}
+
+/* Botón premium para plan Pro */
+.billing__plan-option--recommended .billing__plan-option-btn {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ec4899 100%);
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.billing__plan-option--recommended .billing__plan-option-btn:hover {
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.45);
+    transform: translateY(-3px);
+}
+
+/* Plan Business - PREMIUM STYLE (Verde esmeralda) */
+.billing__plan-option--business {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(135deg, #1a1a2e 0%, #16162a 100%) padding-box,
+        linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%) border-box;
+    position: relative;
+}
+
+.billing__plan-option--business::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.05) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+}
+
+.billing__plan-option--business::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    border-radius: 18px;
+    z-index: -1;
+    opacity: 0.25;
+    filter: blur(12px);
+}
+
+.billing__plan-option--business:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.25);
+}
+
+/* Badge Business Premium */
+.billing__plan-business-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 1.25rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    z-index: 2;
+}
+
+.billing__plan-option--business .billing__plan-option-header {
+    padding-top: 1rem;
+}
+
+/* Botón premium para plan Business */
+.billing__plan-option--business .billing__plan-option-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.billing__plan-option--business .billing__plan-option-btn:hover {
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
+    transform: translateY(-3px);
+}
+
+.billing__plan-option-btn--secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.billing__plan-option-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: none;
+    transform: translateY(-2px);
+}
+
+/* Info adicional bajo planes */
+.billing__plans-info {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.billing__plans-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+}
+
+.billing__plans-info i {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* =====================================================
+   MÉTODO DE PAGO
+   ===================================================== */
+
+.billing__payment {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.billing__payment-empty {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.billing__payment-empty i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    opacity: 0.5;
+}
+
+.billing__payment-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.billing__payment-card-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.billing__payment-card-brand {
+    width: 45px;
+    height: 30px;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.65rem;
+    color: #1a1a2e;
+}
+
+.billing__payment-card-number {
+    font-size: 0.95rem;
+    color: #fff;
+    font-family: monospace;
+}
+
+.billing__payment-card-expiry {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.billing__add-payment-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0.85rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.billing__add-payment-btn:hover {
+    border-color: rgba(102, 126, 234, 0.5);
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+/* =====================================================
+   HISTORIAL FACTURAS
+   ===================================================== */
+
+.billing__invoices {
+    display: flex;
+    flex-direction: column;
+}
+
+.billing__invoices-empty {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.billing__invoice-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.billing__invoice-item:last-child {
+    border-bottom: none;
+}
+
+.billing__invoice-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.billing__invoice-date {
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.billing__invoice-plan {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.billing__invoice-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.billing__invoice-amount {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.billing__invoice-download {
+    background: transparent;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.billing__invoice-download:hover {
+    color: #8b9ff5;
+}
+
+/* =====================================================
+   ZONA DE PELIGRO
+   ===================================================== */
+
+.billing__danger-zone {
+    margin-top: 1rem;
+    animation: billingFadeIn 0.5s ease-out 0.3s backwards;
+}
+
+.billing__danger-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ef4444;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.billing__danger-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+}
+
+.billing__danger-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.25rem 0;
+}
+
+.billing__danger-info p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+.billing__danger-btn {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.billing__danger-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+/* =====================================================
+   MODAL DE UPGRADE
+   ===================================================== */
+
+.billing__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.billing__modal--active {
+    display: flex;
+}
+
+.billing__modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.billing__modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16162a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 440px;
+    animation: billingFadeIn 0.3s ease-out;
+    overflow: hidden;
+}
+
+.billing__modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.6rem;
+    border-radius: 8px;
+    z-index: 1;
+    transition: all 0.2s ease;
+}
+
+.billing__modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.billing__modal-header {
+    text-align: center;
+    padding: 2.5rem 2rem 1.5rem;
+    background: linear-gradient(180deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+}
+
+.billing__modal-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.25rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #667eea;
+}
+
+.billing__modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.billing__modal-price {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+.billing__modal-body {
+    padding: 0 2rem 2rem;
+}
+
+.billing__modal-trial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    color: #34d399;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.billing__modal-features {
+    margin-bottom: 1.5rem;
+}
+
+.billing__modal-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+
+.billing__modal-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.billing__modal-features li i {
+    color: #10b981;
+    font-size: 0.7rem;
+}
+
+.billing__modal-payment {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 1.25rem;
+}
+
+.billing__modal-payment-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.billing__modal-footer {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0 2rem 2rem;
+}
+
+.billing__modal-btn {
+    flex: 1;
+    padding: 0.9rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.billing__modal-btn--cancel {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.billing__modal-btn--cancel:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.billing__modal-btn--confirm {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    flex: 2;
+}
+
+.billing__modal-btn--confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+}
+
+/* Ocultar sidebar antiguo */
+.billing__sidebar-title,
+.billing__sidebar-info {
+    display: none;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1024px) {
+    .billing__plans-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .billing__usage-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .billing__plans-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .billing__plan-option--recommended {
+        grid-column: 1 / -1;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .billing__usage-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .billing__plans-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .billing__plan-option--recommended {
+        max-width: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .billing {
+        gap: 1rem;
+    }
+
+    .billing__hero {
+        padding: 1.5rem;
+    }
+
+    .billing__hero-title {
+        font-size: 1.5rem;
+    }
+
+    .billing__hero-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .billing__hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .billing__plan-card {
+        padding: 1.5rem;
+    }
+
+    .billing__plan-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .billing__plan-amount {
+        font-size: 2.5rem;
+    }
+
+    .billing__danger-card {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .billing__plans-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .billing__modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .billing__modal-features ul {
+        grid-template-columns: 1fr;
+    }
+
+    .billing__modal-footer {
+        flex-direction: column;
+    }
+
+    .billing__modal-btn--confirm {
+        flex: none;
+        order: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .billing__plan-amount {
+        font-size: 2rem;
+    }
+
+    .billing__plan-option {
+        padding: 1.25rem;
+    }
+
+    .billing__plan-option-price {
+        font-size: 1.75rem;
+    }
+}

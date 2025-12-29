@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Precios - Velvz AI Chatbot Solutions</title>
+    <link rel="icon" href="/svg/logoR.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/svg/logoR.png" type="image/png" sizes="32x32">
+    <link rel="stylesheet" href="/assets/css/inicio.css">
+    <link rel="stylesheet" href="/assets/css/precios.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="velvz-header">
+    <div class="velvz-header__container">
+        <div class="velvz-header__island velvz-header__island--brand">
+            <div class="velvz-header__logo">
+                <div class="velvz-header__logo-shape">
+                    <div class="velvz-header__logo-face">
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--left"></div>
+                        <div class="velvz-header__logo-mouth"></div>
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--nav">
+            <nav class="velvz-header__nav">
+                <a href="/" class="velvz-header__link">Inicio</a>
+                <a href="/servicios/" class="velvz-header__link">Servicios</a>
+                <a href="/precios/" class="velvz-header__link velvz-header__link--active">Precios</a>
+                <a href="/contacto/" class="velvz-header__link">Contacto</a>
+            </nav>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--cta">
+            <button class="velvz-header__cta">
+                <span class="velvz-header__cta-text">Entrar</span>
+                <div class="velvz-header__cta-shine"></div>
+            </button>
+        </div>
+
+        <!-- MOBILE MENU TOGGLE -->
+        <div class="velvz-header__mobile-toggle">
+            <div class="velvz-header__hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE MENU -->
+    <div class="velvz-header__mobile-backdrop"></div>
+    <div class="velvz-header__mobile-menu">
+        <!-- CLOSE BUTTON -->
+        <button class="velvz-header__mobile-close"></button>
+        
+        <nav class="velvz-header__mobile-nav">
+            <a href="/" class="velvz-header__mobile-link">Inicio</a>
+            <a href="/servicios/" class="velvz-header__mobile-link">Servicios</a>
+            <a href="/precios/" class="velvz-header__mobile-link velvz-header__mobile-link--active">Precios</a>
+            <a href="/contacto/" class="velvz-header__mobile-link">Contacto</a>
+        </nav>
+
+        <div class="velvz-header__mobile-cta-section">
+            <button class="velvz-header__mobile-cta">
+                <span>Entrar</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- AMBIENT ELEMENTS -->
+    <div class="velvz-header__ambient">
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+    </div>
+</header>
+
+<!-- PÁGINA DE PRECIOS -->
+<main class="velvz-precios">
+    <div class="velvz-precios__container">
+        <!-- HEADER DE PRECIOS -->
+        <header class="velvz-precios__header">
+            <div class="velvz-precios__badge">
+                <span>Precios</span>
+                <div class="velvz-precios__badge-dot"></div>
+            </div>
+            
+            <h1 class="velvz-precios__title">Planes transparentes</h1>
+            <p class="velvz-precios__subtitle">
+                Elige el plan perfecto para tu negocio. Sin costes ocultos, 
+                sin sorpresas. Cambia o cancela cuando quieras.
+            </p>
+        </header>
+
+        <!-- TOGGLE DE FACTURACIÓN -->
+        <div class="velvz-precios__billing-toggle-container">
+            <div class="velvz-precios__billing-toggle" id="billingToggle">
+                <div class="velvz-precios__billing-slider"></div>
+                <button class="velvz-precios__billing-option velvz-precios__billing-option--monthly velvz-precios__billing-option--active" 
+                        data-mode="monthly">
+                    💳 Mensual
+                </button>
+                <button class="velvz-precios__billing-option velvz-precios__billing-option--annual" 
+                        data-mode="annual">
+                    💰 Anual
+                    <span class="velvz-precios__discount-label">-20%</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLANES -->
+        <div class="velvz-precios__plans">
+            <!-- PLAN STARTER -->
+            <div class="velvz-precios__plan velvz-precios__plan--starter">
+                <div class="velvz-precios__plan-header">
+                    <h3 class="velvz-precios__plan-name">Starter</h3>
+                    <p class="velvz-precios__plan-description">
+                        Perfect para pequeñas empresas que empiezan
+                    </p>
+                    <div class="velvz-precios__plan-price">
+                        <span class="velvz-precios__plan-amount" data-monthly="49" data-annual="39">49</span>
+                        <span class="velvz-precios__plan-currency">€</span>
+                    </div>
+                    <p class="velvz-precios__plan-period">por mes</p>
+                </div>
+
+                <ul class="velvz-precios__plan-features">
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">1 chatbot personalizado</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">1,000 conversaciones/mes</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Integración web básica</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Soporte por email</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Analytics básicos</span>
+                    </li>
+                </ul>
+
+                <div class="velvz-precios__plan-cta-container">
+                    <button class="velvz-precios__plan-cta">Empezar gratis</button>
+                </div>
+            </div>
+
+            <!-- PLAN PROFESSIONAL (POPULAR) -->
+            <div class="velvz-precios__plan velvz-precios__plan--professional">
+                <div class="velvz-precios__plan-popular-badge">Más Popular</div>
+                
+                <div class="velvz-precios__plan-header">
+                    <h3 class="velvz-precios__plan-name">Professional</h3>
+                    <p class="velvz-precios__plan-description">
+                        Ideal para empresas en crecimiento
+                    </p>
+                    <div class="velvz-precios__plan-price">
+                        <span class="velvz-precios__plan-amount" data-monthly="149" data-annual="119">149</span>
+                        <span class="velvz-precios__plan-currency">€</span>
+                    </div>
+                    <p class="velvz-precios__plan-period">por mes</p>
+                </div>
+
+                <ul class="velvz-precios__plan-features">
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">3 chatbots personalizados</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">10,000 conversaciones/mes</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Integraciones avanzadas</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Soporte prioritario</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Analytics avanzados</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">A/B Testing</span>
+                    </li>
+                </ul>
+
+                <div class="velvz-precios__plan-cta-container">
+                    <button class="velvz-precios__plan-cta">Empezar prueba</button>
+                </div>
+            </div>
+
+            <!-- PLAN ENTERPRISE -->
+            <div class="velvz-precios__plan velvz-precios__plan--enterprise">
+                <div class="velvz-precios__plan-header">
+                    <h3 class="velvz-precios__plan-name">Enterprise</h3>
+                    <p class="velvz-precios__plan-description">
+                        Para grandes empresas con necesidades específicas
+                    </p>
+                    <div class="velvz-precios__plan-price">
+                        <span class="velvz-precios__plan-amount" data-monthly="399" data-annual="319">399</span>
+                        <span class="velvz-precios__plan-currency">€</span>
+                    </div>
+                    <p class="velvz-precios__plan-period">por mes</p>
+                </div>
+
+                <ul class="velvz-precios__plan-features">
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Chatbots ilimitados</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Conversaciones ilimitadas</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Desarrollo personalizado</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Soporte 24/7 dedicado</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">SLA garantizado</span>
+                    </li>
+                    <li class="velvz-precios__plan-feature">
+                        <div class="velvz-precios__plan-feature-icon"></div>
+                        <span class="velvz-precios__plan-feature-text">Onboarding personalizado</span>
+                    </li>
+                </ul>
+
+                <div class="velvz-precios__plan-cta-container">
+                    <button class="velvz-precios__plan-cta">Contactar ventas</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <section class="velvz-precios__faq">
+            <h2 class="velvz-precios__faq-title">Preguntas frecuentes</h2>
+            
+            <div class="velvz-precios__faq-list">
+                <div class="velvz-precios__faq-item">
+                    <button class="velvz-precios__faq-question">
+                        ¿Puedo cambiar de plan en cualquier momento?
+                        <span class="velvz-precios__faq-icon">▼</span>
+                    </button>
+                    <div class="velvz-precios__faq-answer">
+                        <div class="velvz-precios__faq-answer-content">
+                            Sí, puedes actualizar o degradar tu plan en cualquier momento. Los cambios se aplicarán inmediatamente y se prorrateará la facturación según corresponda.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="velvz-precios__faq-item">
+                    <button class="velvz-precios__faq-question">
+                        ¿Hay período de prueba gratuito?
+                        <span class="velvz-precios__faq-icon">▼</span>
+                    </button>
+                    <div class="velvz-precios__faq-answer">
+                        <div class="velvz-precios__faq-answer-content">
+                            Ofrecemos una prueba gratuita de 14 días para todos nuestros planes. No se requiere tarjeta de crédito para empezar.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="velvz-precios__faq-item">
+                    <button class="velvz-precios__faq-question">
+                        ¿Qué sucede si supero el límite de conversaciones?
+                        <span class="velvz-precios__faq-icon">▼</span>
+                    </button>
+                    <div class="velvz-precios__faq-answer">
+                        <div class="velvz-precios__faq-answer-content">
+                            Te notificaremos cuando te acerques al límite. Puedes actualizar tu plan o comprar conversaciones adicionales a 0.05€ por conversación extra.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="velvz-precios__faq-item">
+                    <button class="velvz-precios__faq-question">
+                        ¿Incluye la personalización del diseño?
+                        <span class="velvz-precios__faq-icon">▼</span>
+                    </button>
+                    <div class="velvz-precios__faq-answer">
+                        <div class="velvz-precios__faq-answer-content">
+                            Todos nuestros planes incluyen personalización completa del diseño y funcionalidades. En el plan Enterprise, también ofrecemos desarrollo totalmente personalizado.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="velvz-precios__faq-item">
+                    <button class="velvz-precios__faq-question">
+                        ¿Cómo funciona el soporte técnico?
+                        <span class="velvz-precios__faq-icon">▼</span>
+                    </button>
+                    <div class="velvz-precios__faq-answer">
+                        <div class="velvz-precios__faq-answer-content">
+                            Starter incluye soporte por email. Professional tiene soporte prioritario con respuesta en 4 horas. Enterprise cuenta con soporte dedicado 24/7 y account manager.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="velvz-precios__faq-item">
+                    <button class="velvz-precios__faq-question">
+                        ¿Los datos están seguros y son privados?
+                        <span class="velvz-precios__faq-icon">▼</span>
+                    </button>
+                    <div class="velvz-precios__faq-answer">
+                        <div class="velvz-precios__faq-answer-content">
+                            Cumplimos totalmente con GDPR. Todos los datos están cifrados de extremo a extremo y almacenados en servidores europeos. Nunca compartimos ni vendemos datos de clientes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- AMBIENT ELEMENTS -->
+    <div class="velvz-precios__ambient">
+        <div class="velvz-precios__ambient-pulse"></div>
+        <div class="velvz-precios__ambient-pulse"></div>
+        <div class="velvz-precios__ambient-pulse"></div>
+        <div class="velvz-precios__ambient-pulse"></div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="velvz-footer">
+    <div class="velvz-footer__container">
+        <div class="velvz-footer__brand">
+            <a href="#" class="velvz-footer__logo-link">
+                <div class="velvz-footer__logo">
+                    <div class="velvz-footer__logo-shape">
+                        <div class="velvz-footer__logo-face">
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                            <div class="velvz-footer__logo-mouth"></div>
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="velvz-footer__brand-name">Velvz</span>
+            </a>
+            <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+        </div>
+        
+        <nav class="velvz-footer__links">
+            <a href="/" class="velvz-footer__link">Inicio</a>
+            <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+            <a href="/precios/" class="velvz-footer__link">Precios</a>
+            <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+            <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+        </nav>
+        
+        <div class="velvz-footer__legal">
+            <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+            <div>
+                <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
+                <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
+                <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AMBIENT ELEMENTS -->
+    <div class="velvz-footer__ambient">
+        <div class="velvz-footer__pulse"></div>
+        <div class="velvz-footer__pulse"></div>
+    </div>
+</footer>
+
+<script src="/assets/js/precios.js"></script>
+<script src="/assets/js/error-cleanup.js"></script>
+
+</body>
+</html>

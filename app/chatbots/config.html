@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración del Chatbot - Velvz Dashboard</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos base del dashboard -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+    
+    <!-- Estilos específicos de configuración -->
+    <link rel="stylesheet" href="/assets/css/chatbot-config.css">
+    <link rel="stylesheet" href="/assets/css/modal.css">
+    <link rel="stylesheet" href="/assets/css/config-sections/configuration-section.css">
+    <link rel="stylesheet" href="/assets/css/config-sections/archives-section.css">
+    <link rel="stylesheet" href="/assets/css/config-sections/web-crawling.css">
+    <link rel="stylesheet" href="/assets/css/config-sections/implementation-section.css">
+    <link rel="stylesheet" href="/assets/css/config-sections/customization-section.css">
+    <link rel="stylesheet" href="/assets/css/config-sections/statistics-section.css">
+</head>
+<body>
+    <!-- HEADER (ESTRUCTURA EXACTA COMO TU INDEX.HTML) -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <!-- LOGO BRAND ISLAND -->
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__logo">
+                    <div class="velvz-header__logo-shape">
+                        <div class="velvz-header__logo-face">
+                            <div class="velvz-header__logo-eye"></div>
+                            <div class="velvz-header__logo-mouth"></div>
+                            <div class="velvz-header__logo-eye"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- BARRA DE BÚSQUEDA ISLAND -->
+            <div class="velvz-header__island velvz-header__island--search">
+                <div class="velvz-header__search">
+                    <input 
+                        type="text" 
+                        class="velvz-header__search-input" 
+                        placeholder="Buscar chatbots, conversaciones..."
+                        id="headerSearchInput"
+                    >
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <!-- AVATAR DEL USUARIO ISLAND -->
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        U
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOBILE TOGGLE (HAMBURGER) -->
+            <div class="velvz-header__mobile-toggle">
+                <div class="velvz-header__hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU ACTUALIZADO -->
+        <div class="velvz-header__mobile-backdrop"></div>
+        <div class="velvz-header__mobile-menu">
+            <button class="velvz-header__mobile-close"></button>
+            
+            <div class="velvz-header__mobile-content">
+                <!-- BÚSQUEDA AL PRINCIPIO -->
+                <div class="velvz-header__mobile-search">
+                    <div class="velvz-header__mobile-search-container">
+                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
+                        <input 
+                            type="text" 
+                            class="velvz-header__mobile-search-input" 
+                            placeholder="Buscar..."
+                            id="mobileSearchInput"
+                        >
+                    </div>
+                </div>
+
+                <!-- SECCIÓN PRINCIPAL -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
+                    <a href="/app/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/app/chatbots/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
+                        <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
+                        <span>Mis Chatbots</span>
+                    </a>
+                    <a href="/app/analytics/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </div>
+
+                <!-- SECCIÓN CONFIGURACIÓN -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Configuración</h3>
+                    <a href="/app/settings/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                    <a href="/app/billing/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
+                        <span>Facturación</span>
+                    </a>
+                    <a href="/app/help/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-question-circle"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </div>
+
+                <!-- SECCIÓN CUENTA -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
+                    <a href="/app/profile/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </a>
+                    <a href="#" class="velvz-header__mobile-link" onclick="handleLogout(); return false;">
+                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- TARJETA DE USUARIO AL FINAL -->
+            <div class="velvz-header__mobile-user-card">
+                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
+                    U
+                </div>
+                <div class="velvz-header__mobile-user-info">
+                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
+                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@example.com</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Principal</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/chatbots/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-robot"></i>
+                            <span>Mis Chatbots</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/analytics/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Configuración</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/billing/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-credit-card"></i>
+                            <span>Facturación</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/help/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-question-circle"></i>
+                            <span>Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/profile/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="#" class="velvz-sidebar__link" onclick="handleLogout(); return false;">
+                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="velvz-main">
+            <div class="velvz-config">
+                <!-- HEADER DE CONFIGURACIÓN - REDISEÑO MÓVIL -->
+                <div class="velvz-config__header">
+                    <!-- Fila superior: Solo Breadcrumbs -->
+                    <div class="velvz-config__top-row">
+                        <nav class="velvz-breadcrumbs">
+                            <a href="/app/" class="velvz-breadcrumbs__link">Dashboard</a>
+                            <span class="velvz-breadcrumbs__separator">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
+                            <a href="/app/chatbots/" class="velvz-breadcrumbs__link">Mis Chatbots</a>
+                            <span class="velvz-breadcrumbs__separator">
+                                <i class="fas fa-chevron-right"></i>
+                            </span>
+                            <span class="velvz-breadcrumbs__current">Configuración</span>
+                        </nav>
+                    </div>
+
+                    <!-- Nombre del chatbot + Botones (misma fila) -->
+                    <div class="velvz-config__chatbot-name">
+                        <h1 class="velvz-config__title" id="chatbotTitle">Cargando...</h1>
+                        <div class="velvz-config__header-actions">
+                            <button class="velvz-btn-header velvz-btn-header--preview" id="previewBtn" title="Vista Previa">
+                                <i class="fas fa-eye"></i>
+                                <span class="velvz-btn-header__text">Vista Previa</span>
+                            </button>
+                            <button class="velvz-btn-header velvz-btn-header--save" id="saveChangesBtn" title="Guardar">
+                                <i class="fas fa-save"></i>
+                                <span class="velvz-btn-header__text">Guardar</span>
+                                <div class="velvz-btn-header__shine"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Estado del chatbot (compacto) -->
+                    <div class="velvz-config__status-bar">
+                        <div class="velvz-config__status" id="chatbotStatus">
+                            <div class="velvz-status velvz-status--active">
+                                <div class="velvz-status__indicator"></div>
+                                <span class="velvz-status__text">Activo</span>
+                            </div>
+                            <div class="velvz-openai-status velvz-openai-status--synced" id="openaiSyncStatus">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sincronizado con OpenAI</span>
+                            </div>
+                        </div>
+                        <div class="velvz-config__last-updated" id="lastUpdated">
+                            Cargando...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MENÚ DE NAVEGACIÓN DE PESTAÑAS -->
+                <div class="velvz-config__tabs">
+                    <div class="velvz-config__tabs-nav">
+                        <button class="velvz-config__tab velvz-config__tab--active" data-tab="configuration">
+                            <i class="fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </button>
+                        <button class="velvz-config__tab" data-tab="files">
+                            <i class="fas fa-folder"></i>
+                            <span>Archivos</span>
+                        </button>
+                        <button class="velvz-config__tab" data-tab="customization">
+                            <i class="fas fa-palette"></i>
+                            <span>Personalización</span>
+                        </button>
+                        <button class="velvz-config__tab" data-tab="statistics">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Estadísticas</span>
+                        </button>
+                        <button class="velvz-config__tab" data-tab="implementation">
+                            <i class="fas fa-code"></i>
+                            <span>Implementación</span>
+                        </button>
+                    </div>
+                </div>
+
+                 <!-- CONTENIDO DE CONFIGURACIÓN -->
+                <div class="velvz-config__content">
+                    <!-- SECCIÓN DE CONFIGURACIÓN - NUEVO DISEÑO MODERNO -->
+                    <section class="velvz-config__section cfg-section" data-tab="configuration">
+
+                        <!-- PANEL PRINCIPAL: IDENTIDAD -->
+                        <div class="cfg-panel">
+                            <div class="cfg-panel__header">
+                                <div class="cfg-panel__icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="cfg-panel__title">
+                                    <h2>Identidad</h2>
+                                    <p>Configura la identidad y comportamiento de tu chatbot</p>
+                                </div>
+                                <div class="cfg-panel__status" id="configStatusIndicator">
+                                    <span class="cfg-status-dot cfg-status-dot--active"></span>
+                                    <span class="cfg-status-text">Activo</span>
+                                </div>
+                            </div>
+
+                            <div class="cfg-panel__body">
+                                <!-- Fila: Nombre y Estado -->
+                                <div class="cfg-grid cfg-grid--2">
+                                    <div class="cfg-field">
+                                        <label class="cfg-label" for="chatbotName">
+                                            Nombre del chatbot
+                                            <span class="cfg-required">*</span>
+                                        </label>
+                                        <div class="cfg-input-wrapper">
+                                            <input
+                                                type="text"
+                                                id="chatbotName"
+                                                class="cfg-input"
+                                                placeholder="Ej: Asistente de Ventas"
+                                                maxlength="100"
+                                            >
+                                            <span class="cfg-input-icon"><i class="fas fa-pen"></i></span>
+                                        </div>
+                                        <span class="cfg-hint">Este nombre se mostrara a tus usuarios</span>
+                                    </div>
+
+                                    <div class="cfg-field">
+                                        <label class="cfg-label">Estado</label>
+                                        <div class="cfg-status-selector" id="chatbotStatusSelect">
+                                            <button type="button" class="cfg-status-btn cfg-status-btn--active" data-value="active">
+                                                <span class="cfg-status-indicator"></span>
+                                                Activo
+                                            </button>
+                                            <button type="button" class="cfg-status-btn" data-value="inactive">
+                                                <span class="cfg-status-indicator"></span>
+                                                Inactivo
+                                            </button>
+                                            <button type="button" class="cfg-status-btn" data-value="draft">
+                                                <span class="cfg-status-indicator"></span>
+                                                Borrador
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Descripción -->
+                                <div class="cfg-field">
+                                    <label class="cfg-label" for="chatbotDescription">
+                                        Descripción
+                                        <span class="cfg-optional">(opcional)</span>
+                                    </label>
+                                    <textarea
+                                        id="chatbotDescription"
+                                        class="cfg-textarea"
+                                        placeholder="Describe brevemente el propósito de tu chatbot..."
+                                        maxlength="500"
+                                        rows="2"
+                                    ></textarea>
+                                    <div class="cfg-field-footer">
+                                        <span class="cfg-hint">Solo visible para ti, ayuda a organizar tus chatbots</span>
+                                        <span class="cfg-counter"><span id="descriptionCount">0</span>/500</span>
+                                    </div>
+                                </div>
+
+                                <!-- Instrucciones -->
+                                <div class="cfg-field cfg-field--highlight">
+                                    <div class="cfg-label-row">
+                                        <label class="cfg-label" for="chatbotInstructions">
+                                            <i class="fas fa-brain"></i>
+                                            Instrucciones para la IA
+                                            <span class="cfg-required">*</span>
+                                        </label>
+                                        <button type="button" class="cfg-help-btn" id="instructionsHelpBtn">
+                                            <i class="fas fa-question-circle"></i>
+                                        </button>
+                                    </div>
+                                    <textarea
+                                        id="chatbotInstructions"
+                                        class="cfg-textarea cfg-textarea--large"
+                                        placeholder="Eres un asistente especializado en... Tu objetivo es ayudar a los usuarios con... Siempre responde de manera..."
+                                        maxlength="2000"
+                                        rows="5"
+                                    ></textarea>
+                                    <div class="cfg-field-footer">
+                                        <span class="cfg-hint">Define la personalidad, tono y conocimiento de tu IA</span>
+                                        <span class="cfg-counter"><span id="instructionsCount">0</span>/2000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PANEL SECUNDARIO: MODELO DE IA -->
+                        <div class="cfg-panel cfg-panel--model">
+                            <div class="cfg-panel__header">
+                                <div class="cfg-panel__icon cfg-panel__icon--ai">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <div class="cfg-panel__title">
+                                    <h2>Modelo de IA</h2>
+                                    <p>Selecciona el motor que potenciara tu chatbot</p>
+                                </div>
+                                <span class="cfg-badge cfg-badge--openai">
+                                    <i class="fas fa-bolt"></i>
+                                    OpenAI
+                                </span>
+                            </div>
+
+                            <div class="cfg-panel__body">
+                                <div class="cfg-models">
+                                    <!-- Modelo 1: Recomendado -->
+                                    <label class="cfg-model cfg-model--selected" data-model="gpt-3.5-turbo-0125">
+                                        <input type="radio" name="aiModel" value="gpt-3.5-turbo-0125" checked>
+                                        <div class="cfg-model__radio"></div>
+                                        <div class="cfg-model__content">
+                                            <div class="cfg-model__header">
+                                                <span class="cfg-model__name">GPT-3.5 Turbo</span>
+                                                <span class="cfg-model__tag cfg-model__tag--recommended">Recomendado</span>
+                                            </div>
+                                            <p class="cfg-model__desc">Version optimizada para conversaciones fluidas y respuestas precisas</p>
+                                            <div class="cfg-model__specs">
+                                                <span><i class="fas fa-memory"></i> 16K tokens</span>
+                                                <span><i class="fas fa-bolt"></i> Rapido</span>
+                                                <span><i class="fas fa-check-circle"></i> Actualizado</span>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Modelo 2: Clasico -->
+                                    <label class="cfg-model" data-model="gpt-3.5-turbo">
+                                        <input type="radio" name="aiModel" value="gpt-3.5-turbo">
+                                        <div class="cfg-model__radio"></div>
+                                        <div class="cfg-model__content">
+                                            <div class="cfg-model__header">
+                                                <span class="cfg-model__name">GPT-3.5 Classic</span>
+                                                <span class="cfg-model__tag cfg-model__tag--economy">Economico</span>
+                                            </div>
+                                            <p class="cfg-model__desc">Ideal para tareas generales y respuestas simples</p>
+                                            <div class="cfg-model__specs">
+                                                <span><i class="fas fa-memory"></i> 4K tokens</span>
+                                                <span><i class="fas fa-coins"></i> Bajo costo</span>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Modelo 3: Contexto largo -->
+                                    <label class="cfg-model" data-model="gpt-3.5-turbo-16k">
+                                        <input type="radio" name="aiModel" value="gpt-3.5-turbo-16k">
+                                        <div class="cfg-model__radio"></div>
+                                        <div class="cfg-model__content">
+                                            <div class="cfg-model__header">
+                                                <span class="cfg-model__name">GPT-3.5 16K</span>
+                                                <span class="cfg-model__tag cfg-model__tag--context">Contexto largo</span>
+                                            </div>
+                                            <p class="cfg-model__desc">Perfecto para documentos largos y conversaciones extensas</p>
+                                            <div class="cfg-model__specs">
+                                                <span><i class="fas fa-memory"></i> 16K tokens</span>
+                                                <span><i class="fas fa-file-alt"></i> Documentos</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PANEL: CONFIGURACION AVANZADA -->
+                        <div class="cfg-panel">
+                            <div class="cfg-panel__header">
+                                <div class="cfg-panel__icon cfg-panel__icon--settings">
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+                                <div class="cfg-panel__title">
+                                    <h2>Configuración Avanzada</h2>
+                                    <p>Ajustes adicionales para personalizar el comportamiento</p>
+                                </div>
+                            </div>
+
+                            <div class="cfg-panel__body">
+                                <div class="cfg-grid cfg-grid--2">
+                                    <!-- Creatividad (Temperatura) -->
+                                    <div class="cfg-field">
+                                        <label class="cfg-label" for="temperatureSlider">
+                                            Creatividad de respuestas
+                                            <span class="cfg-temp-value" id="temperatureValue">1.0</span>
+                                        </label>
+                                        <div class="cfg-slider-wrapper">
+                                            <input type="range" id="temperatureSlider" min="0" max="2" step="0.1" value="1.0" class="cfg-slider">
+                                            <div class="cfg-slider-labels">
+                                                <span>Preciso</span>
+                                                <span>Equilibrado</span>
+                                                <span>Creativo</span>
+                                            </div>
+                                        </div>
+                                        <span class="cfg-hint">Controla la creatividad vs. precisión de las respuestas (0-2)</span>
+                                    </div>
+
+                                    <!-- Longitud máxima -->
+                                    <div class="cfg-field">
+                                        <label class="cfg-label">Longitud de respuesta</label>
+                                        <div class="cfg-tokens-selector" id="maxTokensSelect">
+                                            <button type="button" class="cfg-tokens-btn" data-value="150">
+                                                <span class="cfg-tokens-label">Corta</span>
+                                                <span class="cfg-tokens-value">150</span>
+                                            </button>
+                                            <button type="button" class="cfg-tokens-btn" data-value="300">
+                                                <span class="cfg-tokens-label">Media</span>
+                                                <span class="cfg-tokens-value">300</span>
+                                            </button>
+                                            <button type="button" class="cfg-tokens-btn cfg-tokens-btn--selected" data-value="500">
+                                                <span class="cfg-tokens-label">Larga</span>
+                                                <span class="cfg-tokens-value">500</span>
+                                            </button>
+                                            <button type="button" class="cfg-tokens-btn" data-value="1000">
+                                                <span class="cfg-tokens-label">Muy larga</span>
+                                                <span class="cfg-tokens-value">1000</span>
+                                            </button>
+                                        </div>
+                                        <span class="cfg-hint">Tokens máximos por respuesta del chatbot</span>
+                                    </div>
+                                </div>
+
+                                <!-- Toggles -->
+                                <div class="cfg-toggles">
+                                    <label class="cfg-toggle">
+                                        <input type="checkbox" id="enableFallback" checked>
+                                        <span class="cfg-toggle__switch"></span>
+                                        <div class="cfg-toggle__content">
+                                            <span class="cfg-toggle__title">Respuestas de emergencia</span>
+                                            <span class="cfg-toggle__desc">Mostrar mensaje genérico cuando la IA no puede responder</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="cfg-toggle">
+                                        <input type="checkbox" id="enableAnalytics" checked>
+                                        <span class="cfg-toggle__switch"></span>
+                                        <div class="cfg-toggle__content">
+                                            <span class="cfg-toggle__title">Análisis de conversaciones</span>
+                                            <span class="cfg-toggle__desc">Recopilar estadísticas para mejorar el rendimiento</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PANEL: ZONA DE PELIGRO -->
+                        <div class="cfg-panel cfg-panel--danger">
+                            <div class="cfg-panel__header cfg-panel__header--danger">
+                                <div class="cfg-panel__icon cfg-panel__icon--danger">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="cfg-panel__title">
+                                    <h2>Zona de Peligro</h2>
+                                    <p>Acciones irreversibles que afectarán permanentemente a tu chatbot</p>
+                                </div>
+                            </div>
+
+                            <div class="cfg-panel__body">
+                                <div class="cfg-danger-box">
+                                    <div class="cfg-danger-box__header">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <div>
+                                            <h3>Eliminar Chatbot</h3>
+                                            <p>Esta acción eliminará permanentemente este chatbot y toda su información.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="cfg-danger-box__list">
+                                        <span class="cfg-danger-box__list-title">Se eliminará:</span>
+                                        <ul>
+                                            <li><i class="fas fa-robot"></i> Configuración del chatbot</li>
+                                            <li><i class="fas fa-file-alt"></i> Documentos y archivos</li>
+                                            <li><i class="fas fa-comments"></i> Historial de conversaciones</li>
+                                            <li><i class="fas fa-brain"></i> Base de conocimiento (Vector Store)</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="cfg-danger-box__confirm">
+                                        <label class="cfg-checkbox cfg-checkbox--danger">
+                                            <input type="checkbox" id="confirmDeletion">
+                                            <span class="cfg-checkbox__box"></span>
+                                            <span class="cfg-checkbox__text">Entiendo que esta acción no se puede deshacer</span>
+                                        </label>
+                                    </div>
+
+                                    <button type="button" class="cfg-danger-btn" id="deleteChatbotBtn" disabled>
+                                        <i class="fas fa-trash-alt"></i>
+                                        Eliminar Chatbot Permanentemente
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <!-- GESTIÓN DE ARCHIVOS -->
+                    <section class="velvz-config__section" data-tab="files">
+                        <div class="velvz-config__section-header">
+                            <h2 class="velvz-config__section-title">
+                                <i class="fas fa-file-alt"></i>
+                                Documentos y Conocimiento
+                            </h2>
+                            <p class="velvz-config__section-subtitle">
+                                Sube archivos o extrae contenido de sitios web para entrenar a tu IA
+                            </p>
+                        </div>
+
+                        <div class="velvz-config__section-content">
+                            <!-- Área de subida de archivos -->
+                            <div class="velvz-upload-area" id="uploadArea">
+                                <div class="velvz-upload-area__content">
+                                    <i class="fas fa-cloud-upload-alt velvz-upload-area__icon"></i>
+                                    <h3 class="velvz-upload-area__title">Sube tus documentos</h3>
+                                    <p class="velvz-upload-area__description">
+                                        Arrastra archivos aquí o haz clic para seleccionar
+                                    </p>
+                                    <small class="velvz-upload-area__formats">
+                                        Formatos soportados: PDF, DOC, DOCX, TXT (máx. 20MB por archivo)
+                                    </small>
+                                </div>
+                                <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt" style="display: none;">
+                            </div>
+
+                            <!-- Divider con texto -->
+                            <div class="velvz-divider-text">
+                                <span>O extrae contenido de un sitio web</span>
+                            </div>
+
+                            <!-- Crawling Web (siempre visible, sin tabs) -->
+                            <div class="velvz-crawling-area">
+                                    <!-- Configuración del crawling -->
+                                    <div class="velvz-crawling-config">
+                                        <div class="velvz-crawling-config__header">
+                                            <h3 class="velvz-crawling-config__title">
+                                                <i class="fas fa-spider"></i>
+                                                Extraer contenido de sitio web
+                                            </h3>
+                                            <p class="velvz-crawling-config__subtitle">
+                                                Ingresa una URL y extraeremos automáticamente todo el contenido del dominio
+                                            </p>
+                                        </div>
+
+                                        <div class="velvz-crawling-form">
+                                            <div class="velvz-form__group">
+                                                <label for="crawlingUrl" class="velvz-form__label">
+                                                    <i class="fas fa-link"></i>
+                                                    URL del sitio web
+                                                    <span class="velvz-form__required">*</span>
+                                                </label>
+                                                <div class="velvz-crawling-input-wrapper">
+                                                    <input 
+                                                        type="url" 
+                                                        id="crawlingUrl" 
+                                                        class="velvz-form__input velvz-crawling-input" 
+                                                        placeholder="https://ejemplo.com"
+                                                        pattern="https?://.+"
+                                                    >
+                                                    <button type="button" class="velvz-crawling-analyze-btn" id="analyzeDomainBtn">
+                                                        <i class="fas fa-search"></i>
+                                                        <span>Analizar</span>
+                                                    </button>
+                                                </div>
+                                                <small class="velvz-form__help">
+                                                    Se extraerá el contenido de esta URL y todos sus subdominios
+                                                </small>
+                                            </div>
+
+                                            <!-- Opciones avanzadas (colapsable) -->
+                                            <div class="velvz-crawling-advanced">
+                                                <button type="button" class="velvz-crawling-advanced__toggle" id="advancedOptionsToggle" aria-expanded="false">
+                                                    <i class="fas fa-sliders-h"></i>
+                                                    <span>Opciones avanzadas</span>
+                                                    <i class="fas fa-chevron-down velvz-crawling-advanced__arrow"></i>
+                                                </button>
+
+                                                <div class="velvz-crawling-advanced__content" style="display: none;">
+                                                    <div class="velvz-form__row">
+                                                        <!-- Profundidad máxima - Custom Select -->
+                                                        <div class="velvz-form__group">
+                                                            <label class="velvz-form__label">
+                                                                <i class="fas fa-layer-group"></i>
+                                                                Profundidad máxima
+                                                            </label>
+                                                            <input type="hidden" id="crawlingDepth" value="2">
+                                                            <div class="velvz-custom-select" data-select="crawlingDepth">
+                                                                <button type="button" class="velvz-custom-select__trigger" aria-haspopup="listbox">
+                                                                    <span class="velvz-custom-select__value">
+                                                                        <span class="velvz-custom-select__icon"><i class="fas fa-layer-group"></i></span>
+                                                                        <span class="velvz-custom-select__text">2 niveles</span>
+                                                                    </span>
+                                                                    <i class="fas fa-chevron-down velvz-custom-select__arrow"></i>
+                                                                </button>
+                                                                <div class="velvz-custom-select__dropdown" role="listbox">
+                                                                    <div class="velvz-custom-select__option" data-value="1" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">1</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            1 nivel
+                                                                            <div class="velvz-custom-select__option-desc">Solo página inicial</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option velvz-custom-select__option--selected" data-value="2" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">2</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            2 niveles
+                                                                            <div class="velvz-custom-select__option-desc">Recomendado para la mayoría</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option" data-value="3" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">3</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            3 niveles
+                                                                            <div class="velvz-custom-select__option-desc">Sitios medianos</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option" data-value="5" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">5</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            5 niveles
+                                                                            <div class="velvz-custom-select__option-desc">Sitios grandes</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option" data-value="10" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">10</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            10 niveles
+                                                                            <div class="velvz-custom-select__option-desc">Exploración completa</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <small class="velvz-form__help">
+                                                                Cuántos niveles de enlaces seguir
+                                                            </small>
+                                                        </div>
+
+                                                        <!-- Límite de páginas - Custom Select -->
+                                                        <div class="velvz-form__group">
+                                                            <label class="velvz-form__label">
+                                                                <i class="fas fa-file-alt"></i>
+                                                                Límite de páginas
+                                                            </label>
+                                                            <input type="hidden" id="crawlingLimit" value="50">
+                                                            <div class="velvz-custom-select" data-select="crawlingLimit">
+                                                                <button type="button" class="velvz-custom-select__trigger" aria-haspopup="listbox">
+                                                                    <span class="velvz-custom-select__value">
+                                                                        <span class="velvz-custom-select__icon"><i class="fas fa-file-alt"></i></span>
+                                                                        <span class="velvz-custom-select__text">50 páginas</span>
+                                                                    </span>
+                                                                    <i class="fas fa-chevron-down velvz-custom-select__arrow"></i>
+                                                                </button>
+                                                                <div class="velvz-custom-select__dropdown" role="listbox">
+                                                                    <div class="velvz-custom-select__option" data-value="10" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">10</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            10 páginas
+                                                                            <div class="velvz-custom-select__option-desc">Prueba rápida</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option velvz-custom-select__option--selected" data-value="50" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">50</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            50 páginas
+                                                                            <div class="velvz-custom-select__option-desc">Sitio pequeño</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option" data-value="100" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">100</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            100 páginas
+                                                                            <div class="velvz-custom-select__option-desc">Sitio mediano</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option" data-value="500" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">500</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            500 páginas
+                                                                            <div class="velvz-custom-select__option-desc">Sitio grande</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                    <div class="velvz-custom-select__option" data-value="1000" role="option">
+                                                                        <span class="velvz-custom-select__option-icon">1K</span>
+                                                                        <div class="velvz-custom-select__option-text">
+                                                                            1000 páginas
+                                                                            <div class="velvz-custom-select__option-desc">Máximo permitido</div>
+                                                                        </div>
+                                                                        <i class="fas fa-check velvz-custom-select__check"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <small class="velvz-form__help">
+                                                                Máximo número de páginas a procesar
+                                                            </small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="velvz-form__group">
+                                                        <label class="velvz-form__label">
+                                                            <i class="fas fa-filter"></i>
+                                                            Tipos de contenido a incluir
+                                                        </label>
+                                                        <div class="velvz-checkbox-grid">
+                                                            <label class="velvz-checkbox-item">
+                                                                <input type="checkbox" name="contentTypes" value="text" checked>
+                                                                <span class="velvz-checkbox-item__checkmark"></span>
+                                                                <span class="velvz-checkbox-item__text">Texto de páginas</span>
+                                                            </label>
+                                                            <label class="velvz-checkbox-item">
+                                                                <input type="checkbox" name="contentTypes" value="pdf" checked>
+                                                                <span class="velvz-checkbox-item__checkmark"></span>
+                                                                <span class="velvz-checkbox-item__text">Archivos PDF</span>
+                                                            </label>
+                                                            <label class="velvz-checkbox-item">
+                                                                <input type="checkbox" name="contentTypes" value="docs">
+                                                                <span class="velvz-checkbox-item__checkmark"></span>
+                                                                <span class="velvz-checkbox-item__text">Documentos (DOC, DOCX)</span>
+                                                            </label>
+                                                            <label class="velvz-checkbox-item">
+                                                                <input type="checkbox" name="contentTypes" value="images">
+                                                                <span class="velvz-checkbox-item__checkmark"></span>
+                                                                <span class="velvz-checkbox-item__text">Descripciones de imágenes</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="velvz-form__group">
+                                                        <label for="excludePatterns" class="velvz-form__label">
+                                                            <i class="fas fa-ban"></i>
+                                                            Patrones a excluir (opcional)
+                                                        </label>
+                                                        <textarea
+                                                            id="excludePatterns"
+                                                            class="velvz-form__textarea"
+                                                            placeholder="Ej: /admin/, /login, /private&#10;Un patrón por línea"
+                                                            rows="3"
+                                                        ></textarea>
+                                                        <small class="velvz-form__help">
+                                                            URLs que contengan estos patrones serán ignoradas
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Preview de URLs encontradas -->
+                                    <div class="velvz-crawling-preview" id="crawlingPreview" style="display: none;">
+                                        <div class="velvz-crawling-preview__header">
+                                            <h4 class="velvz-crawling-preview__title">
+                                                <i class="fas fa-list"></i>
+                                                URLs encontradas
+                                            </h4>
+                                            <span class="velvz-crawling-preview__count" id="previewCount">0 páginas</span>
+                                        </div>
+                                        <div class="velvz-crawling-preview__content" id="previewContent">
+                                            <!-- URLs se cargan dinámicamente aquí -->
+                                        </div>
+                                        <div class="velvz-crawling-preview__actions">
+                                            <button type="button" class="velvz-btn velvz-btn--secondary" id="cancelCrawlingBtn">
+                                                <i class="fas fa-times"></i>
+                                                <span>Cancelar</span>
+                                            </button>
+                                            <button type="button" class="velvz-btn velvz-btn--primary" id="startCrawlingBtn">
+                                                <i class="fas fa-rocket"></i>
+                                                <span>Iniciar extracción</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Progreso del crawling -->
+                                    <div class="velvz-crawling-progress" id="crawlingProgress" style="display: none;">
+                                        <div class="velvz-crawling-progress__header">
+                                            <h4 class="velvz-crawling-progress__title">
+                                                <i class="fas fa-spinner fa-spin"></i>
+                                                Extrayendo contenido...
+                                            </h4>
+                                            <button type="button" class="velvz-crawling-progress__cancel" id="stopCrawlingBtn">
+                                                <i class="fas fa-stop"></i>
+                                                Detener
+                                            </button>
+                                        </div>
+                                        <div class="velvz-crawling-progress__bar">
+                                            <div class="velvz-crawling-progress__fill" id="crawlingProgressFill"></div>
+                                        </div>
+                                        <div class="velvz-crawling-progress__stats">
+                                            <span class="velvz-crawling-progress__stat">
+                                                <span id="crawlingProcessed">0</span> / <span id="crawlingTotal">0</span> páginas procesadas
+                                            </span>
+                                            <span class="velvz-crawling-progress__stat">
+                                                <span id="crawlingSuccess">0</span> exitosas, <span id="crawlingErrors">0</span> errores
+                                            </span>
+                                        </div>
+                                        <div class="velvz-crawling-progress__current">
+                                            Procesando: <span id="crawlingCurrentUrl">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <!-- Lista de archivos (ambos tipos) -->
+                            <div class="velvz-file-list" id="fileList">
+                                <div class="velvz-file-list__header">
+                                    <h4 class="velvz-file-list__title">Archivos y contenido (<span id="fileCount">0</span>)</h4>
+                                    <div class="velvz-file-list__controls">
+                                        <div class="velvz-sort-select">
+                                            <i class="fas fa-sort-amount-down"></i>
+                                            <select id="fileSortOrder">
+                                                <option value="date-desc">Más recientes</option>
+                                                <option value="date-asc">Más antiguos</option>
+                                                <option value="name-asc">Nombre A-Z</option>
+                                                <option value="name-desc">Nombre Z-A</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" class="velvz-btn velvz-btn--danger velvz-btn--sm" id="deleteAllDocumentsBtn" style="display: none;">
+                                            <i class="fas fa-trash-alt"></i>
+                                            <span>Eliminar todos</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="fileListContent">
+                                    <!-- Los archivos se cargan dinámicamente aquí -->
+                                    <div class="velvz-empty-state" id="emptyFileState">
+                                        <div class="velvz-empty-state__icon">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <p class="velvz-empty-state__text">No hay documentos o contenido web aún</p>
+                                        <p class="velvz-empty-state__description">
+                                            Sube archivos o extrae contenido de un sitio web para comenzar
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- PERSONALIZACIÓN -->
+                    <section class="velvz-config__section" data-tab="customization">
+                        <div class="velvz-config__section-header">
+                            <h2 class="velvz-config__section-title">
+                                <i class="fas fa-palette"></i>
+                                Personalización Visual
+                            </h2>
+                            <p class="velvz-config__section-subtitle">
+                                Personaliza la apariencia y comportamiento del widget de chat
+                            </p>
+                        </div>
+
+                        <div class="velvz-config__section-content">
+                            <div class="customization-container">
+                                <!-- Panel de Controles -->
+                                <div class="customization-controls">
+                                    <!-- Color del Widget -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Color Principal</h3>
+                                        <div class="color-picker-grid">
+                                            <div class="color-option active" data-color="#667eea" style="background: #667eea;"></div>
+                                            <div class="color-option" data-color="#10b981" style="background: #10b981;"></div>
+                                            <div class="color-option" data-color="#f59e0b" style="background: #f59e0b;"></div>
+                                            <div class="color-option" data-color="#ef4444" style="background: #ef4444;"></div>
+                                            <div class="color-option" data-color="#8b5cf6" style="background: #8b5cf6;"></div>
+                                            <div class="color-option" data-color="#ec4899" style="background: #ec4899;"></div>
+                                            <div class="color-option" data-color="#3b82f6" style="background: #3b82f6;"></div>
+                                            <div class="color-option" data-color="#14b8a6" style="background: #14b8a6;"></div>
+                                            <div class="color-option" data-color="#6366f1" style="background: #6366f1;"></div>
+                                            <div class="color-option" data-color="#1f2937" style="background: #1f2937;"></div>
+                                            <div class="color-option" data-color="#059669" style="background: #059669;"></div>
+                                            <div class="color-option" data-color="#dc2626" style="background: #dc2626;"></div>
+                                        </div>
+                                        <div class="custom-color-input">
+                                            <div class="custom-color-wrapper">
+                                                <input type="color" id="customColorInput" value="#667eea" class="custom-color-picker">
+                                                <div class="custom-color-display" id="customColorDisplay"></div>
+                                            </div>
+                                            <input type="text" id="customColorText" value="#667eea" placeholder="#000000">
+                                        </div>
+                                    </div>
+
+                                    <!-- Posición del Widget -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Posición en Pantalla</h3>
+                                        <div class="position-grid">
+                                            <div class="position-option" data-position="top-left">↖</div>
+                                            <div class="position-option" data-position="top-center">↑</div>
+                                            <div class="position-option" data-position="top-right">↗</div>
+                                            <div class="position-option" data-position="center-left">←</div>
+                                            <div class="position-option position-disabled">×</div>
+                                            <div class="position-option" data-position="center-right">→</div>
+                                            <div class="position-option" data-position="bottom-left">↙</div>
+                                            <div class="position-option" data-position="bottom-center">↓</div>
+                                            <div class="position-option active" data-position="bottom-right">↘</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Estilo del Widget -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Estilo Visual</h3>
+                                        <div class="style-options">
+                                            <div class="style-option active" data-style="modern">
+                                                <div class="style-option__icon"><i class="fas fa-star"></i></div>
+                                                <div class="style-option__name">Moderno</div>
+                                            </div>
+                                            <div class="style-option" data-style="minimal">
+                                                <div class="style-option__icon"><i class="far fa-circle"></i></div>
+                                                <div class="style-option__name">Minimalista</div>
+                                            </div>
+                                            <div class="style-option" data-style="flat">
+                                                <div class="style-option__icon"><i class="fas fa-square"></i></div>
+                                                <div class="style-option__name">Plano</div>
+                                            </div>
+                                            <div class="style-option" data-style="neumorphic">
+                                                <div class="style-option__icon"><i class="fas fa-layer-group"></i></div>
+                                                <div class="style-option__name">Neumórfico</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tamaño de Burbuja -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Tamaño del Botón</h3>
+                                        <div class="custom-select">
+                                            <div class="custom-select__trigger" id="bubbleSizeTrigger">
+                                                <span class="custom-select__value">Mediano (60px)</span>
+                                                <i class="fas fa-chevron-down custom-select__arrow"></i>
+                                            </div>
+                                            <div class="custom-select__options" id="bubbleSizeOptions">
+                                                <div class="custom-select__option" data-value="small">
+                                                    <div class="custom-select__option-icon">
+                                                        <div style="width: 20px; height: 20px; background: var(--widget-color); border-radius: 50%;"></div>
+                                                    </div>
+                                                    <span>Pequeño (50px)</span>
+                                                </div>
+                                                <div class="custom-select__option active" data-value="medium">
+                                                    <div class="custom-select__option-icon">
+                                                        <div style="width: 24px; height: 24px; background: var(--widget-color); border-radius: 50%;"></div>
+                                                    </div>
+                                                    <span>Mediano (60px)</span>
+                                                </div>
+                                                <div class="custom-select__option" data-value="large">
+                                                    <div class="custom-select__option-icon">
+                                                        <div style="width: 28px; height: 28px; background: var(--widget-color); border-radius: 50%;"></div>
+                                                    </div>
+                                                    <span>Grande (70px)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Icono del Chatbot -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Icono del Chatbot</h3>
+                                        <div class="icon-selector">
+                                            <!-- Iconos predefinidos -->
+                                            <div class="icon-options">
+                                                <div class="icon-option active" data-icon="comments">
+                                                    <i class="fas fa-comments"></i>
+                                                </div>
+                                                <div class="icon-option" data-icon="robot">
+                                                    <i class="fas fa-robot"></i>
+                                                </div>
+                                                <div class="icon-option" data-icon="message">
+                                                    <i class="fas fa-message"></i>
+                                                </div>
+                                                <div class="icon-option" data-icon="headset">
+                                                    <i class="fas fa-headset"></i>
+                                                </div>
+                                                <div class="icon-option" data-icon="question">
+                                                    <i class="fas fa-question-circle"></i>
+                                                </div>
+                                                <div class="icon-option" data-icon="user">
+                                                    <i class="fas fa-user-circle"></i>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Subir imagen personalizada -->
+                                            <div class="custom-icon-upload">
+                                                <input type="file" id="customIconFile" accept="image/*" style="display: none;">
+                                                <button class="custom-icon-btn" onclick="document.getElementById('customIconFile').click()">
+                                                    <i class="fas fa-upload"></i>
+                                                    <span>Subir imagen</span>
+                                                </button>
+                                            </div>
+                                            
+                                            <!-- Controles de ajuste de imagen (ocultos por defecto) -->
+                                            <div class="custom-icon-controls" id="customIconControls" style="display: none;">
+                                                <div class="icon-control-group">
+                                                    <label>Escala</label>
+                                                    <input type="range" id="iconScale" min="50" max="200" value="100" class="icon-range">
+                                                    <span id="iconScaleValue">100%</span>
+                                                </div>
+                                                <div class="icon-control-group">
+                                                    <label>Posición X</label>
+                                                    <input type="range" id="iconPosX" min="-50" max="50" value="0" class="icon-range">
+                                                    <span id="iconPosXValue">0px</span>
+                                                </div>
+                                                <div class="icon-control-group">
+                                                    <label>Posición Y</label>
+                                                    <input type="range" id="iconPosY" min="-50" max="50" value="0" class="icon-range">
+                                                    <span id="iconPosYValue">0px</span>
+                                                </div>
+                                                <button class="reset-icon-btn" id="resetIcon">
+                                                    <i class="fas fa-undo"></i>
+                                                    Restablecer
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Opciones Adicionales -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Opciones</h3>
+                                        <div class="toggle-control">
+                                            <span class="toggle-control__label">Mostrar badge de notificación</span>
+                                            <div class="toggle-switch active" data-setting="showBadge">
+                                                <div class="toggle-switch__slider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-control">
+                                            <span class="toggle-control__label">Indicador de escritura</span>
+                                            <div class="toggle-switch active" data-setting="showTypingIndicator">
+                                                <div class="toggle-switch__slider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-control">
+                                            <span class="toggle-control__label">Mensaje de bienvenida automático</span>
+                                            <div class="toggle-switch active" data-setting="autoGreeting">
+                                                <div class="toggle-switch__slider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Textos Personalizados -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Textos Personalizados</h3>
+                                        
+                                        <!-- Mensaje de bienvenida -->
+                                        <div class="text-input-group">
+                                            <label for="welcomeMessage" class="text-input-label">Mensaje de bienvenida</label>
+                                            <textarea 
+                                                id="welcomeMessage" 
+                                                class="text-input-field text-input-field--textarea"
+                                                placeholder="Ej: ¡Hola! 👋 ¿En qué puedo ayudarte hoy?"
+                                                rows="3">¡Hola! 👋 Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?</textarea>
+                                            <span class="text-input-hint">Este mensaje aparecerá automáticamente al abrir el chat</span>
+                                        </div>
+
+                                        <!-- Nombre del asistente -->
+                                        <div class="text-input-group">
+                                            <label for="assistantName" class="text-input-label">Nombre del asistente</label>
+                                            <input 
+                                                type="text" 
+                                                id="assistantName" 
+                                                class="text-input-field"
+                                                placeholder="Ej: Asistente de ventas"
+                                                value="Asistente Virtual">
+                                            <span class="text-input-hint">Aparecerá en el encabezado del chat</span>
+                                        </div>
+
+                                        <!-- Placeholder del input -->
+                                        <div class="text-input-group">
+                                            <label for="inputPlaceholder" class="text-input-label">Texto del campo de entrada</label>
+                                            <input 
+                                                type="text" 
+                                                id="inputPlaceholder" 
+                                                class="text-input-field"
+                                                placeholder="Ej: Escribe tu pregunta aquí..."
+                                                value="Escribe tu mensaje...">
+                                            <span class="text-input-hint">Placeholder del campo de texto</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tipografía -->
+                                    <div class="control-section">
+                                        <h3 class="control-section__title">Tipografía</h3>
+                                        
+                                        <!-- Selector de fuente -->
+                                        <div class="font-selector">
+                                            <label class="font-selector__label">Fuente del chat</label>
+                                            <div class="font-options">
+                                                <div class="font-option active" data-font="Inter">
+                                                    <span style="font-family: 'Inter', sans-serif;">Inter</span>
+                                                </div>
+                                                <div class="font-option" data-font="Roboto">
+                                                    <span style="font-family: 'Roboto', sans-serif;">Roboto</span>
+                                                </div>
+                                                <div class="font-option" data-font="Open Sans">
+                                                    <span style="font-family: 'Open Sans', sans-serif;">Open Sans</span>
+                                                </div>
+                                                <div class="font-option" data-font="Poppins">
+                                                    <span style="font-family: 'Poppins', sans-serif;">Poppins</span>
+                                                </div>
+                                                <div class="font-option" data-font="Montserrat">
+                                                    <span style="font-family: 'Montserrat', sans-serif;">Montserrat</span>
+                                                </div>
+                                                <div class="font-option" data-font="Lato">
+                                                    <span style="font-family: 'Lato', sans-serif;">Lato</span>
+                                                </div>
+                                                <div class="font-option" data-font="Raleway">
+                                                    <span style="font-family: 'Raleway', sans-serif;">Raleway</span>
+                                                </div>
+                                                <div class="font-option" data-font="system-ui">
+                                                    <span style="font-family: system-ui, -apple-system, sans-serif;">Sistema</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Fuente personalizada -->
+                                            <div class="custom-font-input">
+                                                <label for="customFontName" class="custom-font-label">
+                                                    <i class="fas fa-font"></i>
+                                                    Fuente personalizada
+                                                </label>
+                                                <input 
+                                                    type="text" 
+                                                    id="customFontName" 
+                                                    class="custom-font-field"
+                                                    placeholder="Ej: 'Helvetica Neue', Arial"
+                                                    title="Ingresa el nombre de la fuente tal como aparece en CSS">
+                                                <span class="custom-font-hint">
+                                                    <i class="fas fa-info-circle"></i>
+                                                    La fuente debe estar instalada en el sitio web de destino
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Panel de Preview -->
+                                <div class="customization-preview">
+                                    <div class="preview-device__header">
+                                        <span class="preview-device__title">Vista Previa - Tu Sitio Web</span>
+                                    </div>
+                                    <div class="preview-device">
+                                        <div class="preview-device__content">
+                                            <!-- Chat Widget -->
+                                            <div class="chat-widget-preview">
+                                                <!-- Bubble -->
+                                                <div class="chat-bubble">
+                                                    <i class="fas fa-comments chat-bubble__icon"></i>
+                                                    <span class="chat-bubble__badge">1</span>
+                                                </div>
+                                                
+                                                <!-- Chat Window -->
+                                                <div class="chat-window" style="display: none;">
+                                                    <div class="chat-window__header">
+                                                        <div class="chat-window__title">
+                                                            <div class="chat-window__avatar" id="chat-window-icon">
+                                                                <i class="fas fa-robot"></i>
+                                                            </div>
+                                                            <div class="chat-window__info">
+                                                                <div class="chat-window__name">Asistente Virtual</div>
+                                                                <div class="chat-window__status">
+                                                                    <span class="status-dot"></span>
+                                                                    En línea
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button class="chat-window__close">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <div class="chat-window__messages">
+                                                        <!-- Mensaje del bot -->
+                                                        <div class="chat-message chat-message--bot chat-message--greeting">
+                                                            <div class="chat-message__bubble">
+                                                                ¡Hola! 👋 Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Mensaje del usuario -->
+                                                        <div class="chat-message chat-message--user">
+                                                            <div class="chat-message__bubble">
+                                                                Hola, necesito información sobre sus servicios
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Mensaje del bot -->
+                                                        <div class="chat-message chat-message--bot">
+                                                            <div class="chat-message__bubble">
+                                                                ¡Por supuesto! Estaré encantado de ayudarte con información sobre nuestros servicios. ¿Qué te gustaría saber específicamente?
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="chat-window__input">
+                                                        <input type="text" class="chat-input" placeholder="Escribe tu mensaje...">
+                                                        <button class="chat-send-btn">
+                                                            <i class="fas fa-paper-plane"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECCIÓN IMPLEMENTACIÓN -->
+                    <section class="velvz-config__section" data-tab="implementation">
+                        <div class="velvz-config__section-header">
+                            <h2 class="velvz-config__section-title">
+                                <i class="fas fa-code"></i>
+                                Implementación del Widget
+                            </h2>
+                            <p class="velvz-config__section-subtitle">
+                                Integra tu chatbot en cualquier sitio web con una sola línea de código
+                            </p>
+                        </div>
+                    
+                        <div class="velvz-config__section-content">
+                            <div class="velvz-form">
+                                <!-- 1. INSTRUCCIONES DE IMPLEMENTACIÓN (PRIMERO) -->
+                                <div class="velvz-form__group velvz-form__group--full">
+                                    <div class="velvz-info-card">
+                                        <div class="velvz-info-card__header">
+                                            <i class="fas fa-info-circle"></i>
+                                            <h3>Instrucciones de implementación</h3>
+                                        </div>
+                                        <div class="velvz-info-card__content">
+                                            <ol class="velvz-info-card__steps">
+                                                <li>
+                                                    <strong>Añade dominios permitidos</strong> en la lista de abajo (obligatorio por seguridad)
+                                                </li>
+                                                <li>
+                                                    <strong>Copia el código</strong> de implementación
+                                                </li>
+                                                <li>
+                                                    <strong>Pégalo en tu sitio web</strong> antes de cerrar la etiqueta <code>&lt;/body&gt;</code>
+                                                </li>
+                                                <li>
+                                                    <strong>¡Listo!</strong> Tu chatbot aparecerá solo en los dominios autorizados
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 2. DOMINIOS PERMITIDOS -->
+                                <div class="velvz-form__group velvz-form__group--full">
+                                    <label for="allowedDomains" class="velvz-form__label velvz-form__label--required">
+                                        <i class="fas fa-shield-alt"></i>
+                                        Dominios permitidos
+                                    </label>
+                                    <p class="velvz-form__help">
+                                        Lista los dominios donde quieres permitir el uso de tu chatbot. Puedes usar subdominios con <code>*.midominio.com</code>
+                                    </p>
+
+                                    <div class="velvz-domains-editor">
+                                        <div class="velvz-domains-editor__input-wrapper">
+                                            <input
+                                                type="text"
+                                                id="domainInput"
+                                                class="velvz-domains-editor__input"
+                                                placeholder="Ej: midominio.com o *.midominio.com"
+                                            >
+                                            <button type="button" class="velvz-domains-editor__add" id="addDomainBtn">
+                                                <i class="fas fa-plus"></i>
+                                                Añadir
+                                            </button>
+                                        </div>
+
+                                        <!-- Lista de dominios -->
+                                        <div class="velvz-domains-list velvz-domains-list--empty" id="domainsList">
+                                            <div class="velvz-domains-list__empty velvz-domains-list__empty--required" id="domainsEmpty">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <p>Debes añadir al menos un dominio</p>
+                                                <small>Por seguridad, es obligatorio especificar dominios permitidos</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. CÓDIGO DE IMPLEMENTACIÓN -->
+                                <div class="velvz-form__group velvz-form__group--full">
+                                    <label class="velvz-form__label">
+                                        <i class="fas fa-terminal"></i>
+                                        Código de implementación
+                                    </label>
+                                    <p class="velvz-form__help velvz-form__help--prominent">
+                                        Copia este código y pégalo en tu sitio web antes de cerrar la etiqueta <code>&lt;/body&gt;</code>
+                                    </p>
+
+                                    <div class="velvz-code-block">
+                                        <div class="velvz-code-block__header">
+                                            <div class="velvz-code-block__title">
+                                                <i class="fab fa-js-square"></i>
+                                                Código HTML/JavaScript
+                                            </div>
+                                            <button type="button" class="velvz-code-block__copy" id="copyImplementationCode">
+                                                <i class="fas fa-copy"></i>
+                                                <span>Copiar</span>
+                                            </button>
+                                        </div>
+                                        <div class="velvz-code-block__content">
+                                            <pre class="velvz-code-block__code" id="implementationCode"><code>&lt;script
+  src="https://velvz-unified-backend-production.up.railway.app/api/widget/script/ID_CHATBOT"
+  async
+&gt;&lt;/script&gt;</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECCIÓN ESTADÍSTICAS -->
+                    <section class="velvz-config__section" data-tab="statistics">
+                        <div class="velvz-config__section-header">
+                            <h2 class="velvz-config__section-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Estadísticas del Chatbot
+                            </h2>
+                            <p class="velvz-config__section-subtitle">
+                                Analiza el rendimiento y uso de tu chatbot
+                            </p>
+                        </div>
+
+                        <div class="velvz-config__section-content">
+                            <!-- Período de tiempo -->
+                            <div class="stats-period-selector">
+                                <button class="stats-period-btn active" data-period="1">Hoy</button>
+                                <button class="stats-period-btn" data-period="7">Últimos 7 días</button>
+                                <button class="stats-period-btn" data-period="30">Últimos 30 días</button>
+                                <button class="stats-period-btn" data-period="365">Último año</button>
+                            </div>
+
+                            <!-- Métricas principales -->
+                            <div class="stats-cards-grid">
+                                <div class="stats-card">
+                                    <div class="stats-card__icon stats-card__icon--blue">
+                                        <i class="fas fa-comments"></i>
+                                    </div>
+                                    <div class="stats-card__content">
+                                        <div class="stats-card__value">1,234</div>
+                                        <div class="stats-card__label">Conversaciones totales</div>
+                                        <div class="stats-card__change stats-card__change--up">
+                                            <i class="fas fa-arrow-up"></i> 12.5%
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stats-card">
+                                    <div class="stats-card__icon stats-card__icon--green">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stats-card__content">
+                                        <div class="stats-card__value">892</div>
+                                        <div class="stats-card__label">Usuarios únicos</div>
+                                        <div class="stats-card__change stats-card__change--up">
+                                            <i class="fas fa-arrow-up"></i> 8.3%
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stats-card">
+                                    <div class="stats-card__icon stats-card__icon--purple">
+                                        <i class="fas fa-message"></i>
+                                    </div>
+                                    <div class="stats-card__content">
+                                        <div class="stats-card__value">5,678</div>
+                                        <div class="stats-card__label">Mensajes procesados</div>
+                                        <div class="stats-card__change stats-card__change--down">
+                                            <i class="fas fa-arrow-down"></i> 3.2%
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stats-card">
+                                    <div class="stats-card__icon stats-card__icon--orange">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stats-card__content">
+                                        <div class="stats-card__value">2.5 min</div>
+                                        <div class="stats-card__label">Tiempo promedio</div>
+                                        <div class="stats-card__change stats-card__change--neutral">
+                                            <i class="fas fa-minus"></i> 0%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gráficos -->
+                            <div class="stats-charts-container">
+                                <!-- Gráfico de líneas - Conversaciones por día -->
+                                <div class="stats-chart-card">
+                                    <div class="stats-chart-card__header">
+                                        <h3 class="stats-chart-card__title">
+                                            <i class="fas fa-chart-line"></i>
+                                            Conversaciones diarias
+                                        </h3>
+                                        <div class="stats-chart-card__legend">
+                                            <span class="legend-item legend-item--primary">
+                                                <span class="legend-dot"></span>
+                                                Conversaciones
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="stats-chart-card__body">
+                                        <canvas id="conversationsChart" class="stats-chart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Gráfico de barras - Horarios más activos -->
+                                <div class="stats-chart-card">
+                                    <div class="stats-chart-card__header">
+                                        <h3 class="stats-chart-card__title">
+                                            <i class="fas fa-clock"></i>
+                                            Horarios más activos
+                                        </h3>
+                                    </div>
+                                    <div class="stats-chart-card__body">
+                                        <canvas id="hoursChart" class="stats-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tabla de preguntas frecuentes -->
+                            <div class="stats-table-card">
+                                <div class="stats-table-card__header">
+                                    <h3 class="stats-table-card__title">
+                                        <i class="fas fa-question-circle"></i>
+                                        Preguntas más frecuentes
+                                    </h3>
+                                </div>
+                                <div class="stats-table-card__body">
+                                    <table class="stats-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Pregunta</th>
+                                                <th>Frecuencia</th>
+                                                <th>Tasa de respuesta</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>¿Cuál es el horario de atención?</td>
+                                                <td>
+                                                    <span class="stats-badge">234</span>
+                                                </td>
+                                                <td>
+                                                    <div class="stats-progress">
+                                                        <div class="stats-progress__bar" style="width: 95%"></div>
+                                                        <span class="stats-progress__text">95%</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>¿Cómo puedo contactar con soporte?</td>
+                                                <td>
+                                                    <span class="stats-badge">189</span>
+                                                </td>
+                                                <td>
+                                                    <div class="stats-progress">
+                                                        <div class="stats-progress__bar" style="width: 88%"></div>
+                                                        <span class="stats-progress__text">88%</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>¿Cuáles son los precios?</td>
+                                                <td>
+                                                    <span class="stats-badge">156</span>
+                                                </td>
+                                                <td>
+                                                    <div class="stats-progress">
+                                                        <div class="stats-progress__bar" style="width: 92%"></div>
+                                                        <span class="stats-progress__text">92%</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>¿Dónde están ubicados?</td>
+                                                <td>
+                                                    <span class="stats-badge">143</span>
+                                                </td>
+                                                <td>
+                                                    <div class="stats-progress">
+                                                        <div class="stats-progress__bar" style="width: 100%"></div>
+                                                        <span class="stats-progress__text">100%</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>¿Cómo funciona el servicio?</td>
+                                                <td>
+                                                    <span class="stats-badge">98</span>
+                                                </td>
+                                                <td>
+                                                    <div class="stats-progress">
+                                                        <div class="stats-progress__bar" style="width: 78%"></div>
+                                                        <span class="stats-progress__text">78%</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Satisfacción del usuario -->
+                            <div class="stats-satisfaction">
+                                <div class="stats-satisfaction__header">
+                                    <h3 class="stats-satisfaction__title">
+                                        <i class="fas fa-star"></i>
+                                        Satisfacción del usuario
+                                    </h3>
+                                </div>
+                                <div class="stats-satisfaction__content">
+                                    <div class="stats-satisfaction__score">
+                                        <div class="stats-satisfaction__value">4.5</div>
+                                        <div class="stats-satisfaction__stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <div class="stats-satisfaction__label">Basado en 523 valoraciones</div>
+                                    </div>
+                                    <div class="stats-satisfaction__breakdown">
+                                        <div class="stats-rating-row">
+                                            <span class="stats-rating-label">5 estrellas</span>
+                                            <div class="stats-rating-bar">
+                                                <div class="stats-rating-fill" style="width: 65%"></div>
+                                            </div>
+                                            <span class="stats-rating-count">340</span>
+                                        </div>
+                                        <div class="stats-rating-row">
+                                            <span class="stats-rating-label">4 estrellas</span>
+                                            <div class="stats-rating-bar">
+                                                <div class="stats-rating-fill" style="width: 20%"></div>
+                                            </div>
+                                            <span class="stats-rating-count">104</span>
+                                        </div>
+                                        <div class="stats-rating-row">
+                                            <span class="stats-rating-label">3 estrellas</span>
+                                            <div class="stats-rating-bar">
+                                                <div class="stats-rating-fill" style="width: 10%"></div>
+                                            </div>
+                                            <span class="stats-rating-count">52</span>
+                                        </div>
+                                        <div class="stats-rating-row">
+                                            <span class="stats-rating-label">2 estrellas</span>
+                                            <div class="stats-rating-bar">
+                                                <div class="stats-rating-fill" style="width: 3%"></div>
+                                            </div>
+                                            <span class="stats-rating-count">16</span>
+                                        </div>
+                                        <div class="stats-rating-row">
+                                            <span class="stats-rating-label">1 estrella</span>
+                                            <div class="stats-rating-bar">
+                                                <div class="stats-rating-fill" style="width: 2%"></div>
+                                            </div>
+                                            <span class="stats-rating-count">11</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+
+                <!-- ❌ FOOTER DE CONFIGURACIÓN ELIMINADO COMPLETAMENTE -->
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER (ESTRUCTURA EXACTA COMO TU INDEX.HTML) -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+            
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+            
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="velvz-footer__ambient">
+            <div class="velvz-footer__pulse"></div>
+            <div class="velvz-footer__pulse"></div>
+        </div>
+    </footer>
+
+    <!-- Loading overlay -->
+    <div class="velvz-loading-overlay" id="loadingOverlay">
+        <div class="velvz-loading-spinner">
+            <div class="velvz-loading-spinner__icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="velvz-loading-spinner__text">
+                Guardando configuración...
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Vista Previa del Chatbot - Layout Horizontal -->
+    <div id="velvzPreviewModal" class="velvz-preview-modal" style="display: none;">
+        <div class="velvz-preview-modal__overlay"></div>
+        <div class="velvz-preview-modal__container velvz-preview-modal__container--horizontal">
+
+            <!-- Panel izquierdo: Opciones -->
+            <div class="velvz-preview-modal__sidebar">
+                <!-- Header -->
+                <div class="velvz-preview-modal__sidebar-header">
+                    <div class="velvz-preview-modal__title-area">
+                        <i class="fas fa-eye"></i>
+                        <h3>Vista Previa</h3>
+                    </div>
+                    <button class="velvz-preview-modal__close" id="closePreviewModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Opciones -->
+                <div class="velvz-preview-modal__sidebar-content">
+                    <!-- URL de fondo -->
+                    <div class="velvz-preview-modal__option-group">
+                        <label class="velvz-preview-modal__option-label">
+                            <i class="fas fa-globe"></i>
+                            Sitio web de fondo
+                        </label>
+                        <p class="velvz-preview-modal__option-desc">
+                            Introduce una URL para ver cómo quedará el chatbot en tu web
+                        </p>
+                        <div class="velvz-preview-modal__url-input-wrapper">
+                            <input
+                                type="url"
+                                id="previewDomainInput"
+                                class="velvz-preview-modal__url-input"
+                                placeholder="https://tuweb.com"
+                            >
+                            <button class="velvz-preview-modal__url-load" id="loadDomainBtn">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Info del chatbot -->
+                    <div class="velvz-preview-modal__option-group">
+                        <label class="velvz-preview-modal__option-label">
+                            <i class="fas fa-robot"></i>
+                            Chatbot activo
+                        </label>
+                        <div class="velvz-preview-modal__chatbot-info" id="previewChatbotInfo">
+                            <span class="velvz-preview-modal__chatbot-name">Cargando...</span>
+                        </div>
+                    </div>
+
+                    <!-- Nota sobre compatibilidad -->
+                    <div class="velvz-preview-modal__note">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Algunas webs bloquean la carga en iframes por seguridad. Si tu web no carga, puedes probar el chatbot directamente sobre el fondo gris.</span>
+                    </div>
+                </div>
+
+                <!-- Footer del sidebar -->
+                <div class="velvz-preview-modal__sidebar-footer">
+                    <button class="velvz-preview-modal__btn velvz-preview-modal__btn--secondary" id="resetPreviewBtn">
+                        <i class="fas fa-redo"></i>
+                        <span>Reiniciar</span>
+                    </button>
+                    <button class="velvz-preview-modal__btn velvz-preview-modal__btn--primary" id="closePreviewBtn">
+                        <i class="fas fa-check"></i>
+                        <span>Aceptar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panel derecho: Preview grande -->
+            <div class="velvz-preview-modal__main">
+                <!-- Área de preview -->
+                <div class="velvz-preview-modal__preview-area" id="previewArea">
+                    <!-- Background: Iframe o patrón -->
+                    <div class="velvz-preview-modal__background" id="previewBackground">
+                        <div class="velvz-preview-modal__placeholder">
+                            <div class="velvz-preview-modal__placeholder-content">
+                                <i class="fas fa-desktop"></i>
+                                <p>Tu sitio web aparecerá aquí</p>
+                                <span>Introduce una URL a la izquierda o prueba el chatbot directamente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Iframe para cargar dominio externo -->
+                    <iframe
+                        id="previewDomainIframe"
+                        class="velvz-preview-modal__iframe"
+                        style="display: none;"
+                        sandbox="allow-scripts allow-same-origin allow-forms"
+                    ></iframe>
+
+                    <!-- Chatbot widget overlay - se inyectará el widget real -->
+                    <div class="velvz-preview-modal__widget-container" id="previewWidgetContainer">
+                        <!-- El widget real del backend se inyectará aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación personalizado -->
+    <div id="velvzConfirmModal" class="velvz-modal" style="display: none;">
+        <div class="velvz-modal__overlay"></div>
+        <div class="velvz-modal__content">
+            <div class="velvz-modal__header">
+                <i class="fas fa-exclamation-triangle velvz-modal__icon"></i>
+                <h3 class="velvz-modal__title" id="velvzModalTitle">¿Confirmar acción?</h3>
+            </div>
+            <div class="velvz-modal__body">
+                <p id="velvzModalMessage">¿Estás seguro de que deseas continuar?</p>
+            </div>
+            <div class="velvz-modal__footer">
+                <button class="velvz-modal__btn velvz-modal__btn--secondary" id="velvzModalCancel">
+                    Cancelar
+                </button>
+                <button class="velvz-modal__btn velvz-modal__btn--danger" id="velvzModalConfirm">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts EN EL ORDEN CORRECTO -->
+    <script src="/assets/js/modal.js"></script>
+    <script src="/assets/js/auth-config.js"></script>
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/error-cleanup.js"></script>
+    <script src="/assets/js/notifications.js"></script>
+    <script src="/assets/js/dashboard-api.js"></script>
+    <script>
+        // Verificar que los scripts críticos se cargaron
+        console.log('🔍 [CONFIG.HTML DEBUG] Verificando scripts cargados:');
+        console.log('- velvzAuth:', typeof window.velvzAuth !== 'undefined' ? '✅' : '❌');
+        console.log('- CHATBOT_API_BASE (global):', typeof CHATBOT_API_BASE !== 'undefined' ? CHATBOT_API_BASE : 'UNDEFINED');
+        console.log('- window.CHATBOT_API_BASE:', window.CHATBOT_API_BASE);
+        console.log('- window.CHATBOT_API:', window.CHATBOT_API);
+
+        // FORZAR URLs correctas del backend unificado
+        window.CHATBOT_API = 'https://velvz-unified-backend-production.up.railway.app';
+        window.CHATBOT_API_BASE = 'https://velvz-unified-backend-production.up.railway.app';
+
+        console.log('✅ [CONFIG.HTML] URLs finales:');
+        console.log('   window.CHATBOT_API:', window.CHATBOT_API);
+        console.log('   window.CHATBOT_API_BASE:', window.CHATBOT_API_BASE);
+    </script>
+    <!-- ORDEN CORRECTO: MODULARES PRIMERO -->
+    <script src="/TEST-web-crawling.js"></script>
+    <script src="/assets/js/config-sections/configuration-section.js"></script>
+    <script src="/assets/js/config-sections/archives-section.js"></script>
+    <script src="/assets/js/config-sections/web-crawling-section.js"></script>
+    <script src="/assets/js/config-sections/implementation-section.js"></script>
+    <script src="/assets/js/config-sections/customization-section.js"></script>
+    <script src="/assets/js/config-sections/statistics-section.js"></script>
+    <script src="/assets/js/chatbot-config.js"></script>
+    <!-- Private App con menú mejorado - DEBE ser el último -->
+    <script src="/assets/js/private-app.js"></script>
+</body>
+</html>

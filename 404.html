@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada - Velvz</title>
+    <meta name="description" content="Lo sentimos, la página que buscas no existe. Descubre las soluciones de IA conversacional de Velvz.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #1a1a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .velvz-404 {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .velvz-404__container {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .velvz-404__animation {
+            position: relative;
+            margin-bottom: 3rem;
+            display: inline-block;
+        }
+
+        .velvz-404__number {
+            font-size: clamp(8rem, 20vw, 16rem);
+            font-weight: 300;
+            line-height: 0.8;
+            color: rgba(102, 126, 234, 0.1);
+            position: relative;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .velvz-404__skateboard {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            z-index: 2;
+        }
+
+        .velvz-404__skateboard img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: skate 8s ease-in-out infinite;
+        }
+
+        /* Logo Velvz animado */
+        .velvz-404__logo {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid rgba(102, 126, 234, 0.8);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        .velvz-404__logo-face {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 36px;
+            height: 18px;
+            position: relative;
+        }
+
+        .velvz-404__logo-eye {
+            width: 8px;
+            height: 8px;
+            background: rgba(102, 126, 234, 0.9);
+            border-radius: 50%;
+            animation: blink 4s ease-in-out infinite;
+        }
+
+        .velvz-404__logo-mouth {
+            width: 14px;
+            height: 7px;
+            background: rgba(102, 126, 234, 0.9);
+            border-radius: 7px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .velvz-404__content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .velvz-404__title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .velvz-404__subtitle {
+            font-size: 1.125rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 60ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .velvz-404__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .velvz-404__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .velvz-404__btn--primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .velvz-404__btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+        }
+
+        .velvz-404__btn--secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #374151;
+            border: 2px solid rgba(55, 65, 81, 0.1);
+        }
+
+        .velvz-404__btn--secondary:hover {
+            background: #f9fafb;
+            border-color: rgba(55, 65, 81, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .velvz-404__links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .velvz-404__link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .velvz-404__link:hover {
+            color: #5a67d8;
+            text-decoration: underline;
+        }
+
+        /* Elementos ambient */
+        .velvz-404__ambient {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .velvz-404__pulse {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .velvz-404__pulse:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .velvz-404__pulse:nth-child(2) {
+            bottom: 20%;
+            right: 15%;
+            animation-delay: 3s;
+        }
+
+        .velvz-404__pulse:nth-child(3) {
+            top: 60%;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes skate {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-50%, -50%) rotate(-10deg) scale(0.95); }
+            50% { transform: translate(-50%, -50%) rotate(0deg); }
+            75% { transform: translate(-50%, -50%) rotate(10deg) scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.3; 
+            }
+            50% { 
+                transform: scale(1.5); 
+                opacity: 0.1; 
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .velvz-404__content {
+                padding: 2rem;
+                border-radius: 20px;
+            }
+
+            .velvz-404__actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .velvz-404__btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .velvz-404__links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .velvz-404__skateboard {
+                width: 150px;
+                height: 150px;
+            }
+
+            .velvz-404__logo {
+                width: 50px;
+                height: 50px;
+                top: 15%;
+                right: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="velvz-404">
+        <!-- Elementos ambient -->
+        <div class="velvz-404__ambient">
+            <div class="velvz-404__pulse"></div>
+            <div class="velvz-404__pulse"></div>
+            <div class="velvz-404__pulse"></div>
+        </div>
+
+        <div class="velvz-404__container">
+            <!-- Animación principal -->
+            <div class="velvz-404__animation">
+                <div class="velvz-404__number">404</div>
+                <div class="velvz-404__skateboard">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Persona en skateboard -->
+                        <g transform="translate(100,100)">
+                            <!-- Skateboard -->
+                            <ellipse cx="0" cy="40" rx="40" ry="8" fill="#374151" opacity="0.8"/>
+                            <rect x="-35" y="36" width="70" height="8" rx="4" fill="#667eea"/>
+                            
+                            <!-- Ruedas -->
+                            <circle cx="-25" cy="45" r="4" fill="#1f2937"/>
+                            <circle cx="25" cy="45" r="4" fill="#1f2937"/>
+                            
+                            <!-- Cuerpo -->
+                            <ellipse cx="0" cy="10" rx="12" ry="20" fill="#fbbf24"/>
+                            
+                            <!-- Cabeza -->
+                            <circle cx="0" cy="-15" r="12" fill="#f59e0b"/>
+                            
+                            <!-- Brazos -->
+                            <line x1="-10" y1="5" x2="-20" y2="15" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="10" y1="5" x2="20" y2="15" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+                            
+                            <!-- Piernas -->
+                            <line x1="-6" y1="25" x2="-10" y2="40" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="6" y1="25" x2="10" y2="40" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+                            
+                            <!-- Gorra -->
+                            <ellipse cx="0" cy="-20" rx="8" ry="4" fill="#ef4444"/>
+                        </g>
+                    </svg>
+                </div>
+                
+                <!-- Logo Velvz -->
+                <div class="velvz-404__logo">
+                    <div class="velvz-404__logo-face">
+                        <div class="velvz-404__logo-eye"></div>
+                        <div class="velvz-404__logo-mouth"></div>
+                        <div class="velvz-404__logo-eye"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="velvz-404__content">
+                <h1 class="velvz-404__title">Esta página no existe</h1>
+                <p class="velvz-404__subtitle">
+                    Lo sentimos, la página que buscas no se pudo encontrar. Es solo un accidente que no era intencional.
+                    Pero no te preocupes, tenemos muchas otras cosas geniales que mostrarte.
+                </p>
+
+                <div class="velvz-404__actions">
+                    <a href="/" class="velvz-404__btn velvz-404__btn--primary">
+                        🏠 Volver al inicio
+                    </a>
+                    <a href="/contacto/" class="velvz-404__btn velvz-404__btn--secondary">
+                        💬 Contactar soporte
+                    </a>
+                </div>
+
+                <div class="velvz-404__links">
+                    <a href="/servicios/" class="velvz-404__link">🤖 Ver servicios</a>
+                    <a href="/precios/" class="velvz-404__link">💰 Planes y precios</a>
+                    <a href="/documentacion/" class="velvz-404__link">📚 Documentación</a>
+                    <a href="/cuenta/" class="velvz-404__link">🔐 Mi cuenta</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Easter egg: Click en el logo para animación especial
+        document.querySelector('.velvz-404__logo').addEventListener('click', function() {
+            this.style.animation = 'bounce 0.5s ease-in-out 3';
+            
+            setTimeout(() => {
+                this.style.animation = 'bounce 3s ease-in-out infinite';
+            }, 1500);
+        });
+
+        // Log para debug
+        console.log('🛹 Error 404 - Pero al menos el skate está genial!');
+        console.log('🚀 Velvz - IA conversacional para empresas');
+    </script>
+    <script src="/assets/js/error-cleanup.js"></script>
+</body>
+</html>

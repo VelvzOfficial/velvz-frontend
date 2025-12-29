@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Email - Velvz</title>
+    <meta name="description" content="Verifica tu email para activar tu cuenta de Velvz y comenzar a crear chatbots inteligentes.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
+    
+    <!-- Preload crítico -->
+    <link rel="preload" href="/assets/fonts/Inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Estilos - ORDEN CORRECTO: primero inicio.css (header/footer), después cuenta.css (contenido específico) -->
+    <link rel="stylesheet" href="/assets/css/inicio.css">
+    <link rel="stylesheet" href="/assets/css/cuenta.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* ESTILOS ESPECÍFICOS PARA VERIFICACIÓN */
+        .verify-state {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .verify-state.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .verify-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 36px;
+            color: white;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .verify-icon--loading {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .verify-icon--success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .verify-icon--error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        .verify-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .verify-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .verify-message {
+            font-size: 1.1rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .verify-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 8px 8px 0;
+        }
+        
+        .verify-btn--primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+        
+        .verify-btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+        }
+        
+        .verify-btn--secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #374151;
+            border: 2px solid rgba(55, 65, 81, 0.1);
+        }
+        
+        .verify-btn--secondary:hover {
+            background: #f9fafb;
+            transform: translateY(-1px);
+        }
+        
+        .verify-steps {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .verify-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .verify-step-number {
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .verify-step-text {
+            flex: 1;
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .verify-content {
+                padding: 2rem;
+                border-radius: 20px;
+            }
+            
+            .verify-title {
+                font-size: 1.75rem;
+            }
+            
+            .verify-message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER - ESTRUCTURA IDÉNTICA A OTRAS PÁGINAS -->
+<header class="velvz-header">
+    <div class="velvz-header__container">
+        <div class="velvz-header__island velvz-header__island--brand">
+            <div class="velvz-header__logo">
+                <div class="velvz-header__logo-shape">
+                    <div class="velvz-header__logo-face">
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--left"></div>
+                        <div class="velvz-header__logo-mouth"></div>
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--nav">
+            <nav class="velvz-header__nav">
+                <a href="/" class="velvz-header__link">Inicio</a>
+                <a href="/servicios/" class="velvz-header__link">Servicios</a>
+                <a href="/precios/" class="velvz-header__link">Precios</a>
+                <a href="/contacto/" class="velvz-header__link">Contacto</a>
+            </nav>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--cta">
+            <button class="velvz-header__cta">
+                <span class="velvz-header__cta-text">Entrar</span>
+                <div class="velvz-header__cta-shine"></div>
+            </button>
+        </div>
+
+        <!-- MOBILE MENU TOGGLE -->
+        <div class="velvz-header__mobile-toggle">
+            <div class="velvz-header__hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE MENU -->
+    <div class="velvz-header__mobile-backdrop"></div>
+    <div class="velvz-header__mobile-menu">
+        <button class="velvz-header__mobile-close"></button>
+        
+        <nav class="velvz-header__mobile-nav">
+            <a href="/" class="velvz-header__mobile-link">Inicio</a>
+            <a href="/servicios/" class="velvz-header__mobile-link">Servicios</a>
+            <a href="/precios/" class="velvz-header__mobile-link">Precios</a>
+            <a href="/contacto/" class="velvz-header__mobile-link">Contacto</a>
+        </nav>
+        <button class="velvz-header__mobile-cta">
+            <span>Entrar</span>
+            <div class="velvz-header__mobile-cta-shine"></div>
+        </button>
+    </div>
+    
+    <div class="velvz-header__ambient">
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+    </div>
+</header>
+
+<!-- PÁGINA DE VERIFICACIÓN -->
+<main class="velvz-cuenta">
+    <div class="velvz-cuenta__container">
+        
+        <!-- ESTADO: VALIDANDO TOKEN -->
+        <div id="loadingState" class="verify-state active">
+            <div class="verify-content">
+                <div class="verify-icon verify-icon--loading">
+                    <div class="loading-spinner"></div>
+                </div>
+                <h1 class="verify-title" style="color: #667eea;">Validando enlace...</h1>
+                <p class="verify-message">
+                    Por favor espera mientras verificamos tu solicitud de verificación.
+                </p>
+                <div class="verify-steps">
+                    <div class="verify-step">
+                        <div class="verify-step-number">1</div>
+                        <div class="verify-step-text">Verificando token de seguridad</div>
+                    </div>
+                    <div class="verify-step">
+                        <div class="verify-step-number">2</div>
+                        <div class="verify-step-text">Activando tu cuenta</div>
+                    </div>
+                    <div class="verify-step">
+                        <div class="verify-step-number">3</div>
+                        <div class="verify-step-text">Preparando tu perfil</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESTADO: ÉXITO -->
+        <div id="successState" class="verify-state">
+            <div class="verify-content">
+                <div class="verify-icon verify-icon--success">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h1 class="verify-title" style="color: #10b981;">¡Email verificado!</h1>
+                <p class="verify-message">
+                    ¡Excelente! Tu cuenta ha sido verificada correctamente. 
+                    Ya puedes acceder a todas las funcionalidades de Velvz.
+                </p>
+                
+                <div style="background: linear-gradient(135deg, #dcfce7, #bbf7d0); border: 2px solid #22c55e; border-radius: 12px; padding: 20px; margin: 24px 0;">
+                    <h3 style="margin: 0 0 12px; color: #166534; font-size: 16px;">🎉 ¡Bienvenido a Velvz!</h3>
+                    <p style="margin: 0; color: #166534; font-size: 14px; line-height: 1.5;">
+                        Tu cuenta está completamente activada. Comienza a crear chatbots inteligentes para tu negocio.
+                    </p>
+                </div>
+
+                <div style="margin-top: 24px;">
+                    <a href="/cuenta/" class="verify-btn verify-btn--primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Iniciar Sesión
+                    </a>
+                    <a href="/app/" class="verify-btn verify-btn--secondary">
+                        <i class="fas fa-rocket"></i>
+                        Ir al Panel
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESTADO: ERROR -->
+        <div id="errorState" class="verify-state">
+            <div class="verify-content">
+                <div class="verify-icon verify-icon--error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h1 class="verify-title" style="color: #ef4444;">Error de verificación</h1>
+                <p class="verify-message" id="errorMessage">
+                    El enlace de verificación no es válido o ha expirado.
+                </p>
+                
+                <div style="background: linear-gradient(135deg, #fee2e2, #fecaca); border: 2px solid #f87171; border-radius: 12px; padding: 20px; margin: 24px 0;">
+                    <h3 style="margin: 0 0 12px; color: #dc2626; font-size: 16px;">⚠️ Posibles causas</h3>
+                    <ul style="margin: 0; padding-left: 20px; color: #dc2626; font-size: 14px; line-height: 1.5;">
+                        <li>El enlace ha expirado (válido por 24 horas)</li>
+                        <li>El enlace ya fue utilizado anteriormente</li>
+                        <li>El enlace está incompleto o dañado</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 24px;">
+                    <button onclick="showResendForm()" class="verify-btn verify-btn--primary">
+                        <i class="fas fa-envelope"></i>
+                        Solicitar nuevo enlace
+                    </button>
+                    <a href="/cuenta/" class="verify-btn verify-btn--secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Volver a Cuenta
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESTADO: REENVIAR VERIFICACIÓN -->
+        <div id="resendState" class="verify-state">
+            <div class="verify-content">
+                <div class="verify-icon verify-icon--loading">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1 class="verify-title" style="color: #667eea;">Solicitar nuevo enlace</h1>
+                <p class="verify-message">
+                    Ingresa tu email para recibir un nuevo enlace de verificación.
+                </p>
+                
+                <form id="resendForm" style="margin: 24px 0;">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="resendEmail" placeholder="tu@email.com" required>
+                    </div>
+                    
+                    <button type="submit" class="verify-btn verify-btn--primary" id="resendBtn" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i>
+                        <span id="resendBtnText">Enviar nuevo enlace</span>
+                    </button>
+                </form>
+
+                <div style="margin-top: 16px;">
+                    <button onclick="showError('Token inválido', 'El enlace de verificación no es válido')" class="verify-btn verify-btn--secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Volver
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- FOOTER - ESTRUCTURA IDÉNTICA A OTRAS PÁGINAS -->
+<footer class="velvz-footer">
+    <div class="velvz-footer__container">
+        <div class="velvz-footer__brand">
+            <a href="#" class="velvz-footer__logo-link">
+                <div class="velvz-footer__logo">
+                    <div class="velvz-footer__logo-shape">
+                        <div class="velvz-footer__logo-face">
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                            <div class="velvz-footer__logo-mouth"></div>
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="velvz-footer__brand-name">Velvz</span>
+            </a>
+            <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+        </div>
+        
+        <nav class="velvz-footer__links">
+            <a href="/" class="velvz-footer__link">Inicio</a>
+            <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+            <a href="/precios/" class="velvz-footer__link">Precios</a>
+            <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+            <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+        </nav>
+        
+        <div class="velvz-footer__legal">
+            <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+            <div>
+                <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
+                <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
+                <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="velvz-footer__ambient">
+        <div class="velvz-footer__pulse"></div>
+        <div class="velvz-footer__pulse"></div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+// Sistema de verificación de email mejorado
+(function() {
+    'use strict';
+
+    // Variables globales
+    let verificationToken = null;
+    const Logger = {
+        log: (msg, data) => console.log(`🔐 Verify: ${msg}`, data || ''),
+        error: (msg, error) => console.error(`❌ Verify Error: ${msg}`, error || ''),
+        success: (msg, data) => console.log(`✅ Verify Success: ${msg}`, data || '')
+    };
+
+    // Estados de la UI
+    const States = {
+        LOADING: 'loadingState',
+        SUCCESS: 'successState', 
+        ERROR: 'errorState',
+        RESEND: 'resendState'
+    };
+
+    // Elementos DOM
+    const elements = {
+        loadingState: document.getElementById('loadingState'),
+        successState: document.getElementById('successState'),
+        errorState: document.getElementById('errorState'),
+        resendState: document.getElementById('resendState'),
+        errorMessage: document.getElementById('errorMessage'),
+        resendForm: document.getElementById('resendForm'),
+        resendEmail: document.getElementById('resendEmail'),
+        resendBtn: document.getElementById('resendBtn'),
+        resendBtnText: document.getElementById('resendBtnText')
+    };
+
+    // =====================================================
+    // FUNCIONES DE UI
+    // =====================================================
+
+    function showState(stateName) {
+        Logger.log(`Mostrando estado: ${stateName}`);
+        
+        // Ocultar todos los estados
+        Object.values(States).forEach(state => {
+            const element = document.getElementById(state);
+            if (element) {
+                element.classList.remove('active');
+            }
+        });
+
+        // Mostrar el estado solicitado
+        const targetElement = document.getElementById(stateName);
+        if (targetElement) {
+            setTimeout(() => {
+                targetElement.classList.add('active');
+            }, 150);
+        }
+    }
+
+    function showSuccess(message = null) {
+        if (message) {
+            elements.successState.querySelector('.verify-message').textContent = message;
+        }
+        showState(States.SUCCESS);
+        Logger.success("Verificación exitosa");
+    }
+
+    function showError(title, message) {
+        elements.errorState.querySelector('.verify-title').textContent = title;
+        elements.errorMessage.textContent = message;
+        showState(States.ERROR);
+        Logger.error(`Error mostrado: ${title} - ${message}`);
+    }
+
+    function showResendForm() {
+        showState(States.RESEND);
+        setTimeout(() => {
+            elements.resendEmail.focus();
+        }, 300);
+    }
+
+    // =====================================================
+    // VERIFICACIÓN DE EMAIL
+    // =====================================================
+
+    async function verifyEmailToken() {
+        if (!verificationToken) {
+            showError('Token no encontrado', 'El enlace de verificación está incompleto o dañado.');
+            return;
+        }
+
+        Logger.log("Iniciando verificación con token");
+
+        try {
+            if (!window.velvzAuth) {
+                throw new Error('Sistema de autenticación no disponible');
+            }
+
+            const result = await window.velvzAuth.verifyEmail(verificationToken);
+
+            if (result && result.success) {
+                Logger.success("Email verificado correctamente");
+                showSuccess();
+                
+                // Redirigir automáticamente después de 3 segundos
+                setTimeout(() => {
+                    Logger.log("Redirigiendo a cuenta con parámetro verified=true");
+                    window.location.href = '/cuenta/?verified=true';
+                }, 3000);
+            } else {
+                Logger.error("Error en verificación", result);
+                
+                const errorMessage = result.message || 'Error desconocido en la verificación';
+                
+                if (errorMessage.includes('expirado') || errorMessage.includes('expired')) {
+                    showError('Enlace expirado', 'Este enlace de verificación ha expirado. Los enlaces son válidos por 24 horas.');
+                } else if (errorMessage.includes('inválido') || errorMessage.includes('invalid')) {
+                    showError('Enlace inválido', 'Este enlace de verificación no es válido o ya fue utilizado.');
+                } else {
+                    showError('Error de verificación', errorMessage);
+                }
+            }
+        } catch (error) {
+            Logger.error("Error crítico en verificación", error);
+            showError('Error de conexión', 'No se pudo conectar con el servidor. Verifica tu conexión a internet.');
+        }
+    }
+
+    // =====================================================
+    // REENVÍO DE VERIFICACIÓN
+    // =====================================================
+
+    async function handleResendSubmit(e) {
+        e.preventDefault();
+        
+        const email = elements.resendEmail.value.trim();
+        
+        if (!email || !isValidEmail(email)) {
+            alert('Por favor ingresa un email válido');
+            elements.resendEmail.focus();
+            return;
+        }
+
+        Logger.log("Reenviando verificación para:", email);
+
+        // UI Loading
+        elements.resendBtn.disabled = true;
+        elements.resendBtnText.innerHTML = `
+            <div class="loading-spinner" style="width: 16px; height: 16px; border-width: 2px;"></div>
+            Enviando...
+        `;
+
+        try {
+            const result = await window.velvzAuth.resendVerification(email);
+
+            if (result && result.success) {
+                Logger.success("Verificación reenviada correctamente");
+                
+                showSuccess('Nuevo enlace enviado. Revisa tu email y haz click en el enlace de verificación.');
+                
+                setTimeout(() => {
+                    window.location.href = '/cuenta/';
+                }, 3000);
+            } else {
+                Logger.error("Error reenviando verificación", result);
+                alert('❌ ' + (result.message || 'Error al enviar email'));
+            }
+        } catch (error) {
+            Logger.error("Error crítico reenviando verificación", error);
+            alert('Error de conexión al enviar email');
+        } finally {
+            // Restaurar UI
+            elements.resendBtn.disabled = false;
+            elements.resendBtnText.innerHTML = `
+                <i class="fas fa-paper-plane"></i>
+                Enviar nuevo enlace
+            `;
+        }
+    }
+
+    // =====================================================
+    // UTILIDADES
+    // =====================================================
+
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // =====================================================
+    // CONFIGURACIÓN DE HEADER Y MÓVIL
+    // =====================================================
+
+    function setupMobileHeader() {
+        const mobileToggle = document.querySelector(".velvz-header__mobile-toggle");
+        const mobileMenu = document.querySelector(".velvz-header__mobile-menu");
+        const mobileBackdrop = document.querySelector(".velvz-header__mobile-backdrop");
+        const mobileClose = document.querySelector(".velvz-header__mobile-close");
+        const hamburger = document.querySelector(".velvz-header__hamburger");
+
+        function openMobileMenu() {
+            mobileMenu.classList.add("velvz-header__mobile-menu--active");
+            mobileBackdrop.classList.add("velvz-header__mobile-backdrop--active");
+            hamburger.classList.add("velvz-header__hamburger--active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove("velvz-header__mobile-menu--active");
+            mobileBackdrop.classList.remove("velvz-header__mobile-backdrop--active");
+            hamburger.classList.remove("velvz-header__hamburger--active");
+            document.body.style.overflow = "";
+        }
+
+        if (mobileToggle) mobileToggle.addEventListener("click", openMobileMenu);
+        if (mobileClose) mobileClose.addEventListener("click", closeMobileMenu);
+        if (mobileBackdrop) mobileBackdrop.addEventListener("click", closeMobileMenu);
+
+        // Configurar botones CTA para volver a cuenta
+        const ctaButtons = document.querySelectorAll('.velvz-header__cta, .velvz-header__mobile-cta');
+        ctaButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = '/cuenta/';
+            });
+        });
+    }
+
+    function setupHeaderScrolled() {
+        const header = document.querySelector(".velvz-header");
+
+        function handleScroll() {
+            if (window.scrollY > 50) {
+                header.classList.add("velvz-header--scrolled");
+            } else {
+                header.classList.remove("velvz-header--scrolled");
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+    }
+
+    // =====================================================
+    // INICIALIZACIÓN
+    // =====================================================
+
+    function init() {
+        Logger.log('Inicializando página de verificación');
+        
+        // Configurar funcionalidad del header
+        setupMobileHeader();
+        setupHeaderScrolled();
+        
+        // Obtener token de la URL
+        verificationToken = getUrlParameter('token');
+        
+        if (!verificationToken) {
+            showError('Token de verificación no encontrado', 
+                     'El enlace parece estar incompleto o dañado. Solicita un nuevo email de verificación.');
+            return;
+        }
+
+        // Configurar event listeners
+        elements.resendForm.addEventListener('submit', handleResendSubmit);
+
+        // Esperar a que el sistema de auth esté disponible
+        const checkAuth = () => {
+            if (window.velvzAuth) {
+                Logger.log('Sistema de auth disponible, iniciando verificación');
+                // Pequeño delay para mejor UX
+                setTimeout(verifyEmailToken, 1500);
+            } else {
+                Logger.log('Esperando sistema de auth...');
+                setTimeout(checkAuth, 500);
+            }
+        };
+
+        checkAuth();
+    }
+
+    // Hacer funciones disponibles globalmente
+    window.showResendForm = showResendForm;
+    window.showError = showError;
+    window.showSuccess = showSuccess;
+
+    // =====================================================
+    // DEBUG TOOLS
+    // =====================================================
+
+    if (window.location.hostname === 'localhost') {
+        window.verifyDebug = {
+            showSuccess: () => showSuccess(),
+            showError: (title, msg) => showError(title, msg),
+            showResend: () => showResendForm(),
+            getToken: () => verificationToken,
+            testVerify: () => verifyEmailToken(),
+            logger: Logger
+        };
+        console.log('🔧 Debug tools en: window.verifyDebug');
+    }
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    Logger.success('Sistema de verificación inicializado');
+
+})();
+</script>
+
+<!-- Scripts - ORDEN CORRECTO: inicio.js primero para funcionalidad del header -->
+<script src="/assets/js/inicio.js"></script>
+<script src="/assets/js/auth-config.js"></script>
+<script src="/assets/js/public-pages.js"></script>
+<script src="/assets/js/error-cleanup.js"></script>
+
+</body>
+</html>

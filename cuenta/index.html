@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - Velvz</title>
+    <meta name="description" content="Accede a tu cuenta de Velvz para gestionar tus chatbots inteligentes y configuraciones.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/icons/favicon.png">
+    
+    <!-- Preload crítico -->
+    <link rel="preload" href="/assets/fonts/Inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Estilos - ORDEN CORRECTO: primero inicio.css (header/footer), después cuenta.css (contenido específico) -->
+    <link rel="stylesheet" href="/assets/css/inicio.css">
+    <link rel="stylesheet" href="/assets/css/cuenta.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<!-- HEADER - ESTRUCTURA IDÉNTICA A OTRAS PÁGINAS -->
+<header class="velvz-header">
+    <div class="velvz-header__container">
+        <div class="velvz-header__island velvz-header__island--brand">
+            <div class="velvz-header__logo">
+                <div class="velvz-header__logo-shape">
+                    <div class="velvz-header__logo-face">
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--left"></div>
+                        <div class="velvz-header__logo-mouth"></div>
+                        <div class="velvz-header__logo-eye velvz-header__logo-eye--right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--nav">
+            <nav class="velvz-header__nav">
+                <a href="/" class="velvz-header__link">Inicio</a>
+                <a href="/servicios/" class="velvz-header__link">Servicios</a>
+                <a href="/precios/" class="velvz-header__link">Precios</a>
+                <a href="/contacto/" class="velvz-header__link">Contacto</a>
+            </nav>
+        </div>
+        
+        <div class="velvz-header__island velvz-header__island--cta">
+            <button class="velvz-header__cta">
+                <span class="velvz-header__cta-text">Entrar</span>
+                <div class="velvz-header__cta-shine"></div>
+            </button>
+        </div>
+
+        <!-- MOBILE MENU TOGGLE -->
+        <div class="velvz-header__mobile-toggle">
+            <div class="velvz-header__hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE MENU -->
+    <div class="velvz-header__mobile-backdrop"></div>
+    <div class="velvz-header__mobile-menu">
+        <!-- CLOSE BUTTON -->
+        <button class="velvz-header__mobile-close"></button>
+        
+        <nav class="velvz-header__mobile-nav">
+            <a href="/" class="velvz-header__mobile-link">Inicio</a>
+            <a href="/servicios/" class="velvz-header__mobile-link">Servicios</a>
+            <a href="/precios/" class="velvz-header__mobile-link">Precios</a>
+            <a href="/contacto/" class="velvz-header__mobile-link">Contacto</a>
+        </nav>
+        <button class="velvz-header__mobile-cta">
+            <span>Entrar</span>
+            <div class="velvz-header__mobile-cta-shine"></div>
+        </button>
+    </div>
+    
+    <div class="velvz-header__ambient">
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+        <div class="velvz-header__pulse"></div>
+    </div>
+</header>
+
+<!-- CUENTA MAIN -->
+<main class="velvz-cuenta">
+    <div class="velvz-cuenta__container">
+        
+        <!-- HEADER -->
+        <div class="velvz-cuenta__header">
+            <h1 class="velvz-cuenta__title" id="authTitle">Accede a tu cuenta</h1>
+            <p class="velvz-cuenta__subtitle" id="authSubtitle">Gestiona tus chatbots y configuraciones</p>
+        </div>
+
+        <!-- TOGGLE PRINCIPAL -->
+        <div class="velvz-cuenta__toggle-container">
+            <div class="velvz-cuenta__toggle" id="authToggle">
+                <div class="velvz-cuenta__toggle-slider"></div>
+                <button class="velvz-cuenta__toggle-option velvz-cuenta__toggle-option--login velvz-cuenta__toggle-option--active" 
+                        data-mode="login">
+                    Iniciar Sesión
+                </button>
+                <button class="velvz-cuenta__toggle-option velvz-cuenta__toggle-option--register" 
+                        data-mode="register">
+                    Crear Cuenta
+                </button>
+            </div>
+        </div>
+
+        <!-- MENSAJES DE ERROR/ÉXITO -->
+        <div class="velvz-cuenta__messages">
+            <div id="errorMessage" class="message error-message" style="display: none;"></div>
+            <div id="successMessage" class="message success-message" style="display: none;"></div>
+            <div id="connectionStatus" class="connection-status" style="display: none;"></div>
+        </div>
+
+        <!-- FORMULARIO -->
+        <div class="velvz-cuenta__form-wrapper">
+            <form id="emailForm" class="velvz-cuenta__form">
+                
+                <!-- Nombre (solo registro) - AGREGADA CLASE form-element -->
+                <div class="form-group form-element" id="nameGroup" style="display: none;">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" id="nameInput" name="name" class="form-input" placeholder="Tu nombre completo">
+                </div>
+
+                <!-- Email -->
+                <div class="form-group form-element">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="emailInput" name="email" class="form-input" placeholder="tu@email.com" required>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-group form-element">
+                    <label class="form-label">Contraseña</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="passwordInput" name="password" class="form-input" placeholder="••••••••" required>
+                        <button type="button" id="passwordToggle" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Términos (solo registro) - AGREGADA CLASE form-element -->
+                <div class="form-group form-element" id="termsGroup" style="display: none;">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="termsCheckbox" name="terms">
+                        <span class="checkbox-text">
+                            Acepto los <a href="/terminos/" target="_blank">términos y condiciones</a> 
+                            y la <a href="/privacidad/" target="_blank">política de privacidad</a>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Botón Submit -->
+                <button type="submit" id="submitBtn" class="form-submit form-element">
+                    Iniciar Sesión
+                </button>
+
+                <!-- Enlaces adicionales -->
+                <div class="auth-links form-element">
+                    <span id="authToggleText">
+                        ¿No tienes cuenta? <a href="#" id="authToggleLink" class="auth-link">Créala aquí</a>
+                    </span>
+                    <a href="#" class="auth-link" id="forgotPassword" style="display: block; margin-bottom: 8px;">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AMBIENT ELEMENTS ESPECÍFICOS DE CUENTA -->
+    <div class="velvz-cuenta__ambient">
+        <div class="velvz-cuenta__ambient-pulse"></div>
+        <div class="velvz-cuenta__ambient-pulse"></div>
+        <div class="velvz-cuenta__ambient-pulse"></div>
+    </div>
+</main>
+
+<!-- FOOTER - ESTRUCTURA IDÉNTICA A OTRAS PÁGINAS -->
+<footer class="velvz-footer">
+    <div class="velvz-footer__container">
+        <div class="velvz-footer__brand">
+            <a href="#" class="velvz-footer__logo-link">
+                <div class="velvz-footer__logo">
+                    <div class="velvz-footer__logo-shape">
+                        <div class="velvz-footer__logo-face">
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                            <div class="velvz-footer__logo-mouth"></div>
+                            <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="velvz-footer__brand-name">Velvz</span>
+            </a>
+            <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+        </div>
+        
+        <nav class="velvz-footer__links">
+            <a href="/" class="velvz-footer__link">Inicio</a>
+            <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+            <a href="/precios/" class="velvz-footer__link">Precios</a>
+            <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+            <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+        </nav>
+        
+        <div class="velvz-footer__legal">
+            <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+            <div>
+                <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
+                <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
+                <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="velvz-footer__ambient">
+        <div class="velvz-footer__pulse"></div>
+        <div class="velvz-footer__pulse"></div>
+    </div>
+</footer>
+
+<!-- Scripts - ORDEN CORRECTO: cuenta.js al FINAL para evitar conflictos -->
+<script src="/assets/js/inicio.js"></script>
+<script src="/assets/js/auth-config.js"></script>
+<script src="/assets/js/public-pages.js"></script>
+<script src="/assets/js/error-cleanup.js"></script>
+<!-- Cuenta.js debe ser el ÚLTIMO para tener prioridad -->
+<script src="/assets/js/cuenta.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,990 @@
+/* =============================================================================
+   WEB CRAWLING SECTION STYLES
+   ========================================================================== */
+
+/* Divider with Text */
+.velvz-divider-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+    text-align: center;
+}
+
+.velvz-divider-text::before,
+.velvz-divider-text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-border-light), transparent);
+}
+
+.velvz-divider-text span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 8px;
+}
+
+/* Crawling Area */
+.velvz-crawling-area {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 2rem;
+}
+
+/* Crawling Config - Tarjeta diferenciada para tema oscuro */
+.velvz-crawling-config {
+    background: rgba(116, 144, 255, 0.03);
+    border: 1px solid rgba(116, 144, 255, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Línea de acento superior */
+.velvz-crawling-config::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.velvz-crawling-config__header {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(116, 144, 255, 0.1);
+    background: rgba(116, 144, 255, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.velvz-crawling-config__title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e5e7eb;
+}
+
+.velvz-crawling-config__title i {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(116, 144, 255, 0.15) 0%, rgba(168, 139, 250, 0.15) 100%);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #7490ff;
+}
+
+.velvz-crawling-config__subtitle {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    line-height: 1.5;
+    padding-left: 42px; /* Alineado con el título */
+}
+
+.velvz-crawling-form {
+    padding: 24px;
+}
+
+/* Label dentro del formulario de crawling */
+.velvz-crawling-form .velvz-form__label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e5e7eb;
+    margin-bottom: 0.75rem;
+}
+
+.velvz-crawling-form .velvz-form__label i {
+    color: #7490ff;
+    font-size: 0.85rem;
+}
+
+.velvz-crawling-form .velvz-form__required {
+    color: #f59e0b;
+    font-weight: 600;
+}
+
+/* Texto de ayuda dentro del formulario */
+.velvz-crawling-form .velvz-form__help {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+/* Crawling Input Wrapper */
+.velvz-crawling-input-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+}
+
+/* Input de URL estilizado para tema oscuro - Mayor especificidad */
+#crawlingUrl,
+input.velvz-crawling-input,
+.velvz-form__input.velvz-crawling-input {
+    flex: 1;
+    padding: 14px 18px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    color: #e5e7eb !important;
+    transition: all 0.25s ease;
+    outline: none !important;
+    height: 46px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#crawlingUrl::placeholder,
+input.velvz-crawling-input::placeholder,
+.velvz-form__input.velvz-crawling-input::placeholder {
+    color: #9ca3af !important;
+    opacity: 0.7;
+}
+
+#crawlingUrl:hover,
+input.velvz-crawling-input:hover,
+.velvz-form__input.velvz-crawling-input:hover {
+    border-color: rgba(116, 144, 255, 0.5) !important;
+    background: rgba(116, 144, 255, 0.08) !important;
+}
+
+#crawlingUrl:focus,
+input.velvz-crawling-input:focus,
+.velvz-form__input.velvz-crawling-input:focus {
+    border-color: #7490ff !important;
+    box-shadow: 0 0 0 3px rgba(116, 144, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Botón Analizar - Tema oscuro con gradiente azul/violeta */
+#analyzeDomainBtn,
+.velvz-crawling-analyze-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 46px;
+    box-shadow: 0 4px 14px rgba(102, 126, 234, 0.35);
+    letter-spacing: 0.3px;
+}
+
+#analyzeDomainBtn:hover,
+.velvz-crawling-analyze-btn:hover {
+    background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%) !important;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+    transform: translateY(-2px);
+}
+
+#analyzeDomainBtn:active,
+.velvz-crawling-analyze-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+#analyzeDomainBtn:disabled,
+.velvz-crawling-analyze-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Advanced Options - Rediseño Elegante */
+.velvz-crawling-advanced {
+    margin-top: 24px;
+    border: 1px solid rgba(116, 144, 255, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(116, 144, 255, 0.03) 0%, rgba(168, 139, 250, 0.03) 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.velvz-crawling-advanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--dark-accent, #7490ff) 0%, #a78bfa 100%);
+    opacity: 0.6;
+}
+
+.velvz-crawling-advanced__toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 24px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-text, #e5e7eb);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.velvz-crawling-advanced__toggle:hover {
+    background: rgba(116, 144, 255, 0.05);
+}
+
+.velvz-crawling-advanced__toggle i:first-child {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(116, 144, 255, 0.15) 0%, rgba(168, 139, 250, 0.15) 100%);
+    border-radius: 10px;
+    color: var(--dark-accent, #7490ff);
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.velvz-crawling-advanced__toggle:hover i:first-child {
+    background: linear-gradient(135deg, rgba(116, 144, 255, 0.25) 0%, rgba(168, 139, 250, 0.25) 100%);
+}
+
+.velvz-crawling-advanced__arrow {
+    margin-left: auto;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--dark-text-secondary, #9ca3af);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.velvz-crawling-advanced__toggle:hover .velvz-crawling-advanced__arrow {
+    background: rgba(116, 144, 255, 0.15);
+    color: var(--dark-accent, #7490ff);
+}
+
+.velvz-crawling-advanced__toggle[aria-expanded="true"] .velvz-crawling-advanced__arrow {
+    transform: rotate(180deg);
+    background: rgba(116, 144, 255, 0.2);
+    color: var(--dark-accent, #7490ff);
+}
+
+.velvz-crawling-advanced__content {
+    padding: 24px;
+    border-top: 1px solid rgba(116, 144, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+    animation: advancedSlideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes advancedSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom Select para Opciones Avanzadas */
+.velvz-custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.velvz-custom-select__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-text, #e5e7eb);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.velvz-custom-select__trigger:hover {
+    border-color: rgba(116, 144, 255, 0.4);
+    background: rgba(116, 144, 255, 0.05);
+}
+
+.velvz-custom-select__trigger:focus,
+.velvz-custom-select--open .velvz-custom-select__trigger {
+    border-color: var(--dark-accent, #7490ff);
+    box-shadow: 0 0 0 3px rgba(116, 144, 255, 0.15);
+}
+
+.velvz-custom-select__value {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.velvz-custom-select__icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(116, 144, 255, 0.15) 0%, rgba(168, 139, 250, 0.15) 100%);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--dark-accent, #7490ff);
+}
+
+.velvz-custom-select__arrow {
+    font-size: 10px;
+    color: var(--dark-text-secondary, #9ca3af);
+    transition: transform 0.25s ease;
+}
+
+.velvz-custom-select--open .velvz-custom-select__arrow {
+    transform: rotate(180deg);
+}
+
+.velvz-custom-select__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--dark-bg-secondary, #1e293b);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.velvz-custom-select--open .velvz-custom-select__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.velvz-custom-select__option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--dark-text, #e5e7eb);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.velvz-custom-select__option:last-child {
+    border-bottom: none;
+}
+
+.velvz-custom-select__option:hover {
+    background: rgba(116, 144, 255, 0.1);
+}
+
+.velvz-custom-select__option--selected {
+    background: rgba(116, 144, 255, 0.15);
+    color: var(--dark-accent, #7490ff);
+}
+
+.velvz-custom-select__option-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(116, 144, 255, 0.1);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--dark-accent, #7490ff);
+}
+
+.velvz-custom-select__option--selected .velvz-custom-select__option-icon {
+    background: var(--dark-accent, #7490ff);
+    color: white;
+}
+
+.velvz-custom-select__option-text {
+    flex: 1;
+}
+
+.velvz-custom-select__option-desc {
+    font-size: 12px;
+    color: var(--dark-text-secondary, #9ca3af);
+    margin-top: 2px;
+}
+
+.velvz-custom-select__check {
+    opacity: 0;
+    color: var(--dark-accent, #7490ff);
+    font-size: 12px;
+    transition: opacity 0.2s ease;
+}
+
+.velvz-custom-select__option--selected .velvz-custom-select__check {
+    opacity: 1;
+}
+
+/* Grupo de opciones con layout mejorado */
+.velvz-crawling-advanced .velvz-form__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.velvz-crawling-advanced .velvz-form__group {
+    margin-bottom: 0;
+}
+
+.velvz-crawling-advanced .velvz-form__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark-text, #e5e7eb);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.velvz-crawling-advanced .velvz-form__label i {
+    color: var(--dark-accent, #7490ff);
+    font-size: 12px;
+}
+
+.velvz-crawling-advanced .velvz-form__help {
+    font-size: 12px;
+    color: var(--dark-text-secondary, #9ca3af);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.velvz-crawling-advanced .velvz-form__help::before {
+    content: '\f05a';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+/* Sección de tipos de contenido - separador arriba */
+.velvz-crawling-advanced__content > .velvz-form__group:nth-child(2) {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Sección de patrones a excluir - separador arriba */
+.velvz-crawling-advanced__content > .velvz-form__group:nth-child(3) {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Textarea mejorado */
+.velvz-crawling-advanced .velvz-form__textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'Monaco', 'Menlo', monospace;
+    color: var(--dark-text, #e5e7eb);
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.25s ease;
+}
+
+.velvz-crawling-advanced .velvz-form__textarea:focus {
+    border-color: var(--dark-accent, #7490ff);
+    box-shadow: 0 0 0 3px rgba(116, 144, 255, 0.15);
+    outline: none;
+}
+
+.velvz-crawling-advanced .velvz-form__textarea::placeholder {
+    color: var(--dark-text-secondary, #9ca3af);
+    opacity: 0.6;
+}
+
+/* Responsive para opciones avanzadas */
+@media (max-width: 768px) {
+    .velvz-crawling-advanced .velvz-form__row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .velvz-crawling-advanced__content {
+        padding: 16px;
+    }
+
+    .velvz-crawling-advanced__toggle {
+        padding: 14px 16px;
+    }
+}
+
+/* Checkbox Grid - Rediseño Elegante */
+.velvz-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.velvz-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.25s ease;
+}
+
+.velvz-checkbox-item:hover {
+    background: rgba(116, 144, 255, 0.05);
+    border-color: rgba(116, 144, 255, 0.3);
+}
+
+.velvz-checkbox-item input[type="checkbox"] {
+    display: none;
+}
+
+.velvz-checkbox-item__checkmark {
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.velvz-checkbox-item input[type="checkbox"]:checked + .velvz-checkbox-item__checkmark {
+    background: linear-gradient(135deg, var(--dark-accent, #7490ff) 0%, #a78bfa 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(116, 144, 255, 0.3);
+}
+
+.velvz-checkbox-item input[type="checkbox"]:checked + .velvz-checkbox-item__checkmark::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: white;
+    font-size: 11px;
+    animation: checkPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes checkPop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.velvz-checkbox-item__text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-text, #e5e7eb);
+    transition: color 0.25s ease;
+}
+
+.velvz-checkbox-item:hover .velvz-checkbox-item__text {
+    color: var(--dark-accent, #7490ff);
+}
+
+.velvz-checkbox-item:hover .velvz-checkbox-item__checkmark {
+    border-color: rgba(116, 144, 255, 0.5);
+    background: rgba(116, 144, 255, 0.1);
+}
+
+.velvz-checkbox-item input[type="checkbox"]:checked ~ .velvz-checkbox-item__text {
+    color: var(--dark-accent, #7490ff);
+}
+
+/* Responsive para checkboxes */
+@media (max-width: 600px) {
+    .velvz-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Crawling Preview */
+.velvz-crawling-preview {
+    background: var(--color-background);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.velvz-crawling-preview__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--color-background-soft);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.velvz-crawling-preview__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.velvz-crawling-preview__count {
+    padding: 4px 8px;
+    background: var(--color-primary-lighter);
+    color: var(--color-primary-dark);
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.velvz-crawling-preview__content {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+
+.velvz-crawling-preview__url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-border-lighter);
+    font-size: 14px;
+}
+
+.velvz-crawling-preview__url:last-child {
+    border-bottom: none;
+}
+
+.velvz-crawling-preview__url-icon {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    width: 16px;
+}
+
+.velvz-crawling-preview__url-text {
+    color: var(--color-text);
+    word-break: break-all;
+}
+
+.velvz-crawling-preview__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--color-background-soft);
+    border-top: 1px solid var(--color-border-light);
+}
+
+/* Crawling Progress */
+.velvz-crawling-progress {
+    background: var(--color-background);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.velvz-crawling-progress__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--color-success-light), var(--color-success-lighter));
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.velvz-crawling-progress__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-success-dark);
+}
+
+.velvz-crawling-progress__cancel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--color-danger);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.velvz-crawling-progress__cancel:hover {
+    background: var(--color-danger-dark, #dc2626);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.velvz-crawling-progress__bar {
+    height: 6px;
+    background: var(--color-background-soft);
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.velvz-crawling-progress__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-success), var(--color-success-light));
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.velvz-crawling-progress__stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+}
+
+.velvz-crawling-progress__stat {
+    font-weight: 500;
+}
+
+.velvz-crawling-progress__current {
+    padding: 0 20px 16px 20px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    word-break: break-all;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .velvz-crawling-input-wrapper {
+        flex-direction: column;
+    }
+    
+    .velvz-crawling-analyze-btn {
+        height: auto;
+        align-self: stretch;
+    }
+    
+    .velvz-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .velvz-crawling-preview__actions {
+        flex-direction: column;
+    }
+    
+    .velvz-crawling-progress__stats {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .velvz-crawling-config__header {
+        background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    }
+    
+    .velvz-crawling-progress__header {
+        background: linear-gradient(135deg, var(--color-success-dark), var(--color-success));
+    }
+}
+
+/* Loading States */
+.velvz-crawling-analyze-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.velvz-crawling-analyze-btn.loading {
+    pointer-events: none;
+}
+
+.velvz-crawling-analyze-btn.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Success/Error States */
+.velvz-crawling-input--success {
+    border-color: var(--color-success);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.velvz-crawling-input--error {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Animations */
+.velvz-crawling-preview,
+.velvz-crawling-progress {
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =============================================================================
+   CRAWLING ACTION BUTTONS - Styled for consistency
+   ========================================================================== */
+
+/* Botón Iniciar Extracción - Mismo estilo que botón Guardar */
+.velvz-crawling-preview__actions .velvz-btn--primary#startCrawlingBtn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: 2px solid transparent;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.velvz-crawling-preview__actions .velvz-btn--primary#startCrawlingBtn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+}
+
+/* Botón Cancelar */
+.velvz-crawling-preview__actions .velvz-btn--secondary#cancelCrawlingBtn {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.velvz-crawling-preview__actions .velvz-btn--secondary#cancelCrawlingBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-text-secondary);
+}
+
+/* Botón de quitar URL individual */
+.velvz-crawling-preview__url-remove {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    color: rgba(239, 68, 68, 0.7);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+}
+
+.velvz-crawling-preview__url-remove:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+}
+
+/* Estilo para URLs en preview */
+.velvz-crawling-preview__url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    transition: background 0.2s ease;
+}
+
+.velvz-crawling-preview__url:hover {
+    background: rgba(255, 255, 255, 0.06);
+}

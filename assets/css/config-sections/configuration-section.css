@@ -1,0 +1,1208 @@
+/* =====================================================
+   CONFIGURACIÓN - NUEVO DISEÑO MODERNO
+   Estilo limpio, minimalista y profesional
+   ===================================================== */
+
+/* =====================================================
+   ANIMACIONES DE ENTRADA
+   ===================================================== */
+
+@keyframes cfgSlideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cfgFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* =====================================================
+   SECCIÓN PRINCIPAL - SOBRESCRITURAS CRÍTICAS
+   ===================================================== */
+
+/* Sobrescribir TODOS los estilos base de .velvz-config__section */
+section.velvz-config__section.cfg-section,
+.velvz-config__section.cfg-section {
+    opacity: 1 !important;
+    transform: none !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    min-height: auto !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    /* NOTA: NO usar !important en display para permitir que JS lo controle */
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Quitar hover effects del contenedor principal */
+section.velvz-config__section.cfg-section:hover,
+.velvz-config__section.cfg-section:hover {
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Asegurar que los paneles dentro se muestren correctamente */
+.cfg-section > .cfg-panel {
+    visibility: visible !important;
+    display: block !important;
+}
+
+/* =====================================================
+   PANELES
+   ===================================================== */
+
+.cfg-panel {
+    background: var(--dark-bg-secondary, #1a1a2e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    /* Animación de entrada */
+    opacity: 0;
+    animation: cfgSlideInUp 0.6s ease-out forwards;
+}
+
+/* Animaciones escalonadas para cada panel */
+.cfg-section > .cfg-panel:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.cfg-section > .cfg-panel:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.cfg-section > .cfg-panel:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.cfg-section > .cfg-panel:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.cfg-panel:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.cfg-panel:focus-within {
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Header del panel */
+.cfg-panel__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+    border-bottom: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+}
+
+.cfg-panel__icon {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.cfg-panel__icon--ai {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.cfg-panel__title {
+    flex: 1;
+    min-width: 0;
+}
+
+.cfg-panel__title h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--dark-text, #eee6ff);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.3;
+}
+
+.cfg-panel__title p {
+    font-size: 0.875rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Status indicator en header */
+.cfg-panel__status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.cfg-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: cfgPulse 2s infinite;
+}
+
+.cfg-status-dot--active {
+    background: #10b981;
+}
+
+.cfg-status-dot--inactive {
+    background: #6b7280;
+    animation: none;
+}
+
+.cfg-status-dot--draft {
+    background: #f59e0b;
+    animation: none;
+}
+
+@keyframes cfgPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.cfg-status-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #10b981;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Body del panel */
+.cfg-panel__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* =====================================================
+   BADGE OPENAI
+   ===================================================== */
+
+.cfg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.cfg-badge--openai {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.cfg-badge--openai i {
+    font-size: 0.7rem;
+}
+
+/* =====================================================
+   GRID LAYOUTS
+   ===================================================== */
+
+.cfg-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.cfg-grid--2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+    .cfg-grid--2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   CAMPOS DE FORMULARIO
+   ===================================================== */
+
+.cfg-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cfg-field--highlight {
+    background: rgba(102, 126, 234, 0.03);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.cfg-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.cfg-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--dark-text, #eee6ff);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cfg-label i {
+    color: var(--dark-accent, #667eea);
+    font-size: 0.9rem;
+}
+
+.cfg-required {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.cfg-optional {
+    color: var(--dark-text-secondary, #a5a5c9);
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+.cfg-help-btn {
+    background: transparent;
+    border: none;
+    color: var(--dark-text-secondary, #a5a5c9);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.cfg-help-btn:hover {
+    color: var(--dark-accent, #667eea);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* =====================================================
+   INPUTS
+   ===================================================== */
+
+.cfg-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cfg-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    padding-right: 2.5rem;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 10px;
+    color: var(--dark-text, #eee6ff);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.cfg-input::placeholder {
+    color: var(--dark-text-secondary, #a5a5c9);
+    opacity: 0.6;
+}
+
+.cfg-input:hover {
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+.cfg-input:focus {
+    border-color: var(--dark-accent, #667eea);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    background: var(--dark-bg-secondary, #1a1a2e);
+}
+
+.cfg-input-icon {
+    position: absolute;
+    right: 1rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    font-size: 0.85rem;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.cfg-input:focus + .cfg-input-icon {
+    opacity: 0;
+}
+
+/* =====================================================
+   TEXTAREAS
+   ===================================================== */
+
+.cfg-textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 10px;
+    color: var(--dark-text, #eee6ff);
+    font-size: 0.95rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    transition: all 0.2s ease;
+    outline: none;
+    line-height: 1.5;
+}
+
+.cfg-textarea::placeholder {
+    color: var(--dark-text-secondary, #a5a5c9);
+    opacity: 0.6;
+}
+
+.cfg-textarea:hover {
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+.cfg-textarea:focus {
+    border-color: var(--dark-accent, #667eea);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    background: var(--dark-bg-secondary, #1a1a2e);
+}
+
+.cfg-textarea--large {
+    min-height: 140px;
+}
+
+/* =====================================================
+   HINTS Y FOOTERS
+   ===================================================== */
+
+.cfg-hint {
+    font-size: 0.8rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    line-height: 1.4;
+}
+
+.cfg-field-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.25rem;
+}
+
+.cfg-counter {
+    font-size: 0.75rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    font-weight: 500;
+    flex-shrink: 0;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+
+/* =====================================================
+   SELECTOR DE ESTADO
+   ===================================================== */
+
+.cfg-status-selector {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 10px;
+    padding: 0.375rem;
+}
+
+.cfg-status-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 0.75rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--dark-text-secondary, #a5a5c9);
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.cfg-status-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--dark-text, #eee6ff);
+}
+
+.cfg-status-btn .cfg-status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+/* Estado Activo */
+.cfg-status-btn--active,
+.cfg-status-btn[data-value="active"].cfg-status-btn--selected {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.cfg-status-btn--active .cfg-status-indicator,
+.cfg-status-btn[data-value="active"].cfg-status-btn--selected .cfg-status-indicator {
+    background: #10b981;
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+/* Estado Inactivo seleccionado */
+.cfg-status-btn[data-value="inactive"].cfg-status-btn--selected {
+    background: rgba(107, 114, 128, 0.15);
+    color: #9ca3af;
+}
+
+.cfg-status-btn[data-value="inactive"].cfg-status-btn--selected .cfg-status-indicator {
+    background: #6b7280;
+    opacity: 1;
+}
+
+/* Estado Borrador seleccionado */
+.cfg-status-btn[data-value="draft"].cfg-status-btn--selected {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.cfg-status-btn[data-value="draft"].cfg-status-btn--selected .cfg-status-indicator {
+    background: #f59e0b;
+    opacity: 1;
+}
+
+/* =====================================================
+   SELECTOR DE MODELOS DE IA
+   ===================================================== */
+
+.cfg-models {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cfg-model {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 2px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+.cfg-model input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cfg-model:hover {
+    border-color: rgba(102, 126, 234, 0.4);
+    background: rgba(102, 126, 234, 0.03);
+}
+
+.cfg-model--selected {
+    border-color: var(--dark-accent, #667eea);
+    background: rgba(102, 126, 234, 0.08);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Radio button personalizado */
+.cfg-model__radio {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s ease;
+    margin-top: 2px;
+}
+
+.cfg-model__radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    background: var(--dark-accent, #667eea);
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.cfg-model--selected .cfg-model__radio {
+    border-color: var(--dark-accent, #667eea);
+}
+
+.cfg-model--selected .cfg-model__radio::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Contenido del modelo */
+.cfg-model__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.cfg-model__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.cfg-model__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark-text, #eee6ff);
+}
+
+.cfg-model__tag {
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.cfg-model__tag--recommended {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.15) 100%);
+    color: var(--dark-accent, #667eea);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.cfg-model__tag--economy {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.cfg-model__tag--context {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.cfg-model__desc {
+    font-size: 0.875rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+}
+
+.cfg-model__specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.cfg-model__specs span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+
+.cfg-model__specs i {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 640px) {
+    .cfg-panel__header {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .cfg-panel__status {
+        order: -1;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cfg-badge {
+        margin-left: auto;
+    }
+
+    .cfg-status-selector {
+        flex-direction: column;
+    }
+
+    .cfg-model {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .cfg-model__radio {
+        align-self: flex-start;
+    }
+
+    .cfg-field-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* =====================================================
+   ANIMACIONES (desactivadas para evitar bugs)
+   ===================================================== */
+
+/* Las animaciones se han desactivado temporalmente */
+
+/* Focus visible para accesibilidad */
+.cfg-input:focus-visible,
+.cfg-textarea:focus-visible,
+.cfg-status-btn:focus-visible,
+.cfg-model:focus-visible {
+    outline: 2px solid var(--dark-accent, #667eea);
+    outline-offset: 2px;
+}
+
+/* =====================================================
+   PANEL: CONFIGURACIÓN AVANZADA
+   ===================================================== */
+
+.cfg-panel__icon--settings {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+/* Slider de temperatura */
+.cfg-slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cfg-slider-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cfg-temp-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #a78bfa;
+}
+
+.cfg-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cfg-slider:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.cfg-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+    transition: all 0.2s ease;
+}
+
+.cfg-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5);
+}
+
+.cfg-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+}
+
+.cfg-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+}
+
+.cfg-slider-labels span {
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+}
+
+/* Selector de tokens */
+.cfg-tokens-selector {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 10px;
+    padding: 0.375rem;
+}
+
+.cfg-tokens-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--dark-text-secondary, #a5a5c9);
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.cfg-tokens-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.cfg-tokens-value {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.cfg-tokens-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--dark-text, #eee6ff);
+}
+
+.cfg-tokens-btn--selected {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+}
+
+.cfg-tokens-btn--selected .cfg-tokens-value {
+    opacity: 1;
+}
+
+/* Toggles */
+.cfg-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cfg-toggle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--dark-bg-tertiary, #16213e);
+    border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cfg-toggle:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.cfg-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Switch toggle */
+.cfg-toggle__switch {
+    position: relative;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+    background: var(--dark-border, rgba(255, 255, 255, 0.1));
+    border-radius: 13px;
+    transition: all 0.3s ease;
+}
+
+.cfg-toggle__switch::before {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cfg-toggle input[type="checkbox"]:checked + .cfg-toggle__switch {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.cfg-toggle input[type="checkbox"]:checked + .cfg-toggle__switch::before {
+    transform: translateX(22px);
+}
+
+.cfg-toggle input[type="checkbox"]:focus + .cfg-toggle__switch {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.cfg-toggle__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cfg-toggle__title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--dark-text, #eee6ff);
+}
+
+.cfg-toggle__desc {
+    font-size: 0.8rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    line-height: 1.4;
+}
+
+/* =====================================================
+   PANEL: ZONA DE PELIGRO
+   ===================================================== */
+
+.cfg-panel--danger {
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.cfg-panel--danger:hover {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.cfg-panel__header--danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, transparent 100%);
+    border-bottom-color: rgba(239, 68, 68, 0.15);
+}
+
+.cfg-panel__icon--danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.cfg-danger-box {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.cfg-danger-box__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.cfg-danger-box__header > i {
+    color: #ef4444;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cfg-danger-box__header > div {
+    flex: 1;
+}
+
+.cfg-danger-box__header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fca5a5;
+    margin: 0 0 0.375rem 0;
+}
+
+.cfg-danger-box__header p {
+    font-size: 0.875rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.cfg-danger-box__list {
+    background: rgba(239, 68, 68, 0.03);
+    border: 1px solid rgba(239, 68, 68, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.cfg-danger-box__list-title {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark-text-secondary, #a5a5c9);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.cfg-danger-box__list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.cfg-danger-box__list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+}
+
+.cfg-danger-box__list li i {
+    color: #ef4444;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.cfg-danger-box__confirm {
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.cfg-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cfg-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cfg-checkbox__box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(239, 68, 68, 0.4);
+    border-radius: 5px;
+    background: transparent;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.cfg-checkbox__box::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.7rem;
+    color: white;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.cfg-checkbox input[type="checkbox"]:checked + .cfg-checkbox__box {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+.cfg-checkbox input[type="checkbox"]:checked + .cfg-checkbox__box::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cfg-checkbox:hover .cfg-checkbox__box {
+    border-color: #ef4444;
+}
+
+.cfg-checkbox__text {
+    font-size: 0.875rem;
+    color: var(--dark-text-secondary, #a5a5c9);
+    line-height: 1.4;
+}
+
+.cfg-checkbox--danger .cfg-checkbox__text {
+    color: #fca5a5;
+}
+
+.cfg-danger-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: transparent;
+    border: 2px solid rgba(239, 68, 68, 0.4);
+    border-radius: 10px;
+    color: #ef4444;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: not-allowed;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.cfg-danger-btn i {
+    font-size: 0.85rem;
+}
+
+.cfg-danger-btn--enabled {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.cfg-danger-btn--enabled:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+.cfg-danger-btn--enabled:active {
+    transform: scale(0.98);
+}
+
+/* =====================================================
+   RESPONSIVE ADICIONAL
+   ===================================================== */
+
+@media (max-width: 640px) {
+    .cfg-tokens-selector {
+        flex-wrap: wrap;
+    }
+
+    .cfg-tokens-btn {
+        min-width: calc(50% - 0.25rem);
+    }
+
+    .cfg-toggle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .cfg-toggle__switch {
+        align-self: flex-end;
+    }
+
+    .cfg-danger-box {
+        padding: 1rem;
+    }
+
+    .cfg-danger-box__list ul {
+        grid-template-columns: 1fr;
+    }
+
+    .cfg-danger-btn {
+        width: 100%;
+    }
+}
+
+/* =====================================================
+   COMPATIBILIDAD CON CLASES ANTIGUAS
+   Mantener funcionando el JS existente
+   ===================================================== */
+
+/* El selector de estado ahora usa cfg-status-btn--selected en lugar del custom select */
+.velvz-custom-select__option--selected {
+    font-weight: 500;
+}

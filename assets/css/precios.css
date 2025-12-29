@@ -1,0 +1,774 @@
+/* =====================================================
+   PÁGINA DE PRECIOS: BREATHING MINIMALISM STYLE
+   ===================================================== */
+
+/* HEADER CON FONDO AL HACER SCROLL */
+.velvz-header--scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.velvz-precios {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8rem 0 4rem;
+    overflow: hidden;
+    z-index: 10;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.velvz-precios__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+/* =====================================================
+   HEADER DE PRECIOS
+   ===================================================== */
+
+.velvz-precios__header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.velvz-precios__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(51, 51, 51, 0.05);
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #666;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.velvz-precios__badge-dot {
+    width: 6px;
+    height: 6px;
+    background: #667eea;
+    border-radius: 50%;
+    animation: velvzBadgePulse 2s ease-in-out infinite;
+}
+
+.velvz-precios__title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+.velvz-precios__subtitle {
+    font-size: 1.125rem;
+    color: #666;
+    max-width: 60ch;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.6s forwards;
+}
+
+/* =====================================================
+   TOGGLE DE FACTURACIÓN (ESTILO CONTACTO)
+   ===================================================== */
+
+.velvz-precios__billing-toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: velvzFadeInUp 0.8s ease-out 0.8s forwards;
+}
+
+.velvz-precios__billing-toggle {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 60px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0;
+    position: relative;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    animation: velvzToggleBreathe 8s ease-in-out infinite;
+    min-width: 480px;
+}
+
+.velvz-precios__billing-option {
+    background: transparent;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    position: relative;
+    z-index: 2;
+    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.velvz-precios__billing-option--monthly {
+    color: white;
+}
+
+.velvz-precios__billing-option--annual {
+    color: #666;
+}
+
+.velvz-precios__discount-label {
+    background: #ff6b35;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+
+.velvz-precios__billing-slider {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: calc(50% - 0.5rem);
+    height: calc(100% - 1rem);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    z-index: 1;
+}
+
+.velvz-precios__billing-toggle--annual .velvz-precios__billing-slider {
+    transform: translateX(calc(100% + 0.2rem));
+}
+
+.velvz-precios__billing-toggle--annual .velvz-precios__billing-option--monthly {
+    color: #666;
+}
+
+.velvz-precios__billing-toggle--annual .velvz-precios__billing-option--annual {
+    color: white;
+}
+
+@keyframes velvzToggleBreathe {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    }
+    50% { 
+        transform: scale(1.005); 
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* =====================================================
+   GRID DE PLANES
+   ===================================================== */
+
+.velvz-precios__plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2rem;
+    margin-bottom: 6rem;
+    align-items: stretch;
+}
+
+.velvz-precios__plan {
+    position: relative;
+    border-radius: 28px;
+    padding: 3rem;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 650px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ANIMACIÓN DE APARICIÓN AL CAMBIAR PRECIOS */
+.velvz-precios__plan--animating {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.velvz-precios__plan--animating.velvz-precios__plan--show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.velvz-precios__plan::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(102, 126, 234, 0.05) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.velvz-precios__plan:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.velvz-precios__plan:hover::before {
+    opacity: 1;
+}
+
+/* STARTER PLAN - BLANCO Y GRIS ÚNICAMENTE */
+.velvz-precios__plan--starter {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.velvz-precios__plan--starter .velvz-precios__plan-feature-icon {
+    background: #6b7280;
+    border: none;
+}
+
+.velvz-precios__plan--starter .velvz-precios__plan-feature-icon::after {
+    content: '✓';
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* PROFESSIONAL PLAN - PLATEADO CON ETIQUETA DISCRETA */
+.velvz-precios__plan--professional {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(203, 213, 225, 0.6);
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.velvz-precios__plan--professional::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(148, 163, 184, 0.1) 0%, rgba(203, 213, 225, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.velvz-precios__plan--professional:hover::before {
+    opacity: 1;
+}
+
+/* ENTERPRISE PLAN - NEGRO Y DORADO */
+.velvz-precios__plan--enterprise {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 1px solid #333;
+    color: white;
+}
+
+.velvz-precios__plan--enterprise .velvz-precios__plan-name,
+.velvz-precios__plan--enterprise .velvz-precios__plan-amount,
+.velvz-precios__plan--enterprise .velvz-precios__plan-currency {
+    color: #ffd700;
+}
+
+.velvz-precios__plan--enterprise .velvz-precios__plan-description,
+.velvz-precios__plan--enterprise .velvz-precios__plan-period,
+.velvz-precios__plan--enterprise .velvz-precios__plan-feature-text {
+    color: #ccc;
+}
+
+.velvz-precios__plan--enterprise .velvz-precios__plan-feature-icon {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+}
+
+/* ETIQUETA DISCRETA MÁS POPULAR */
+.velvz-precios__plan-popular-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);
+}
+
+/* BADGE MÁS POPULAR - ELIMINAR EL ANTERIOR */
+.velvz-precios__plan-badge {
+    display: none;
+}
+
+.velvz-precios__plan-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.velvz-precios__plan-name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.75rem;
+}
+
+.velvz-precios__plan-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.velvz-precios__plan-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.velvz-precios__plan-amount {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    line-height: 1;
+    transition: all 0.3s ease;
+}
+
+.velvz-precios__plan-currency {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.velvz-precios__plan-period {
+    font-size: 1rem;
+    color: #888;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.velvz-precios__plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem 0;
+    flex: 1;
+}
+
+.velvz-precios__plan-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.velvz-precios__plan--enterprise .velvz-precios__plan-feature {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.velvz-precios__plan-feature:last-child {
+    border-bottom: none;
+}
+
+.velvz-precios__plan-feature-icon {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.velvz-precios__plan-feature-icon::after {
+    content: '✓';
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.velvz-precios__plan-feature-text {
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* CONTENEDOR DE BOTONES PARA ALINEACIÓN */
+.velvz-precios__plan-cta-container {
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+.velvz-precios__plan-cta {
+    width: 100%;
+    background: transparent;
+    color: #333;
+    border: 2px solid rgba(51, 51, 51, 0.2);
+    padding: 1.25rem 2rem;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.velvz-precios__plan-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.velvz-precios__plan-cta:hover {
+    background: #333;
+    color: white;
+    border-color: #333;
+    box-shadow: 0 4px 16px rgba(51, 51, 51, 0.3);
+    transform: translateY(-2px);
+}
+
+.velvz-precios__plan-cta:hover::before {
+    left: 100%;
+}
+
+/* BOTÓN PROFESIONAL */
+.velvz-precios__plan--professional .velvz-precios__plan-cta {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.velvz-precios__plan--professional .velvz-precios__plan-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+/* BOTÓN ENTERPRISE */
+.velvz-precios__plan--enterprise .velvz-precios__plan-cta {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+    color: #1a1a1a;
+    border: none;
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+    font-weight: 700;
+}
+
+.velvz-precios__plan--enterprise .velvz-precios__plan-cta:hover {
+    background: linear-gradient(135deg, #ffed4a 0%, #fbbf24 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4);
+}
+
+/* =====================================================
+   SECCIÓN DE FAQ
+   ===================================================== */
+
+.velvz-precios__faq {
+    margin-top: 4rem;
+    padding: 0;
+}
+
+.velvz-precios__faq-title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+}
+
+.velvz-precios__faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.velvz-precios__faq-item {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.velvz-precios__faq-item:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.velvz-precios__faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: color 0.3s ease;
+    font-family: inherit;
+}
+
+.velvz-precios__faq-question:hover {
+    color: #667eea;
+}
+
+.velvz-precios__faq-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    color: #667eea;
+}
+
+.velvz-precios__faq-item--active .velvz-precios__faq-icon {
+    transform: rotate(180deg);
+}
+
+.velvz-precios__faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.velvz-precios__faq-item--active .velvz-precios__faq-answer {
+    max-height: 200px;
+}
+
+.velvz-precios__faq-answer-content {
+    padding: 0 2rem 1.5rem 2rem;
+    color: #666;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* =====================================================
+   ELEMENTOS AMBIENTALES
+   ===================================================== */
+
+.velvz-precios__ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.velvz-precios__ambient-pulse {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: velvzAmbientPulse 20s ease-in-out infinite;
+}
+
+.velvz-precios__ambient-pulse:nth-child(1) {
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.velvz-precios__ambient-pulse:nth-child(2) {
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 10s;
+}
+
+.velvz-precios__ambient-pulse:nth-child(3) {
+    top: 60%;
+    left: 70%;
+    animation-delay: 5s;
+}
+
+.velvz-precios__ambient-pulse:nth-child(4) {
+    bottom: 50%;
+    left: 20%;
+    animation-delay: 7.5s;
+}
+
+@keyframes velvzAmbientPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.3; 
+    }
+    50% { 
+        transform: scale(1.2); 
+        opacity: 0.1; 
+    }
+}
+
+/* =====================================================
+   ANIMACIONES GENERALES
+   ===================================================== */
+
+@keyframes velvzFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes velvzBadgePulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+    50% { 
+        transform: scale(1.1); 
+        opacity: 0.8; 
+    }
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1024px) {
+    .velvz-precios__billing-toggle {
+        min-width: 420px;
+    }
+    
+    .velvz-precios__plans {
+        gap: 2rem;
+    }
+    
+    .velvz-precios__plan {
+        padding: 2.5rem;
+    }
+}
+
+@media (max-width: 895px) {
+    .velvz-precios__plans {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 480px;
+        margin: 0 auto 6rem auto;
+    }
+    
+    .velvz-precios__billing-toggle {
+        min-width: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .velvz-precios {
+        padding: 6rem 0 3rem;
+    }
+    
+    .velvz-precios__container {
+        padding: 0 1rem;
+    }
+    
+    .velvz-precios__plan {
+        padding: 2rem;
+        border-radius: 20px;
+        min-height: auto;
+    }
+    
+    .velvz-precios__plan-amount {
+        font-size: 3rem;
+    }
+    
+    .velvz-precios__plan-currency {
+        font-size: 1.5rem;
+    }
+    
+    .velvz-precios__faq-question {
+        padding: 1.25rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .velvz-precios__faq-answer-content {
+        padding: 0 1.5rem 1.25rem 1.5rem;
+    }
+    
+    /* TOGGLE VERTICAL EN MÓVIL */
+    .velvz-precios__billing-toggle {
+        flex-direction: column;
+        min-width: 300px;
+        max-width: 340px;
+        padding: 0.4rem;
+        height: auto;
+        border-radius: 20px;
+    }
+    
+    .velvz-precios__billing-option {
+        padding: 1rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+        flex: none;
+        height: 54px;
+        border-radius: 16px;
+    }
+    
+    .velvz-precios__billing-slider {
+        width: calc(100% - 0.8rem);
+        height: calc(50% - 0.8rem);
+        top: 0.4rem;
+        left: 0.4rem;
+        transform: translateY(0);
+        border-radius: 16px;
+    }
+    
+    .velvz-precios__billing-toggle--annual .velvz-precios__billing-slider {
+        transform: translateY(100%);
+    }
+    
+    /* Ocultar elementos ambientales en móvil */
+    .velvz-precios__ambient-pulse {
+        display: none;
+    }
+}
