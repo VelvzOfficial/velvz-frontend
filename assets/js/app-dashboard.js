@@ -119,6 +119,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Configurar menú móvil
     setupMobileMenu();
+
+    // Configurar selector de servicios
+    setupServiceSelector();
+  }
+
+  function setupServiceSelector() {
+    const selector = document.getElementById('serviceSelector');
+    const trigger = document.getElementById('serviceTrigger');
+
+    if (!selector || !trigger) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selector.classList.toggle('service-selector--open');
+    });
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!selector.contains(e.target)) {
+        selector.classList.remove('service-selector--open');
+      }
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        selector.classList.remove('service-selector--open');
+      }
+    });
   }
 
   function setupUserAvatar(user) {

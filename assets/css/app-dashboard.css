@@ -121,12 +121,122 @@ body {
     padding: 0.6rem 1.2rem;
 }
 
-.velvz-header__island--cta { 
+.velvz-header__island--cta {
     animation-delay: 2.7s;
     background: rgba(26, 26, 46, 0.85);
     border: 1px solid var(--dark-border);
     padding: 0.8rem;
     flex-shrink: 0;
+}
+
+/* SERVICE SELECTOR */
+.velvz-header__island--services {
+    animation-delay: 0.6s;
+    padding: 0.5rem;
+    flex-shrink: 0;
+}
+
+.service-selector {
+    position: relative;
+}
+
+.service-selector__trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--dark-text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.service-selector__trigger:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.service-selector__icon {
+    color: var(--dark-accent);
+}
+
+.service-selector__arrow {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    transition: transform 0.2s ease;
+}
+
+.service-selector--open .service-selector__arrow {
+    transform: rotate(180deg);
+}
+
+.service-selector__dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    min-width: 200px;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 100;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.service-selector--open .service-selector__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.service-selector__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--dark-text-secondary);
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.service-selector__item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--dark-text);
+}
+
+.service-selector__item--active {
+    background: rgba(102, 126, 234, 0.15);
+    color: var(--dark-accent);
+}
+
+.service-selector__item--active i {
+    color: var(--dark-accent);
+}
+
+.service-selector__item--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.service-selector__badge {
+    margin-left: auto;
+    padding: 0.15rem 0.5rem;
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    font-size: 0.65rem;
+    font-weight: 600;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 @keyframes velvzHeaderBreathe {
