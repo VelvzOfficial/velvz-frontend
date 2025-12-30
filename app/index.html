@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velvz App - Dashboard</title>
+    <title>Velvz - Centro de Control</title>
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -12,24 +12,283 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- CSS -->
+    <!-- CSS Base -->
     <link rel="stylesheet" href="/assets/css/app-dashboard.css">
-    
+
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
+
+    <style>
+        /* Hub specific styles */
+        .hub-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 140px 2rem 4rem;
+        }
+
+        .hub-welcome {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hub-welcome__greeting {
+            font-size: 1rem;
+            color: var(--dark-text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hub-welcome__title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .hub-welcome__subtitle {
+            font-size: 1rem;
+            color: var(--dark-text-secondary);
+        }
+
+        /* Services Grid */
+        .hub-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .hub-service-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid var(--dark-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hub-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--service-color, var(--primary-gradient));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hub-service-card:hover {
+            border-color: var(--service-color-solid, var(--dark-accent));
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hub-service-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Service card colors */
+        .hub-service-card--chatbots {
+            --service-color: linear-gradient(90deg, #667eea, #764ba2);
+            --service-color-solid: #667eea;
+        }
+
+        .hub-service-card--rrhh {
+            --service-color: linear-gradient(90deg, #10b981, #059669);
+            --service-color-solid: #10b981;
+        }
+
+        .hub-service-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .hub-service-card__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            background: var(--service-color, var(--primary-gradient));
+        }
+
+        .hub-service-card__badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hub-service-card__badge--active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .hub-service-card__badge--coming {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .hub-service-card__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .hub-service-card__description {
+            font-size: 0.9rem;
+            color: var(--dark-text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .hub-service-card__stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .hub-service-card__stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hub-service-card__stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        .hub-service-card__stat-label {
+            font-size: 0.75rem;
+            color: var(--dark-text-secondary);
+        }
+
+        .hub-service-card__arrow {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--dark-bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .hub-service-card:hover .hub-service-card__arrow {
+            background: var(--service-color-solid, var(--dark-accent));
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* Coming soon card */
+        .hub-service-card--coming-soon {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .hub-service-card--coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Quick actions */
+        .hub-quick-actions {
+            background: var(--dark-bg-secondary);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+        }
+
+        .hub-quick-actions__title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--dark-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .hub-quick-actions__list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .hub-quick-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--dark-bg-tertiary);
+            border: 1px solid var(--dark-border);
+            border-radius: 8px;
+            color: var(--dark-text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .hub-quick-action:hover {
+            background: var(--dark-accent);
+            border-color: var(--dark-accent);
+            color: white;
+        }
+
+        .hub-quick-action i {
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hub-container {
+                padding: 120px 1rem 2rem;
+            }
+
+            .hub-welcome__title {
+                font-size: 1.5rem;
+            }
+
+            .hub-services {
+                grid-template-columns: 1fr;
+            }
+
+            .hub-service-card {
+                padding: 1.5rem;
+            }
+
+            .hub-quick-actions__list {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- HEADER ACTUALIZADO CON BARRA DE BÚSQUEDA -->
+    <!-- HEADER -->
     <header class="velvz-header">
         <div class="velvz-header__container">
-            <!-- LOGO BRAND ISLAND -->
+            <!-- LOGO + SERVICE SELECTOR -->
             <div class="velvz-header__island velvz-header__island--brand">
                 <a href="/app/" class="velvz-header__logo">
                     <div class="velvz-header__logo-shape">
@@ -40,477 +299,248 @@
                         </div>
                     </div>
                 </a>
+
+                <!-- Service Selector -->
+                <div class="velvz-service-selector" id="serviceSelector">
+                    <button class="velvz-service-selector__trigger" id="serviceSelectorTrigger">
+                        <div class="velvz-service-selector__icon velvz-service-selector__option-icon--hub">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <span class="velvz-service-selector__name">Hub</span>
+                        <i class="fas fa-chevron-down velvz-service-selector__arrow"></i>
+                    </button>
+
+                    <div class="velvz-service-selector__dropdown">
+                        <a href="/app/" class="velvz-service-selector__option velvz-service-selector__option--active">
+                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--hub">
+                                <i class="fas fa-th-large"></i>
+                            </div>
+                            <div class="velvz-service-selector__option-info">
+                                <div class="velvz-service-selector__option-name">Hub</div>
+                                <div class="velvz-service-selector__option-desc">Centro de control</div>
+                            </div>
+                        </a>
+
+                        <div class="velvz-service-selector__divider"></div>
+
+                        <a href="/app/chatbots/" class="velvz-service-selector__option">
+                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--chatbots">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="velvz-service-selector__option-info">
+                                <div class="velvz-service-selector__option-name">Chatbots IA</div>
+                                <div class="velvz-service-selector__option-desc">Asistentes virtuales</div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="velvz-service-selector__option" style="opacity: 0.5; pointer-events: none;">
+                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--rrhh">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="velvz-service-selector__option-info">
+                                <div class="velvz-service-selector__option-name">RRHH IA</div>
+                                <div class="velvz-service-selector__option-desc">Seleccion de personal</div>
+                            </div>
+                            <span class="velvz-service-selector__option-badge velvz-service-selector__option-badge--coming">Pronto</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <!-- BARRA DE BÚSQUEDA ISLAND -->
+            <!-- SEARCH -->
             <div class="velvz-header__island velvz-header__island--search">
                 <div class="velvz-header__search">
-                    <input 
-                        type="text" 
-                        class="velvz-header__search-input" 
-                        placeholder="Buscar chatbots, conversaciones..."
-                        id="headerSearchInput"
+                    <input
+                        type="text"
+                        class="velvz-header__search-input"
+                        placeholder="Buscar en todos los servicios..."
+                        id="globalSearch"
                     >
-                    <i class="fas fa-search velvz-header__search-icon"></i>
+                    <button class="velvz-header__search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- AVATAR DEL USUARIO ISLAND -->
-            <div class="velvz-header__island velvz-header__island--cta">
-                <div class="velvz-header__avatar" id="userAvatar">
-                    <div class="velvz-header__avatar-circle">
-                        U
-                    </div>
-                </div>
-            </div>
-
-            <!-- MOBILE TOGGLE (HAMBURGER) -->
-            <div class="velvz-header__mobile-toggle">
-                <div class="velvz-header__hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- MOBILE MENU ACTUALIZADO -->
-        <div class="velvz-header__mobile-backdrop"></div>
-        <div class="velvz-header__mobile-menu">
-            <button class="velvz-header__mobile-close"></button>
-            
-            <div class="velvz-header__mobile-content">
-                <!-- BÚSQUEDA AL PRINCIPIO -->
-                <div class="velvz-header__mobile-search">
-                    <div class="velvz-header__mobile-search-container">
-                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
-                        <input 
-                            type="text" 
-                            class="velvz-header__mobile-search-input" 
-                            placeholder="Buscar..."
-                            id="mobileSearchInput"
-                        >
-                    </div>
-                </div>
-
-                <!-- SECCIÓN PRINCIPAL -->
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
-                    <a href="/app/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
-                        <i class="velvz-header__mobile-link-icon fas fa-chart-pie"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="/app/chatbots/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
-                        <span>Mis Chatbots</span>
-                    </a>
-                    <a href="/app/analytics/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
-                        <span>Analytics</span>
-                    </a>
-                </div>
-
-                <!-- SECCIÓN CONFIGURACIÓN -->
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Configuración</h3>
-                    <a href="/app/settings/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
-                        <span>Configuración</span>
-                    </a>
-                    <a href="/app/billing/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
-                        <span>Facturación</span>
-                    </a>
-                    <a href="/app/help/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-question-circle"></i>
-                        <span>Ayuda</span>
-                    </a>
-                </div>
-
-                <!-- SECCIÓN CUENTA -->
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
-                    <a href="/app/profile/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
-                        <span>Mi Perfil</span>
-                    </a>
-                    <a href="#" class="velvz-header__mobile-link" onclick="handleLogout(); return false;">
-                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
-                        <span>Cerrar Sesión</span>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- TARJETA DE USUARIO AL FINAL -->
-            <div class="velvz-header__mobile-user-card">
-                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
-                    U
-                </div>
-                <div class="velvz-header__mobile-user-info">
-                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
-                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@example.com</div>
-                </div>
+            <!-- USER -->
+            <div class="velvz-header__island velvz-header__island--user">
+                <button class="velvz-header__user" id="userMenuBtn">
+                    <span class="velvz-header__user-avatar" id="userAvatar">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- LAYOUT PRINCIPAL -->
-    <div class="velvz-app">
-        <!-- SIDEBAR -->
-        <aside class="velvz-sidebar">
-            <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Principal</h3>
-                <ul class="velvz-sidebar__menu">
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/" class="velvz-sidebar__link velvz-sidebar__link--active">
-                            <i class="velvz-sidebar__icon fas fa-chart-pie"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/chatbots/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-robot"></i>
-                            <span>Mis Chatbots</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/analytics/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-chart-line"></i>
-                            <span>Analytics</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <!-- MAIN CONTENT -->
+    <main class="hub-container">
+        <!-- Welcome -->
+        <section class="hub-welcome">
+            <p class="hub-welcome__greeting">Bienvenido de nuevo</p>
+            <h1 class="hub-welcome__title" id="welcomeUserName">Cargando...</h1>
+            <p class="hub-welcome__subtitle">Selecciona un servicio para comenzar</p>
+        </section>
 
-            <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Configuración</h3>
-                <ul class="velvz-sidebar__menu">
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/settings/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-cog"></i>
-                            <span>Configuración</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/billing/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-credit-card"></i>
-                            <span>Facturación</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/help/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-question-circle"></i>
-                            <span>Ayuda</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Cuenta</h3>
-                <ul class="velvz-sidebar__menu">
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/profile/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-user"></i>
-                            <span>Mi Perfil</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="#" class="velvz-sidebar__link" onclick="handleLogout(); return false;">
-                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
-                            <span>Cerrar Sesión</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-
-        <!-- CONTENIDO PRINCIPAL -->
-        <main class="velvz-main">
-            <div class="velvz-dashboard">
-                <!-- HEADER DEL DASHBOARD -->
-                <div class="velvz-dashboard__header">
-                    <div class="velvz-dashboard__header-content">
-                        <h1 class="velvz-dashboard__title" id="welcomeTitle">Bienvenido de vuelta</h1>
-                        <p class="velvz-dashboard__subtitle">Aquí tienes un resumen de tu actividad</p>
+        <!-- Services -->
+        <section class="hub-services">
+            <!-- Chatbots -->
+            <a href="/app/chatbots/" class="hub-service-card hub-service-card--chatbots">
+                <div class="hub-service-card__header">
+                    <div class="hub-service-card__icon">
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <a href="/app/chatbots/new/" class="velvz-dashboard__cta">
-                        <i class="fas fa-plus"></i>
-                        <span>Nuevo Chatbot</span>
-                    </a>
+                    <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
                 </div>
-
-                <!-- MÉTRICAS PRINCIPALES -->
-                <div class="velvz-metrics">
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--primary">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="3">0</span>
-                            <span class="velvz-metric__label">Chatbots Activos</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+1 este mes</span>
-                        </div>
+                <h2 class="hub-service-card__title">Chatbots IA</h2>
+                <p class="hub-service-card__description">
+                    Crea asistentes virtuales inteligentes entrenados con tus documentos.
+                    Responden preguntas de clientes 24/7.
+                </p>
+                <div class="hub-service-card__stats">
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value" id="chatbotsCount">-</span>
+                        <span class="hub-service-card__stat-label">Chatbots</span>
                     </div>
-
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--success">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="847">0</span>
-                            <span class="velvz-metric__label">Conversaciones</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+23%</span>
-                        </div>
-                    </div>
-
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--warning">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="4.8" data-decimals="1">0</span>
-                            <span class="velvz-metric__label">Satisfacción</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--neutral">
-                            <i class="fas fa-minus"></i>
-                            <span>Estable</span>
-                        </div>
-                    </div>
-
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--info">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="1.2" data-decimals="1">0</span><span class="velvz-metric__suffix">s</span>
-                            <span class="velvz-metric__label">Tiempo de Respuesta</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--up">
-                            <i class="fas fa-arrow-down"></i>
-                            <span>-15%</span>
-                        </div>
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value" id="conversationsCount">-</span>
+                        <span class="hub-service-card__stat-label">Conversaciones</span>
                     </div>
                 </div>
+                <div class="hub-service-card__arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
 
-                <!-- GRÁFICA Y CHATBOTS -->
-                <div class="velvz-dashboard__row">
-                    <!-- GRÁFICA DE CONVERSACIONES -->
-                    <div class="velvz-chart-card">
-                        <div class="velvz-chart-card__header">
-                            <h3 class="velvz-chart-card__title">
-                                <i class="fas fa-chart-area"></i>
-                                Conversaciones (últimos 7 días)
-                            </h3>
-                            <div class="velvz-chart-card__actions">
-                                <button class="velvz-chart-card__btn velvz-chart-card__btn--active" data-period="7d">7D</button>
-                                <button class="velvz-chart-card__btn" data-period="30d">30D</button>
-                                <button class="velvz-chart-card__btn" data-period="90d">90D</button>
-                            </div>
-                        </div>
-                        <div class="velvz-chart-card__body">
-                            <canvas id="conversationsChart"></canvas>
-                        </div>
+            <!-- RRHH -->
+            <div class="hub-service-card hub-service-card--rrhh hub-service-card--coming-soon">
+                <div class="hub-service-card__header">
+                    <div class="hub-service-card__icon">
+                        <i class="fas fa-users"></i>
                     </div>
-
-                    <!-- LISTA DE CHATBOTS -->
-                    <div class="velvz-chatbots-card">
-                        <div class="velvz-chatbots-card__header">
-                            <h3 class="velvz-chatbots-card__title">
-                                <i class="fas fa-robot"></i>
-                                Mis Chatbots
-                            </h3>
-                            <a href="/app/chatbots/" class="velvz-chatbots-card__link">Ver todos</a>
-                        </div>
-                        <div class="velvz-chatbots-card__body">
-                            <div class="velvz-chatbot-item">
-                                <div class="velvz-chatbot-item__avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <div class="velvz-chatbot-item__info">
-                                    <span class="velvz-chatbot-item__name">Soporte Técnico</span>
-                                    <span class="velvz-chatbot-item__stats">234 conversaciones hoy</span>
-                                </div>
-                                <div class="velvz-chatbot-item__status velvz-chatbot-item__status--online">
-                                    <span class="velvz-chatbot-item__dot"></span>
-                                    Activo
-                                </div>
-                            </div>
-
-                            <div class="velvz-chatbot-item">
-                                <div class="velvz-chatbot-item__avatar" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <div class="velvz-chatbot-item__info">
-                                    <span class="velvz-chatbot-item__name">Ventas Online</span>
-                                    <span class="velvz-chatbot-item__stats">156 conversaciones hoy</span>
-                                </div>
-                                <div class="velvz-chatbot-item__status velvz-chatbot-item__status--online">
-                                    <span class="velvz-chatbot-item__dot"></span>
-                                    Activo
-                                </div>
-                            </div>
-
-                            <div class="velvz-chatbot-item">
-                                <div class="velvz-chatbot-item__avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                                    <i class="fas fa-question-circle"></i>
-                                </div>
-                                <div class="velvz-chatbot-item__info">
-                                    <span class="velvz-chatbot-item__name">FAQ Assistant</span>
-                                    <span class="velvz-chatbot-item__stats">89 conversaciones hoy</span>
-                                </div>
-                                <div class="velvz-chatbot-item__status velvz-chatbot-item__status--online">
-                                    <span class="velvz-chatbot-item__dot"></span>
-                                    Activo
-                                </div>
-                            </div>
-                        </div>
+                    <span class="hub-service-card__badge hub-service-card__badge--coming">Proximamente</span>
+                </div>
+                <h2 class="hub-service-card__title">RRHH IA</h2>
+                <p class="hub-service-card__description">
+                    Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
+                    dinamicos y encuentra el talento ideal.
+                </p>
+                <div class="hub-service-card__stats">
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value">-</span>
+                        <span class="hub-service-card__stat-label">Procesos</span>
+                    </div>
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value">-</span>
+                        <span class="hub-service-card__stat-label">Candidatos</span>
                     </div>
                 </div>
-
-                <!-- ACTIVIDAD RECIENTE Y ACCIONES RÁPIDAS -->
-                <div class="velvz-dashboard__row">
-                    <!-- ACTIVIDAD RECIENTE -->
-                    <div class="velvz-activity-card">
-                        <div class="velvz-activity-card__header">
-                            <h3 class="velvz-activity-card__title">
-                                <i class="fas fa-history"></i>
-                                Actividad Reciente
-                            </h3>
-                        </div>
-                        <div class="velvz-activity-card__body">
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--success">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Conversación completada exitosamente</span>
-                                    <span class="velvz-activity-item__meta">Soporte Técnico · hace 2 min</span>
-                                </div>
-                            </div>
-
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--info">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Nuevo usuario registrado desde chatbot</span>
-                                    <span class="velvz-activity-item__meta">Ventas Online · hace 15 min</span>
-                                </div>
-                            </div>
-
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--warning">
-                                    <i class="fas fa-exclamation"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Escalado a agente humano</span>
-                                    <span class="velvz-activity-item__meta">Soporte Técnico · hace 32 min</span>
-                                </div>
-                            </div>
-
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--success">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Valoración 5 estrellas recibida</span>
-                                    <span class="velvz-activity-item__meta">FAQ Assistant · hace 1 hora</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ACCIONES RÁPIDAS -->
-                    <div class="velvz-quick-actions">
-                        <h3 class="velvz-quick-actions__title">Acciones Rápidas</h3>
-                        <div class="velvz-quick-actions__grid">
-                            <a href="/app/chatbots/new/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-plus"></i>
-                                </div>
-                                <span>Crear Chatbot</span>
-                            </a>
-                            <a href="/app/analytics/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-chart-bar"></i>
-                                </div>
-                                <span>Ver Analytics</span>
-                            </a>
-                            <a href="/app/settings/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-cog"></i>
-                                </div>
-                                <span>Configuración</span>
-                            </a>
-                            <a href="/documentacion/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                                <span>Documentación</span>
-                            </a>
-                        </div>
-                    </div>
+                <div class="hub-service-card__arrow">
+                    <i class="fas fa-arrow-right"></i>
                 </div>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <!-- FOOTER OSCURO (IGUAL AL DE LA PÁGINA PRINCIPAL) -->
-    <footer class="velvz-footer">
-        <div class="velvz-footer__container">
-            <div class="velvz-footer__brand">
-                <a href="/" class="velvz-footer__logo-link">
-                    <div class="velvz-footer__logo">
-                        <div class="velvz-footer__logo-shape">
-                            <div class="velvz-footer__logo-face">
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
-                                <div class="velvz-footer__logo-mouth"></div>
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="velvz-footer__brand-name">Velvz</span>
+        <!-- Quick Actions -->
+        <section class="hub-quick-actions">
+            <h3 class="hub-quick-actions__title">Acciones rapidas</h3>
+            <div class="hub-quick-actions__list">
+                <a href="/app/chatbots/config.html" class="hub-quick-action">
+                    <i class="fas fa-plus"></i>
+                    Crear chatbot
                 </a>
-                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+                <a href="/app/chatbots/dashboard.html" class="hub-quick-action">
+                    <i class="fas fa-chart-line"></i>
+                    Ver estadisticas
+                </a>
+                <a href="/app/billing/" class="hub-quick-action">
+                    <i class="fas fa-credit-card"></i>
+                    Facturacion
+                </a>
+                <a href="/cuenta/" class="hub-quick-action">
+                    <i class="fas fa-cog"></i>
+                    Mi cuenta
+                </a>
             </div>
-            
-            <nav class="velvz-footer__links">
-                <a href="/" class="velvz-footer__link">Inicio</a>
-                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
-                <a href="/precios/" class="velvz-footer__link">Precios</a>
-                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
-                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
-            </nav>
-            
-            <div class="velvz-footer__legal">
-                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
-                <div>
-                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
-                    <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
-                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="velvz-footer__ambient">
-            <div class="velvz-footer__pulse"></div>
-            <div class="velvz-footer__pulse"></div>
-        </div>
-    </footer>
+        </section>
+    </main>
 
-    <!-- JavaScript -->
-    <script src="/assets/js/app-dashboard.js"></script>
-    <script src="/assets/js/error-cleanup.js"></script>
-    <!-- API Dashboard -->
-    <script src="/assets/js/dashboard-api.js"></script>
-    <!-- Private App con protección y menú mejorado - DEBE ser el último -->
-    <script src="/assets/js/private-app.js"></script>
+    <script>
+        // Auth check
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check auth
+            if (typeof velvzAuth !== 'undefined') {
+                const isAuthenticated = await velvzAuth.isAuthenticated();
+                if (!isAuthenticated) {
+                    window.location.href = '/cuenta/?redirect=' + encodeURIComponent(window.location.pathname);
+                    return;
+                }
+
+                // Get user info
+                const user = velvzAuth.getUser();
+                if (user) {
+                    document.getElementById('welcomeUserName').textContent = user.name || user.email.split('@')[0];
+
+                    // Set avatar initial
+                    const initial = (user.name || user.email)[0].toUpperCase();
+                    document.getElementById('userAvatar').textContent = initial;
+                }
+            }
+
+            // Load chatbot stats
+            loadChatbotStats();
+        });
+
+        async function loadChatbotStats() {
+            try {
+                const token = localStorage.getItem('velvz_token');
+                if (!token) return;
+
+                const response = await fetch(window.VELVZ_CONFIG?.API_URL + '/api/chatbots', {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const chatbots = data.data || data.chatbots || [];
+                    document.getElementById('chatbotsCount').textContent = chatbots.length;
+
+                    // Calculate total conversations (if available)
+                    let totalConversations = 0;
+                    chatbots.forEach(bot => {
+                        totalConversations += bot.total_conversations || 0;
+                    });
+                    document.getElementById('conversationsCount').textContent = totalConversations;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Service selector toggle
+        const serviceSelector = document.getElementById('serviceSelector');
+        const serviceSelectorTrigger = document.getElementById('serviceSelectorTrigger');
+
+        serviceSelectorTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            serviceSelector.classList.toggle('velvz-service-selector--open');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!serviceSelector.contains(e.target)) {
+                serviceSelector.classList.remove('velvz-service-selector--open');
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                serviceSelector.classList.remove('velvz-service-selector--open');
+            }
+        });
+    </script>
 </body>
 </html>

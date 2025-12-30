@@ -1032,4 +1032,31 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     console.log("🔧 Funciones de debug disponibles en: window.velvzDebug");
   }
+
+  // =====================================================
+  // SERVICE SELECTOR - Toggle dropdown
+  // =====================================================
+  const serviceSelector = document.getElementById('serviceSelector');
+  const serviceSelectorTrigger = document.getElementById('serviceSelectorTrigger');
+
+  if (serviceSelector && serviceSelectorTrigger) {
+    serviceSelectorTrigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      serviceSelector.classList.toggle('velvz-service-selector--open');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!serviceSelector.contains(e.target)) {
+        serviceSelector.classList.remove('velvz-service-selector--open');
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        serviceSelector.classList.remove('velvz-service-selector--open');
+      }
+    });
+  }
 });

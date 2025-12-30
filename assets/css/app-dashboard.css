@@ -105,10 +105,13 @@ body {
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
 }
 
-.velvz-header__island--brand { 
+.velvz-header__island--brand {
     animation-delay: 0s;
     padding: 0.8rem;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .velvz-header__island--search { 
@@ -1760,5 +1763,169 @@ a.velvz-header__logo {
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+/* =====================================================
+   SELECTOR DE SERVICIOS EN HEADER
+   ===================================================== */
+
+.velvz-service-selector {
+    position: relative;
+}
+
+.velvz-service-selector__trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.velvz-service-selector__trigger:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.velvz-service-selector__icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: white;
+    background: var(--service-accent, var(--primary-gradient));
+}
+
+.velvz-service-selector__name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.velvz-service-selector__arrow {
+    font-size: 0.7rem;
+    color: var(--dark-text-secondary);
+    transition: transform 0.2s ease;
+}
+
+.velvz-service-selector--open .velvz-service-selector__arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown */
+.velvz-service-selector__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 220px;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1001;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.velvz-service-selector--open .velvz-service-selector__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.velvz-service-selector__option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--dark-text);
+    transition: all 0.2s ease;
+}
+
+.velvz-service-selector__option:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.velvz-service-selector__option--active {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.velvz-service-selector__option-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: white;
+}
+
+.velvz-service-selector__option-icon--chatbots {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.velvz-service-selector__option-icon--rrhh {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.velvz-service-selector__option-icon--hub {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.velvz-service-selector__option-info {
+    flex: 1;
+}
+
+.velvz-service-selector__option-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.125rem;
+}
+
+.velvz-service-selector__option-desc {
+    font-size: 0.75rem;
+    color: var(--dark-text-secondary);
+}
+
+.velvz-service-selector__option-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.velvz-service-selector__option-badge--coming {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.velvz-service-selector__divider {
+    height: 1px;
+    background: var(--dark-border);
+    margin: 0.5rem 0;
+}
+
+/* Mobile: ocultar nombre, solo icono */
+@media (max-width: 768px) {
+    .velvz-service-selector__name {
+        display: none;
+    }
+
+    .velvz-service-selector__dropdown {
+        left: -50px;
     }
 }
