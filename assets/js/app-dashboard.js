@@ -2,6 +2,8 @@
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
 
+// Selector de servicios se maneja directamente en cada página HTML
+
 // =====================================================
 // VERIFICACIÓN INMEDIATA DE SESIÓN (antes de DOM ready)
 // Si no hay token, redirigir inmediatamente sin mostrar nada
@@ -125,29 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupServiceSelector() {
-    const selector = document.getElementById('serviceSelector');
-    const trigger = document.getElementById('serviceTrigger');
-
-    if (!selector || !trigger) return;
-
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      selector.classList.toggle('service-selector--open');
-    });
-
-    // Cerrar al hacer clic fuera
-    document.addEventListener('click', (e) => {
-      if (!selector.contains(e.target)) {
-        selector.classList.remove('service-selector--open');
-      }
-    });
-
-    // Cerrar con Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        selector.classList.remove('service-selector--open');
-      }
-    });
+    // Selector se maneja directamente en HTML de cada página
   }
 
   function setupUserAvatar(user) {
@@ -1062,30 +1042,4 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("🔧 Funciones de debug disponibles en: window.velvzDebug");
   }
 
-  // =====================================================
-  // SERVICE SELECTOR - Toggle dropdown
-  // =====================================================
-  const serviceSelector = document.getElementById('serviceSelector');
-  const serviceSelectorTrigger = document.getElementById('serviceSelectorTrigger');
-
-  if (serviceSelector && serviceSelectorTrigger) {
-    serviceSelectorTrigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      serviceSelector.classList.toggle('velvz-service-selector--open');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!serviceSelector.contains(e.target)) {
-        serviceSelector.classList.remove('velvz-service-selector--open');
-      }
-    });
-
-    // Close on escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        serviceSelector.classList.remove('velvz-service-selector--open');
-      }
-    });
-  }
 });

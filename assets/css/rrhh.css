@@ -10,6 +10,55 @@
 }
 
 /* =====================================================
+   SIDEBAR - COLOR VERDE PARA RRHH
+   ===================================================== */
+
+/* Solo el item activo tiene color verde, hover es gris como en chatbots */
+.velvz-sidebar__link--active {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #10b981 !important;
+}
+
+.velvz-sidebar__link--active .velvz-sidebar__icon {
+    color: #10b981 !important;
+}
+
+/* =====================================================
+   BREADCRUMBS - IGUAL QUE EN CHATBOTS
+   ===================================================== */
+
+.velvz-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: slideInUp 0.5s ease-out forwards;
+}
+
+.velvz-breadcrumbs__link {
+    color: var(--dark-text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.velvz-breadcrumbs__link:hover {
+    color: var(--dark-accent);
+}
+
+.velvz-breadcrumbs__separator {
+    color: var(--dark-text-secondary);
+    opacity: 0.5;
+    font-size: 0.7rem;
+}
+
+.velvz-breadcrumbs__current {
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+/* =====================================================
    CONTENEDOR PRINCIPAL
    ===================================================== */
 
@@ -522,15 +571,171 @@
 }
 
 /* =====================================================
-   MODAL ESPECÍFICO RRHH
+   SISTEMA DE MODALES
    ===================================================== */
+
+.velvz-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.velvz-modal--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.velvz-modal__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+.velvz-modal__content {
+    position: relative;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.velvz-modal--active .velvz-modal__content {
+    transform: translateY(0) scale(1);
+}
+
+.velvz-modal__content--large {
+    max-width: 700px;
+}
+
+.velvz-modal__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--dark-border);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%);
+}
+
+.velvz-modal__header-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: white;
+    flex-shrink: 0;
+}
 
 .velvz-modal__header-icon--rrhh {
     background: var(--rrhh-gradient);
 }
 
-.velvz-modal__content--large {
-    max-width: 700px;
+.velvz-modal__header-text {
+    flex: 1;
+}
+
+.velvz-modal__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 0.25rem;
+}
+
+.velvz-modal__subtitle {
+    font-size: 0.9rem;
+    color: var(--dark-text-secondary);
+}
+
+.velvz-modal__close {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    color: var(--dark-text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.velvz-modal__close:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--error);
+    color: var(--error);
+}
+
+.velvz-modal__body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.velvz-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--dark-border);
+    background: var(--dark-bg-tertiary);
+}
+
+/* =====================================================
+   BOTONES
+   ===================================================== */
+
+.velvz-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.velvz-btn--ghost {
+    background: transparent;
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text-secondary);
+}
+
+.velvz-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--dark-text-secondary);
+    color: var(--dark-text);
 }
 
 .velvz-btn--rrhh {
@@ -542,6 +747,192 @@
 .velvz-btn--rrhh:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+}
+
+/* =====================================================
+   FORMULARIOS
+   ===================================================== */
+
+.velvz-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.velvz-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.velvz-form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.velvz-form-label i {
+    color: var(--rrhh-primary);
+    font-size: 0.85rem;
+}
+
+.velvz-form-optional {
+    font-weight: 400;
+    color: var(--dark-text-secondary);
+    font-size: 0.8rem;
+}
+
+.velvz-form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--dark-bg-tertiary);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    color: var(--dark-text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.velvz-form-input:focus {
+    outline: none;
+    border-color: var(--rrhh-primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.velvz-form-input::placeholder {
+    color: var(--dark-text-secondary);
+    opacity: 0.7;
+}
+
+.velvz-form-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+.velvz-form-hint {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--dark-text-secondary);
+    margin-top: 0.5rem;
+}
+
+select.velvz-form-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* =====================================================
+   FILTER PILLS
+   ===================================================== */
+
+.velvz-filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 20px;
+    color: var(--dark-text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.velvz-filter-pill:hover {
+    border-color: var(--rrhh-primary);
+    color: var(--dark-text);
+}
+
+.velvz-filter-pill--active {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--rrhh-primary);
+    color: var(--rrhh-primary);
+}
+
+.velvz-filter-pill__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.velvz-filter-pill__dot--active {
+    background: var(--success);
+}
+
+.velvz-filter-pill__dot--inactive {
+    background: var(--error);
+}
+
+.velvz-filter-pill__count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.125rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+}
+
+.velvz-filter-pill--active .velvz-filter-pill__count {
+    background: rgba(16, 185, 129, 0.3);
+}
+
+/* =====================================================
+   LOADING OVERLAY
+   ===================================================== */
+
+.velvz-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.velvz-loading-overlay--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.velvz-loading-overlay__content {
+    text-align: center;
+}
+
+.velvz-loading-overlay__spinner {
+    width: 56px;
+    height: 56px;
+    border: 3px solid var(--dark-border);
+    border-top-color: var(--rrhh-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.5rem;
+}
+
+.velvz-loading-overlay__text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.velvz-loading-overlay__subtitle {
+    font-size: 0.9rem;
+    color: var(--dark-text-secondary);
 }
 
 /* Secciones del formulario */
@@ -592,13 +983,6 @@
     }
 }
 
-/* =====================================================
-   SERVICE SELECTOR ICON COLOR
-   ===================================================== */
-
-.service-selector__icon--rrhh {
-    color: var(--rrhh-primary) !important;
-}
 
 /* =====================================================
    ANIMACIONES

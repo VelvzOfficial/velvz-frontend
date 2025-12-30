@@ -452,7 +452,11 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    const chatbots = data.data || data.chatbots || [];
+                    // Asegurar que chatbots sea un array
+                    let chatbots = data.data || data.chatbots || [];
+                    if (!Array.isArray(chatbots)) {
+                        chatbots = [];
+                    }
                     document.getElementById('chatbotsCount').textContent = chatbots.length;
 
                     // Calculate total conversations (if available)

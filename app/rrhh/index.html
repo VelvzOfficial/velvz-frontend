@@ -41,24 +41,49 @@
                 </a>
             </div>
 
-            <!-- SERVICE SELECTOR -->
-            <div class="velvz-header__island velvz-header__island--services">
-                <div class="service-selector" id="serviceSelector">
-                    <button class="service-selector__trigger" id="serviceTrigger">
-                        <i class="fas fa-users service-selector__icon service-selector__icon--rrhh"></i>
-                        <span class="service-selector__text">RRHH</span>
-                        <i class="fas fa-chevron-down service-selector__arrow"></i>
+            <!-- SERVICE SELECTOR - Simple y funcional -->
+            <div class="velvz-header__island velvz-header__island--services" style="margin-right: 0;">
+                <div style="position: relative;">
+                    <button type="button" id="svcBtn" style="
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.5rem 1rem;
+                        background: transparent;
+                        border: none;
+                        color: var(--dark-text);
+                        font-family: inherit;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                        border-radius: 12px;
+                    ">
+                        <i class="fas fa-users" style="color: #10b981;"></i>
+                        <span>RRHH</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.7rem; opacity: 0.6;"></i>
                     </button>
-                    <div class="service-selector__dropdown" id="serviceDropdown">
-                        <a href="/app/" class="service-selector__item">
+                    <div id="svcDropdown" style="
+                        position: absolute;
+                        top: calc(100% + 8px);
+                        left: 0;
+                        min-width: 200px;
+                        background: #1a1a2e;
+                        border: 1px solid rgba(255,255,255,0.1);
+                        border-radius: 12px;
+                        padding: 0.5rem;
+                        display: none;
+                        z-index: 9999;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                    ">
+                        <a href="/app/" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #a5a5c9; text-decoration: none; border-radius: 8px;">
                             <i class="fas fa-th-large"></i>
                             <span>Hub Central</span>
                         </a>
-                        <a href="/app/chatbots/" class="service-selector__item">
+                        <a href="/app/chatbots/" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #a5a5c9; text-decoration: none; border-radius: 8px;">
                             <i class="fas fa-robot"></i>
                             <span>Chatbots IA</span>
                         </a>
-                        <a href="/app/rrhh/" class="service-selector__item service-selector__item--active">
+                        <a href="/app/rrhh/" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; color: #10b981; text-decoration: none; border-radius: 8px; background: rgba(16,185,129,0.15);">
                             <i class="fas fa-users"></i>
                             <span>RRHH IA</span>
                         </a>
@@ -379,6 +404,7 @@
                 <a href="/" class="velvz-footer__link">Inicio</a>
                 <a href="/servicios/" class="velvz-footer__link">Servicios</a>
                 <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
                 <a href="/contacto/" class="velvz-footer__link">Contacto</a>
             </nav>
 
@@ -583,5 +609,27 @@
     <script src="/assets/js/app-dashboard.js"></script>
     <script src="/assets/js/notifications.js"></script>
     <script src="/assets/js/rrhh.js"></script>
+
+    <!-- Selector de servicios - SIMPLE -->
+    <script>
+    (function() {
+        var btn = document.getElementById('svcBtn');
+        var dropdown = document.getElementById('svcDropdown');
+        var isOpen = false;
+
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            isOpen = !isOpen;
+            dropdown.style.display = isOpen ? 'block' : 'none';
+        });
+
+        document.addEventListener('click', function() {
+            if (isOpen) {
+                isOpen = false;
+                dropdown.style.display = 'none';
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
