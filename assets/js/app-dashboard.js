@@ -1,7 +1,7 @@
 // =====================================================
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
-console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-30-v2');
+console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v1');
 
 // Selector de servicios se maneja directamente en cada página HTML
 
@@ -29,47 +29,38 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("🔍 DEBUG APP-DASHBOARD: Script cargado y ejecutándose");
 
   // =====================================================
-  // INICIALIZAR SELECTOR DE SERVICIOS INMEDIATAMENTE
-  // (No depende de autenticación)
+  // SELECTOR DE SERVICIOS - NUEVO DESDE CERO
   // =====================================================
-  initServiceSelectorImmediate();
-
-  function initServiceSelectorImmediate() {
+  (function initServiceSelector() {
     const selector = document.getElementById('serviceSelector');
-    const trigger = document.getElementById('serviceTrigger');
-    const dropdown = document.getElementById('serviceDropdown');
+    if (!selector) return;
 
-    if (!selector || !trigger || !dropdown) {
-      console.log('⚠️ Selector de servicios no encontrado');
-      return;
-    }
+    const trigger = selector.querySelector('.service-selector__trigger');
+    if (!trigger) return;
 
-    console.log('✅ Inicializando selector de servicios (inmediato)');
-
-    // Toggle dropdown al hacer click en el trigger
+    // Click en el botón: toggle open/close
     trigger.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      const isOpen = selector.classList.toggle('service-selector--open');
-      console.log('🔄 Selector toggle:', isOpen ? 'abierto' : 'cerrado');
+      selector.classList.toggle('open');
     });
 
-    // Cerrar dropdown al hacer click fuera
+    // Click fuera: cerrar
     document.addEventListener('click', function(e) {
       if (!selector.contains(e.target)) {
-        selector.classList.remove('service-selector--open');
+        selector.classList.remove('open');
       }
     });
 
-    // Cerrar dropdown al presionar Escape
+    // Escape: cerrar
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        selector.classList.remove('service-selector--open');
+        selector.classList.remove('open');
       }
     });
 
-    console.log('✅ Selector de servicios listo');
-  }
+    console.log('✅ Selector de servicios inicializado');
+  })();
 
   // =====================================================
   // PROTECCIÓN DE ACCESO - VERIFICAR SESIÓN
@@ -171,8 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupServiceSelector() {
-    // Ya inicializado en initServiceSelectorImmediate()
-    console.log('ℹ️ setupServiceSelector: ya inicializado');
+    // Ya inicializado al inicio del DOMContentLoaded
   }
 
   function setupUserAvatar(user) {
