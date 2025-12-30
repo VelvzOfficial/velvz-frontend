@@ -269,10 +269,9 @@
                             <i class="fas fa-robot"></i>
                             <span>Chatbots IA</span>
                         </a>
-                        <a href="#" class="service-selector__item service-selector__item--disabled">
+                        <a href="/app/rrhh/" class="service-selector__item">
                             <i class="fas fa-users"></i>
                             <span>RRHH IA</span>
-                            <span class="service-selector__badge">Pronto</span>
                         </a>
                     </div>
                 </div>
@@ -342,12 +341,12 @@
             </a>
 
             <!-- RRHH -->
-            <div class="hub-service-card hub-service-card--rrhh hub-service-card--coming-soon">
+            <a href="/app/rrhh/" class="hub-service-card hub-service-card--rrhh">
                 <div class="hub-service-card__header">
                     <div class="hub-service-card__icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <span class="hub-service-card__badge hub-service-card__badge--coming">Pronto</span>
+                    <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
                 </div>
                 <h2 class="hub-service-card__title">RRHH IA</h2>
                 <p class="hub-service-card__description">
@@ -356,18 +355,18 @@
                 </p>
                 <div class="hub-service-card__stats">
                     <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value">-</span>
+                        <span class="hub-service-card__stat-value" id="rrhhProcessesCount">-</span>
                         <span class="hub-service-card__stat-label">Procesos</span>
                     </div>
                     <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value">-</span>
+                        <span class="hub-service-card__stat-value" id="rrhhCandidatesCount">-</span>
                         <span class="hub-service-card__stat-label">Candidatos</span>
                     </div>
                 </div>
                 <div class="hub-service-card__arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
-            </div>
+            </a>
         </section>
     </main>
 
@@ -434,6 +433,9 @@
 
                 // Cargar estadísticas de chatbots
                 loadChatbotStats();
+
+                // Cargar estadísticas de RRHH
+                loadRRHHStats();
             }, 100);
         });
 
@@ -463,6 +465,19 @@
             } catch (error) {
                 console.error('Error loading stats:', error);
             }
+        }
+
+        function loadRRHHStats() {
+            // Cargar estadísticas de RRHH desde localStorage
+            const processes = JSON.parse(localStorage.getItem('velvz_rrhh_processes') || '[]');
+            const activeProcesses = processes.filter(p => p.status === 'active').length;
+            const totalCandidates = processes.reduce((sum, p) => sum + (p.candidates || 0), 0);
+
+            const processesEl = document.getElementById('rrhhProcessesCount');
+            const candidatesEl = document.getElementById('rrhhCandidatesCount');
+
+            if (processesEl) processesEl.textContent = activeProcesses;
+            if (candidatesEl) candidatesEl.textContent = totalCandidates;
         }
     </script>
 </body>

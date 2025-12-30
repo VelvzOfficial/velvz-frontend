@@ -1,0 +1,688 @@
+/* =====================================================
+   PÁGINA DE RRHH IA - ESTILOS ESPECÍFICOS
+   Color principal: Verde (#10b981)
+   ===================================================== */
+
+:root {
+    --rrhh-primary: #10b981;
+    --rrhh-primary-dark: #059669;
+    --rrhh-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+   ===================================================== */
+
+.velvz-rrhh-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* =====================================================
+   HERO HEADER
+   ===================================================== */
+
+.velvz-rrhh-hero {
+    background: linear-gradient(135deg,
+        rgba(16, 185, 129, 0.1) 0%,
+        rgba(5, 150, 105, 0.05) 50%,
+        transparent 100%);
+    border: 1px solid var(--dark-border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.velvz-rrhh-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.velvz-rrhh-hero__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.velvz-rrhh-hero__text {
+    flex: 1;
+}
+
+.velvz-rrhh-hero__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.velvz-rrhh-hero__icon {
+    width: 48px;
+    height: 48px;
+    background: var(--rrhh-gradient);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.velvz-rrhh-hero__subtitle {
+    color: var(--dark-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    max-width: 500px;
+}
+
+.velvz-rrhh-hero__cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--rrhh-gradient);
+    color: white;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+    flex-shrink: 0;
+}
+
+.velvz-rrhh-hero__cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+}
+
+.velvz-rrhh-hero__cta i {
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+   ESTADÍSTICAS
+   ===================================================== */
+
+.velvz-rrhh-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.velvz-rrhh-stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.velvz-rrhh-stat:hover {
+    border-color: var(--rrhh-primary);
+    transform: translateY(-2px);
+}
+
+.velvz-rrhh-stat__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.velvz-rrhh-stat__icon--primary {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--rrhh-primary);
+}
+
+.velvz-rrhh-stat__icon--success {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.velvz-rrhh-stat__icon--info {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+}
+
+.velvz-rrhh-stat__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.velvz-rrhh-stat__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    line-height: 1;
+}
+
+.velvz-rrhh-stat__label {
+    font-size: 0.8rem;
+    color: var(--dark-text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* =====================================================
+   TOOLBAR
+   ===================================================== */
+
+.velvz-rrhh-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out 0.15s forwards;
+}
+
+.velvz-rrhh-toolbar__left {
+    flex: 1;
+    min-width: 200px;
+}
+
+.velvz-rrhh-toolbar__right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.velvz-rrhh-search {
+    position: relative;
+    max-width: 300px;
+    width: 100%;
+}
+
+.velvz-rrhh-search i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-text-secondary);
+    font-size: 0.9rem;
+}
+
+.velvz-rrhh-search__input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    color: var(--dark-text);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.velvz-rrhh-search__input:focus {
+    outline: none;
+    border-color: var(--rrhh-primary);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.velvz-rrhh-search__input::placeholder {
+    color: var(--dark-text-secondary);
+}
+
+.velvz-rrhh-filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* =====================================================
+   CONTENEDOR Y ESTADOS
+   ===================================================== */
+
+.velvz-rrhh-container {
+    min-height: 300px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out 0.2s forwards;
+}
+
+.velvz-rrhh-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    gap: 1rem;
+}
+
+.velvz-rrhh-loading__spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--dark-border);
+    border-top-color: var(--rrhh-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.velvz-rrhh-loading__text {
+    color: var(--dark-text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Estado vacío */
+.velvz-rrhh-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.velvz-rrhh-empty__illustration {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.5rem;
+}
+
+.velvz-rrhh-empty__icon {
+    width: 100%;
+    height: 100%;
+    background: var(--rrhh-gradient);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+    animation: float 3s ease-in-out infinite;
+}
+
+.velvz-rrhh-empty__particles {
+    position: absolute;
+    inset: -20px;
+    pointer-events: none;
+}
+
+.velvz-rrhh-empty__particles span {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--rrhh-primary);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: particle 2s ease-in-out infinite;
+}
+
+.velvz-rrhh-empty__particles span:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.velvz-rrhh-empty__particles span:nth-child(2) {
+    top: 20%;
+    right: 5%;
+    animation-delay: 0.5s;
+}
+
+.velvz-rrhh-empty__particles span:nth-child(3) {
+    bottom: 15%;
+    left: 15%;
+    animation-delay: 1s;
+}
+
+.velvz-rrhh-empty__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.velvz-rrhh-empty__description {
+    color: var(--dark-text-secondary);
+    font-size: 1rem;
+    max-width: 400px;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.velvz-rrhh-empty__cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--rrhh-gradient);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+}
+
+.velvz-rrhh-empty__cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+}
+
+/* =====================================================
+   GRID DE PROCESOS
+   ===================================================== */
+
+.velvz-rrhh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+}
+
+/* =====================================================
+   TARJETA DE PROCESO
+   ===================================================== */
+
+.velvz-process-card {
+    background: var(--dark-bg-secondary);
+    border: 1px solid var(--dark-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.velvz-process-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--rrhh-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.velvz-process-card:hover {
+    border-color: var(--rrhh-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+}
+
+.velvz-process-card:hover::before {
+    transform: scaleX(1);
+}
+
+.velvz-process-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.velvz-process-card__icon {
+    width: 48px;
+    height: 48px;
+    background: var(--rrhh-gradient);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: white;
+}
+
+.velvz-process-card__status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.velvz-process-card__status--active {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.velvz-process-card__status--closed {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--error);
+}
+
+.velvz-process-card__status--paused {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+}
+
+.velvz-process-card__title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.25rem;
+}
+
+.velvz-process-card__department {
+    font-size: 0.85rem;
+    color: var(--dark-text-secondary);
+    margin-bottom: 1rem;
+}
+
+.velvz-process-card__stats {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--dark-border);
+}
+
+.velvz-process-card__stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.velvz-process-card__stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+.velvz-process-card__stat-label {
+    font-size: 0.75rem;
+    color: var(--dark-text-secondary);
+}
+
+/* =====================================================
+   MODAL ESPECÍFICO RRHH
+   ===================================================== */
+
+.velvz-modal__header-icon--rrhh {
+    background: var(--rrhh-gradient);
+}
+
+.velvz-modal__content--large {
+    max-width: 700px;
+}
+
+.velvz-btn--rrhh {
+    background: var(--rrhh-gradient);
+    color: white;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+}
+
+.velvz-btn--rrhh:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+}
+
+/* Secciones del formulario */
+.velvz-form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.velvz-form-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.velvz-form-section__title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 1.25rem;
+}
+
+.velvz-form-section__number {
+    width: 28px;
+    height: 28px;
+    background: var(--rrhh-gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.velvz-form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .velvz-form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   SERVICE SELECTOR ICON COLOR
+   ===================================================== */
+
+.service-selector__icon--rrhh {
+    color: var(--rrhh-primary) !important;
+}
+
+/* =====================================================
+   ANIMACIONES
+   ===================================================== */
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes particle {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .velvz-rrhh-hero {
+        padding: 1.5rem;
+    }
+
+    .velvz-rrhh-hero__content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .velvz-rrhh-hero__title {
+        font-size: 1.5rem;
+    }
+
+    .velvz-rrhh-hero__cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .velvz-rrhh-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .velvz-rrhh-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .velvz-rrhh-toolbar__right {
+        flex-direction: column;
+    }
+
+    .velvz-rrhh-search {
+        max-width: none;
+    }
+
+    .velvz-rrhh-filters {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+
+    .velvz-rrhh-grid {
+        grid-template-columns: 1fr;
+    }
+}
