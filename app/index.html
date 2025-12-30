@@ -18,6 +18,7 @@
 
     <!-- CSS Base -->
     <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+    <link rel="stylesheet" href="/assets/css/inicio.css">
 
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
@@ -28,13 +29,6 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 140px 2rem 4rem;
-            min-height: calc(100vh - 80px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hub-content {
-            flex: 1;
         }
 
         .hub-welcome {
@@ -219,38 +213,6 @@
             box-shadow: none;
         }
 
-        /* Footer */
-        .hub-footer {
-            margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid var(--dark-border);
-            text-align: center;
-        }
-
-        .hub-footer__links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .hub-footer__link {
-            color: var(--dark-text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s ease;
-        }
-
-        .hub-footer__link:hover {
-            color: var(--dark-text);
-        }
-
-        .hub-footer__copyright {
-            color: var(--dark-text-secondary);
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hub-container {
@@ -267,11 +229,6 @@
 
             .hub-service-card {
                 padding: 1.5rem;
-            }
-
-            .hub-footer__links {
-                flex-direction: column;
-                gap: 1rem;
             }
         }
     </style>
@@ -317,86 +274,114 @@
 
     <!-- MAIN CONTENT -->
     <main class="hub-container">
-        <div class="hub-content">
-            <!-- Welcome -->
-            <section class="hub-welcome">
-                <p class="hub-welcome__greeting">Bienvenido de nuevo</p>
-                <h1 class="hub-welcome__title" id="welcomeUserName">Cargando...</h1>
-                <p class="hub-welcome__subtitle">Selecciona un servicio para comenzar</p>
-            </section>
+        <!-- Welcome -->
+        <section class="hub-welcome">
+            <p class="hub-welcome__greeting">Bienvenido de nuevo</p>
+            <h1 class="hub-welcome__title" id="welcomeUserName">Cargando...</h1>
+            <p class="hub-welcome__subtitle">Selecciona un servicio para comenzar</p>
+        </section>
 
-            <!-- Services -->
-            <section class="hub-services">
-                <!-- Chatbots -->
-                <a href="/app/chatbots/" class="hub-service-card hub-service-card--chatbots">
-                    <div class="hub-service-card__header">
-                        <div class="hub-service-card__icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
+        <!-- Services -->
+        <section class="hub-services">
+            <!-- Chatbots -->
+            <a href="/app/chatbots/" class="hub-service-card hub-service-card--chatbots">
+                <div class="hub-service-card__header">
+                    <div class="hub-service-card__icon">
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <h2 class="hub-service-card__title">Chatbots IA</h2>
-                    <p class="hub-service-card__description">
-                        Crea asistentes virtuales inteligentes entrenados con tus documentos.
-                        Responden preguntas de clientes 24/7.
-                    </p>
-                    <div class="hub-service-card__stats">
-                        <div class="hub-service-card__stat">
-                            <span class="hub-service-card__stat-value" id="chatbotsCount">-</span>
-                            <span class="hub-service-card__stat-label">Chatbots</span>
-                        </div>
-                        <div class="hub-service-card__stat">
-                            <span class="hub-service-card__stat-value" id="conversationsCount">-</span>
-                            <span class="hub-service-card__stat-label">Conversaciones</span>
-                        </div>
+                    <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
+                </div>
+                <h2 class="hub-service-card__title">Chatbots IA</h2>
+                <p class="hub-service-card__description">
+                    Crea asistentes virtuales inteligentes entrenados con tus documentos.
+                    Responden preguntas de clientes 24/7.
+                </p>
+                <div class="hub-service-card__stats">
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value" id="chatbotsCount">-</span>
+                        <span class="hub-service-card__stat-label">Chatbots</span>
                     </div>
-                    <div class="hub-service-card__arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- RRHH -->
-                <div class="hub-service-card hub-service-card--rrhh hub-service-card--coming-soon">
-                    <div class="hub-service-card__header">
-                        <div class="hub-service-card__icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <span class="hub-service-card__badge hub-service-card__badge--coming">Pronto</span>
-                    </div>
-                    <h2 class="hub-service-card__title">RRHH IA</h2>
-                    <p class="hub-service-card__description">
-                        Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
-                        dinámicos y encuentra el talento ideal.
-                    </p>
-                    <div class="hub-service-card__stats">
-                        <div class="hub-service-card__stat">
-                            <span class="hub-service-card__stat-value">-</span>
-                            <span class="hub-service-card__stat-label">Procesos</span>
-                        </div>
-                        <div class="hub-service-card__stat">
-                            <span class="hub-service-card__stat-value">-</span>
-                            <span class="hub-service-card__stat-label">Candidatos</span>
-                        </div>
-                    </div>
-                    <div class="hub-service-card__arrow">
-                        <i class="fas fa-arrow-right"></i>
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value" id="conversationsCount">-</span>
+                        <span class="hub-service-card__stat-label">Conversaciones</span>
                     </div>
                 </div>
-            </section>
+                <div class="hub-service-card__arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- RRHH -->
+            <div class="hub-service-card hub-service-card--rrhh hub-service-card--coming-soon">
+                <div class="hub-service-card__header">
+                    <div class="hub-service-card__icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="hub-service-card__badge hub-service-card__badge--coming">Pronto</span>
+                </div>
+                <h2 class="hub-service-card__title">RRHH IA</h2>
+                <p class="hub-service-card__description">
+                    Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
+                    dinámicos y encuentra el talento ideal.
+                </p>
+                <div class="hub-service-card__stats">
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value">-</span>
+                        <span class="hub-service-card__stat-label">Procesos</span>
+                    </div>
+                    <div class="hub-service-card__stat">
+                        <span class="hub-service-card__stat-value">-</span>
+                        <span class="hub-service-card__stat-label">Candidatos</span>
+                    </div>
+                </div>
+                <div class="hub-service-card__arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="hub-footer">
-            <div class="hub-footer__links">
-                <a href="/cuenta/" class="hub-footer__link">Mi cuenta</a>
-                <a href="/app/billing/" class="hub-footer__link">Facturación</a>
-                <a href="/contacto/" class="hub-footer__link">Soporte</a>
-                <a href="/terminos/" class="hub-footer__link">Términos</a>
-                <a href="/privacidad/" class="hub-footer__link">Privacidad</a>
-            </div>
-            <p class="hub-footer__copyright">© 2024 Velvz. Todos los derechos reservados.</p>
-        </footer>
-    </main>
+        <div class="velvz-footer__ambient">
+            <div class="velvz-footer__pulse"></div>
+            <div class="velvz-footer__pulse"></div>
+        </div>
+    </footer>
 
     <script>
         // Auth check
@@ -409,9 +394,10 @@
                     return;
                 }
 
-                // Get user info
-                const user = velvzAuth.getUser();
-                if (user) {
+                // Get user info using getProfile (not getUser)
+                const result = await velvzAuth.getProfile();
+                if (result.success && result.user) {
+                    const user = result.user;
                     document.getElementById('welcomeUserName').textContent = user.name || user.email.split('@')[0];
 
                     // Set avatar initial
@@ -429,7 +415,7 @@
                 const token = localStorage.getItem('velvz_token');
                 if (!token) return;
 
-                const response = await fetch(window.VELVZ_CONFIG?.API_URL + '/api/chatbots', {
+                const response = await fetch(window.API_CONFIG?.API_URL + '/api/chatbots', {
                     headers: {
                         'Authorization': 'Bearer ' + token
                     }
