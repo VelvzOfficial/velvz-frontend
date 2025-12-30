@@ -22,6 +22,9 @@
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
 
+    <!-- Dashboard JS (para menú de usuario) -->
+    <script src="/assets/js/app-dashboard.js" defer></script>
+
     <style>
         /* Hub specific styles */
         .hub-container {
@@ -385,30 +388,27 @@
     </footer>
 
     <script>
-        // Auth check
+        // Hub-specific: cargar stats y nombre de bienvenida
+        // La autenticación y menú de usuario lo maneja app-dashboard.js
         document.addEventListener('DOMContentLoaded', async function() {
-            // Check auth
-            if (typeof velvzAuth !== 'undefined') {
-                const isAuthenticated = await velvzAuth.isAuthenticated();
-                if (!isAuthenticated) {
-                    window.location.href = '/cuenta/?redirect=' + encodeURIComponent(window.location.pathname);
-                    return;
+            // Esperar a que app-dashboard.js verifique la auth
+            // Luego cargar datos específicos del hub
+            setTimeout(async () => {
+                // Actualizar nombre de bienvenida
+                const welcomeName = document.getElementById('welcomeUserName');
+                if (welcomeName) {
+                    const cachedUser = localStorage.getItem('velvz_user');
+                    if (cachedUser) {
+                        try {
+                            const user = JSON.parse(cachedUser);
+                            welcomeName.textContent = user.name || user.email.split('@')[0];
+                        } catch (e) {}
+                    }
                 }
 
-                // Get user info using getProfile (not getUser)
-                const result = await velvzAuth.getProfile();
-                if (result.success && result.user) {
-                    const user = result.user;
-                    document.getElementById('welcomeUserName').textContent = user.name || user.email.split('@')[0];
-
-                    // Set avatar initial
-                    const initial = (user.name || user.email)[0].toUpperCase();
-                    document.getElementById('userInitials').textContent = initial;
-                }
-            }
-
-            // Load chatbot stats
-            loadChatbotStats();
+                // Cargar estadísticas de chatbots
+                loadChatbotStats();
+            }, 100);
         });
 
         async function loadChatbotStats() {
