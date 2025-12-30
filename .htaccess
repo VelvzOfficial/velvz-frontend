@@ -1,0 +1,29 @@
+DirectoryIndex index.html
+
+# Configuración de errores personalizados
+ErrorDocument 404 /404.html
+
+# Redirecciones para mantener URLs limpias (opcional)
+RewriteEngine On
+
+# Redirigir /cuenta/verify a /cuenta/verify.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^/cuenta/verify$
+RewriteRule ^cuenta/verify$ /cuenta/verify.html [L]
+
+# Redirigir /cuenta/reset-password a /cuenta/reset-password.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} ^/cuenta/reset-password$
+RewriteRule ^cuenta/reset-password$ /cuenta/reset-password.html [L]
+
+# Forzar HTTPS (recomendado)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Seguridad adicional
+Options -Indexes
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
