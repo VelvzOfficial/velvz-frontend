@@ -127,7 +127,45 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupServiceSelector() {
-    // Selector se maneja directamente en HTML de cada página
+    const selector = document.getElementById('serviceSelector');
+    const trigger = document.getElementById('serviceTrigger');
+    const dropdown = document.getElementById('serviceDropdown');
+
+    if (!selector || !trigger || !dropdown) {
+      console.log('⚠️ Selector de servicios no encontrado en esta página');
+      return;
+    }
+
+    console.log('✅ Configurando selector de servicios');
+
+    // Toggle dropdown al hacer click en el trigger
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      selector.classList.toggle('service-selector--open');
+      console.log('🔄 Toggle selector:', selector.classList.contains('service-selector--open'));
+    });
+
+    // Cerrar dropdown al hacer click fuera
+    document.addEventListener('click', function(e) {
+      if (!selector.contains(e.target)) {
+        selector.classList.remove('service-selector--open');
+      }
+    });
+
+    // Cerrar dropdown al presionar Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        selector.classList.remove('service-selector--open');
+      }
+    });
+
+    // Cerrar dropdown al hacer click en un item (navegación)
+    const items = dropdown.querySelectorAll('.service-selector__item');
+    items.forEach(item => {
+      item.addEventListener('click', function() {
+        selector.classList.remove('service-selector--open');
+      });
+    });
   }
 
   function setupUserAvatar(user) {
