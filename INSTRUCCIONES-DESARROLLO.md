@@ -41,6 +41,11 @@ El backend está en Railway:
 - **API URL**: Se configura en `assets/js/auth-config.js`
 - **Repositorio**: `VelvzOfficial/velvz-unified-backend`
 
+### Deploy del Backend
+- **Solo Alejandro** gestiona los deploys de Railway
+- Si haces cambios en el backend, haz `git push` y avisa a Alejandro para que haga el deploy
+- El frontend (Hostinger) sí tiene deploy automático con cada `git push`
+
 ## Flujo de Trabajo con Git
 
 ### ANTES de empezar a trabajar (SIEMPRE):
