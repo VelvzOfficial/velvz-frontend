@@ -28,6 +28,49 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("🔍 DEBUG APP-DASHBOARD: Script cargado y ejecutándose");
 
   // =====================================================
+  // INICIALIZAR SELECTOR DE SERVICIOS INMEDIATAMENTE
+  // (No depende de autenticación)
+  // =====================================================
+  initServiceSelectorImmediate();
+
+  function initServiceSelectorImmediate() {
+    const selector = document.getElementById('serviceSelector');
+    const trigger = document.getElementById('serviceTrigger');
+    const dropdown = document.getElementById('serviceDropdown');
+
+    if (!selector || !trigger || !dropdown) {
+      console.log('⚠️ Selector de servicios no encontrado');
+      return;
+    }
+
+    console.log('✅ Inicializando selector de servicios (inmediato)');
+
+    // Toggle dropdown al hacer click en el trigger
+    trigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = selector.classList.toggle('service-selector--open');
+      console.log('🔄 Selector toggle:', isOpen ? 'abierto' : 'cerrado');
+    });
+
+    // Cerrar dropdown al hacer click fuera
+    document.addEventListener('click', function(e) {
+      if (!selector.contains(e.target)) {
+        selector.classList.remove('service-selector--open');
+      }
+    });
+
+    // Cerrar dropdown al presionar Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        selector.classList.remove('service-selector--open');
+      }
+    });
+
+    console.log('✅ Selector de servicios listo');
+  }
+
+  // =====================================================
   // PROTECCIÓN DE ACCESO - VERIFICAR SESIÓN
   // =====================================================
 
@@ -127,45 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupServiceSelector() {
-    const selector = document.getElementById('serviceSelector');
-    const trigger = document.getElementById('serviceTrigger');
-    const dropdown = document.getElementById('serviceDropdown');
-
-    if (!selector || !trigger || !dropdown) {
-      console.log('⚠️ Selector de servicios no encontrado en esta página');
-      return;
-    }
-
-    console.log('✅ Configurando selector de servicios');
-
-    // Toggle dropdown al hacer click en el trigger
-    trigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      selector.classList.toggle('service-selector--open');
-      console.log('🔄 Toggle selector:', selector.classList.contains('service-selector--open'));
-    });
-
-    // Cerrar dropdown al hacer click fuera
-    document.addEventListener('click', function(e) {
-      if (!selector.contains(e.target)) {
-        selector.classList.remove('service-selector--open');
-      }
-    });
-
-    // Cerrar dropdown al presionar Escape
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        selector.classList.remove('service-selector--open');
-      }
-    });
-
-    // Cerrar dropdown al hacer click en un item (navegación)
-    const items = dropdown.querySelectorAll('.service-selector__item');
-    items.forEach(item => {
-      item.addEventListener('click', function() {
-        selector.classList.remove('service-selector--open');
-      });
-    });
+    // Ya inicializado en initServiceSelectorImmediate()
+    console.log('ℹ️ setupServiceSelector: ya inicializado');
   }
 
   function setupUserAvatar(user) {
