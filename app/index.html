@@ -25,9 +25,16 @@
     <style>
         /* Hub specific styles */
         .hub-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 140px 2rem 4rem;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hub-content {
+            flex: 1;
         }
 
         .hub-welcome {
@@ -58,7 +65,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 3rem;
         }
 
         .hub-service-card {
@@ -213,51 +219,36 @@
             box-shadow: none;
         }
 
-        /* Quick actions */
-        .hub-quick-actions {
-            background: var(--dark-bg-secondary);
-            border: 1px solid var(--dark-border);
-            border-radius: 16px;
-            padding: 1.5rem 2rem;
+        /* Footer */
+        .hub-footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--dark-border);
+            text-align: center;
         }
 
-        .hub-quick-actions__title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--dark-text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .hub-footer__links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
             margin-bottom: 1rem;
         }
 
-        .hub-quick-actions__list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .hub-quick-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--dark-bg-tertiary);
-            border: 1px solid var(--dark-border);
-            border-radius: 8px;
+        .hub-footer__link {
             color: var(--dark-text-secondary);
             text-decoration: none;
             font-size: 0.85rem;
-            transition: all 0.2s ease;
+            transition: color 0.2s ease;
         }
 
-        .hub-quick-action:hover {
-            background: var(--dark-accent);
-            border-color: var(--dark-accent);
-            color: white;
+        .hub-footer__link:hover {
+            color: var(--dark-text);
         }
 
-        .hub-quick-action i {
-            font-size: 0.9rem;
+        .hub-footer__copyright {
+            color: var(--dark-text-secondary);
+            font-size: 0.8rem;
+            opacity: 0.7;
         }
 
         /* Responsive */
@@ -278,8 +269,9 @@
                 padding: 1.5rem;
             }
 
-            .hub-quick-actions__list {
+            .hub-footer__links {
                 flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -288,7 +280,7 @@
     <!-- HEADER -->
     <header class="velvz-header">
         <div class="velvz-header__container">
-            <!-- LOGO + SERVICE SELECTOR -->
+            <!-- LOGO -->
             <div class="velvz-header__island velvz-header__island--brand">
                 <a href="/app/" class="velvz-header__logo">
                     <div class="velvz-header__logo-shape">
@@ -299,52 +291,6 @@
                         </div>
                     </div>
                 </a>
-
-                <!-- Service Selector -->
-                <div class="velvz-service-selector" id="serviceSelector">
-                    <button class="velvz-service-selector__trigger" id="serviceSelectorTrigger">
-                        <div class="velvz-service-selector__icon velvz-service-selector__option-icon--hub">
-                            <i class="fas fa-th-large"></i>
-                        </div>
-                        <span class="velvz-service-selector__name">Hub</span>
-                        <i class="fas fa-chevron-down velvz-service-selector__arrow"></i>
-                    </button>
-
-                    <div class="velvz-service-selector__dropdown">
-                        <a href="/app/" class="velvz-service-selector__option velvz-service-selector__option--active">
-                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--hub">
-                                <i class="fas fa-th-large"></i>
-                            </div>
-                            <div class="velvz-service-selector__option-info">
-                                <div class="velvz-service-selector__option-name">Hub</div>
-                                <div class="velvz-service-selector__option-desc">Centro de control</div>
-                            </div>
-                        </a>
-
-                        <div class="velvz-service-selector__divider"></div>
-
-                        <a href="/app/chatbots/" class="velvz-service-selector__option">
-                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--chatbots">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="velvz-service-selector__option-info">
-                                <div class="velvz-service-selector__option-name">Chatbots IA</div>
-                                <div class="velvz-service-selector__option-desc">Asistentes virtuales</div>
-                            </div>
-                        </a>
-
-                        <a href="#" class="velvz-service-selector__option" style="opacity: 0.5; pointer-events: none;">
-                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--rrhh">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="velvz-service-selector__option-info">
-                                <div class="velvz-service-selector__option-name">RRHH IA</div>
-                                <div class="velvz-service-selector__option-desc">Seleccion de personal</div>
-                            </div>
-                            <span class="velvz-service-selector__option-badge velvz-service-selector__option-badge--coming">Pronto</span>
-                        </a>
-                    </div>
-                </div>
             </div>
 
             <!-- SEARCH -->
@@ -356,113 +302,100 @@
                         placeholder="Buscar en todos los servicios..."
                         id="globalSearch"
                     >
-                    <button class="velvz-header__search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <i class="fas fa-search velvz-header__search-icon"></i>
                 </div>
             </div>
 
             <!-- USER -->
-            <div class="velvz-header__island velvz-header__island--user">
-                <button class="velvz-header__user" id="userMenuBtn">
-                    <span class="velvz-header__user-avatar" id="userAvatar">
-                        <i class="fas fa-user"></i>
-                    </span>
-                </button>
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar-circle" id="userAvatar">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <main class="hub-container">
-        <!-- Welcome -->
-        <section class="hub-welcome">
-            <p class="hub-welcome__greeting">Bienvenido de nuevo</p>
-            <h1 class="hub-welcome__title" id="welcomeUserName">Cargando...</h1>
-            <p class="hub-welcome__subtitle">Selecciona un servicio para comenzar</p>
-        </section>
+        <div class="hub-content">
+            <!-- Welcome -->
+            <section class="hub-welcome">
+                <p class="hub-welcome__greeting">Bienvenido de nuevo</p>
+                <h1 class="hub-welcome__title" id="welcomeUserName">Cargando...</h1>
+                <p class="hub-welcome__subtitle">Selecciona un servicio para comenzar</p>
+            </section>
 
-        <!-- Services -->
-        <section class="hub-services">
-            <!-- Chatbots -->
-            <a href="/app/chatbots/" class="hub-service-card hub-service-card--chatbots">
-                <div class="hub-service-card__header">
-                    <div class="hub-service-card__icon">
-                        <i class="fas fa-robot"></i>
+            <!-- Services -->
+            <section class="hub-services">
+                <!-- Chatbots -->
+                <a href="/app/chatbots/" class="hub-service-card hub-service-card--chatbots">
+                    <div class="hub-service-card__header">
+                        <div class="hub-service-card__icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
                     </div>
-                    <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
-                </div>
-                <h2 class="hub-service-card__title">Chatbots IA</h2>
-                <p class="hub-service-card__description">
-                    Crea asistentes virtuales inteligentes entrenados con tus documentos.
-                    Responden preguntas de clientes 24/7.
-                </p>
-                <div class="hub-service-card__stats">
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value" id="chatbotsCount">-</span>
-                        <span class="hub-service-card__stat-label">Chatbots</span>
+                    <h2 class="hub-service-card__title">Chatbots IA</h2>
+                    <p class="hub-service-card__description">
+                        Crea asistentes virtuales inteligentes entrenados con tus documentos.
+                        Responden preguntas de clientes 24/7.
+                    </p>
+                    <div class="hub-service-card__stats">
+                        <div class="hub-service-card__stat">
+                            <span class="hub-service-card__stat-value" id="chatbotsCount">-</span>
+                            <span class="hub-service-card__stat-label">Chatbots</span>
+                        </div>
+                        <div class="hub-service-card__stat">
+                            <span class="hub-service-card__stat-value" id="conversationsCount">-</span>
+                            <span class="hub-service-card__stat-label">Conversaciones</span>
+                        </div>
                     </div>
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value" id="conversationsCount">-</span>
-                        <span class="hub-service-card__stat-label">Conversaciones</span>
+                    <div class="hub-service-card__arrow">
+                        <i class="fas fa-arrow-right"></i>
                     </div>
-                </div>
-                <div class="hub-service-card__arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            </a>
+                </a>
 
-            <!-- RRHH -->
-            <div class="hub-service-card hub-service-card--rrhh hub-service-card--coming-soon">
-                <div class="hub-service-card__header">
-                    <div class="hub-service-card__icon">
-                        <i class="fas fa-users"></i>
+                <!-- RRHH -->
+                <div class="hub-service-card hub-service-card--rrhh hub-service-card--coming-soon">
+                    <div class="hub-service-card__header">
+                        <div class="hub-service-card__icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span class="hub-service-card__badge hub-service-card__badge--coming">Pronto</span>
                     </div>
-                    <span class="hub-service-card__badge hub-service-card__badge--coming">Proximamente</span>
-                </div>
-                <h2 class="hub-service-card__title">RRHH IA</h2>
-                <p class="hub-service-card__description">
-                    Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
-                    dinamicos y encuentra el talento ideal.
-                </p>
-                <div class="hub-service-card__stats">
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value">-</span>
-                        <span class="hub-service-card__stat-label">Procesos</span>
+                    <h2 class="hub-service-card__title">RRHH IA</h2>
+                    <p class="hub-service-card__description">
+                        Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
+                        dinámicos y encuentra el talento ideal.
+                    </p>
+                    <div class="hub-service-card__stats">
+                        <div class="hub-service-card__stat">
+                            <span class="hub-service-card__stat-value">-</span>
+                            <span class="hub-service-card__stat-label">Procesos</span>
+                        </div>
+                        <div class="hub-service-card__stat">
+                            <span class="hub-service-card__stat-value">-</span>
+                            <span class="hub-service-card__stat-label">Candidatos</span>
+                        </div>
                     </div>
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value">-</span>
-                        <span class="hub-service-card__stat-label">Candidatos</span>
+                    <div class="hub-service-card__arrow">
+                        <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
-                <div class="hub-service-card__arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="hub-footer">
+            <div class="hub-footer__links">
+                <a href="/cuenta/" class="hub-footer__link">Mi cuenta</a>
+                <a href="/app/billing/" class="hub-footer__link">Facturación</a>
+                <a href="/contacto/" class="hub-footer__link">Soporte</a>
+                <a href="/terminos/" class="hub-footer__link">Términos</a>
+                <a href="/privacidad/" class="hub-footer__link">Privacidad</a>
             </div>
-        </section>
-
-        <!-- Quick Actions -->
-        <section class="hub-quick-actions">
-            <h3 class="hub-quick-actions__title">Acciones rapidas</h3>
-            <div class="hub-quick-actions__list">
-                <a href="/app/chatbots/config.html" class="hub-quick-action">
-                    <i class="fas fa-plus"></i>
-                    Crear chatbot
-                </a>
-                <a href="/app/chatbots/dashboard.html" class="hub-quick-action">
-                    <i class="fas fa-chart-line"></i>
-                    Ver estadisticas
-                </a>
-                <a href="/app/billing/" class="hub-quick-action">
-                    <i class="fas fa-credit-card"></i>
-                    Facturacion
-                </a>
-                <a href="/cuenta/" class="hub-quick-action">
-                    <i class="fas fa-cog"></i>
-                    Mi cuenta
-                </a>
-            </div>
-        </section>
+            <p class="hub-footer__copyright">© 2024 Velvz. Todos los derechos reservados.</p>
+        </footer>
     </main>
 
     <script>
@@ -483,7 +416,7 @@
 
                     // Set avatar initial
                     const initial = (user.name || user.email)[0].toUpperCase();
-                    document.getElementById('userAvatar').textContent = initial;
+                    document.getElementById('userAvatar').innerHTML = initial;
                 }
             }
 
@@ -518,29 +451,6 @@
                 console.error('Error loading stats:', error);
             }
         }
-
-        // Service selector toggle
-        const serviceSelector = document.getElementById('serviceSelector');
-        const serviceSelectorTrigger = document.getElementById('serviceSelectorTrigger');
-
-        serviceSelectorTrigger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            serviceSelector.classList.toggle('velvz-service-selector--open');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!serviceSelector.contains(e.target)) {
-                serviceSelector.classList.remove('velvz-service-selector--open');
-            }
-        });
-
-        // Close on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                serviceSelector.classList.remove('velvz-service-selector--open');
-            }
-        });
     </script>
 </body>
 </html>

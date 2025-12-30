@@ -28,7 +28,7 @@
     <!-- HEADER -->
     <header class="velvz-header">
         <div class="velvz-header__container">
-            <!-- BRAND + SERVICE SELECTOR -->
+            <!-- BRAND -->
             <div class="velvz-header__island velvz-header__island--brand">
                 <a href="/app/" class="velvz-header__logo">
                     <div class="velvz-header__logo-shape">
@@ -39,52 +39,6 @@
                         </div>
                     </div>
                 </a>
-
-                <!-- Service Selector -->
-                <div class="velvz-service-selector" id="serviceSelector">
-                    <button class="velvz-service-selector__trigger" id="serviceSelectorTrigger">
-                        <div class="velvz-service-selector__icon velvz-service-selector__option-icon--chatbots">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <span class="velvz-service-selector__name">Chatbots</span>
-                        <i class="fas fa-chevron-down velvz-service-selector__arrow"></i>
-                    </button>
-
-                    <div class="velvz-service-selector__dropdown">
-                        <a href="/app/" class="velvz-service-selector__option">
-                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--hub">
-                                <i class="fas fa-th-large"></i>
-                            </div>
-                            <div class="velvz-service-selector__option-info">
-                                <div class="velvz-service-selector__option-name">Hub</div>
-                                <div class="velvz-service-selector__option-desc">Centro de control</div>
-                            </div>
-                        </a>
-
-                        <div class="velvz-service-selector__divider"></div>
-
-                        <a href="/app/chatbots/" class="velvz-service-selector__option velvz-service-selector__option--active">
-                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--chatbots">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="velvz-service-selector__option-info">
-                                <div class="velvz-service-selector__option-name">Chatbots IA</div>
-                                <div class="velvz-service-selector__option-desc">Asistentes virtuales</div>
-                            </div>
-                        </a>
-
-                        <a href="#" class="velvz-service-selector__option" style="opacity: 0.5; pointer-events: none;">
-                            <div class="velvz-service-selector__option-icon velvz-service-selector__option-icon--rrhh">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="velvz-service-selector__option-info">
-                                <div class="velvz-service-selector__option-name">RRHH IA</div>
-                                <div class="velvz-service-selector__option-desc">Seleccion de personal</div>
-                            </div>
-                            <span class="velvz-service-selector__option-badge velvz-service-selector__option-badge--coming">Pronto</span>
-                        </a>
-                    </div>
-                </div>
             </div>
 
             <!-- BÚSQUEDA -->
@@ -134,17 +88,13 @@
 
                 <div class="velvz-header__mobile-section">
                     <h3 class="velvz-header__mobile-section-title">Principal</h3>
-                    <a href="/app/" class="velvz-header__mobile-link">
+                    <a href="/app/chatbots/dashboard.html" class="velvz-header__mobile-link">
                         <i class="velvz-header__mobile-link-icon fas fa-chart-pie"></i>
-                        <span>Dashboard</span>
+                        <span>Resumen</span>
                     </a>
                     <a href="/app/chatbots/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
                         <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
                         <span>Mis Chatbots</span>
-                    </a>
-                    <a href="/app/analytics/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
-                        <span>Analytics</span>
                     </a>
                 </div>
 
@@ -193,21 +143,15 @@
                 <h3 class="velvz-sidebar__title">Principal</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
-                        <a href="/app/" class="velvz-sidebar__link">
+                        <a href="/app/chatbots/dashboard.html" class="velvz-sidebar__link">
                             <i class="velvz-sidebar__icon fas fa-chart-pie"></i>
-                            <span>Dashboard</span>
+                            <span>Resumen</span>
                         </a>
                     </li>
                     <li class="velvz-sidebar__item">
                         <a href="/app/chatbots/" class="velvz-sidebar__link velvz-sidebar__link--active">
                             <i class="velvz-sidebar__icon fas fa-robot"></i>
                             <span>Mis Chatbots</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/analytics/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-chart-line"></i>
-                            <span>Analytics</span>
                         </a>
                     </li>
                 </ul>
@@ -261,7 +205,11 @@
             <div class="velvz-chatbots-page">
                 <!-- BREADCRUMBS -->
                 <nav class="velvz-breadcrumbs">
-                    <a href="/app/" class="velvz-breadcrumbs__link">Dashboard</a>
+                    <a href="/app/" class="velvz-breadcrumbs__link">Hub</a>
+                    <span class="velvz-breadcrumbs__separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                    <a href="/app/chatbots/" class="velvz-breadcrumbs__link">Chatbots</a>
                     <span class="velvz-breadcrumbs__separator">
                         <i class="fas fa-chevron-right"></i>
                     </span>
