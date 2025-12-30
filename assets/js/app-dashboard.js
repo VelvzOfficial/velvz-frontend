@@ -1,7 +1,7 @@
 // =====================================================
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
-console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v1');
+console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v2');
 
 // Selector de servicios se maneja directamente en cada página HTML
 
