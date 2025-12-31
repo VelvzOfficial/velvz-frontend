@@ -1,0 +1,601 @@
+/* ========================================
+   SETTINGS PAGE STYLES - DARK THEME
+   ======================================== */
+
+/* Settings Container */
+.velvz-settings {
+    padding: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Header */
+.velvz-settings__header {
+    margin-bottom: 2rem;
+}
+
+.velvz-settings__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.velvz-settings__title i {
+    color: #6366f1;
+}
+
+.velvz-settings__subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+/* Navigation Tabs */
+.velvz-settings__nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+}
+
+.velvz-settings__nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.velvz-settings__nav-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.velvz-settings__nav-btn--active {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+}
+
+.velvz-settings__nav-btn i {
+    font-size: 1rem;
+}
+
+/* Content Sections */
+.velvz-settings__content {
+    min-height: 400px;
+}
+
+.velvz-settings__section {
+    display: none;
+}
+
+.velvz-settings__section--active {
+    display: block;
+}
+
+/* Settings Card */
+.velvz-settings-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.velvz-settings-card--danger {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.velvz-settings-card__header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.velvz-settings-card__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.velvz-settings-card__title i {
+    color: #818cf8;
+    font-size: 0.9rem;
+}
+
+.velvz-settings-card--danger .velvz-settings-card__title i {
+    color: #f87171;
+}
+
+.velvz-settings-card__body {
+    padding: 1.5rem;
+}
+
+.velvz-settings-card__text {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+.velvz-settings-card__footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Form Elements */
+.velvz-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.velvz-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.velvz-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.velvz-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+}
+
+.velvz-form-input,
+.velvz-form-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.5rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.velvz-form-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.velvz-form-input:focus,
+.velvz-form-select:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.velvz-form-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.velvz-form-select {
+    cursor: pointer;
+}
+
+.velvz-form-select option {
+    background: #1a1a2e;
+    color: #ffffff;
+}
+
+.velvz-form-hint {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.35rem;
+}
+
+/* Setting Item (toggle rows) */
+.velvz-setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.velvz-setting-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.velvz-setting-item:first-child {
+    padding-top: 0;
+}
+
+.velvz-setting-item__info {
+    flex: 1;
+}
+
+.velvz-setting-item__label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.velvz-setting-item__description {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Toggle Switch */
+.velvz-toggle {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.velvz-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.velvz-toggle__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 26px;
+    transition: 0.3s;
+}
+
+.velvz-toggle__slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.velvz-toggle input:checked + .velvz-toggle__slider {
+    background: #6366f1;
+}
+
+.velvz-toggle input:checked + .velvz-toggle__slider:before {
+    transform: translateX(22px);
+}
+
+/* Checkbox */
+.velvz-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.velvz-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.velvz-checkbox input {
+    display: none;
+}
+
+.velvz-checkbox__mark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.velvz-checkbox__mark:after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 10px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.velvz-checkbox input:checked + .velvz-checkbox__mark {
+    background: #6366f1;
+    border-color: #6366f1;
+}
+
+.velvz-checkbox input:checked + .velvz-checkbox__mark:after {
+    opacity: 1;
+}
+
+/* Buttons */
+.velvz-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.velvz-btn--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.velvz-btn--primary {
+    background: #6366f1;
+    color: white;
+}
+
+.velvz-btn--primary:hover {
+    background: #5558e3;
+}
+
+.velvz-btn--secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.velvz-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.velvz-btn--ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.velvz-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.velvz-btn--danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.velvz-btn--danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+.velvz-btn--ghost.velvz-btn--danger {
+    background: transparent;
+    border: none;
+}
+
+.velvz-btn--ghost.velvz-btn--danger:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+/* Badge */
+.velvz-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.velvz-badge--success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+.velvz-badge--warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+.velvz-badge--danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+/* API Keys */
+.velvz-api-key {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.velvz-api-key:last-child {
+    margin-bottom: 0;
+}
+
+.velvz-api-key__info {
+    min-width: 150px;
+}
+
+.velvz-api-key__name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.velvz-api-key__created {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.velvz-api-key__value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.velvz-api-key__value code {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.35rem;
+    flex: 1;
+}
+
+.velvz-api-key__copy {
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.velvz-api-key__copy:hover {
+    color: #6366f1;
+}
+
+.velvz-api-key__actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+/* Integrations */
+.velvz-integration {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.velvz-integration:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.velvz-integration:first-child {
+    padding-top: 0;
+}
+
+.velvz-integration__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+}
+
+.velvz-integration__info {
+    flex: 1;
+}
+
+.velvz-integration__name {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.velvz-integration__description {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .velvz-settings {
+        padding: 1rem;
+    }
+
+    .velvz-settings__nav {
+        gap: 0.25rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .velvz-settings__nav-btn {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .velvz-settings__nav-btn span {
+        display: none;
+    }
+
+    .velvz-settings__nav-btn i {
+        margin: 0;
+    }
+
+    .velvz-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .velvz-settings-card__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .velvz-api-key {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .velvz-api-key__value {
+        width: 100%;
+    }
+
+    .velvz-api-key__value code {
+        font-size: 0.75rem;
+        overflow-x: auto;
+    }
+}

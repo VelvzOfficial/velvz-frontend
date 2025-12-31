@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Velvz Dashboard</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/logoR.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logoR.png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+    <link rel="stylesheet" href="/assets/css/settings.css">
+
+    <!-- Auth System -->
+    <script src="/assets/js/auth-config.js"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <!-- LOGO BRAND ISLAND -->
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__logo">
+                    <div class="velvz-header__logo-shape">
+                        <div class="velvz-header__logo-face">
+                            <div class="velvz-header__logo-eye"></div>
+                            <div class="velvz-header__logo-mouth"></div>
+                            <div class="velvz-header__logo-eye"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- SELECTOR DE SERVICIOS -->
+            <div class="velvz-header__island velvz-header__island--services">
+                <button class="svc-selector" id="svcSelector" data-current="chatbots">
+                    <i class="fas fa-robot svc-selector__icon"></i>
+                    <span class="svc-selector__text">Chatbots</span>
+                    <i class="fas fa-chevron-down svc-selector__arrow"></i>
+                </button>
+                <div class="svc-dropdown" id="svcDropdown">
+                    <a href="/app/chatbots/dashboard.html" class="svc-dropdown__item svc-dropdown__item--active" data-service="chatbots">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </a>
+                    <a href="/app/rrhh/" class="svc-dropdown__item" data-service="rrhh">
+                        <i class="fas fa-users"></i>
+                        <span>RRHH</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BARRA DE BÚSQUEDA ISLAND - CENTRADA -->
+            <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
+                <div class="velvz-header__search">
+                    <input
+                        type="text"
+                        class="velvz-header__search-input"
+                        placeholder="Buscar en configuración..."
+                        id="headerSearchInput"
+                    >
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <!-- AVATAR DEL USUARIO ISLAND -->
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        U
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOBILE TOGGLE (HAMBURGER) -->
+            <div class="velvz-header__mobile-toggle">
+                <div class="velvz-header__hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div class="velvz-header__mobile-backdrop"></div>
+        <div class="velvz-header__mobile-menu">
+            <button class="velvz-header__mobile-close"></button>
+
+            <div class="velvz-header__mobile-content">
+                <!-- BÚSQUEDA -->
+                <div class="velvz-header__mobile-search">
+                    <div class="velvz-header__mobile-search-container">
+                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
+                        <input
+                            type="text"
+                            class="velvz-header__mobile-search-input"
+                            placeholder="Buscar..."
+                            id="mobileSearchInput"
+                        >
+                    </div>
+                </div>
+
+                <!-- SECCIÓN PRINCIPAL -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
+                    <a href="/app/chatbots/dashboard.html" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-pie"></i>
+                        <span>Resumen</span>
+                    </a>
+                    <a href="/app/chatbots/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
+                        <span>Mis Chatbots</span>
+                    </a>
+                    <a href="/app/analytics/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </div>
+
+                <!-- SECCIÓN CONFIGURACIÓN -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Configuración</h3>
+                    <a href="/app/settings/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
+                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                    <a href="/app/billing/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
+                        <span>Facturación</span>
+                    </a>
+                    <a href="/app/help/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-question-circle"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </div>
+
+                <!-- SECCIÓN CUENTA -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
+                    <a href="/app/profile/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </a>
+                    <a href="#" class="velvz-header__mobile-link" onclick="handleLogout(); return false;">
+                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TARJETA DE USUARIO -->
+            <div class="velvz-header__mobile-user-card">
+                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
+                    U
+                </div>
+                <div class="velvz-header__mobile-user-info">
+                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
+                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@example.com</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Principal</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/chatbots/dashboard.html" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-pie"></i>
+                            <span>Resumen</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/chatbots/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-robot"></i>
+                            <span>Mis Chatbots</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/analytics/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Configuración</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/settings/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/billing/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-credit-card"></i>
+                            <span>Facturación</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/help/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-question-circle"></i>
+                            <span>Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/profile/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="#" class="velvz-sidebar__link" onclick="handleLogout(); return false;">
+                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="velvz-main">
+            <div class="velvz-settings">
+                <!-- HEADER DE CONFIGURACIÓN -->
+                <div class="velvz-settings__header">
+                    <div class="velvz-settings__header-content">
+                        <h1 class="velvz-settings__title">
+                            <i class="fas fa-cog"></i>
+                            Configuración
+                        </h1>
+                        <p class="velvz-settings__subtitle">Gestiona las preferencias de tu cuenta y chatbots</p>
+                    </div>
+                </div>
+
+                <!-- NAVEGACIÓN DE CONFIGURACIÓN -->
+                <div class="velvz-settings__nav">
+                    <button class="velvz-settings__nav-btn velvz-settings__nav-btn--active" data-section="general">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>General</span>
+                    </button>
+                    <button class="velvz-settings__nav-btn" data-section="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Notificaciones</span>
+                    </button>
+                    <button class="velvz-settings__nav-btn" data-section="security">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Seguridad</span>
+                    </button>
+                    <button class="velvz-settings__nav-btn" data-section="api">
+                        <i class="fas fa-key"></i>
+                        <span>API Keys</span>
+                    </button>
+                    <button class="velvz-settings__nav-btn" data-section="integrations">
+                        <i class="fas fa-plug"></i>
+                        <span>Integraciones</span>
+                    </button>
+                </div>
+
+                <!-- CONTENIDO DE CONFIGURACIÓN -->
+                <div class="velvz-settings__content">
+                    <!-- SECCIÓN GENERAL -->
+                    <div class="velvz-settings__section velvz-settings__section--active" id="section-general">
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-user-circle"></i>
+                                    Información de la Cuenta
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-form-row">
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Nombre</label>
+                                        <input type="text" class="velvz-form-input" id="settingsName" placeholder="Tu nombre">
+                                    </div>
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Email</label>
+                                        <input type="email" class="velvz-form-input" id="settingsEmail" placeholder="tu@email.com" disabled>
+                                        <span class="velvz-form-hint">El email no se puede cambiar</span>
+                                    </div>
+                                </div>
+                                <div class="velvz-form-row">
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Empresa</label>
+                                        <input type="text" class="velvz-form-input" id="settingsCompany" placeholder="Nombre de tu empresa">
+                                    </div>
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Teléfono</label>
+                                        <input type="tel" class="velvz-form-input" id="settingsPhone" placeholder="+34 600 000 000">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="velvz-settings-card__footer">
+                                <button class="velvz-btn velvz-btn--primary" id="saveGeneralSettings">
+                                    <i class="fas fa-save"></i>
+                                    Guardar Cambios
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-palette"></i>
+                                    Preferencias de Interfaz
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Idioma</span>
+                                        <span class="velvz-setting-item__description">Selecciona el idioma de la interfaz</span>
+                                    </div>
+                                    <select class="velvz-form-select" id="settingsLanguage">
+                                        <option value="es" selected>Español</option>
+                                        <option value="en">English</option>
+                                        <option value="pt">Português</option>
+                                    </select>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Zona Horaria</span>
+                                        <span class="velvz-setting-item__description">Para mostrar fechas y horas correctamente</span>
+                                    </div>
+                                    <select class="velvz-form-select" id="settingsTimezone">
+                                        <option value="Europe/Madrid" selected>Europe/Madrid (GMT+1)</option>
+                                        <option value="America/Mexico_City">America/Mexico_City (GMT-6)</option>
+                                        <option value="America/Bogota">America/Bogota (GMT-5)</option>
+                                        <option value="America/Buenos_Aires">America/Buenos_Aires (GMT-3)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN NOTIFICACIONES -->
+                    <div class="velvz-settings__section" id="section-notifications">
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-envelope"></i>
+                                    Notificaciones por Email
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Resumen diario</span>
+                                        <span class="velvz-setting-item__description">Recibe un resumen diario de la actividad de tus chatbots</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifDailySummary" checked>
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Alertas de errores</span>
+                                        <span class="velvz-setting-item__description">Notificaciones cuando un chatbot tenga problemas</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifErrors" checked>
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Nuevas conversaciones</span>
+                                        <span class="velvz-setting-item__description">Notificación por cada nueva conversación iniciada</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifNewConversations">
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Actualizaciones del producto</span>
+                                        <span class="velvz-setting-item__description">Novedades y mejoras de Velvz</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifUpdates" checked>
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN SEGURIDAD -->
+                    <div class="velvz-settings__section" id="section-security">
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-lock"></i>
+                                    Cambiar Contraseña
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-form-group">
+                                    <label class="velvz-form-label">Contraseña actual</label>
+                                    <input type="password" class="velvz-form-input" id="currentPassword" placeholder="Tu contraseña actual">
+                                </div>
+                                <div class="velvz-form-row">
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Nueva contraseña</label>
+                                        <input type="password" class="velvz-form-input" id="newPassword" placeholder="Nueva contraseña">
+                                    </div>
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Confirmar contraseña</label>
+                                        <input type="password" class="velvz-form-input" id="confirmPassword" placeholder="Confirmar contraseña">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="velvz-settings-card__footer">
+                                <button class="velvz-btn velvz-btn--primary" id="changePassword">
+                                    <i class="fas fa-key"></i>
+                                    Cambiar Contraseña
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    Autenticación en Dos Pasos (2FA)
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Estado</span>
+                                        <span class="velvz-setting-item__description">Añade una capa extra de seguridad a tu cuenta</span>
+                                    </div>
+                                    <span class="velvz-badge velvz-badge--warning">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Desactivado
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="velvz-settings-card__footer">
+                                <button class="velvz-btn velvz-btn--secondary" id="enable2FA">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Activar 2FA
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card velvz-settings-card--danger">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Zona de Peligro
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Eliminar cuenta</span>
+                                        <span class="velvz-setting-item__description">Esta acción es permanente y no se puede deshacer</span>
+                                    </div>
+                                    <button class="velvz-btn velvz-btn--danger" id="deleteAccount">
+                                        <i class="fas fa-trash"></i>
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN API KEYS -->
+                    <div class="velvz-settings__section" id="section-api">
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-key"></i>
+                                    Tus API Keys
+                                </h3>
+                                <button class="velvz-btn velvz-btn--primary velvz-btn--sm" id="createApiKey">
+                                    <i class="fas fa-plus"></i>
+                                    Nueva API Key
+                                </button>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-api-key">
+                                    <div class="velvz-api-key__info">
+                                        <span class="velvz-api-key__name">Production Key</span>
+                                        <span class="velvz-api-key__created">Creada el 15 dic 2024</span>
+                                    </div>
+                                    <div class="velvz-api-key__value">
+                                        <code>velvz_pk_****************************7f3a</code>
+                                        <button class="velvz-api-key__copy" title="Copiar">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="velvz-api-key__actions">
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="velvz-api-key">
+                                    <div class="velvz-api-key__info">
+                                        <span class="velvz-api-key__name">Development Key</span>
+                                        <span class="velvz-api-key__created">Creada el 20 dic 2024</span>
+                                    </div>
+                                    <div class="velvz-api-key__value">
+                                        <code>velvz_dk_****************************2b1c</code>
+                                        <button class="velvz-api-key__copy" title="Copiar">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="velvz-api-key__actions">
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-book"></i>
+                                    Documentación API
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <p class="velvz-settings-card__text">
+                                    Consulta nuestra documentación para integrar los chatbots de Velvz en tu aplicación.
+                                </p>
+                                <a href="/documentacion/api/" class="velvz-btn velvz-btn--secondary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Ver Documentación
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN INTEGRACIONES -->
+                    <div class="velvz-settings__section" id="section-integrations">
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-plug"></i>
+                                    Integraciones Disponibles
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-integration">
+                                    <div class="velvz-integration__icon" style="background: #25D366;">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div class="velvz-integration__info">
+                                        <span class="velvz-integration__name">WhatsApp Business</span>
+                                        <span class="velvz-integration__description">Conecta tus chatbots con WhatsApp</span>
+                                    </div>
+                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
+                                        Conectar
+                                    </button>
+                                </div>
+                                <div class="velvz-integration">
+                                    <div class="velvz-integration__icon" style="background: #0084FF;">
+                                        <i class="fab fa-facebook-messenger"></i>
+                                    </div>
+                                    <div class="velvz-integration__info">
+                                        <span class="velvz-integration__name">Facebook Messenger</span>
+                                        <span class="velvz-integration__description">Integra con Messenger de Facebook</span>
+                                    </div>
+                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
+                                        Conectar
+                                    </button>
+                                </div>
+                                <div class="velvz-integration">
+                                    <div class="velvz-integration__icon" style="background: #7289DA;">
+                                        <i class="fab fa-slack"></i>
+                                    </div>
+                                    <div class="velvz-integration__info">
+                                        <span class="velvz-integration__name">Slack</span>
+                                        <span class="velvz-integration__description">Añade chatbots a tu workspace de Slack</span>
+                                    </div>
+                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
+                                        Conectar
+                                    </button>
+                                </div>
+                                <div class="velvz-integration">
+                                    <div class="velvz-integration__icon" style="background: #0088CC;">
+                                        <i class="fab fa-telegram"></i>
+                                    </div>
+                                    <div class="velvz-integration__info">
+                                        <span class="velvz-integration__name">Telegram</span>
+                                        <span class="velvz-integration__description">Crea bots de Telegram con Velvz</span>
+                                    </div>
+                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
+                                        Conectar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-link"></i>
+                                    Webhooks
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-form-group">
+                                    <label class="velvz-form-label">URL del Webhook</label>
+                                    <input type="url" class="velvz-form-input" id="webhookUrl" placeholder="https://tu-servidor.com/webhook">
+                                    <span class="velvz-form-hint">Recibirás eventos de tus chatbots en esta URL</span>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Eventos a enviar</span>
+                                    </div>
+                                </div>
+                                <div class="velvz-checkbox-group">
+                                    <label class="velvz-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="velvz-checkbox__mark"></span>
+                                        <span>Nueva conversación</span>
+                                    </label>
+                                    <label class="velvz-checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="velvz-checkbox__mark"></span>
+                                        <span>Mensaje recibido</span>
+                                    </label>
+                                    <label class="velvz-checkbox">
+                                        <input type="checkbox">
+                                        <span class="velvz-checkbox__mark"></span>
+                                        <span>Conversación cerrada</span>
+                                    </label>
+                                    <label class="velvz-checkbox">
+                                        <input type="checkbox">
+                                        <span class="velvz-checkbox__mark"></span>
+                                        <span>Escalado a agente</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="velvz-settings-card__footer">
+                                <button class="velvz-btn velvz-btn--primary" id="saveWebhook">
+                                    <i class="fas fa-save"></i>
+                                    Guardar Webhook
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="velvz-footer__ambient">
+            <div class="velvz-footer__pulse"></div>
+            <div class="velvz-footer__pulse"></div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/error-cleanup.js"></script>
+    <script src="/assets/js/settings.js"></script>
+    <script src="/assets/js/private-app.js"></script>
+</body>
+</html>
