@@ -322,17 +322,9 @@ document.addEventListener("DOMContentLoaded", function () {
           <i class="fas fa-user"></i>
           Mi Perfil
         </a>
-        <a href="/app/settings/" class="velvz-user-menu__link">
-          <i class="fas fa-cog"></i>
-          Configuración
-        </a>
         <a href="/app/billing/" class="velvz-user-menu__link">
           <i class="fas fa-credit-card"></i>
           Facturación
-        </a>
-        <a href="/app/help/" class="velvz-user-menu__link">
-          <i class="fas fa-question-circle"></i>
-          Ayuda
         </a>
       </nav>
       
