@@ -3,32 +3,824 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RRHH IA - Velvz Dashboard</title>
+    <title>RRHH IA - Velvz</title>
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="icon" href="/logoR.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/logoR.png">
 
-    <!-- Estilos base del dashboard -->
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/app-dashboard.css">
 
-    <!-- Estilos específicos de RRHH -->
-    <link rel="stylesheet" href="/assets/css/rrhh.css">
+    <!-- Auth System -->
+    <script src="/assets/js/auth-config.js"></script>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* =====================================================
+           RRHH - ESTILOS ESPECÍFICOS
+           ===================================================== */
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        :root {
+            --rrhh-primary: #10b981;
+            --rrhh-primary-light: rgba(16, 185, 129, 0.1);
+            --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
+        }
+
+        /* =====================================================
+           HEADER DE PÁGINA
+           ===================================================== */
+
+        .rrhh-page-header {
+            margin-bottom: 2rem;
+        }
+
+        .rrhh-page-header__top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rrhh-page-header__info {
+            flex: 1;
+        }
+
+        .rrhh-page-header__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .rrhh-page-header__title i {
+            color: var(--rrhh-primary);
+        }
+
+        .rrhh-page-header__subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+        }
+
+        .rrhh-page-header__actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* =====================================================
+           MÉTRICAS SUPERIORES
+           ===================================================== */
+
+        .rrhh-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .rrhh-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .rrhh-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .rrhh-metric {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .rrhh-metric:hover {
+            border-color: rgba(16, 185, 129, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .rrhh-metric__icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .rrhh-metric__icon--processes {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+        }
+
+        .rrhh-metric__icon--candidates {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #fff;
+        }
+
+        .rrhh-metric__icon--profiles {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            color: #fff;
+        }
+
+        .rrhh-metric__icon--hired {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #fff;
+        }
+
+        .rrhh-metric__content {
+            flex: 1;
+        }
+
+        .rrhh-metric__value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .rrhh-metric__label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* =====================================================
+           TABS DE NAVEGACIÓN
+           ===================================================== */
+
+        .rrhh-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 0;
+        }
+
+        .rrhh-tab {
+            position: relative;
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rrhh-tab:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .rrhh-tab--active {
+            color: var(--rrhh-primary);
+        }
+
+        .rrhh-tab--active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--rrhh-primary);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .rrhh-tab__count {
+            background: rgba(255,255,255,0.1);
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .rrhh-tab--active .rrhh-tab__count {
+            background: var(--rrhh-primary-light);
+            color: var(--rrhh-primary);
+        }
+
+        /* =====================================================
+           CONTENIDO DE TABS
+           ===================================================== */
+
+        .rrhh-tab-content {
+            display: none;
+        }
+
+        .rrhh-tab-content--active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =====================================================
+           TOOLBAR DE SECCIÓN
+           ===================================================== */
+
+        .rrhh-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .rrhh-toolbar__left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .rrhh-toolbar__right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .rrhh-search {
+            position: relative;
+            max-width: 300px;
+            flex: 1;
+        }
+
+        .rrhh-search__input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .rrhh-search__input:focus {
+            outline: none;
+            border-color: var(--rrhh-primary);
+            box-shadow: 0 0 0 3px var(--rrhh-primary-light);
+        }
+
+        .rrhh-search__input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .rrhh-search__icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+
+        /* =====================================================
+           BOTONES
+           ===================================================== */
+
+        .rrhh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .rrhh-btn--primary {
+            background: var(--rrhh-primary);
+            color: #fff;
+        }
+
+        .rrhh-btn--primary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--rrhh-primary-glow);
+        }
+
+        .rrhh-btn--secondary {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+
+        .rrhh-btn--secondary:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .rrhh-btn--ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .rrhh-btn--ghost:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* =====================================================
+           FILTROS
+           ===================================================== */
+
+        .rrhh-filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .rrhh-filter {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .rrhh-filter:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .rrhh-filter--active {
+            background: var(--rrhh-primary-light);
+            border-color: var(--rrhh-primary);
+            color: var(--rrhh-primary);
+        }
+
+        /* =====================================================
+           GRID DE CARDS
+           ===================================================== */
+
+        .rrhh-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* =====================================================
+           CARD DE PROCESO
+           ===================================================== */
+
+        .process-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .process-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .process-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .process-card__status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .process-card__status--active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .process-card__status--paused {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .process-card__status--closed {
+            background: rgba(107, 114, 128, 0.15);
+            color: #9ca3af;
+        }
+
+        .process-card__status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .process-card__menu {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .process-card__menu:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .process-card__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.35rem;
+        }
+
+        .process-card__department {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1rem;
+        }
+
+        .process-card__stats {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1rem;
+        }
+
+        .process-card__stat {
+            text-align: center;
+        }
+
+        .process-card__stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .process-card__stat-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .process-card__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .process-card__date {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .process-card__action {
+            color: var(--rrhh-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .process-card__action:hover {
+            gap: 0.5rem;
+        }
+
+        /* =====================================================
+           CARD DE CANDIDATO
+           ===================================================== */
+
+        .candidate-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .candidate-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .candidate-card__header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .candidate-card__avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .candidate-card__info {
+            flex: 1;
+        }
+
+        .candidate-card__name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .candidate-card__role {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .candidate-card__score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .candidate-card__score-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--rrhh-primary);
+        }
+
+        .candidate-card__score-label {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+        }
+
+        .candidate-card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .candidate-card__tag {
+            padding: 0.25rem 0.6rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .candidate-card__process {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .candidate-card__process-info {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .candidate-card__process-info strong {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* =====================================================
+           CARD DE PERFIL
+           ===================================================== */
+
+        .profile-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .profile-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .profile-card__icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.25rem;
+        }
+
+        .profile-card__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.35rem;
+        }
+
+        .profile-card__department {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1rem;
+        }
+
+        .profile-card__requirements {
+            margin-bottom: 1rem;
+        }
+
+        .profile-card__requirements-title {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-card__requirements-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .profile-card__requirement {
+            padding: 0.25rem 0.6rem;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #a78bfa;
+        }
+
+        .profile-card__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .profile-card__processes {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .profile-card__processes strong {
+            color: #fff;
+        }
+
+        /* =====================================================
+           ESTADO VACÍO
+           ===================================================== */
+
+        .rrhh-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .rrhh-empty__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--dark-bg-tertiary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .rrhh-empty__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .rrhh-empty__text {
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 768px) {
+            .rrhh-page-header__top {
+                flex-direction: column;
+            }
+
+            .rrhh-page-header__actions {
+                width: 100%;
+            }
+
+            .rrhh-page-header__actions .rrhh-btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .rrhh-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .rrhh-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .rrhh-tab {
+                white-space: nowrap;
+                padding: 0.75rem 1rem;
+            }
+
+            .rrhh-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .rrhh-toolbar__left,
+            .rrhh-toolbar__right {
+                width: 100%;
+            }
+
+            .rrhh-search {
+                max-width: none;
+            }
+
+            .rrhh-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER -->
     <header class="velvz-header">
         <div class="velvz-header__container">
-            <!-- BRAND -->
+            <!-- LOGO -->
             <div class="velvz-header__island velvz-header__island--brand">
                 <a href="/app/" class="velvz-header__logo">
                     <div class="velvz-header__logo-shape">
@@ -53,7 +845,7 @@
                         <i class="fas fa-robot"></i>
                         <span>Chatbots</span>
                     </a>
-                    <a href="/app/rrhh/" class="svc-dropdown__item svc-dropdown__item--active svc-dropdown__item--rrhh" data-service="rrhh">
+                    <a href="/app/rrhh/" class="svc-dropdown__item svc-dropdown__item--active" data-service="rrhh">
                         <i class="fas fa-users"></i>
                         <span>RRHH</span>
                     </a>
@@ -91,59 +883,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- MENÚ MÓVIL -->
-        <div class="velvz-header__mobile-backdrop"></div>
-        <div class="velvz-header__mobile-menu" id="mobileMenu">
-            <button class="velvz-header__mobile-close"></button>
-
-            <div class="velvz-header__mobile-content">
-                <div class="velvz-header__mobile-search">
-                    <div class="velvz-header__mobile-search-container">
-                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
-                        <input type="text" class="velvz-header__mobile-search-input" placeholder="Buscar..." id="mobileSearchInput">
-                    </div>
-                </div>
-
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">RRHH IA</h3>
-                    <a href="/app/rrhh/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
-                        <i class="velvz-header__mobile-link-icon fas fa-briefcase"></i>
-                        <span>Procesos</span>
-                    </a>
-                    <a href="/app/rrhh/candidates/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-user-tie"></i>
-                        <span>Candidatos</span>
-                    </a>
-                    <a href="/app/rrhh/forms/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-file-alt"></i>
-                        <span>Formularios</span>
-                    </a>
-                </div>
-
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
-                    <a href="/app/profile/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
-                        <span>Mi Perfil</span>
-                    </a>
-                    <a href="#" class="velvz-header__mobile-link" id="mobileLogout">
-                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
-                        <span>Cerrar Sesión</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="velvz-header__mobile-user-card">
-                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
-                    <span id="mobileUserInitials">-</span>
-                </div>
-                <div class="velvz-header__mobile-user-info">
-                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
-                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@email.com</div>
-                </div>
-            </div>
-        </div>
     </header>
 
     <!-- LAYOUT PRINCIPAL -->
@@ -155,38 +894,32 @@
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
                         <a href="/app/rrhh/" class="velvz-sidebar__link velvz-sidebar__link--active">
-                            <i class="velvz-sidebar__icon fas fa-briefcase"></i>
-                            <span>Procesos</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/rrhh/candidates/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-user-tie"></i>
-                            <span>Candidatos</span>
-                        </a>
-                    </li>
-                    <li class="velvz-sidebar__item">
-                        <a href="/app/rrhh/forms/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-file-alt"></i>
-                            <span>Formularios</span>
+                            <i class="velvz-sidebar__icon fas fa-th-large"></i>
+                            <span>Panel Principal</span>
                         </a>
                     </li>
                 </ul>
             </div>
 
             <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Análisis</h3>
+                <h3 class="velvz-sidebar__title">Gestión</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
-                        <a href="/app/rrhh/analytics/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-chart-bar"></i>
-                            <span>Estadísticas</span>
+                        <a href="#" class="velvz-sidebar__link" data-tab="processes">
+                            <i class="velvz-sidebar__icon fas fa-briefcase"></i>
+                            <span>Procesos</span>
                         </a>
                     </li>
                     <li class="velvz-sidebar__item">
-                        <a href="/app/rrhh/reports/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-file-export"></i>
-                            <span>Informes</span>
+                        <a href="#" class="velvz-sidebar__link" data-tab="candidates">
+                            <i class="velvz-sidebar__icon fas fa-user-tie"></i>
+                            <span>Candidatos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="#" class="velvz-sidebar__link" data-tab="profiles">
+                            <i class="velvz-sidebar__icon fas fa-id-badge"></i>
+                            <span>Perfiles</span>
                         </a>
                     </li>
                 </ul>
@@ -213,137 +946,206 @@
 
         <!-- CONTENIDO PRINCIPAL -->
         <main class="velvz-main">
-            <div class="velvz-rrhh-page">
-                <!-- BREADCRUMBS -->
-                <nav class="velvz-breadcrumbs">
-                    <a href="/app/" class="velvz-breadcrumbs__link">Hub</a>
-                    <span class="velvz-breadcrumbs__separator">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                    <a href="/app/rrhh/" class="velvz-breadcrumbs__link">RRHH IA</a>
-                    <span class="velvz-breadcrumbs__separator">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                    <span class="velvz-breadcrumbs__current">Procesos de Selección</span>
-                </nav>
-
-                <!-- HERO HEADER -->
-                <div class="velvz-rrhh-hero">
-                    <div class="velvz-rrhh-hero__content">
-                        <div class="velvz-rrhh-hero__text">
-                            <h1 class="velvz-rrhh-hero__title">
-                                <span class="velvz-rrhh-hero__icon">
-                                    <i class="fas fa-users"></i>
-                                </span>
-                                Procesos de Selección
+            <div class="velvz-dashboard">
+                <!-- HEADER DE PÁGINA -->
+                <div class="rrhh-page-header">
+                    <div class="rrhh-page-header__top">
+                        <div class="rrhh-page-header__info">
+                            <h1 class="rrhh-page-header__title">
+                                <i class="fas fa-users"></i>
+                                RRHH IA
                             </h1>
-                            <p class="velvz-rrhh-hero__subtitle">
-                                Automatiza el filtrado de candidatos con IA y encuentra el talento ideal
+                            <p class="rrhh-page-header__subtitle">
+                                Gestiona procesos de selección, candidatos y perfiles de tu empresa
                             </p>
                         </div>
-                        <button class="velvz-rrhh-hero__cta" id="createProcessBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Nuevo Proceso</span>
-                        </button>
+                        <div class="rrhh-page-header__actions">
+                            <button class="rrhh-btn rrhh-btn--primary" id="newProcessBtn">
+                                <i class="fas fa-plus"></i>
+                                <span>Nuevo Proceso</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- ESTADÍSTICAS RÁPIDAS -->
-                    <div class="velvz-rrhh-stats">
-                        <div class="velvz-rrhh-stat">
-                            <div class="velvz-rrhh-stat__icon velvz-rrhh-stat__icon--primary">
+                    <!-- MÉTRICAS -->
+                    <div class="rrhh-metrics">
+                        <div class="rrhh-metric">
+                            <div class="rrhh-metric__icon rrhh-metric__icon--processes">
                                 <i class="fas fa-briefcase"></i>
                             </div>
-                            <div class="velvz-rrhh-stat__content">
-                                <span class="velvz-rrhh-stat__value" id="statTotalProcesses">0</span>
-                                <span class="velvz-rrhh-stat__label">Procesos Activos</span>
+                            <div class="rrhh-metric__content">
+                                <div class="rrhh-metric__value" id="metricProcesses">0</div>
+                                <div class="rrhh-metric__label">Procesos Activos</div>
                             </div>
                         </div>
-                        <div class="velvz-rrhh-stat">
-                            <div class="velvz-rrhh-stat__icon velvz-rrhh-stat__icon--success">
+                        <div class="rrhh-metric">
+                            <div class="rrhh-metric__icon rrhh-metric__icon--candidates">
                                 <i class="fas fa-user-tie"></i>
                             </div>
-                            <div class="velvz-rrhh-stat__content">
-                                <span class="velvz-rrhh-stat__value" id="statTotalCandidates">0</span>
-                                <span class="velvz-rrhh-stat__label">Candidatos</span>
+                            <div class="rrhh-metric__content">
+                                <div class="rrhh-metric__value" id="metricCandidates">0</div>
+                                <div class="rrhh-metric__label">Candidatos Totales</div>
                             </div>
                         </div>
-                        <div class="velvz-rrhh-stat">
-                            <div class="velvz-rrhh-stat__icon velvz-rrhh-stat__icon--info">
-                                <i class="fas fa-star"></i>
+                        <div class="rrhh-metric">
+                            <div class="rrhh-metric__icon rrhh-metric__icon--profiles">
+                                <i class="fas fa-id-badge"></i>
                             </div>
-                            <div class="velvz-rrhh-stat__content">
-                                <span class="velvz-rrhh-stat__value" id="statShortlisted">0</span>
-                                <span class="velvz-rrhh-stat__label">Preseleccionados</span>
+                            <div class="rrhh-metric__content">
+                                <div class="rrhh-metric__value" id="metricProfiles">0</div>
+                                <div class="rrhh-metric__label">Perfiles Definidos</div>
+                            </div>
+                        </div>
+                        <div class="rrhh-metric">
+                            <div class="rrhh-metric__icon rrhh-metric__icon--hired">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="rrhh-metric__content">
+                                <div class="rrhh-metric__value" id="metricHired">0</div>
+                                <div class="rrhh-metric__label">Contratados</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- BARRA DE HERRAMIENTAS -->
-                <div class="velvz-rrhh-toolbar">
-                    <div class="velvz-rrhh-toolbar__left">
-                        <div class="velvz-rrhh-search">
-                            <i class="fas fa-search"></i>
-                            <input
-                                type="text"
-                                placeholder="Buscar procesos..."
-                                id="processSearch"
-                                class="velvz-rrhh-search__input"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="velvz-rrhh-toolbar__right">
-                        <div class="velvz-rrhh-filters">
-                            <button class="velvz-filter-pill velvz-filter-pill--active" data-filter="all">
-                                <span>Todos</span>
-                                <span class="velvz-filter-pill__count" id="allCount">0</span>
-                            </button>
-                            <button class="velvz-filter-pill" data-filter="active">
-                                <span class="velvz-filter-pill__dot velvz-filter-pill__dot--active"></span>
-                                <span>Activos</span>
-                                <span class="velvz-filter-pill__count" id="activeCount">0</span>
-                            </button>
-                            <button class="velvz-filter-pill" data-filter="closed">
-                                <span class="velvz-filter-pill__dot velvz-filter-pill__dot--inactive"></span>
-                                <span>Cerrados</span>
-                                <span class="velvz-filter-pill__count" id="closedCount">0</span>
-                            </button>
-                        </div>
-                    </div>
+                <!-- TABS DE NAVEGACIÓN -->
+                <div class="rrhh-tabs" id="rrhhTabs">
+                    <button class="rrhh-tab rrhh-tab--active" data-tab="processes">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Procesos</span>
+                        <span class="rrhh-tab__count" id="tabCountProcesses">0</span>
+                    </button>
+                    <button class="rrhh-tab" data-tab="candidates">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Candidatos</span>
+                        <span class="rrhh-tab__count" id="tabCountCandidates">0</span>
+                    </button>
+                    <button class="rrhh-tab" data-tab="profiles">
+                        <i class="fas fa-id-badge"></i>
+                        <span>Perfiles</span>
+                        <span class="rrhh-tab__count" id="tabCountProfiles">0</span>
+                    </button>
                 </div>
 
-                <!-- CONTENEDOR DE PROCESOS -->
-                <div class="velvz-rrhh-container">
-                    <!-- Loading state -->
-                    <div class="velvz-rrhh-loading" id="processesLoading" style="display: none;">
-                        <div class="velvz-rrhh-loading__spinner"></div>
-                        <p class="velvz-rrhh-loading__text">Cargando procesos...</p>
-                    </div>
-
-                    <!-- Estado vacío -->
-                    <div class="velvz-rrhh-empty" id="emptyProcesses">
-                        <div class="velvz-rrhh-empty__illustration">
-                            <div class="velvz-rrhh-empty__icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="velvz-rrhh-empty__particles">
-                                <span></span><span></span><span></span>
+                <!-- =====================================================
+                     TAB: PROCESOS
+                     ===================================================== -->
+                <div class="rrhh-tab-content rrhh-tab-content--active" id="tabProcesses">
+                    <div class="rrhh-toolbar">
+                        <div class="rrhh-toolbar__left">
+                            <div class="rrhh-search">
+                                <i class="fas fa-search rrhh-search__icon"></i>
+                                <input type="text" class="rrhh-search__input" placeholder="Buscar procesos..." id="searchProcesses">
                             </div>
                         </div>
-                        <h3 class="velvz-rrhh-empty__title">Crea tu primer proceso de selección</h3>
-                        <p class="velvz-rrhh-empty__description">
-                            Define el puesto, sube CVs y deja que la IA filtre los mejores candidatos para ti
-                        </p>
-                        <button class="velvz-rrhh-empty__cta" id="createFirstProcessBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Crear mi primer proceso</span>
-                        </button>
+                        <div class="rrhh-toolbar__right">
+                            <div class="rrhh-filters">
+                                <button class="rrhh-filter rrhh-filter--active" data-filter="all">Todos</button>
+                                <button class="rrhh-filter" data-filter="active">Activos</button>
+                                <button class="rrhh-filter" data-filter="paused">Pausados</button>
+                                <button class="rrhh-filter" data-filter="closed">Cerrados</button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Grid de procesos -->
-                    <div class="velvz-rrhh-grid" id="processesGrid" style="display: none;">
-                        <!-- Los procesos se cargan dinámicamente -->
+                    <div class="rrhh-grid" id="processesGrid">
+                        <!-- Los procesos se cargarán dinámicamente -->
+                    </div>
+
+                    <!-- Estado vacío -->
+                    <div class="rrhh-empty" id="emptyProcesses">
+                        <div class="rrhh-empty__icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="rrhh-empty__title">Crea tu primer proceso de selección</h3>
+                        <p class="rrhh-empty__text">
+                            Define el puesto, los requisitos y deja que la IA filtre los mejores candidatos para ti
+                        </p>
+                        <button class="rrhh-btn rrhh-btn--primary" id="emptyNewProcess">
+                            <i class="fas fa-plus"></i>
+                            <span>Crear Proceso</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- =====================================================
+                     TAB: CANDIDATOS
+                     ===================================================== -->
+                <div class="rrhh-tab-content" id="tabCandidates">
+                    <div class="rrhh-toolbar">
+                        <div class="rrhh-toolbar__left">
+                            <div class="rrhh-search">
+                                <i class="fas fa-search rrhh-search__icon"></i>
+                                <input type="text" class="rrhh-search__input" placeholder="Buscar candidatos..." id="searchCandidates">
+                            </div>
+                        </div>
+                        <div class="rrhh-toolbar__right">
+                            <button class="rrhh-btn rrhh-btn--secondary">
+                                <i class="fas fa-filter"></i>
+                                <span>Filtrar</span>
+                            </button>
+                            <button class="rrhh-btn rrhh-btn--secondary">
+                                <i class="fas fa-download"></i>
+                                <span>Exportar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Grid de candidatos -->
+                    <div class="rrhh-grid" id="candidatesGrid">
+                        <!-- Los candidatos se cargarán dinámicamente -->
+                    </div>
+
+                    <!-- Estado vacío -->
+                    <div class="rrhh-empty" id="emptyCandidates">
+                        <div class="rrhh-empty__icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3 class="rrhh-empty__title">Sin candidatos aún</h3>
+                        <p class="rrhh-empty__text">
+                            Los candidatos aparecerán aquí cuando se inscriban a tus procesos de selección
+                        </p>
+                    </div>
+                </div>
+
+                <!-- =====================================================
+                     TAB: PERFILES
+                     ===================================================== -->
+                <div class="rrhh-tab-content" id="tabProfiles">
+                    <div class="rrhh-toolbar">
+                        <div class="rrhh-toolbar__left">
+                            <div class="rrhh-search">
+                                <i class="fas fa-search rrhh-search__icon"></i>
+                                <input type="text" class="rrhh-search__input" placeholder="Buscar perfiles..." id="searchProfiles">
+                            </div>
+                        </div>
+                        <div class="rrhh-toolbar__right">
+                            <button class="rrhh-btn rrhh-btn--primary" id="newProfileBtn">
+                                <i class="fas fa-plus"></i>
+                                <span>Nuevo Perfil</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Grid de perfiles -->
+                    <div class="rrhh-grid" id="profilesGrid">
+                        <!-- Los perfiles se cargarán dinámicamente -->
+                    </div>
+
+                    <!-- Estado vacío -->
+                    <div class="rrhh-empty" id="emptyProfiles">
+                        <div class="rrhh-empty__icon">
+                            <i class="fas fa-id-badge"></i>
+                        </div>
+                        <h3 class="rrhh-empty__title">Define los perfiles de tu empresa</h3>
+                        <p class="rrhh-empty__text">
+                            Crea plantillas de puestos con requisitos predefinidos para acelerar la creación de procesos
+                        </p>
+                        <button class="rrhh-btn rrhh-btn--primary" id="emptyNewProfile">
+                            <i class="fas fa-plus"></i>
+                            <span>Crear Perfil</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -386,219 +1188,320 @@
                 </div>
             </div>
         </div>
-
-        <div class="velvz-footer__ambient">
-            <div class="velvz-footer__pulse"></div>
-            <div class="velvz-footer__pulse"></div>
-        </div>
     </footer>
 
-    <!-- MODAL CREAR PROCESO -->
-    <div class="velvz-modal" id="createProcessModal">
-        <div class="velvz-modal__backdrop"></div>
-        <div class="velvz-modal__content velvz-modal__content--large">
-            <div class="velvz-modal__header">
-                <div class="velvz-modal__header-icon velvz-modal__header-icon--rrhh">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="velvz-modal__header-text">
-                    <h2 class="velvz-modal__title">Nuevo Proceso de Selección</h2>
-                    <p class="velvz-modal__subtitle">Define el puesto y los requisitos para filtrar candidatos</p>
-                </div>
-                <button class="velvz-modal__close" id="closeCreateModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="velvz-modal__body">
-                <form id="createProcessForm">
-                    <!-- Paso 1: Información básica -->
-                    <div class="velvz-form-section">
-                        <h3 class="velvz-form-section__title">
-                            <span class="velvz-form-section__number">1</span>
-                            Información del Puesto
-                        </h3>
-
-                        <div class="velvz-form-group">
-                            <label class="velvz-form-label" for="processName">
-                                <i class="fas fa-briefcase"></i>
-                                Nombre del puesto
-                            </label>
-                            <input
-                                type="text"
-                                id="processName"
-                                class="velvz-form-input"
-                                placeholder="Ej: Desarrollador Full Stack Senior"
-                                required
-                                maxlength="100"
-                            >
-                        </div>
-
-                        <div class="velvz-form-row">
-                            <div class="velvz-form-group">
-                                <label class="velvz-form-label" for="processDepartment">
-                                    <i class="fas fa-building"></i>
-                                    Departamento
-                                </label>
-                                <select id="processDepartment" class="velvz-form-input">
-                                    <option value="">Seleccionar...</option>
-                                    <option value="tech">Tecnología</option>
-                                    <option value="marketing">Marketing</option>
-                                    <option value="sales">Ventas</option>
-                                    <option value="hr">Recursos Humanos</option>
-                                    <option value="finance">Finanzas</option>
-                                    <option value="operations">Operaciones</option>
-                                    <option value="other">Otro</option>
-                                </select>
-                            </div>
-                            <div class="velvz-form-group">
-                                <label class="velvz-form-label" for="processLocation">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    Ubicación
-                                </label>
-                                <input
-                                    type="text"
-                                    id="processLocation"
-                                    class="velvz-form-input"
-                                    placeholder="Ej: Madrid, Remoto"
-                                >
-                            </div>
-                        </div>
-
-                        <div class="velvz-form-group">
-                            <label class="velvz-form-label" for="processDescription">
-                                <i class="fas fa-align-left"></i>
-                                Descripción del puesto
-                            </label>
-                            <textarea
-                                id="processDescription"
-                                class="velvz-form-input velvz-form-textarea"
-                                placeholder="Describe las responsabilidades y funciones principales del puesto..."
-                                rows="4"
-                            ></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Paso 2: Requisitos -->
-                    <div class="velvz-form-section">
-                        <h3 class="velvz-form-section__title">
-                            <span class="velvz-form-section__number">2</span>
-                            Requisitos del Candidato
-                        </h3>
-
-                        <div class="velvz-form-group">
-                            <label class="velvz-form-label" for="processRequirements">
-                                <i class="fas fa-list-check"></i>
-                                Requisitos obligatorios
-                            </label>
-                            <textarea
-                                id="processRequirements"
-                                class="velvz-form-input velvz-form-textarea"
-                                placeholder="Lista los requisitos indispensables (uno por línea):
-- 5+ años de experiencia en desarrollo web
-- Dominio de React y Node.js
-- Inglés avanzado"
-                                rows="4"
-                            ></textarea>
-                            <span class="velvz-form-hint">La IA usará estos criterios para filtrar candidatos</span>
-                        </div>
-
-                        <div class="velvz-form-group">
-                            <label class="velvz-form-label" for="processNiceToHave">
-                                <i class="fas fa-star"></i>
-                                Requisitos deseables <span class="velvz-form-optional">(opcional)</span>
-                            </label>
-                            <textarea
-                                id="processNiceToHave"
-                                class="velvz-form-input velvz-form-textarea"
-                                placeholder="Requisitos que suman puntos pero no son obligatorios..."
-                                rows="3"
-                            ></textarea>
-                        </div>
-
-                        <div class="velvz-form-row">
-                            <div class="velvz-form-group">
-                                <label class="velvz-form-label" for="processExperience">
-                                    <i class="fas fa-clock"></i>
-                                    Experiencia mínima
-                                </label>
-                                <select id="processExperience" class="velvz-form-input">
-                                    <option value="0">Sin experiencia</option>
-                                    <option value="1">1+ año</option>
-                                    <option value="2">2+ años</option>
-                                    <option value="3">3+ años</option>
-                                    <option value="5" selected>5+ años</option>
-                                    <option value="10">10+ años</option>
-                                </select>
-                            </div>
-                            <div class="velvz-form-group">
-                                <label class="velvz-form-label" for="processSalary">
-                                    <i class="fas fa-euro-sign"></i>
-                                    Rango salarial <span class="velvz-form-optional">(opcional)</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="processSalary"
-                                    class="velvz-form-input"
-                                    placeholder="Ej: 45.000€ - 60.000€"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="velvz-modal__footer">
-                <button type="button" class="velvz-btn velvz-btn--ghost" id="cancelCreateModal">
-                    Cancelar
-                </button>
-                <button type="submit" form="createProcessForm" class="velvz-btn velvz-btn--rrhh" id="submitCreateProcess">
-                    <i class="fas fa-rocket"></i>
-                    <span>Crear Proceso</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- INDICADOR DE CARGA GLOBAL -->
-    <div class="velvz-loading-overlay" id="globalLoadingOverlay">
-        <div class="velvz-loading-overlay__content">
-            <div class="velvz-loading-overlay__spinner"></div>
-            <div class="velvz-loading-overlay__text" id="loadingText">
-                Creando proceso...
-            </div>
-            <div class="velvz-loading-overlay__subtitle" id="loadingSubtitle">
-                Esto puede tardar unos segundos
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
-    <script src="/assets/js/auth-config.js"></script>
     <script src="/assets/js/app-dashboard.js"></script>
-    <script src="/assets/js/notifications.js"></script>
-    <script src="/assets/js/rrhh.js"></script>
 
-    <!-- Selector de servicios - SIMPLE -->
     <script>
-    (function() {
-        var btn = document.getElementById('svcBtn');
-        var dropdown = document.getElementById('svcDropdown');
-        var isOpen = false;
+        // =====================================================
+        // RRHH - FUNCIONALIDAD PRINCIPAL
+        // =====================================================
 
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            isOpen = !isOpen;
-            dropdown.style.display = isOpen ? 'block' : 'none';
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Datos de ejemplo (después vendrán de la API)
+            const mockData = {
+                processes: [
+                    {
+                        id: 1,
+                        title: 'Desarrollador Full Stack Senior',
+                        department: 'Tecnología',
+                        status: 'active',
+                        candidates: 45,
+                        shortlisted: 8,
+                        forms: 2,
+                        createdAt: '2025-01-15'
+                    },
+                    {
+                        id: 2,
+                        title: 'Product Manager',
+                        department: 'Producto',
+                        status: 'active',
+                        candidates: 32,
+                        shortlisted: 5,
+                        forms: 1,
+                        createdAt: '2025-01-20'
+                    },
+                    {
+                        id: 3,
+                        title: 'Diseñador UX/UI',
+                        department: 'Diseño',
+                        status: 'paused',
+                        candidates: 18,
+                        shortlisted: 3,
+                        forms: 1,
+                        createdAt: '2025-01-10'
+                    }
+                ],
+                candidates: [
+                    {
+                        id: 1,
+                        name: 'María García',
+                        initials: 'MG',
+                        role: 'Full Stack Developer',
+                        score: 92,
+                        skills: ['React', 'Node.js', 'Python'],
+                        process: 'Desarrollador Full Stack Senior',
+                        phase: 'Formulario 2'
+                    },
+                    {
+                        id: 2,
+                        name: 'Carlos López',
+                        initials: 'CL',
+                        role: 'Senior Developer',
+                        score: 87,
+                        skills: ['Vue.js', 'Django', 'AWS'],
+                        process: 'Desarrollador Full Stack Senior',
+                        phase: 'Preseleccionado'
+                    },
+                    {
+                        id: 3,
+                        name: 'Ana Martínez',
+                        initials: 'AM',
+                        role: 'Product Lead',
+                        score: 95,
+                        skills: ['Scrum', 'Analytics', 'UX'],
+                        process: 'Product Manager',
+                        phase: 'Entrevista'
+                    }
+                ],
+                profiles: [
+                    {
+                        id: 1,
+                        title: 'Desarrollador Backend',
+                        department: 'Tecnología',
+                        requirements: ['Python', 'SQL', 'APIs REST', 'Docker'],
+                        processesUsed: 3
+                    },
+                    {
+                        id: 2,
+                        title: 'Desarrollador Frontend',
+                        department: 'Tecnología',
+                        requirements: ['React', 'TypeScript', 'CSS', 'Testing'],
+                        processesUsed: 2
+                    }
+                ]
+            };
 
-        document.addEventListener('click', function() {
-            if (isOpen) {
-                isOpen = false;
-                dropdown.style.display = 'none';
+            // Actualizar métricas
+            document.getElementById('metricProcesses').textContent = mockData.processes.filter(p => p.status === 'active').length;
+            document.getElementById('metricCandidates').textContent = mockData.candidates.length;
+            document.getElementById('metricProfiles').textContent = mockData.profiles.length;
+            document.getElementById('metricHired').textContent = '0';
+
+            // Actualizar contadores de tabs
+            document.getElementById('tabCountProcesses').textContent = mockData.processes.length;
+            document.getElementById('tabCountCandidates').textContent = mockData.candidates.length;
+            document.getElementById('tabCountProfiles').textContent = mockData.profiles.length;
+
+            // Renderizar procesos
+            function renderProcesses() {
+                const grid = document.getElementById('processesGrid');
+                const empty = document.getElementById('emptyProcesses');
+
+                if (mockData.processes.length === 0) {
+                    grid.style.display = 'none';
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+                empty.style.display = 'none';
+
+                grid.innerHTML = mockData.processes.map(process => `
+                    <div class="process-card" data-id="${process.id}">
+                        <div class="process-card__header">
+                            <span class="process-card__status process-card__status--${process.status}">
+                                <span class="process-card__status-dot"></span>
+                                ${process.status === 'active' ? 'Activo' : process.status === 'paused' ? 'Pausado' : 'Cerrado'}
+                            </span>
+                            <button class="process-card__menu">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <h3 class="process-card__title">${process.title}</h3>
+                        <p class="process-card__department">
+                            <i class="fas fa-building"></i> ${process.department}
+                        </p>
+                        <div class="process-card__stats">
+                            <div class="process-card__stat">
+                                <div class="process-card__stat-value">${process.candidates}</div>
+                                <div class="process-card__stat-label">Candidatos</div>
+                            </div>
+                            <div class="process-card__stat">
+                                <div class="process-card__stat-value">${process.shortlisted}</div>
+                                <div class="process-card__stat-label">Preselec.</div>
+                            </div>
+                            <div class="process-card__stat">
+                                <div class="process-card__stat-value">${process.forms}</div>
+                                <div class="process-card__stat-label">Formularios</div>
+                            </div>
+                        </div>
+                        <div class="process-card__footer">
+                            <span class="process-card__date">
+                                <i class="far fa-calendar"></i> ${new Date(process.createdAt).toLocaleDateString('es-ES')}
+                            </span>
+                            <a href="#" class="process-card__action">
+                                Ver detalles <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
             }
+
+            // Renderizar candidatos
+            function renderCandidates() {
+                const grid = document.getElementById('candidatesGrid');
+                const empty = document.getElementById('emptyCandidates');
+
+                if (mockData.candidates.length === 0) {
+                    grid.style.display = 'none';
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+                empty.style.display = 'none';
+
+                grid.innerHTML = mockData.candidates.map(candidate => `
+                    <div class="candidate-card" data-id="${candidate.id}">
+                        <div class="candidate-card__header">
+                            <div class="candidate-card__avatar">${candidate.initials}</div>
+                            <div class="candidate-card__info">
+                                <div class="candidate-card__name">${candidate.name}</div>
+                                <div class="candidate-card__role">${candidate.role}</div>
+                            </div>
+                            <div class="candidate-card__score">
+                                <div class="candidate-card__score-value">${candidate.score}</div>
+                                <div class="candidate-card__score-label">Match</div>
+                            </div>
+                        </div>
+                        <div class="candidate-card__tags">
+                            ${candidate.skills.map(skill => `<span class="candidate-card__tag">${skill}</span>`).join('')}
+                        </div>
+                        <div class="candidate-card__process">
+                            <div class="candidate-card__process-info">
+                                <strong>${candidate.process}</strong><br>
+                                Fase: ${candidate.phase}
+                            </div>
+                            <button class="rrhh-btn rrhh-btn--ghost">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Renderizar perfiles
+            function renderProfiles() {
+                const grid = document.getElementById('profilesGrid');
+                const empty = document.getElementById('emptyProfiles');
+
+                if (mockData.profiles.length === 0) {
+                    grid.style.display = 'none';
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+                empty.style.display = 'none';
+
+                grid.innerHTML = mockData.profiles.map(profile => `
+                    <div class="profile-card" data-id="${profile.id}">
+                        <div class="profile-card__header">
+                            <div class="profile-card__icon">
+                                <i class="fas fa-id-badge"></i>
+                            </div>
+                            <button class="process-card__menu">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <h3 class="profile-card__title">${profile.title}</h3>
+                        <p class="profile-card__department">
+                            <i class="fas fa-building"></i> ${profile.department}
+                        </p>
+                        <div class="profile-card__requirements">
+                            <div class="profile-card__requirements-title">Requisitos clave</div>
+                            <div class="profile-card__requirements-list">
+                                ${profile.requirements.map(req => `<span class="profile-card__requirement">${req}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="profile-card__footer">
+                            <span class="profile-card__processes">
+                                Usado en <strong>${profile.processesUsed}</strong> procesos
+                            </span>
+                            <button class="rrhh-btn rrhh-btn--ghost">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Sistema de tabs
+            const tabs = document.querySelectorAll('.rrhh-tab');
+            const tabContents = document.querySelectorAll('.rrhh-tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.dataset.tab;
+
+                    // Actualizar tabs activos
+                    tabs.forEach(t => t.classList.remove('rrhh-tab--active'));
+                    tab.classList.add('rrhh-tab--active');
+
+                    // Mostrar contenido correspondiente
+                    tabContents.forEach(content => {
+                        content.classList.remove('rrhh-tab-content--active');
+                        if (content.id === 'tab' + targetTab.charAt(0).toUpperCase() + targetTab.slice(1)) {
+                            content.classList.add('rrhh-tab-content--active');
+                        }
+                    });
+                });
+            });
+
+            // Sidebar links que cambian de tab
+            document.querySelectorAll('.velvz-sidebar__link[data-tab]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetTab = link.dataset.tab;
+                    document.querySelector(`.rrhh-tab[data-tab="${targetTab}"]`).click();
+                });
+            });
+
+            // Filtros de procesos
+            document.querySelectorAll('#tabProcesses .rrhh-filter').forEach(filter => {
+                filter.addEventListener('click', () => {
+                    document.querySelectorAll('#tabProcesses .rrhh-filter').forEach(f => f.classList.remove('rrhh-filter--active'));
+                    filter.classList.add('rrhh-filter--active');
+                    // Aquí iría la lógica de filtrado
+                });
+            });
+
+            // Renderizar todo
+            renderProcesses();
+            renderCandidates();
+            renderProfiles();
+
+            // Botones de nuevo proceso/perfil (placeholder)
+            ['newProcessBtn', 'emptyNewProcess'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        alert('Modal de nuevo proceso - Por implementar');
+                    });
+                }
+            });
+
+            ['newProfileBtn', 'emptyNewProfile'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        alert('Modal de nuevo perfil - Por implementar');
+                    });
+                }
+            });
         });
-    })();
     </script>
 </body>
 </html>
