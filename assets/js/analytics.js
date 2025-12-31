@@ -1,20 +1,23 @@
 /**
- * Analytics Page JavaScript
+ * Analytics Page JavaScript - Dark Theme
  * Gestiona las gráficas y datos de la página de analytics
  */
 
 (function() {
     'use strict';
 
-    // Configuración de colores
+    // Configuración de colores para tema oscuro
     const COLORS = {
         primary: '#6366f1',
-        primaryLight: 'rgba(99, 102, 241, 0.1)',
-        secondary: '#e2e8f0',
+        primaryLight: 'rgba(99, 102, 241, 0.3)',
+        secondary: 'rgba(255, 255, 255, 0.3)',
         success: '#10b981',
         warning: '#f59e0b',
         danger: '#ef4444',
-        info: '#3b82f6'
+        info: '#3b82f6',
+        text: 'rgba(255, 255, 255, 0.7)',
+        textMuted: 'rgba(255, 255, 255, 0.5)',
+        grid: 'rgba(255, 255, 255, 0.1)'
     };
 
     // Datos de ejemplo (en producción vendrían del API)
@@ -75,7 +78,7 @@
                         fill: true,
                         tension: 0.4,
                         pointBackgroundColor: COLORS.primary,
-                        pointBorderColor: '#fff',
+                        pointBorderColor: '#1a1a2e',
                         pointBorderWidth: 2,
                         pointRadius: 4,
                         pointHoverRadius: 6
@@ -88,7 +91,7 @@
                         borderDash: [5, 5],
                         tension: 0.4,
                         pointBackgroundColor: COLORS.secondary,
-                        pointBorderColor: '#fff',
+                        pointBorderColor: '#1a1a2e',
                         pointBorderWidth: 2,
                         pointRadius: 3,
                         pointHoverRadius: 5
@@ -107,21 +110,24 @@
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: '#1a1a2e',
+                        backgroundColor: 'rgba(26, 26, 46, 0.95)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
                         padding: 12,
                         cornerRadius: 8,
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
                         displayColors: true
                     }
                 },
                 scales: {
                     x: {
                         grid: {
-                            display: false
+                            color: COLORS.grid,
+                            drawBorder: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: COLORS.text,
                             font: {
                                 size: 12
                             }
@@ -130,10 +136,11 @@
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
+                            color: COLORS.grid,
+                            drawBorder: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: COLORS.text,
                             font: {
                                 size: 12
                             }
@@ -158,11 +165,11 @@
                 datasets: [{
                     data: analyticsData.satisfaction.data,
                     backgroundColor: [
-                        COLORS.success,
+                        '#10b981',
                         '#34d399',
-                        COLORS.warning,
+                        '#fbbf24',
                         '#fb923c',
-                        COLORS.danger
+                        '#f87171'
                     ],
                     borderWidth: 0,
                     hoverOffset: 8
@@ -176,7 +183,7 @@
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#64748b',
+                            color: COLORS.text,
                             padding: 15,
                             usePointStyle: true,
                             pointStyle: 'circle',
@@ -186,11 +193,13 @@
                         }
                     },
                     tooltip: {
-                        backgroundColor: '#1a1a2e',
+                        backgroundColor: 'rgba(26, 26, 46, 0.95)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
                         padding: 12,
                         cornerRadius: 8,
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
                         callbacks: {
                             label: function(context) {
                                 return context.label + ': ' + context.parsed + '%';
@@ -218,8 +227,8 @@
                     data: analyticsData.chatbotPerformance.conversations,
                     backgroundColor: [
                         'rgba(102, 126, 234, 0.8)',
-                        'rgba(17, 153, 142, 0.8)',
-                        'rgba(240, 147, 251, 0.8)'
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(245, 158, 11, 0.8)'
                     ],
                     borderRadius: 8,
                     barThickness: 40
@@ -234,21 +243,24 @@
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: '#1a1a2e',
+                        backgroundColor: 'rgba(26, 26, 46, 0.95)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
                         padding: 12,
-                        cornerRadius: 8
+                        cornerRadius: 8,
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1
                     }
                 },
                 scales: {
                     x: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
+                            color: COLORS.grid,
+                            drawBorder: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: COLORS.text,
                             font: {
                                 size: 12
                             }
@@ -259,7 +271,7 @@
                             display: false
                         },
                         ticks: {
-                            color: '#1a1a2e',
+                            color: '#ffffff',
                             font: {
                                 size: 12,
                                 weight: 500
@@ -303,11 +315,13 @@
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: '#1a1a2e',
+                        backgroundColor: 'rgba(26, 26, 46, 0.95)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
                         padding: 12,
                         cornerRadius: 8,
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
                         callbacks: {
                             label: function(context) {
                                 return context.raw + ' conversaciones';
@@ -321,7 +335,7 @@
                             display: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: COLORS.text,
                             font: {
                                 size: 10
                             }
@@ -330,10 +344,11 @@
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
+                            color: COLORS.grid,
+                            drawBorder: false
                         },
                         ticks: {
-                            color: '#64748b',
+                            color: COLORS.text,
                             font: {
                                 size: 12
                             }

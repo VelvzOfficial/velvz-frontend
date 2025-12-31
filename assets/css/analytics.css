@@ -1,5 +1,5 @@
 /* ========================================
-   ANALYTICS PAGE STYLES
+   ANALYTICS PAGE STYLES - DARK THEME
    ======================================== */
 
 /* Analytics Container */
@@ -28,7 +28,7 @@
 .velvz-analytics__title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -36,12 +36,12 @@
 }
 
 .velvz-analytics__title i {
-    color: var(--primary-color, #6366f1);
+    color: #6366f1;
 }
 
 .velvz-analytics__subtitle {
     font-size: 0.95rem;
-    color: var(--text-secondary, #64748b);
+    color: rgba(255, 255, 255, 0.6);
     margin: 0;
 }
 
@@ -49,16 +49,17 @@
 .velvz-analytics__period-selector {
     display: flex;
     gap: 0.5rem;
-    background: var(--surface-secondary, #f1f5f9);
+    background: rgba(255, 255, 255, 0.05);
     padding: 0.25rem;
     border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .velvz-period-btn {
     padding: 0.5rem 1rem;
     border: none;
     background: transparent;
-    color: var(--text-secondary, #64748b);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.875rem;
     font-weight: 500;
     border-radius: 0.5rem;
@@ -67,14 +68,13 @@
 }
 
 .velvz-period-btn:hover {
-    color: var(--text-primary, #1a1a2e);
-    background: rgba(99, 102, 241, 0.1);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .velvz-period-btn--active {
-    background: white;
-    color: var(--primary-color, #6366f1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
 }
 
 /* Metrics Grid */
@@ -86,20 +86,19 @@
 }
 
 .velvz-analytics-metric {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
     padding: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .velvz-analytics-metric:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .velvz-analytics-metric__icon {
@@ -114,23 +113,23 @@
 }
 
 .velvz-analytics-metric__icon--primary {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.05) 100%);
-    color: #6366f1;
+    background: rgba(99, 102, 241, 0.2);
+    color: #818cf8;
 }
 
 .velvz-analytics-metric__icon--success {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
-    color: #10b981;
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
 }
 
 .velvz-analytics-metric__icon--warning {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
-    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
 }
 
 .velvz-analytics-metric__icon--info {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
-    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
 }
 
 .velvz-analytics-metric__data {
@@ -142,14 +141,14 @@
     display: block;
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     line-height: 1.2;
 }
 
 .velvz-analytics-metric__label {
     display: block;
     font-size: 0.8rem;
-    color: var(--text-secondary, #64748b);
+    color: rgba(255, 255, 255, 0.6);
     margin-top: 0.25rem;
 }
 
@@ -164,18 +163,18 @@
 }
 
 .velvz-analytics-metric__trend--up {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
 }
 
 .velvz-analytics-metric__trend--down {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
 }
 
 .velvz-analytics-metric__trend--neutral {
-    background: rgba(100, 116, 139, 0.1);
-    color: #64748b;
+    background: rgba(156, 163, 175, 0.2);
+    color: #9ca3af;
 }
 
 /* Charts Row */
@@ -192,10 +191,9 @@
 
 /* Chart Card */
 .velvz-analytics-chart {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
@@ -205,7 +203,7 @@
 
 .velvz-analytics-chart__header {
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -214,7 +212,7 @@
 .velvz-analytics-chart__title {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     margin: 0;
     display: flex;
     align-items: center;
@@ -222,7 +220,7 @@
 }
 
 .velvz-analytics-chart__title i {
-    color: var(--primary-color, #6366f1);
+    color: #818cf8;
     font-size: 0.9rem;
 }
 
@@ -236,7 +234,7 @@
     align-items: center;
     gap: 0.4rem;
     font-size: 0.8rem;
-    color: var(--text-secondary, #64748b);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .velvz-legend-dot {
@@ -250,7 +248,7 @@
 }
 
 .velvz-legend-item--secondary .velvz-legend-dot {
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .velvz-analytics-chart__body {
@@ -264,16 +262,15 @@
 }
 
 .velvz-analytics-table {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
 .velvz-analytics-table__header {
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -282,7 +279,7 @@
 .velvz-analytics-table__title {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     margin: 0;
     display: flex;
     align-items: center;
@@ -290,7 +287,7 @@
 }
 
 .velvz-analytics-table__title i {
-    color: var(--primary-color, #6366f1);
+    color: #818cf8;
 }
 
 .velvz-analytics-table__export {
@@ -298,19 +295,19 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 0.5rem;
     font-size: 0.85rem;
-    color: var(--text-secondary, #64748b);
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .velvz-analytics-table__export:hover {
-    background: var(--surface-secondary, #f8fafc);
-    color: var(--primary-color, #6366f1);
-    border-color: var(--primary-color, #6366f1);
+    background: rgba(102, 126, 234, 0.15);
+    color: #667eea;
+    border-color: #667eea;
 }
 
 .velvz-analytics-table__body {
@@ -334,15 +331,15 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-secondary, #64748b);
-    background: var(--surface-secondary, #f8fafc);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .velvz-table td {
     font-size: 0.9rem;
-    color: var(--text-primary, #1a1a2e);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .velvz-table tr:last-child td {
@@ -350,7 +347,7 @@
 }
 
 .velvz-table tr:hover td {
-    background: rgba(99, 102, 241, 0.02);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .velvz-table__chatbot {
@@ -379,29 +376,29 @@
 }
 
 .velvz-table__badge--success {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
 }
 
 .velvz-table__badge--warning {
-    background: rgba(245, 158, 11, 0.1);
-    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
 }
 
 .velvz-table__badge--danger {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
 }
 
 .velvz-table__stars {
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    color: #f59e0b;
+    color: #fbbf24;
 }
 
 .velvz-table__stars span {
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     font-weight: 600;
 }
 
@@ -414,15 +411,15 @@
 }
 
 .velvz-table__trend--up {
-    color: #10b981;
+    color: #34d399;
 }
 
 .velvz-table__trend--down {
-    color: #ef4444;
+    color: #f87171;
 }
 
 .velvz-table__trend--neutral {
-    color: #64748b;
+    color: #9ca3af;
 }
 
 /* Insights Section */
@@ -433,7 +430,7 @@
 .velvz-analytics__insights-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     margin: 0 0 1rem 0;
     display: flex;
     align-items: center;
@@ -441,7 +438,7 @@
 }
 
 .velvz-analytics__insights-title i {
-    color: #f59e0b;
+    color: #fbbf24;
 }
 
 .velvz-insights-grid {
@@ -451,18 +448,19 @@
 }
 
 .velvz-insight {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
     padding: 1.25rem;
     display: flex;
     gap: 1rem;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-left: 4px solid;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .velvz-insight:hover {
     transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .velvz-insight--positive {
@@ -488,18 +486,18 @@
 }
 
 .velvz-insight--positive .velvz-insight__icon {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
 }
 
 .velvz-insight--info .velvz-insight__icon {
-    background: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
 }
 
 .velvz-insight--warning .velvz-insight__icon {
-    background: rgba(245, 158, 11, 0.1);
-    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
 }
 
 .velvz-insight__content {
@@ -510,13 +508,13 @@
 .velvz-insight__title {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text-primary, #1a1a2e);
+    color: #ffffff;
     margin: 0 0 0.35rem 0;
 }
 
 .velvz-insight__text {
     font-size: 0.85rem;
-    color: var(--text-secondary, #64748b);
+    color: rgba(255, 255, 255, 0.6);
     margin: 0;
     line-height: 1.5;
 }
