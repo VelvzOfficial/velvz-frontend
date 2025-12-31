@@ -87,7 +87,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    align-items: start;
+    align-items: stretch;
 }
 
 .velvz-settings__section--active .velvz-settings-card:only-child,
@@ -101,7 +101,13 @@
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
-    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.velvz-settings-card__body {
+    padding: 1.5rem;
+    flex: 1;
 }
 
 .velvz-settings-card--danger {
@@ -133,10 +139,6 @@
 
 .velvz-settings-card--danger .velvz-settings-card__title i {
     color: #f87171;
-}
-
-.velvz-settings-card__body {
-    padding: 1.5rem;
 }
 
 .velvz-settings-card__text {
