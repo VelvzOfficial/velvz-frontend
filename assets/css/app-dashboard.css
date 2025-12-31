@@ -138,20 +138,20 @@ body {
 }
 
 /* Grupo centrado: selector + búsqueda en páginas del dashboard */
+.velvz-header:not(.velvz-header--hub) .velvz-header__container {
+    justify-content: flex-start;
+}
+
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    position: absolute !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    left: auto !important;
-    right: calc(50% + 5px) !important;
+    position: static !important;
+    transform: none !important;
+    margin-left: auto;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    position: absolute !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    left: calc(50% + 5px) !important;
-    right: auto !important;
+    position: static !important;
+    transform: none !important;
+    margin-right: auto;
 }
 
 .velvz-header__island--cta {
