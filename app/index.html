@@ -372,6 +372,16 @@
                 bottom: 2rem;
             }
         }
+
+        /* =====================================================
+           FOOTER EN HUB (no sticky, parte del flujo)
+           ===================================================== */
+
+        .hub-footer-section {
+            position: relative;
+            z-index: 1;
+            scroll-snap-align: end;
+        }
     </style>
 </head>
 <body>
@@ -493,6 +503,44 @@
             </a>
         </div>
     </section>
+
+    <!-- FOOTER (como última sección del scroll) -->
+    <footer class="velvz-footer hub-footer-section">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- THREE.JS y Post-processing -->
     <script type="importmap">
@@ -772,46 +820,5 @@
 
     <!-- Dashboard JS para auth y menú usuario -->
     <script src="/assets/js/app-dashboard.js" defer></script>
-
-    <!-- FOOTER -->
-    <footer class="hub-footer">
-        <div class="hub-footer__content">
-            <span class="hub-footer__brand">Velvz</span>
-            <span class="hub-footer__separator">·</span>
-            <span class="hub-footer__copyright">© 2025</span>
-        </div>
-    </footer>
-
-    <style>
-        .hub-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            padding: 1rem 2rem;
-            pointer-events: none;
-        }
-
-        .hub-footer__content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
-            letter-spacing: 0.05em;
-        }
-
-        .hub-footer__brand {
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-        }
-
-        .hub-footer__separator {
-            opacity: 0.5;
-        }
-    </style>
 </body>
 </html>
