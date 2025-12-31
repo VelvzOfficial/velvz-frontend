@@ -29,27 +29,156 @@
             --profiles-light: rgba(139, 92, 246, 0.1);
         }
 
-        /* Override sidebar hover color */
-        .velvz-sidebar__link:hover,
+        /* Override sidebar: solo activo verde, hover gris */
         .velvz-sidebar__link--active {
-            background: rgba(16, 185, 129, 0.1) !important;
+            background: rgba(16, 185, 129, 0.15) !important;
             color: #10b981 !important;
         }
-        .velvz-sidebar__link:hover .velvz-sidebar__icon,
         .velvz-sidebar__link--active .velvz-sidebar__icon {
             color: #10b981 !important;
         }
 
         /* Button styles */
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; border: none; text-decoration: none; }
+        .btn--primary { background: var(--profiles-color); color: #fff; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35); }
+        .btn--primary:hover { background: #7c3aed; transform: translateY(-2px); box-shadow: 0 6px 25px rgba(139, 92, 246, 0.45); }
+        .btn--secondary { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+        .btn--secondary:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
         .btn--sm { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+
+        /* Hero Header estilo Chatbots */
+        .profiles-hero {
+            background: linear-gradient(135deg,
+                rgba(139, 92, 246, 0.1) 0%,
+                rgba(124, 58, 237, 0.05) 50%,
+                transparent 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profiles-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .profiles-hero__content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profiles-hero__text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profiles-hero__icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .profiles-hero__text p {
+            color: rgba(255,255,255,0.5);
+            font-size: 1.05rem;
+            line-height: 1.5;
+            max-width: 500px;
+        }
+
+        .profiles-hero__stats {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profiles-hero__stat {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+        }
+
+        .profiles-hero__stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .profiles-hero__stat-icon--total {
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+        }
+
+        .profiles-hero__stat-icon--active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .profiles-hero__stat-icon--match {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .profiles-hero__stat-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profiles-hero__stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .profiles-hero__stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
 
         /* Main Content Layout */
         .profiles-layout {
             display: grid;
             grid-template-columns: 340px 1fr;
             gap: 0;
-            height: calc(100vh - 80px);
-            margin: -2rem;
+            height: calc(100vh - 280px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
         }
 
         /* Left Panel - Lista */
@@ -650,20 +779,63 @@
         <!-- MAIN -->
         <main class="velvz-main">
             <div class="velvz-dashboard">
+                <!-- HERO SECTION -->
+                <div class="profiles-hero">
+                    <div class="profiles-hero__content">
+                        <div class="profiles-hero__text">
+                            <h1>
+                                <span class="profiles-hero__icon">
+                                    <i class="fas fa-id-badge"></i>
+                                </span>
+                                Perfiles de Empresa
+                            </h1>
+                            <p>Define y gestiona los perfiles ideales para tus procesos de selección</p>
+                        </div>
+                        <button class="btn btn--primary" id="newProfileBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Nuevo Perfil</span>
+                        </button>
+                    </div>
+                    <div class="profiles-hero__stats">
+                        <div class="profiles-hero__stat">
+                            <div class="profiles-hero__stat-icon profiles-hero__stat-icon--total">
+                                <i class="fas fa-id-badge"></i>
+                            </div>
+                            <div class="profiles-hero__stat-content">
+                                <span class="profiles-hero__stat-value" id="statTotal">4</span>
+                                <span class="profiles-hero__stat-label">Total Perfiles</span>
+                            </div>
+                        </div>
+                        <div class="profiles-hero__stat">
+                            <div class="profiles-hero__stat-icon profiles-hero__stat-icon--active">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="profiles-hero__stat-content">
+                                <span class="profiles-hero__stat-value" id="statActive">10</span>
+                                <span class="profiles-hero__stat-label">Procesos Usando</span>
+                            </div>
+                        </div>
+                        <div class="profiles-hero__stat">
+                            <div class="profiles-hero__stat-icon profiles-hero__stat-icon--match">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="profiles-hero__stat-content">
+                                <span class="profiles-hero__stat-value" id="statMatch">83%</span>
+                                <span class="profiles-hero__stat-label">Match Promedio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="profiles-layout">
                     <!-- Lista de Perfiles -->
                     <div class="profiles-list">
                         <div class="profiles-list__header">
                             <div class="profiles-list__header-left">
                                 <h1 class="profiles-list__title">
-                                    <i class="fas fa-id-badge"></i> Perfiles
+                                    <i class="fas fa-list"></i> Lista
                                 </h1>
                                 <p class="profiles-list__count" id="profilesCount">4 perfiles</p>
-                            </div>
-                            <div class="profiles-list__header-actions">
-                                <button class="btn btn--primary btn--sm" id="newProfileBtn">
-                                    <i class="fas fa-plus"></i>
-                                </button>
                             </div>
                         </div>
                         <div class="profiles-list__toolbar">

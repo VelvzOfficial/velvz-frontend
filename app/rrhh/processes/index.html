@@ -29,13 +29,11 @@
             --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
         }
 
-        /* Override sidebar hover color */
-        .velvz-sidebar__link:hover,
+        /* Override sidebar: solo activo verde, hover gris */
         .velvz-sidebar__link--active {
-            background: rgba(16, 185, 129, 0.1) !important;
+            background: rgba(16, 185, 129, 0.15) !important;
             color: #10b981 !important;
         }
-        .velvz-sidebar__link:hover .velvz-sidebar__icon,
         .velvz-sidebar__link--active .velvz-sidebar__icon {
             color: #10b981 !important;
         }
@@ -103,13 +101,29 @@
         .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
         .filter-btn--active { background: var(--rrhh-primary-light); border-color: var(--rrhh-primary); color: var(--rrhh-primary); }
 
-        /* Hero Section */
+        /* Hero Section - Estilo Mis Chatbots */
         .processes-hero {
-            background: var(--dark-bg-secondary);
+            background: linear-gradient(135deg,
+                rgba(16, 185, 129, 0.1) 0%,
+                rgba(5, 150, 105, 0.05) 50%,
+                transparent 100%);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .processes-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .processes-hero__content {
@@ -118,10 +132,12 @@
             justify-content: space-between;
             gap: 2rem;
             margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .processes-hero__text h1 {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #fff;
             display: flex;
@@ -130,13 +146,24 @@
             margin-bottom: 0.5rem;
         }
 
-        .processes-hero__text h1 i {
-            color: var(--rrhh-primary);
+        .processes-hero__icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
 
         .processes-hero__text p {
             color: rgba(255,255,255,0.5);
-            font-size: 0.95rem;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            max-width: 500px;
         }
 
         .processes-stats {
@@ -195,8 +222,14 @@
         /* Grid - Tipo cuadrícula más ancha (2 por fila) */
         .processes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.25rem;
+        }
+
+        @media (max-width: 1200px) {
+            .processes-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Process Card - Más compacta */
@@ -342,7 +375,6 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .processes-grid { grid-template-columns: 1fr; }
             .processes-stats { flex-wrap: wrap; gap: 1rem; }
         }
 
@@ -480,7 +512,12 @@
                 <div class="processes-hero">
                     <div class="processes-hero__content">
                         <div class="processes-hero__text">
-                            <h1><i class="fas fa-briefcase"></i> Procesos de Selección</h1>
+                            <h1>
+                                <span class="processes-hero__icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </span>
+                                Procesos de Selección
+                            </h1>
                             <p>Crea y gestiona procesos de contratación con inteligencia artificial</p>
                         </div>
                         <button class="btn btn--primary" id="newProcessBtn">
