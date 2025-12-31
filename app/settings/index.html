@@ -483,37 +483,6 @@
                         <div class="velvz-settings-card">
                             <div class="velvz-settings-card__header">
                                 <h3 class="velvz-settings-card__title">
-                                    <i class="fas fa-desktop"></i>
-                                    Notificaciones en Navegador
-                                </h3>
-                            </div>
-                            <div class="velvz-settings-card__body">
-                                <div class="velvz-setting-item">
-                                    <div class="velvz-setting-item__info">
-                                        <span class="velvz-setting-item__label">Notificaciones push</span>
-                                        <span class="velvz-setting-item__description">Recibe alertas en tiempo real en tu navegador</span>
-                                    </div>
-                                    <label class="velvz-toggle">
-                                        <input type="checkbox" id="notifPush">
-                                        <span class="velvz-toggle__slider"></span>
-                                    </label>
-                                </div>
-                                <div class="velvz-setting-item">
-                                    <div class="velvz-setting-item__info">
-                                        <span class="velvz-setting-item__label">Sonido de notificación</span>
-                                        <span class="velvz-setting-item__description">Reproduce un sonido cuando llegue una notificación</span>
-                                    </div>
-                                    <label class="velvz-toggle">
-                                        <input type="checkbox" id="notifSound" checked>
-                                        <span class="velvz-toggle__slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="velvz-settings-card">
-                            <div class="velvz-settings-card__header">
-                                <h3 class="velvz-settings-card__title">
                                     <i class="fas fa-clock"></i>
                                     Horario de Notificaciones
                                 </h3>
@@ -538,37 +507,6 @@
                                         <label class="velvz-form-label">Hasta</label>
                                         <input type="time" class="velvz-form-input" id="dndTo" value="18:00">
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="velvz-settings-card">
-                            <div class="velvz-settings-card__header">
-                                <h3 class="velvz-settings-card__title">
-                                    <i class="fas fa-filter"></i>
-                                    Filtros de Notificación
-                                </h3>
-                            </div>
-                            <div class="velvz-settings-card__body">
-                                <div class="velvz-setting-item">
-                                    <div class="velvz-setting-item__info">
-                                        <span class="velvz-setting-item__label">Solo chatbots favoritos</span>
-                                        <span class="velvz-setting-item__description">Recibir notificaciones solo de chatbots marcados como favoritos</span>
-                                    </div>
-                                    <label class="velvz-toggle">
-                                        <input type="checkbox" id="notifFavorites">
-                                        <span class="velvz-toggle__slider"></span>
-                                    </label>
-                                </div>
-                                <div class="velvz-setting-item">
-                                    <div class="velvz-setting-item__info">
-                                        <span class="velvz-setting-item__label">Agrupar notificaciones</span>
-                                        <span class="velvz-setting-item__description">Agrupar múltiples notificaciones en un solo resumen</span>
-                                    </div>
-                                    <label class="velvz-toggle">
-                                        <input type="checkbox" id="notifGroup" checked>
-                                        <span class="velvz-toggle__slider"></span>
-                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -706,65 +644,6 @@
 
                     <!-- SECCIÓN INTEGRACIONES -->
                     <div class="velvz-settings__section" id="section-integrations">
-                        <div class="velvz-settings-card">
-                            <div class="velvz-settings-card__header">
-                                <h3 class="velvz-settings-card__title">
-                                    <i class="fas fa-plug"></i>
-                                    Integraciones Disponibles
-                                </h3>
-                            </div>
-                            <div class="velvz-settings-card__body">
-                                <div class="velvz-integration">
-                                    <div class="velvz-integration__icon" style="background: #25D366;">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </div>
-                                    <div class="velvz-integration__info">
-                                        <span class="velvz-integration__name">WhatsApp Business</span>
-                                        <span class="velvz-integration__description">Conecta tus chatbots con WhatsApp</span>
-                                    </div>
-                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
-                                        Conectar
-                                    </button>
-                                </div>
-                                <div class="velvz-integration">
-                                    <div class="velvz-integration__icon" style="background: #0084FF;">
-                                        <i class="fab fa-facebook-messenger"></i>
-                                    </div>
-                                    <div class="velvz-integration__info">
-                                        <span class="velvz-integration__name">Facebook Messenger</span>
-                                        <span class="velvz-integration__description">Integra con Messenger de Facebook</span>
-                                    </div>
-                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
-                                        Conectar
-                                    </button>
-                                </div>
-                                <div class="velvz-integration">
-                                    <div class="velvz-integration__icon" style="background: #7289DA;">
-                                        <i class="fab fa-slack"></i>
-                                    </div>
-                                    <div class="velvz-integration__info">
-                                        <span class="velvz-integration__name">Slack</span>
-                                        <span class="velvz-integration__description">Añade chatbots a tu workspace de Slack</span>
-                                    </div>
-                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
-                                        Conectar
-                                    </button>
-                                </div>
-                                <div class="velvz-integration">
-                                    <div class="velvz-integration__icon" style="background: #0088CC;">
-                                        <i class="fab fa-telegram"></i>
-                                    </div>
-                                    <div class="velvz-integration__info">
-                                        <span class="velvz-integration__name">Telegram</span>
-                                        <span class="velvz-integration__description">Crea bots de Telegram con Velvz</span>
-                                    </div>
-                                    <button class="velvz-btn velvz-btn--secondary velvz-btn--sm">
-                                        Conectar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="velvz-settings-card">
                             <div class="velvz-settings-card__header">
                                 <h3 class="velvz-settings-card__title">
