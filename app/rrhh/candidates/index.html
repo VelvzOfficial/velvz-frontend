@@ -38,6 +38,11 @@
             color: #10b981 !important;
         }
 
+        /* Override max-width para aprovechar todo el ancho */
+        .velvz-dashboard {
+            max-width: none;
+        }
+
         /* Buttons */
         .btn {
             display: inline-flex;
@@ -187,7 +192,8 @@
             display: grid;
             grid-template-columns: 340px 1fr;
             gap: 0;
-            height: calc(100vh - 280px);
+            height: calc(100vh - 320px);
+            min-height: 500px;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.06);
