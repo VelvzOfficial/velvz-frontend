@@ -39,7 +39,7 @@
         }
 
         body {
-            background: #0a0a0f;
+            background: #0f0f1a;
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -553,7 +553,7 @@
         });
 
         const pts = new THREE.Points(geo, mat);
-        pts.scale.set(2.0, 2.0, 2.0); // Escala mayor
+        pts.scale.set(1.4, 1.4, 1.4); // Escala reducida
         pts.position.y = 5; // Subida
         scene.add(pts);
 
@@ -674,7 +674,9 @@
                         dot.classList.remove('active');
                         if (dot.dataset.section === sectionId) {
                             dot.classList.add('active');
-                            dot.style.setProperty('--active-color', sectionColor === 'none' ? '#667eea' : sectionColor);
+                            // Usar el color del data-color del dot (blanco para hero)
+                            const dotColor = dot.dataset.color || '#667eea';
+                            dot.style.setProperty('--active-color', dotColor);
                         }
                     });
 
