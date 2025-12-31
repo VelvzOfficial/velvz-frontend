@@ -270,10 +270,6 @@
                         <i class="fas fa-shield-alt"></i>
                         <span>Seguridad</span>
                     </button>
-                    <button class="velvz-settings__nav-btn" data-section="api">
-                        <i class="fas fa-key"></i>
-                        <span>API Keys</span>
-                    </button>
                     <button class="velvz-settings__nav-btn" data-section="integrations">
                         <i class="fas fa-plug"></i>
                         <span>Integraciones</span>
@@ -353,6 +349,79 @@
                                         <option value="America/Buenos_Aires">America/Buenos_Aires (GMT-3)</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-key"></i>
+                                    Tus API Keys
+                                </h3>
+                                <button class="velvz-btn velvz-btn--primary velvz-btn--sm" id="createApiKey">
+                                    <i class="fas fa-plus"></i>
+                                    Nueva API Key
+                                </button>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-api-key">
+                                    <div class="velvz-api-key__info">
+                                        <span class="velvz-api-key__name">Production Key</span>
+                                        <span class="velvz-api-key__created">Creada el 15 dic 2024</span>
+                                    </div>
+                                    <div class="velvz-api-key__value">
+                                        <code>velvz_pk_****************************7f3a</code>
+                                        <button class="velvz-api-key__copy" title="Copiar">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="velvz-api-key__actions">
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="velvz-api-key">
+                                    <div class="velvz-api-key__info">
+                                        <span class="velvz-api-key__name">Development Key</span>
+                                        <span class="velvz-api-key__created">Creada el 20 dic 2024</span>
+                                    </div>
+                                    <div class="velvz-api-key__value">
+                                        <code>velvz_dk_****************************2b1c</code>
+                                        <button class="velvz-api-key__copy" title="Copiar">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="velvz-api-key__actions">
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-book"></i>
+                                    Documentación API
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <p class="velvz-settings-card__text">
+                                    Consulta nuestra documentación para integrar los chatbots de Velvz en tu aplicación.
+                                </p>
+                                <a href="/documentacion/api/" class="velvz-btn velvz-btn--secondary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Ver Documentación
+                                </a>
                             </div>
                         </div>
 
@@ -633,83 +702,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- SECCIÓN API KEYS -->
-                    <div class="velvz-settings__section" id="section-api">
-                        <div class="velvz-settings-card">
-                            <div class="velvz-settings-card__header">
-                                <h3 class="velvz-settings-card__title">
-                                    <i class="fas fa-key"></i>
-                                    Tus API Keys
-                                </h3>
-                                <button class="velvz-btn velvz-btn--primary velvz-btn--sm" id="createApiKey">
-                                    <i class="fas fa-plus"></i>
-                                    Nueva API Key
-                                </button>
-                            </div>
-                            <div class="velvz-settings-card__body">
-                                <div class="velvz-api-key">
-                                    <div class="velvz-api-key__info">
-                                        <span class="velvz-api-key__name">Production Key</span>
-                                        <span class="velvz-api-key__created">Creada el 15 dic 2024</span>
-                                    </div>
-                                    <div class="velvz-api-key__value">
-                                        <code>velvz_pk_****************************7f3a</code>
-                                        <button class="velvz-api-key__copy" title="Copiar">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
-                                    </div>
-                                    <div class="velvz-api-key__actions">
-                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="velvz-api-key">
-                                    <div class="velvz-api-key__info">
-                                        <span class="velvz-api-key__name">Development Key</span>
-                                        <span class="velvz-api-key__created">Creada el 20 dic 2024</span>
-                                    </div>
-                                    <div class="velvz-api-key__value">
-                                        <code>velvz_dk_****************************2b1c</code>
-                                        <button class="velvz-api-key__copy" title="Copiar">
-                                            <i class="fas fa-copy"></i>
-                                        </button>
-                                    </div>
-                                    <div class="velvz-api-key__actions">
-                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="velvz-settings-card">
-                            <div class="velvz-settings-card__header">
-                                <h3 class="velvz-settings-card__title">
-                                    <i class="fas fa-book"></i>
-                                    Documentación API
-                                </h3>
-                            </div>
-                            <div class="velvz-settings-card__body">
-                                <p class="velvz-settings-card__text">
-                                    Consulta nuestra documentación para integrar los chatbots de Velvz en tu aplicación.
-                                </p>
-                                <a href="/documentacion/api/" class="velvz-btn velvz-btn--secondary">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Ver Documentación
-                                </a>
-                            </div>
-                        </div>
-
                     </div>
 
                     <!-- SECCIÓN INTEGRACIONES -->
