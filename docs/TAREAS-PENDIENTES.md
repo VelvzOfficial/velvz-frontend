@@ -19,7 +19,6 @@
 
 - [ ] Arreglar el selector de servicio del header (y diseñarlo bien)
 - [ ] Rediseñar el selector de servicios de la app
-- [ ] Revisar consistencia de los chatbots a lo largo del customizador, vista previa y real
 - [ ] Revisar funcionalidades de la sección de configuración
 - [ ] Menú de usuario: cerrar al hacer click en el avatar cuando está abierto
 - [ ] Añadir opción para editar el z-index de los chatbots
@@ -36,7 +35,9 @@
 
 ## Completadas
 
-*Mover aquí las tareas completadas con fecha*
+- [x] Revisar consistencia de los chatbots a lo largo del customizador, vista previa y real (2024-12-31)
+  - Widget en Vista Previa ahora respeta la posición seleccionada
+  - Arreglado icono avatar en tema minimalista
 
 ---
 
