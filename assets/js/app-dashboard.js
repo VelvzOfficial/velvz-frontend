@@ -1,7 +1,7 @@
 // =====================================================
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
-console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v5');
+console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v6');
 
 // =====================================================
 // SELECTOR DE SERVICIOS
