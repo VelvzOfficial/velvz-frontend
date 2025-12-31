@@ -37,6 +37,7 @@
 /* Navigation Tabs */
 .velvz-settings__nav {
     display: flex;
+    justify-content: flex-start;
     gap: 0.5rem;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
@@ -58,6 +59,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
+    flex-shrink: 0;
+    min-width: fit-content;
 }
 
 .velvz-settings__nav-btn:hover {
