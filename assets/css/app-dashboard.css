@@ -144,19 +144,19 @@ body {
     position: fixed !important;
     top: calc(env(safe-area-inset-top, 0px) + 18px) !important;
     z-index: 1001 !important;
-    /* Desactivar la animación breathe para estos elementos ya que interfiere con el posicionamiento */
     animation: none !important;
-    transform: none !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    right: calc(50% + 5px) !important;
-    left: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(calc(-100% - 5px)) !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    left: calc(50% + 5px) !important;
+    left: 50% !important;
     right: auto !important;
+    transform: translateX(5px) !important;
 }
 
 .velvz-header__island--cta {
