@@ -40,10 +40,13 @@
             color: #10b981 !important;
         }
 
+        /* Button styles */
+        .btn--sm { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+
         /* Main Content Layout */
         .profiles-layout {
             display: grid;
-            grid-template-columns: 380px 1fr;
+            grid-template-columns: 340px 1fr;
             gap: 0;
             height: calc(100vh - 80px);
             margin: -2rem;
@@ -59,15 +62,23 @@
         }
 
         .profiles-list__header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profiles-list__header-left {
+            display: flex;
+            flex-direction: column;
         }
 
         .profiles-list__title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.15rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -76,17 +87,24 @@
         .profiles-list__title i { color: var(--profiles-color); }
 
         .profiles-list__count {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: rgba(255,255,255,0.5);
         }
 
-        .profiles-list__actions {
-            padding: 1rem 1.5rem;
+        .profiles-list__header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .profiles-list__toolbar {
+            padding: 0.75rem 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            gap: 0.5rem;
         }
 
         .profiles-list__search {
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
@@ -207,12 +225,18 @@
             background: var(--dark-bg);
             padding: 2rem;
             overflow-y: auto;
+            min-width: 500px;
         }
 
         .profile-detail--empty {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .profile-detail__inner {
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .detail-empty {
@@ -630,14 +654,21 @@
                     <!-- Lista de Perfiles -->
                     <div class="profiles-list">
                         <div class="profiles-list__header">
-                            <h1 class="profiles-list__title">
-                                <i class="fas fa-id-badge"></i> Perfiles
-                            </h1>
-                            <p class="profiles-list__count" id="profilesCount">4 perfiles</p>
+                            <div class="profiles-list__header-left">
+                                <h1 class="profiles-list__title">
+                                    <i class="fas fa-id-badge"></i> Perfiles
+                                </h1>
+                                <p class="profiles-list__count" id="profilesCount">4 perfiles</p>
+                            </div>
+                            <div class="profiles-list__header-actions">
+                                <button class="btn btn--primary btn--sm" id="newProfileBtn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="profiles-list__actions">
-                            <button class="btn btn--primary btn--full" id="newProfileBtn">
-                                <i class="fas fa-plus"></i> Nuevo Perfil
+                        <div class="profiles-list__toolbar">
+                            <button class="btn btn--secondary btn--sm" id="filterProfilesBtn">
+                                <i class="fas fa-filter"></i> Filtrar
                             </button>
                         </div>
                         <div class="profiles-list__search">

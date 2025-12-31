@@ -40,29 +40,6 @@
             color: #10b981 !important;
         }
 
-        /* Page Header */
-        .page-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .page-header__info h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .page-header__info h1 i { color: var(--rrhh-primary); }
-        .page-header__info p { color: rgba(255,255,255,0.5); font-size: 0.95rem; }
-        .page-header__actions { display: flex; gap: 0.75rem; }
-
         /* Buttons */
         .btn {
             display: inline-flex;
@@ -126,11 +103,100 @@
         .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
         .filter-btn--active { background: var(--rrhh-primary-light); border-color: var(--rrhh-primary); color: var(--rrhh-primary); }
 
-        /* Grid - Tipo cuadrícula compacta */
+        /* Hero Section */
+        .processes-hero {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .processes-hero__content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .processes-hero__text h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .processes-hero__text h1 i {
+            color: var(--rrhh-primary);
+        }
+
+        .processes-hero__text p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+        }
+
+        .processes-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .processes-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .processes-stat__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .processes-stat__icon--primary {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--rrhh-primary);
+        }
+
+        .processes-stat__icon--active {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .processes-stat__icon--candidates {
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+        }
+
+        .processes-stat__content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .processes-stat__value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .processes-stat__label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Grid - Tipo cuadrícula más ancha (2 por fila) */
         .processes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 1.25rem;
         }
 
         /* Process Card - Más compacta */
@@ -275,15 +341,19 @@
         .empty-state__text { color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .processes-grid { grid-template-columns: 1fr; }
+            .processes-stats { flex-wrap: wrap; gap: 1rem; }
+        }
+
         @media (max-width: 768px) {
-            .page-header { flex-direction: column; }
-            .page-header__actions { width: 100%; }
-            .page-header__actions .btn { flex: 1; justify-content: center; }
+            .processes-hero { padding: 1.5rem; }
+            .processes-hero__content { flex-direction: column; align-items: flex-start; }
+            .processes-hero__content .btn { width: 100%; justify-content: center; }
             .toolbar { flex-direction: column; align-items: stretch; }
             .toolbar__left, .toolbar__right { width: 100%; }
             .search-box { max-width: none; }
             .filters { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .processes-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -406,17 +476,46 @@
         <!-- MAIN -->
         <main class="velvz-main">
             <div class="velvz-dashboard">
-                <!-- PAGE HEADER -->
-                <div class="page-header">
-                    <div class="page-header__info">
-                        <h1><i class="fas fa-briefcase"></i> Procesos de Selección</h1>
-                        <p>Crea y gestiona procesos de contratación con IA</p>
-                    </div>
-                    <div class="page-header__actions">
+                <!-- HERO SECTION -->
+                <div class="processes-hero">
+                    <div class="processes-hero__content">
+                        <div class="processes-hero__text">
+                            <h1><i class="fas fa-briefcase"></i> Procesos de Selección</h1>
+                            <p>Crea y gestiona procesos de contratación con inteligencia artificial</p>
+                        </div>
                         <button class="btn btn--primary" id="newProcessBtn">
                             <i class="fas fa-plus"></i>
                             <span>Nuevo Proceso</span>
                         </button>
+                    </div>
+                    <div class="processes-stats">
+                        <div class="processes-stat">
+                            <div class="processes-stat__icon processes-stat__icon--primary">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="processes-stat__content">
+                                <span class="processes-stat__value" id="statTotal">6</span>
+                                <span class="processes-stat__label">Total Procesos</span>
+                            </div>
+                        </div>
+                        <div class="processes-stat">
+                            <div class="processes-stat__icon processes-stat__icon--active">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="processes-stat__content">
+                                <span class="processes-stat__value" id="statActive">4</span>
+                                <span class="processes-stat__label">Activos</span>
+                            </div>
+                        </div>
+                        <div class="processes-stat">
+                            <div class="processes-stat__icon processes-stat__icon--candidates">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="processes-stat__content">
+                                <span class="processes-stat__value" id="statCandidates">189</span>
+                                <span class="processes-stat__label">Candidatos</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

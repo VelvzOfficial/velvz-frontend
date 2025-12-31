@@ -40,10 +40,30 @@
             color: #10b981 !important;
         }
 
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+        .btn--primary { background: var(--candidates-color); color: #fff; }
+        .btn--primary:hover { background: #2563eb; }
+        .btn--secondary { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+        .btn--secondary:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+        .btn--sm { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+
         /* Main Content Layout */
         .candidates-layout {
             display: grid;
-            grid-template-columns: 380px 1fr;
+            grid-template-columns: 340px 1fr;
             gap: 0;
             height: calc(100vh - 80px);
             margin: -2rem;
@@ -59,15 +79,23 @@
         }
 
         .candidates-list__header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .candidates-list__header-left {
+            display: flex;
+            flex-direction: column;
         }
 
         .candidates-list__title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.15rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -76,12 +104,24 @@
         .candidates-list__title i { color: var(--candidates-color); }
 
         .candidates-list__count {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: rgba(255,255,255,0.5);
         }
 
+        .candidates-list__actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .candidates-list__toolbar {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            gap: 0.5rem;
+        }
+
         .candidates-list__search {
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
@@ -203,12 +243,18 @@
             background: var(--dark-bg);
             padding: 2rem;
             overflow-y: auto;
+            min-width: 500px;
         }
 
         .candidate-detail--empty {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .candidate-detail__inner {
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .detail-empty {
@@ -659,10 +705,25 @@
                     <!-- Lista de Candidatos -->
                     <div class="candidates-list">
                         <div class="candidates-list__header">
-                            <h1 class="candidates-list__title">
-                                <i class="fas fa-user-tie"></i> Candidatos
-                            </h1>
-                            <p class="candidates-list__count" id="candidatesCount">5 candidatos</p>
+                            <div class="candidates-list__header-left">
+                                <h1 class="candidates-list__title">
+                                    <i class="fas fa-user-tie"></i> Candidatos
+                                </h1>
+                                <p class="candidates-list__count" id="candidatesCount">5 candidatos</p>
+                            </div>
+                            <div class="candidates-list__actions">
+                                <button class="btn btn--primary btn--sm" id="addCandidateBtn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="candidates-list__toolbar">
+                            <button class="btn btn--secondary btn--sm" id="filterBtn">
+                                <i class="fas fa-filter"></i> Filtrar
+                            </button>
+                            <button class="btn btn--secondary btn--sm" id="exportBtn">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
                         </div>
                         <div class="candidates-list__search">
                             <div class="search-wrapper">
