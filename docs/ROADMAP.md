@@ -5,8 +5,8 @@
 | Servicio | Estado |
 |----------|--------|
 | **Hub Central** | Activo |
-| **Chatbots IA** | Activo |
-| **RRHH IA** | Activo |
+| **Chatbots IA** | En desarrollo |
+| **RRHH IA** | Pendiente |
 
 ---
 
@@ -14,11 +14,22 @@
 
 ### Prioridad Alta
 
-*Añadir funcionalidades aquí*
+- [ ] **Pulir servicio de Chatbots**
+  - Eliminar bugs existentes
+  - Funcionalidad completa sin datos inventados
+  - Testing exhaustivo de todos los flujos
+
+- [ ] **Pasarela de pago**
+  - Integración con procesador de pagos
+  - Planes de suscripción
+  - Gestión de facturación
 
 ### Prioridad Media
 
-*Añadir funcionalidades aquí*
+- [ ] **Desarrollar servicio de RRHH**
+  - Implementación completa del módulo
+  - Gestión de procesos de selección
+  - Análisis de candidatos con IA
 
 ### Prioridad Baja
 
