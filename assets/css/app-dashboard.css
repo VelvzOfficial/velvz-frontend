@@ -138,7 +138,6 @@ body {
 }
 
 /* Grupo centrado: selector + búsqueda en páginas del dashboard */
-/* Usamos position fixed y compensamos el sidebar (60px/2 = 30px) para centrar en el área visible */
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
     position: fixed !important;
@@ -148,13 +147,13 @@ body {
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    left: calc(50% + 30px) !important;
+    left: 50% !important;
     right: auto !important;
     transform: translateX(calc(-100% - 5px)) !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    left: calc(50% + 30px) !important;
+    left: 50% !important;
     right: auto !important;
     transform: translateX(5px) !important;
 }
