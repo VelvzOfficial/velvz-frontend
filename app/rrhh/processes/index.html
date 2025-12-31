@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesos de Selección - RRHH IA - Velvz</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/logoR.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logoR.png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+
+    <!-- Auth System -->
+    <script src="/assets/js/auth-config.js"></script>
+
+    <style>
+        :root {
+            --rrhh-primary: #10b981;
+            --rrhh-primary-light: rgba(16, 185, 129, 0.1);
+            --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
+        }
+
+        /* =====================================================
+           PAGE HEADER
+           ===================================================== */
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-header__info h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-header__info h1 i {
+            color: var(--rrhh-primary);
+        }
+
+        .page-header__info p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+        }
+
+        .page-header__actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* =====================================================
+           BOTONES
+           ===================================================== */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn--primary {
+            background: var(--rrhh-primary);
+            color: #fff;
+        }
+
+        .btn--primary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--rrhh-primary-glow);
+        }
+
+        .btn--secondary {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+
+        .btn--secondary:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .btn--ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            padding: 0.5rem;
+        }
+
+        .btn--ghost:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* =====================================================
+           TOOLBAR
+           ===================================================== */
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .toolbar__left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .toolbar__right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 300px;
+            flex: 1;
+        }
+
+        .search-box__input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box__input:focus {
+            outline: none;
+            border-color: var(--rrhh-primary);
+            box-shadow: 0 0 0 3px var(--rrhh-primary-light);
+        }
+
+        .search-box__input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .search-box__icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+
+        /* =====================================================
+           FILTROS
+           ===================================================== */
+
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        .filter-btn--active {
+            background: var(--rrhh-primary-light);
+            border-color: var(--rrhh-primary);
+            color: var(--rrhh-primary);
+        }
+
+        /* =====================================================
+           GRID
+           ===================================================== */
+
+        .processes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* =====================================================
+           PROCESS CARD
+           ===================================================== */
+
+        .process-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .process-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .process-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .process-card__status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .process-card__status--active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .process-card__status--paused {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .process-card__status--closed {
+            background: rgba(107, 114, 128, 0.15);
+            color: #9ca3af;
+        }
+
+        .process-card__status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .process-card__menu {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .process-card__menu:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .process-card__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.35rem;
+        }
+
+        .process-card__department {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .process-card__stats {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1rem;
+        }
+
+        .process-card__stat {
+            text-align: center;
+        }
+
+        .process-card__stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .process-card__stat-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .process-card__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .process-card__date {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .process-card__action {
+            color: var(--rrhh-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s ease;
+        }
+
+        .process-card__action:hover {
+            gap: 0.5rem;
+        }
+
+        /* =====================================================
+           EMPTY STATE
+           ===================================================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--dark-bg-tertiary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .empty-state__title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state__text {
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+            }
+
+            .page-header__actions {
+                width: 100%;
+            }
+
+            .page-header__actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toolbar__left,
+            .toolbar__right {
+                width: 100%;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .filters {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .processes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__logo">
+                    <div class="velvz-header__logo-shape">
+                        <div class="velvz-header__logo-face">
+                            <div class="velvz-header__logo-eye"></div>
+                            <div class="velvz-header__logo-mouth"></div>
+                            <div class="velvz-header__logo-eye"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="velvz-header__island velvz-header__island--services">
+                <button class="svc-selector" id="svcSelector" data-current="rrhh">
+                    <i class="fas fa-users svc-selector__icon" style="color: #10b981;"></i>
+                    <span class="svc-selector__text">RRHH</span>
+                    <i class="fas fa-chevron-down svc-selector__arrow"></i>
+                </button>
+                <div class="svc-dropdown" id="svcDropdown">
+                    <a href="/app/chatbots/dashboard.html" class="svc-dropdown__item" data-service="chatbots">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </a>
+                    <a href="/app/rrhh/" class="svc-dropdown__item svc-dropdown__item--active" data-service="rrhh">
+                        <i class="fas fa-users"></i>
+                        <span>RRHH</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
+                <div class="velvz-header__search">
+                    <input type="text" class="velvz-header__search-input" placeholder="Buscar procesos..." id="headerSearchInput">
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        <span id="userInitials">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="velvz-header__mobile-toggle" id="mobileMenuToggle">
+                <div class="velvz-header__hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">RRHH IA</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-th-large"></i>
+                            <span>Panel Principal</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Gestión</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/processes/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-briefcase"></i>
+                            <span>Procesos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/candidates/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user-tie"></i>
+                            <span>Candidatos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/profiles/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-id-badge"></i>
+                            <span>Perfiles</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/profile/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="#" class="velvz-sidebar__link" id="logoutLink">
+                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="velvz-main">
+            <div class="velvz-dashboard">
+                <!-- PAGE HEADER -->
+                <div class="page-header">
+                    <div class="page-header__info">
+                        <h1><i class="fas fa-briefcase"></i> Procesos de Selección</h1>
+                        <p>Crea y gestiona procesos de contratación con IA</p>
+                    </div>
+                    <div class="page-header__actions">
+                        <button class="btn btn--primary" id="newProcessBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Nuevo Proceso</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TOOLBAR -->
+                <div class="toolbar">
+                    <div class="toolbar__left">
+                        <div class="search-box">
+                            <i class="fas fa-search search-box__icon"></i>
+                            <input type="text" class="search-box__input" placeholder="Buscar procesos..." id="searchProcesses">
+                        </div>
+                    </div>
+                    <div class="toolbar__right">
+                        <div class="filters">
+                            <button class="filter-btn filter-btn--active" data-filter="all">Todos</button>
+                            <button class="filter-btn" data-filter="active">Activos</button>
+                            <button class="filter-btn" data-filter="paused">Pausados</button>
+                            <button class="filter-btn" data-filter="closed">Cerrados</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROCESSES GRID -->
+                <div class="processes-grid" id="processesGrid">
+                    <!-- Cards se cargan dinámicamente -->
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-state__icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="empty-state__title">Crea tu primer proceso de selección</h3>
+                    <p class="empty-state__text">
+                        Define el puesto, los requisitos y deja que la IA filtre los mejores candidatos para ti
+                    </p>
+                    <button class="btn btn--primary" id="emptyNewProcess">
+                        <i class="fas fa-plus"></i>
+                        <span>Crear Proceso</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mock data
+            const processes = [
+                {
+                    id: 1,
+                    title: 'Desarrollador Full Stack Senior',
+                    department: 'Tecnología',
+                    status: 'active',
+                    candidates: 45,
+                    shortlisted: 8,
+                    forms: 2,
+                    createdAt: '2025-01-15'
+                },
+                {
+                    id: 2,
+                    title: 'Product Manager',
+                    department: 'Producto',
+                    status: 'active',
+                    candidates: 32,
+                    shortlisted: 5,
+                    forms: 1,
+                    createdAt: '2025-01-20'
+                },
+                {
+                    id: 3,
+                    title: 'Diseñador UX/UI',
+                    department: 'Diseño',
+                    status: 'paused',
+                    candidates: 18,
+                    shortlisted: 3,
+                    forms: 1,
+                    createdAt: '2025-01-10'
+                }
+            ];
+
+            const grid = document.getElementById('processesGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            function renderProcesses(data) {
+                if (data.length === 0) {
+                    grid.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                grid.style.display = 'grid';
+                emptyState.style.display = 'none';
+
+                grid.innerHTML = data.map(process => `
+                    <div class="process-card" data-id="${process.id}">
+                        <div class="process-card__header">
+                            <span class="process-card__status process-card__status--${process.status}">
+                                <span class="process-card__status-dot"></span>
+                                ${process.status === 'active' ? 'Activo' : process.status === 'paused' ? 'Pausado' : 'Cerrado'}
+                            </span>
+                            <button class="process-card__menu">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <h3 class="process-card__title">${process.title}</h3>
+                        <p class="process-card__department">
+                            <i class="fas fa-building"></i> ${process.department}
+                        </p>
+                        <div class="process-card__stats">
+                            <div class="process-card__stat">
+                                <div class="process-card__stat-value">${process.candidates}</div>
+                                <div class="process-card__stat-label">Candidatos</div>
+                            </div>
+                            <div class="process-card__stat">
+                                <div class="process-card__stat-value">${process.shortlisted}</div>
+                                <div class="process-card__stat-label">Preselec.</div>
+                            </div>
+                            <div class="process-card__stat">
+                                <div class="process-card__stat-value">${process.forms}</div>
+                                <div class="process-card__stat-label">Formularios</div>
+                            </div>
+                        </div>
+                        <div class="process-card__footer">
+                            <span class="process-card__date">
+                                <i class="far fa-calendar"></i> ${new Date(process.createdAt).toLocaleDateString('es-ES')}
+                            </span>
+                            <a href="#" class="process-card__action">
+                                Ver detalles <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Filtros
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-btn--active'));
+                    btn.classList.add('filter-btn--active');
+
+                    const filter = btn.dataset.filter;
+                    if (filter === 'all') {
+                        renderProcesses(processes);
+                    } else {
+                        renderProcesses(processes.filter(p => p.status === filter));
+                    }
+                });
+            });
+
+            // Búsqueda
+            document.getElementById('searchProcesses').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                renderProcesses(processes.filter(p =>
+                    p.title.toLowerCase().includes(query) ||
+                    p.department.toLowerCase().includes(query)
+                ));
+            });
+
+            // Render inicial
+            renderProcesses(processes);
+
+            // Botón nuevo proceso
+            ['newProcessBtn', 'emptyNewProcess'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        alert('Modal de nuevo proceso - Por implementar');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
