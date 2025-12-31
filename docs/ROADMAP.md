@@ -31,6 +31,10 @@
   - Gestión de procesos de selección
   - Análisis de candidatos con IA
 
+- [ ] **Revisar la ciberseguridad**
+  - Auditoría de seguridad general
+  - Protección de datos de usuarios
+
 ### Prioridad Baja
 
 *Añadir funcionalidades aquí*

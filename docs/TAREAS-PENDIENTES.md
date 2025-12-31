@@ -17,7 +17,10 @@
 
 ## Por Hacer
 
-*Añadir tareas aquí*
+- [ ] Arreglar el selector de servicio del header (y diseñarlo bien)
+- [ ] Rediseñar el selector de servicios de la app
+- [ ] Revisar consistencia de los chatbots a lo largo del customizador, vista previa y real
+- [ ] Revisar funcionalidades de la sección de configuración
 
 ---
 
