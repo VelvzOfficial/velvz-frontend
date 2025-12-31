@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="/logoR.png">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,7 +34,8 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
         }
 
         body {
@@ -53,37 +54,44 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
 
-        /* Header transparente en el hub */
+        #particleCanvas.visible {
+            opacity: 1;
+        }
+
+        /* Header SIEMPRE transparente en el hub */
         .velvz-header--hub {
             background: transparent !important;
             border-bottom: none !important;
-            transition: background 0.4s ease, border 0.4s ease;
         }
 
-        .velvz-header--hub.scrolled {
-            background: rgba(10, 10, 15, 0.9) !important;
+        .velvz-header--hub .velvz-header__island {
+            background: rgba(10, 10, 15, 0.6) !important;
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
         }
 
         /* =====================================================
-           SECCIONES SCROLL
+           SECCIONES CON SCROLL SNAP
            ===================================================== */
 
         .hub-section {
             position: relative;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1;
             padding: 2rem;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
         /* =====================================================
-           HERO - LOGO VELVZ
+           HERO - LOGO VELVZ (estilo landing)
            ===================================================== */
 
         .hub-hero {
@@ -92,24 +100,28 @@
         }
 
         .hub-hero__title {
-            font-size: clamp(4rem, 15vw, 12rem);
-            font-weight: 900;
-            letter-spacing: -0.02em;
+            font-size: clamp(6rem, 18vw, 22rem);
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            line-height: 0.85;
+            text-transform: uppercase;
             color: #fff;
-            text-shadow: 0 0 80px rgba(102, 126, 234, 0.5);
             opacity: 0;
-            transform: translateY(30px);
-            animation: heroFadeIn 1s ease forwards 0.3s;
+            animation: heroFadeIn 2s ease-out 0.5s forwards;
+            user-select: none;
         }
 
         .hub-hero__subtitle {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            font-weight: 400;
-            color: rgba(255,255,255,0.6);
-            letter-spacing: 0.2em;
+            font-size: clamp(1.2rem, 3vw, 2.5rem);
+            font-weight: 200;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
             opacity: 0;
-            animation: heroFadeIn 1s ease forwards 0.6s;
+            transform: translateY(30px);
+            animation: heroSubtitleAppear 1.5s ease-out 2s forwards;
+            user-select: none;
+            margin-top: 1rem;
         }
 
         .hub-hero__scroll-hint {
@@ -122,7 +134,7 @@
             align-items: center;
             gap: 0.5rem;
             opacity: 0;
-            animation: heroFadeIn 1s ease forwards 1s, bounce 2s ease-in-out infinite 2s;
+            animation: heroFadeIn 1s ease forwards 2.5s, bounce 2s ease-in-out infinite 3.5s;
         }
 
         .hub-hero__scroll-hint span {
@@ -140,6 +152,12 @@
         @keyframes heroFadeIn {
             to {
                 opacity: 1;
+            }
+        }
+
+        @keyframes heroSubtitleAppear {
+            to {
+                opacity: 1;
                 transform: translateY(0);
             }
         }
@@ -154,20 +172,20 @@
            ===================================================== */
 
         .hub-service {
-            padding-top: 120px;
+            padding-top: 0;
         }
 
         .hub-service__content {
             max-width: 600px;
             text-align: center;
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hub-service__content.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .hub-service__badge {
@@ -321,6 +339,16 @@
            ===================================================== */
 
         @media (max-width: 768px) {
+            .hub-hero__title {
+                font-size: clamp(3rem, 12vw, 8rem);
+                letter-spacing: 0.2em;
+            }
+
+            .hub-hero__subtitle {
+                font-size: clamp(0.8rem, 2vw, 1.5rem);
+                letter-spacing: 0.1em;
+            }
+
             .hub-service__stats {
                 gap: 1.5rem;
             }
@@ -396,7 +424,7 @@
     </nav>
 
     <!-- SECCIÓN HERO -->
-    <section class="hub-section hub-hero" id="hero" data-color="#667eea">
+    <section class="hub-section hub-hero" id="hero" data-color="none">
         <h1 class="hub-hero__title">VELVZ</h1>
         <p class="hub-hero__subtitle">Centro de Control</p>
 
@@ -519,10 +547,10 @@
         );
 
         /* =====================================================
-           ESFERA DE PARTÍCULAS
+           ESFERA DE PARTÍCULAS (MÁS GRANDE)
            ===================================================== */
 
-        const R = 26, SEG = 100;
+        const R = 32, SEG = 110; // Más grande
         const geo = new THREE.SphereGeometry(R, SEG, SEG).toNonIndexed();
         const posAttr = geo.getAttribute('position');
         const basePos = posAttr.array.slice();
@@ -538,22 +566,21 @@
         });
 
         const pts = new THREE.Points(geo, mat);
-        pts.scale.set(1.7, 1.7, 1.7);
+        pts.scale.set(2.0, 2.0, 2.0); // Escala mayor
+        pts.position.y = -15; // Más abajo
         scene.add(pts);
 
         /* =====================================================
            COLORES POR SECCIÓN
            ===================================================== */
 
-        // Colores en formato HSL
         const sectionColors = {
-            hero: { h: 0.68, s: 0.7, l: 0.65 },      // Morado/índigo Velvz
             chatbots: { h: 0.65, s: 0.75, l: 0.60 }, // Azul índigo
             rrhh: { h: 0.42, s: 0.85, l: 0.45 }      // Verde
         };
 
-        let currentColor = { ...sectionColors.hero };
-        let targetColor = { ...sectionColors.hero };
+        let currentColor = { h: 0.65, s: 0.75, l: 0.60 };
+        let targetColor = { h: 0.65, s: 0.75, l: 0.60 };
 
         function lerpColor(current, target, speed) {
             current.h += (target.h - current.h) * speed;
@@ -628,11 +655,11 @@
 
         const sections = document.querySelectorAll('.hub-section');
         const navDots = document.querySelectorAll('.hub-nav__dot');
-        const header = document.getElementById('hubHeader');
+        const canvasEl = document.getElementById('particleCanvas');
 
         const observerOptions = {
             root: null,
-            threshold: 0.5
+            threshold: 0.6
         };
 
         const sectionObserver = new IntersectionObserver((entries) => {
@@ -641,9 +668,18 @@
                     const sectionId = entry.target.id;
                     const sectionColor = entry.target.dataset.color;
 
-                    // Cambiar color de la esfera
-                    if (sectionColors[sectionId]) {
-                        targetColor = { ...sectionColors[sectionId] };
+                    // Mostrar/ocultar esfera según sección
+                    if (sectionId === 'hero') {
+                        // Hero: ocultar esfera
+                        canvasEl.classList.remove('visible');
+                    } else {
+                        // Servicios: mostrar esfera
+                        canvasEl.classList.add('visible');
+
+                        // Cambiar color de la esfera
+                        if (sectionColors[sectionId]) {
+                            targetColor = { ...sectionColors[sectionId] };
+                        }
                     }
 
                     // Actualizar navegación
@@ -651,21 +687,21 @@
                         dot.classList.remove('active');
                         if (dot.dataset.section === sectionId) {
                             dot.classList.add('active');
-                            dot.style.setProperty('--active-color', sectionColor);
+                            dot.style.setProperty('--active-color', sectionColor === 'none' ? '#667eea' : sectionColor);
                         }
                     });
 
-                    // Mostrar contenido de servicios
+                    // Ocultar contenidos de servicios no visibles
+                    document.querySelectorAll('.hub-service__content').forEach(content => {
+                        content.classList.remove('visible');
+                    });
+
+                    // Mostrar contenido de servicio actual
                     const content = entry.target.querySelector('.hub-service__content');
                     if (content) {
-                        content.classList.add('visible');
-                    }
-
-                    // Header background
-                    if (sectionId === 'hero') {
-                        header.classList.remove('scrolled');
-                    } else {
-                        header.classList.add('scrolled');
+                        setTimeout(() => {
+                            content.classList.add('visible');
+                        }, 100);
                     }
                 }
             });
@@ -732,10 +768,5 @@
 
     <!-- Dashboard JS para auth y menú usuario -->
     <script src="/assets/js/app-dashboard.js" defer></script>
-
-    <script
-      src="https://velvz-unified-backend-production.up.railway.app/api/widget/script/11"
-      async
-    ></script>
 </body>
 </html>
