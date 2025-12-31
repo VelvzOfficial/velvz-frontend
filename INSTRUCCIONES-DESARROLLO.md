@@ -60,17 +60,16 @@ git pull
 
 ### DESPUÉS de hacer cambios:
 ```bash
-# IMPORTANTE: Solo añadir los archivos que modificaste, NO usar "git add ."
-git add archivo1.html archivo2.css   # Solo los archivos que tocaste
+git pull                             # SIEMPRE hacer pull antes de nada
+git add archivo1.html archivo2.css   # Solo los archivos que tocaste (NO usar "git add .")
 git commit -m "Descripción clara del cambio"
 git push
-git pull   # Sincronizar con cambios remotos
 ```
 
 ### Regla de Git: SOLO subir lo que modificaste
+- **SIEMPRE hacer `git pull` ANTES de empezar cualquier cosa**
 - **NO usar `git add .`** - esto añade todos los archivos
 - **Usar `git add <archivo>` específico** para cada archivo modificado
-- Después de push, hacer `git pull` para sincronizar
 
 ### Deploy Automático
 - Hostinger está configurado para hacer deploy automático
