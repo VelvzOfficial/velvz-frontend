@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velvz App - Dashboard</title>
+    <title>Chatbots IA - Velvz</title>
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -12,24 +12,373 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/app-dashboard.css">
-    
+
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
+
+    <style>
+        :root {
+            --chatbot-primary: #667eea;
+            --chatbot-primary-light: rgba(102, 126, 234, 0.1);
+            --chatbot-primary-glow: rgba(102, 126, 234, 0.3);
+        }
+
+        /* Override sidebar: solo activo morado, hover gris */
+        .velvz-sidebar__link--active {
+            background: rgba(102, 126, 234, 0.15) !important;
+            color: #667eea !important;
+        }
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #667eea !important;
+        }
+
+        /* Override max-width para aprovechar todo el ancho */
+        .velvz-dashboard {
+            max-width: none;
+        }
+
+        /* Breadcrumbs */
+        .velvz-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .velvz-breadcrumbs__link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .velvz-breadcrumbs__link:hover {
+            color: var(--chatbot-primary);
+        }
+
+        .velvz-breadcrumbs__separator {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.7rem;
+        }
+
+        .velvz-breadcrumbs__current {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* =====================================================
+           PANEL PRINCIPAL - HEADER
+           ===================================================== */
+
+        .chatbot-welcome {
+            margin-bottom: 2.5rem;
+        }
+
+        .chatbot-welcome__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chatbot-welcome__title i {
+            color: var(--chatbot-primary);
+        }
+
+        .chatbot-welcome__subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+        }
+
+        /* =====================================================
+           METRICAS
+           ===================================================== */
+
+        .chatbot-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .chatbot-metrics { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .chatbot-metrics { grid-template-columns: 1fr; }
+        }
+
+        .chatbot-metric {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-metric:hover {
+            border-color: rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .chatbot-metric__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+        }
+
+        .chatbot-metric__icon--bots {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        .chatbot-metric__icon--conversations {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: #fff;
+        }
+
+        .chatbot-metric__icon--satisfaction {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #fff;
+        }
+
+        .chatbot-metric__icon--response {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #fff;
+        }
+
+        .chatbot-metric__content {
+            flex: 1;
+        }
+
+        .chatbot-metric__value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .chatbot-metric__label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* =====================================================
+           SHORTCUTS - ACCESOS RAPIDOS
+           ===================================================== */
+
+        .chatbot-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .chatbot-shortcuts { grid-template-columns: 1fr; }
+        }
+
+        .chatbot-shortcut {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chatbot-shortcut::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--shortcut-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chatbot-shortcut:hover {
+            border-color: var(--shortcut-color);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .chatbot-shortcut:hover::before {
+            opacity: 1;
+        }
+
+        .chatbot-shortcut__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            background: var(--shortcut-color);
+            color: #fff;
+        }
+
+        .chatbot-shortcut__title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .chatbot-shortcut__desc {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .chatbot-shortcut__cta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--shortcut-color);
+            transition: gap 0.2s ease;
+        }
+
+        .chatbot-shortcut:hover .chatbot-shortcut__cta {
+            gap: 0.75rem;
+        }
+
+        .chatbot-shortcut--bots { --shortcut-color: #667eea; }
+        .chatbot-shortcut--analytics { --shortcut-color: #11998e; }
+        .chatbot-shortcut--settings { --shortcut-color: #f59e0b; }
+
+        /* =====================================================
+           ACTIVIDAD RECIENTE
+           ===================================================== */
+
+        .chatbot-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chatbot-section-title i {
+            color: var(--chatbot-primary);
+        }
+
+        .chatbot-activity {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .chatbot-activity__item {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s ease;
+        }
+
+        .chatbot-activity__item:last-child {
+            border-bottom: none;
+        }
+
+        .chatbot-activity__item:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .chatbot-activity__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-activity__icon--success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .chatbot-activity__icon--info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .chatbot-activity__icon--warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .chatbot-activity__content {
+            flex: 1;
+        }
+
+        .chatbot-activity__text {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .chatbot-activity__meta {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 768px) {
+            .chatbot-welcome__title {
+                font-size: 1.5rem;
+            }
+
+            .chatbot-shortcut {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- HEADER ACTUALIZADO CON BARRA DE BÚSQUEDA -->
+    <!-- HEADER -->
     <header class="velvz-header">
         <div class="velvz-header__container">
-            <!-- LOGO BRAND ISLAND -->
+            <!-- LOGO -->
             <div class="velvz-header__island velvz-header__island--brand">
                 <a href="/app/" class="velvz-header__logo">
                     <div class="velvz-header__logo-shape">
@@ -45,7 +394,7 @@
             <!-- SELECTOR DE SERVICIOS -->
             <div class="velvz-header__island velvz-header__island--services">
                 <button class="svc-selector" id="svcSelector" data-current="chatbots">
-                    <i class="fas fa-robot svc-selector__icon"></i>
+                    <i class="fas fa-robot svc-selector__icon" style="color: #667eea;"></i>
                     <span class="svc-selector__text">Chatbots</span>
                     <i class="fas fa-chevron-down svc-selector__arrow"></i>
                 </button>
@@ -61,113 +410,34 @@
                 </div>
             </div>
 
-            <!-- BARRA DE BÚSQUEDA ISLAND - CENTRADA -->
-            <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
+            <!-- BUSQUEDA -->
+            <div class="velvz-header__island velvz-header__island--search">
                 <div class="velvz-header__search">
                     <input
                         type="text"
                         class="velvz-header__search-input"
-                        placeholder="Buscar..."
+                        placeholder="Buscar chatbots..."
                         id="headerSearchInput"
                     >
                     <i class="fas fa-search velvz-header__search-icon"></i>
                 </div>
             </div>
 
-            <!-- AVATAR DEL USUARIO ISLAND -->
+            <!-- PERFIL -->
             <div class="velvz-header__island velvz-header__island--cta">
                 <div class="velvz-header__avatar" id="userAvatar">
                     <div class="velvz-header__avatar-circle">
-                        U
+                        <span id="userInitials">-</span>
                     </div>
                 </div>
             </div>
 
-            <!-- MOBILE TOGGLE (HAMBURGER) -->
-            <div class="velvz-header__mobile-toggle">
+            <!-- TOGGLE MOVIL -->
+            <div class="velvz-header__mobile-toggle" id="mobileMenuToggle">
                 <div class="velvz-header__hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- MOBILE MENU ACTUALIZADO -->
-        <div class="velvz-header__mobile-backdrop"></div>
-        <div class="velvz-header__mobile-menu">
-            <button class="velvz-header__mobile-close"></button>
-            
-            <div class="velvz-header__mobile-content">
-                <!-- BÚSQUEDA AL PRINCIPIO -->
-                <div class="velvz-header__mobile-search">
-                    <div class="velvz-header__mobile-search-container">
-                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
-                        <input 
-                            type="text" 
-                            class="velvz-header__mobile-search-input" 
-                            placeholder="Buscar..."
-                            id="mobileSearchInput"
-                        >
-                    </div>
-                </div>
-
-                <!-- SECCIÓN PRINCIPAL -->
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
-                    <a href="/app/chatbots/dashboard.html" class="velvz-header__mobile-link velvz-header__mobile-link--active">
-                        <i class="velvz-header__mobile-link-icon fas fa-th-large"></i>
-                        <span>Resumen</span>
-                    </a>
-                    <a href="/app/chatbots/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
-                        <span>Mis Chatbots</span>
-                    </a>
-                    <a href="/app/analytics/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
-                        <span>Analytics</span>
-                    </a>
-                </div>
-
-                <!-- SECCIÓN CONFIGURACIÓN -->
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Configuración</h3>
-                    <a href="/app/settings/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
-                        <span>Configuración</span>
-                    </a>
-                    <a href="/app/billing/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
-                        <span>Facturación</span>
-                    </a>
-                    <a href="/app/help/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-question-circle"></i>
-                        <span>Ayuda</span>
-                    </a>
-                </div>
-
-                <!-- SECCIÓN CUENTA -->
-                <div class="velvz-header__mobile-section">
-                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
-                    <a href="/app/profile/" class="velvz-header__mobile-link">
-                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
-                        <span>Mi Perfil</span>
-                    </a>
-                    <a href="#" class="velvz-header__mobile-link" onclick="handleLogout(); return false;">
-                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
-                        <span>Cerrar Sesión</span>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- TARJETA DE USUARIO AL FINAL -->
-            <div class="velvz-header__mobile-user-card">
-                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
-                    U
-                </div>
-                <div class="velvz-header__mobile-user-info">
-                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
-                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@example.com</div>
                 </div>
             </div>
         </div>
@@ -178,7 +448,7 @@
         <!-- SIDEBAR -->
         <aside class="velvz-sidebar">
             <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Chatbots</h3>
+                <h3 class="velvz-sidebar__title">Chatbots IA</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
                         <a href="/app/chatbots/dashboard.html" class="velvz-sidebar__link velvz-sidebar__link--active">
@@ -190,7 +460,7 @@
             </div>
 
             <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Gestión</h3>
+                <h3 class="velvz-sidebar__title">Gestion</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
                         <a href="/app/chatbots/" class="velvz-sidebar__link">
@@ -219,7 +489,7 @@
                     <li class="velvz-sidebar__item">
                         <a href="/app/settings/" class="velvz-sidebar__link">
                             <i class="velvz-sidebar__icon fas fa-cog"></i>
-                            <span>Configuración</span>
+                            <span>Configuracion</span>
                         </a>
                     </li>
                 </ul>
@@ -231,244 +501,148 @@
             <div class="velvz-dashboard">
                 <!-- BREADCRUMBS -->
                 <nav class="velvz-breadcrumbs">
-                    <a href="/app/" class="velvz-breadcrumbs__link">Hub</a>
+                    <a href="/app/chatbots/dashboard.html" class="velvz-breadcrumbs__link">
+                        <i class="fas fa-robot" style="margin-right: 0.35rem;"></i>Chatbots
+                    </a>
                     <span class="velvz-breadcrumbs__separator">
                         <i class="fas fa-chevron-right"></i>
                     </span>
-                    <a href="/app/chatbots/" class="velvz-breadcrumbs__link">Chatbots</a>
-                    <span class="velvz-breadcrumbs__separator">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                    <span class="velvz-breadcrumbs__current">Panel Principal</span>
+                    <span class="velvz-breadcrumbs__current">Panel de Control</span>
                 </nav>
 
-                <!-- HEADER DEL DASHBOARD -->
-                <div class="velvz-dashboard__header">
-                    <div class="velvz-dashboard__header-content">
-                        <h1 class="velvz-dashboard__title" id="welcomeTitle">Bienvenido de vuelta</h1>
-                        <p class="velvz-dashboard__subtitle">Aquí tienes un resumen de tu actividad</p>
+                <!-- BIENVENIDA -->
+                <div class="chatbot-welcome">
+                    <h1 class="chatbot-welcome__title">
+                        <i class="fas fa-robot"></i>
+                        Chatbots IA
+                    </h1>
+                    <p class="chatbot-welcome__subtitle">
+                        Panel de control de chatbots con inteligencia artificial
+                    </p>
+                </div>
+
+                <!-- METRICAS -->
+                <div class="chatbot-metrics">
+                    <div class="chatbot-metric">
+                        <div class="chatbot-metric__icon chatbot-metric__icon--bots">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="chatbot-metric__content">
+                            <div class="chatbot-metric__value" id="metricBots">3</div>
+                            <div class="chatbot-metric__label">Chatbots Activos</div>
+                        </div>
                     </div>
-                    <a href="/app/chatbots/new/" class="velvz-dashboard__cta">
-                        <i class="fas fa-plus"></i>
-                        <span>Nuevo Chatbot</span>
+                    <div class="chatbot-metric">
+                        <div class="chatbot-metric__icon chatbot-metric__icon--conversations">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="chatbot-metric__content">
+                            <div class="chatbot-metric__value" id="metricConversations">847</div>
+                            <div class="chatbot-metric__label">Conversaciones</div>
+                        </div>
+                    </div>
+                    <div class="chatbot-metric">
+                        <div class="chatbot-metric__icon chatbot-metric__icon--satisfaction">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="chatbot-metric__content">
+                            <div class="chatbot-metric__value" id="metricSatisfaction">4.8</div>
+                            <div class="chatbot-metric__label">Satisfaccion</div>
+                        </div>
+                    </div>
+                    <div class="chatbot-metric">
+                        <div class="chatbot-metric__icon chatbot-metric__icon--response">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="chatbot-metric__content">
+                            <div class="chatbot-metric__value" id="metricResponse">1.2s</div>
+                            <div class="chatbot-metric__label">Tiempo Respuesta</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCESOS RAPIDOS -->
+                <div class="chatbot-shortcuts">
+                    <a href="/app/chatbots/" class="chatbot-shortcut chatbot-shortcut--bots">
+                        <div class="chatbot-shortcut__icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="chatbot-shortcut__title">Mis Chatbots</h3>
+                        <p class="chatbot-shortcut__desc">
+                            Gestiona tus chatbots, configura respuestas y entrena la IA con documentos personalizados.
+                        </p>
+                        <span class="chatbot-shortcut__cta">
+                            Ir a Chatbots <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="/app/analytics/" class="chatbot-shortcut chatbot-shortcut--analytics">
+                        <div class="chatbot-shortcut__icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="chatbot-shortcut__title">Analytics</h3>
+                        <p class="chatbot-shortcut__desc">
+                            Analiza el rendimiento de tus chatbots. Metricas de conversaciones, satisfaccion y tiempos.
+                        </p>
+                        <span class="chatbot-shortcut__cta">
+                            Ver Analytics <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </a>
+
+                    <a href="/app/settings/" class="chatbot-shortcut chatbot-shortcut--settings">
+                        <div class="chatbot-shortcut__icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <h3 class="chatbot-shortcut__title">Configuracion</h3>
+                        <p class="chatbot-shortcut__desc">
+                            Ajusta las preferencias de tu cuenta, notificaciones y opciones de integracion.
+                        </p>
+                        <span class="chatbot-shortcut__cta">
+                            Ir a Configuracion <i class="fas fa-arrow-right"></i>
+                        </span>
                     </a>
                 </div>
 
-                <!-- MÉTRICAS PRINCIPALES -->
-                <div class="velvz-metrics">
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--primary">
-                            <i class="fas fa-robot"></i>
+                <!-- ACTIVIDAD RECIENTE -->
+                <h2 class="chatbot-section-title">
+                    <i class="fas fa-history"></i>
+                    Actividad Reciente
+                </h2>
+                <div class="chatbot-activity" id="activityList">
+                    <div class="chatbot-activity__item">
+                        <div class="chatbot-activity__icon chatbot-activity__icon--success">
+                            <i class="fas fa-check"></i>
                         </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="3">0</span>
-                            <span class="velvz-metric__label">Chatbots Activos</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+1 este mes</span>
-                        </div>
-                    </div>
-
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--success">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="847">0</span>
-                            <span class="velvz-metric__label">Conversaciones</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+23%</span>
+                        <div class="chatbot-activity__content">
+                            <div class="chatbot-activity__text">Conversacion completada exitosamente</div>
+                            <div class="chatbot-activity__meta">Soporte Tecnico - hace 2 min</div>
                         </div>
                     </div>
-
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--warning">
+                    <div class="chatbot-activity__item">
+                        <div class="chatbot-activity__icon chatbot-activity__icon--info">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="chatbot-activity__content">
+                            <div class="chatbot-activity__text">Nuevo usuario registrado desde chatbot</div>
+                            <div class="chatbot-activity__meta">Ventas Online - hace 15 min</div>
+                        </div>
+                    </div>
+                    <div class="chatbot-activity__item">
+                        <div class="chatbot-activity__icon chatbot-activity__icon--warning">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <div class="chatbot-activity__content">
+                            <div class="chatbot-activity__text">Escalado a agente humano</div>
+                            <div class="chatbot-activity__meta">Soporte Tecnico - hace 32 min</div>
+                        </div>
+                    </div>
+                    <div class="chatbot-activity__item">
+                        <div class="chatbot-activity__icon chatbot-activity__icon--success">
                             <i class="fas fa-star"></i>
                         </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="4.8" data-decimals="1">0</span>
-                            <span class="velvz-metric__label">Satisfacción</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--neutral">
-                            <i class="fas fa-minus"></i>
-                            <span>Estable</span>
-                        </div>
-                    </div>
-
-                    <div class="velvz-metric">
-                        <div class="velvz-metric__icon velvz-metric__icon--info">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="velvz-metric__data">
-                            <span class="velvz-metric__value" data-count="1.2" data-decimals="1">0</span><span class="velvz-metric__suffix">s</span>
-                            <span class="velvz-metric__label">Tiempo de Respuesta</span>
-                        </div>
-                        <div class="velvz-metric__trend velvz-metric__trend--up">
-                            <i class="fas fa-arrow-down"></i>
-                            <span>-15%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GRÁFICA Y CHATBOTS -->
-                <div class="velvz-dashboard__row">
-                    <!-- GRÁFICA DE CONVERSACIONES -->
-                    <div class="velvz-chart-card">
-                        <div class="velvz-chart-card__header">
-                            <h3 class="velvz-chart-card__title">
-                                <i class="fas fa-chart-area"></i>
-                                Conversaciones (últimos 7 días)
-                            </h3>
-                            <div class="velvz-chart-card__actions">
-                                <button class="velvz-chart-card__btn velvz-chart-card__btn--active" data-period="7d">7D</button>
-                                <button class="velvz-chart-card__btn" data-period="30d">30D</button>
-                                <button class="velvz-chart-card__btn" data-period="90d">90D</button>
-                            </div>
-                        </div>
-                        <div class="velvz-chart-card__body">
-                            <canvas id="conversationsChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- LISTA DE CHATBOTS -->
-                    <div class="velvz-chatbots-card">
-                        <div class="velvz-chatbots-card__header">
-                            <h3 class="velvz-chatbots-card__title">
-                                <i class="fas fa-robot"></i>
-                                Mis Chatbots
-                            </h3>
-                            <a href="/app/chatbots/" class="velvz-chatbots-card__link">Ver todos</a>
-                        </div>
-                        <div class="velvz-chatbots-card__body">
-                            <div class="velvz-chatbot-item">
-                                <div class="velvz-chatbot-item__avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <div class="velvz-chatbot-item__info">
-                                    <span class="velvz-chatbot-item__name">Soporte Técnico</span>
-                                    <span class="velvz-chatbot-item__stats">234 conversaciones hoy</span>
-                                </div>
-                                <div class="velvz-chatbot-item__status velvz-chatbot-item__status--online">
-                                    <span class="velvz-chatbot-item__dot"></span>
-                                    Activo
-                                </div>
-                            </div>
-
-                            <div class="velvz-chatbot-item">
-                                <div class="velvz-chatbot-item__avatar" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <div class="velvz-chatbot-item__info">
-                                    <span class="velvz-chatbot-item__name">Ventas Online</span>
-                                    <span class="velvz-chatbot-item__stats">156 conversaciones hoy</span>
-                                </div>
-                                <div class="velvz-chatbot-item__status velvz-chatbot-item__status--online">
-                                    <span class="velvz-chatbot-item__dot"></span>
-                                    Activo
-                                </div>
-                            </div>
-
-                            <div class="velvz-chatbot-item">
-                                <div class="velvz-chatbot-item__avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                                    <i class="fas fa-question-circle"></i>
-                                </div>
-                                <div class="velvz-chatbot-item__info">
-                                    <span class="velvz-chatbot-item__name">FAQ Assistant</span>
-                                    <span class="velvz-chatbot-item__stats">89 conversaciones hoy</span>
-                                </div>
-                                <div class="velvz-chatbot-item__status velvz-chatbot-item__status--online">
-                                    <span class="velvz-chatbot-item__dot"></span>
-                                    Activo
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ACTIVIDAD RECIENTE Y ACCIONES RÁPIDAS -->
-                <div class="velvz-dashboard__row">
-                    <!-- ACTIVIDAD RECIENTE -->
-                    <div class="velvz-activity-card">
-                        <div class="velvz-activity-card__header">
-                            <h3 class="velvz-activity-card__title">
-                                <i class="fas fa-history"></i>
-                                Actividad Reciente
-                            </h3>
-                        </div>
-                        <div class="velvz-activity-card__body">
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--success">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Conversación completada exitosamente</span>
-                                    <span class="velvz-activity-item__meta">Soporte Técnico · hace 2 min</span>
-                                </div>
-                            </div>
-
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--info">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Nuevo usuario registrado desde chatbot</span>
-                                    <span class="velvz-activity-item__meta">Ventas Online · hace 15 min</span>
-                                </div>
-                            </div>
-
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--warning">
-                                    <i class="fas fa-exclamation"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Escalado a agente humano</span>
-                                    <span class="velvz-activity-item__meta">Soporte Técnico · hace 32 min</span>
-                                </div>
-                            </div>
-
-                            <div class="velvz-activity-item">
-                                <div class="velvz-activity-item__icon velvz-activity-item__icon--success">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="velvz-activity-item__content">
-                                    <span class="velvz-activity-item__text">Valoración 5 estrellas recibida</span>
-                                    <span class="velvz-activity-item__meta">FAQ Assistant · hace 1 hora</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ACCIONES RÁPIDAS -->
-                    <div class="velvz-quick-actions">
-                        <h3 class="velvz-quick-actions__title">Acciones Rápidas</h3>
-                        <div class="velvz-quick-actions__grid">
-                            <a href="/app/chatbots/new/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-plus"></i>
-                                </div>
-                                <span>Crear Chatbot</span>
-                            </a>
-                            <a href="/app/analytics/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-chart-bar"></i>
-                                </div>
-                                <span>Ver Analytics</span>
-                            </a>
-                            <a href="/app/settings/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-cog"></i>
-                                </div>
-                                <span>Configuración</span>
-                            </a>
-                            <a href="/documentacion/" class="velvz-quick-action">
-                                <div class="velvz-quick-action__icon">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                                <span>Documentación</span>
-                            </a>
+                        <div class="chatbot-activity__content">
+                            <div class="chatbot-activity__text">Valoracion 5 estrellas recibida</div>
+                            <div class="chatbot-activity__meta">FAQ Assistant - hace 1 hora</div>
                         </div>
                     </div>
                 </div>
@@ -476,7 +650,7 @@
         </main>
     </div>
 
-    <!-- FOOTER OSCURO (IGUAL AL DE LA PÁGINA PRINCIPAL) -->
+    <!-- FOOTER -->
     <footer class="velvz-footer">
         <div class="velvz-footer__container">
             <div class="velvz-footer__brand">
@@ -494,37 +668,30 @@
                 </a>
                 <p class="velvz-footer__tagline">IA conversacional para empresas</p>
             </div>
-            
+
             <nav class="velvz-footer__links">
                 <a href="/" class="velvz-footer__link">Inicio</a>
                 <a href="/servicios/" class="velvz-footer__link">Servicios</a>
                 <a href="/precios/" class="velvz-footer__link">Precios</a>
-                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentacion</a>
                 <a href="/contacto/" class="velvz-footer__link">Contacto</a>
             </nav>
-            
+
             <div class="velvz-footer__legal">
                 <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
                 <div>
-                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> · 
-                    <a href="/terminos/" class="velvz-footer__link">Términos</a> · 
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> -
+                    <a href="/terminos/" class="velvz-footer__link">Terminos</a> -
                     <a href="/cookies/" class="velvz-footer__link">Cookies</a>
                 </div>
             </div>
         </div>
-        
-        <div class="velvz-footer__ambient">
-            <div class="velvz-footer__pulse"></div>
-            <div class="velvz-footer__pulse"></div>
-        </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Scripts -->
     <script src="/assets/js/app-dashboard.js"></script>
     <script src="/assets/js/error-cleanup.js"></script>
-    <!-- API Dashboard -->
     <script src="/assets/js/dashboard-api.js"></script>
-    <!-- Private App con protección y menú mejorado - DEBE ser el último -->
     <script src="/assets/js/private-app.js"></script>
 </body>
 </html>

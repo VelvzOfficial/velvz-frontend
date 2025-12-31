@@ -22,6 +22,52 @@
 
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
+
+    <style>
+        :root {
+            --chatbot-primary: #667eea;
+            --chatbot-primary-light: rgba(102, 126, 234, 0.1);
+            --chatbot-primary-glow: rgba(102, 126, 234, 0.3);
+        }
+
+        /* Override sidebar: solo activo morado */
+        .velvz-sidebar__link--active {
+            background: rgba(102, 126, 234, 0.15) !important;
+            color: #667eea !important;
+        }
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #667eea !important;
+        }
+
+        /* Breadcrumbs */
+        .velvz-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .velvz-breadcrumbs__link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .velvz-breadcrumbs__link:hover {
+            color: var(--chatbot-primary);
+        }
+
+        .velvz-breadcrumbs__separator {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.7rem;
+        }
+
+        .velvz-breadcrumbs__current {
+            color: #fff;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER -->
@@ -43,7 +89,7 @@
             <!-- SELECTOR DE SERVICIOS -->
             <div class="velvz-header__island velvz-header__island--services">
                 <button class="svc-selector" id="svcSelector" data-current="chatbots">
-                    <i class="fas fa-robot svc-selector__icon"></i>
+                    <i class="fas fa-robot svc-selector__icon" style="color: #667eea;"></i>
                     <span class="svc-selector__text">Chatbots</span>
                     <i class="fas fa-chevron-down svc-selector__arrow"></i>
                 </button>
@@ -229,15 +275,13 @@
             <div class="velvz-settings">
                 <!-- BREADCRUMBS -->
                 <nav class="velvz-breadcrumbs">
-                    <a href="/app/" class="velvz-breadcrumbs__link">Hub</a>
+                    <a href="/app/chatbots/dashboard.html" class="velvz-breadcrumbs__link">
+                        <i class="fas fa-robot" style="margin-right: 0.35rem;"></i>Chatbots
+                    </a>
                     <span class="velvz-breadcrumbs__separator">
                         <i class="fas fa-chevron-right"></i>
                     </span>
-                    <a href="/app/chatbots/" class="velvz-breadcrumbs__link">Chatbots</a>
-                    <span class="velvz-breadcrumbs__separator">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                    <span class="velvz-breadcrumbs__current">Configuración</span>
+                    <span class="velvz-breadcrumbs__current">Configuracion</span>
                 </nav>
 
                 <!-- HEADER DE CONFIGURACIÓN -->
