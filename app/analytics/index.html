@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Velvz Dashboard</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/logoR.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logoR.png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+    <link rel="stylesheet" href="/assets/css/analytics.css">
+
+    <!-- Auth System -->
+    <script src="/assets/js/auth-config.js"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <!-- LOGO BRAND ISLAND -->
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__logo">
+                    <div class="velvz-header__logo-shape">
+                        <div class="velvz-header__logo-face">
+                            <div class="velvz-header__logo-eye"></div>
+                            <div class="velvz-header__logo-mouth"></div>
+                            <div class="velvz-header__logo-eye"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- SELECTOR DE SERVICIOS -->
+            <div class="velvz-header__island velvz-header__island--services">
+                <button class="svc-selector" id="svcSelector" data-current="chatbots">
+                    <i class="fas fa-robot svc-selector__icon"></i>
+                    <span class="svc-selector__text">Chatbots</span>
+                    <i class="fas fa-chevron-down svc-selector__arrow"></i>
+                </button>
+                <div class="svc-dropdown" id="svcDropdown">
+                    <a href="/app/chatbots/dashboard.html" class="svc-dropdown__item svc-dropdown__item--active" data-service="chatbots">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </a>
+                    <a href="/app/rrhh/" class="svc-dropdown__item" data-service="rrhh">
+                        <i class="fas fa-users"></i>
+                        <span>RRHH</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BARRA DE BÚSQUEDA ISLAND - CENTRADA -->
+            <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
+                <div class="velvz-header__search">
+                    <input
+                        type="text"
+                        class="velvz-header__search-input"
+                        placeholder="Buscar chatbots, conversaciones..."
+                        id="headerSearchInput"
+                    >
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <!-- AVATAR DEL USUARIO ISLAND -->
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        U
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOBILE TOGGLE (HAMBURGER) -->
+            <div class="velvz-header__mobile-toggle">
+                <div class="velvz-header__hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div class="velvz-header__mobile-backdrop"></div>
+        <div class="velvz-header__mobile-menu">
+            <button class="velvz-header__mobile-close"></button>
+
+            <div class="velvz-header__mobile-content">
+                <!-- BÚSQUEDA -->
+                <div class="velvz-header__mobile-search">
+                    <div class="velvz-header__mobile-search-container">
+                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
+                        <input
+                            type="text"
+                            class="velvz-header__mobile-search-input"
+                            placeholder="Buscar..."
+                            id="mobileSearchInput"
+                        >
+                    </div>
+                </div>
+
+                <!-- SECCIÓN PRINCIPAL -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
+                    <a href="/app/chatbots/dashboard.html" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-pie"></i>
+                        <span>Resumen</span>
+                    </a>
+                    <a href="/app/chatbots/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-robot"></i>
+                        <span>Mis Chatbots</span>
+                    </a>
+                    <a href="/app/analytics/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
+                        <i class="velvz-header__mobile-link-icon fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </div>
+
+                <!-- SECCIÓN CONFIGURACIÓN -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Configuración</h3>
+                    <a href="/app/settings/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                    <a href="/app/billing/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
+                        <span>Facturación</span>
+                    </a>
+                    <a href="/app/help/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-question-circle"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </div>
+
+                <!-- SECCIÓN CUENTA -->
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
+                    <a href="/app/profile/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </a>
+                    <a href="#" class="velvz-header__mobile-link" onclick="handleLogout(); return false;">
+                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TARJETA DE USUARIO -->
+            <div class="velvz-header__mobile-user-card">
+                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
+                    U
+                </div>
+                <div class="velvz-header__mobile-user-info">
+                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
+                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@example.com</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Principal</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/chatbots/dashboard.html" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-chart-pie"></i>
+                            <span>Resumen</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/chatbots/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-robot"></i>
+                            <span>Mis Chatbots</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/analytics/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Configuración</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/billing/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-credit-card"></i>
+                            <span>Facturación</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/help/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-question-circle"></i>
+                            <span>Ayuda</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/profile/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="#" class="velvz-sidebar__link" onclick="handleLogout(); return false;">
+                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="velvz-main">
+            <div class="velvz-analytics">
+                <!-- HEADER DE ANALYTICS -->
+                <div class="velvz-analytics__header">
+                    <div class="velvz-analytics__header-content">
+                        <h1 class="velvz-analytics__title">
+                            <i class="fas fa-chart-line"></i>
+                            Analytics
+                        </h1>
+                        <p class="velvz-analytics__subtitle">Analiza el rendimiento de tus chatbots</p>
+                    </div>
+
+                    <!-- SELECTOR DE PERÍODO -->
+                    <div class="velvz-analytics__period-selector">
+                        <button class="velvz-period-btn" data-period="7d">7 días</button>
+                        <button class="velvz-period-btn velvz-period-btn--active" data-period="30d">30 días</button>
+                        <button class="velvz-period-btn" data-period="90d">90 días</button>
+                        <button class="velvz-period-btn" data-period="1y">1 año</button>
+                    </div>
+                </div>
+
+                <!-- MÉTRICAS PRINCIPALES -->
+                <div class="velvz-analytics__metrics">
+                    <div class="velvz-analytics-metric">
+                        <div class="velvz-analytics-metric__icon velvz-analytics-metric__icon--primary">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="velvz-analytics-metric__data">
+                            <span class="velvz-analytics-metric__value" id="totalConversations">2,847</span>
+                            <span class="velvz-analytics-metric__label">Conversaciones Totales</span>
+                        </div>
+                        <div class="velvz-analytics-metric__trend velvz-analytics-metric__trend--up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+18.3%</span>
+                        </div>
+                    </div>
+
+                    <div class="velvz-analytics-metric">
+                        <div class="velvz-analytics-metric__icon velvz-analytics-metric__icon--success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="velvz-analytics-metric__data">
+                            <span class="velvz-analytics-metric__value" id="resolutionRate">94.2%</span>
+                            <span class="velvz-analytics-metric__label">Tasa de Resolución</span>
+                        </div>
+                        <div class="velvz-analytics-metric__trend velvz-analytics-metric__trend--up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+2.1%</span>
+                        </div>
+                    </div>
+
+                    <div class="velvz-analytics-metric">
+                        <div class="velvz-analytics-metric__icon velvz-analytics-metric__icon--warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="velvz-analytics-metric__data">
+                            <span class="velvz-analytics-metric__value" id="avgResponseTime">1.2s</span>
+                            <span class="velvz-analytics-metric__label">Tiempo Medio Respuesta</span>
+                        </div>
+                        <div class="velvz-analytics-metric__trend velvz-analytics-metric__trend--up">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>-0.3s</span>
+                        </div>
+                    </div>
+
+                    <div class="velvz-analytics-metric">
+                        <div class="velvz-analytics-metric__icon velvz-analytics-metric__icon--info">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="velvz-analytics-metric__data">
+                            <span class="velvz-analytics-metric__value" id="satisfactionScore">4.7</span>
+                            <span class="velvz-analytics-metric__label">Satisfacción Media</span>
+                        </div>
+                        <div class="velvz-analytics-metric__trend velvz-analytics-metric__trend--neutral">
+                            <i class="fas fa-minus"></i>
+                            <span>Estable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICAS PRINCIPALES -->
+                <div class="velvz-analytics__charts-row">
+                    <!-- GRÁFICA DE CONVERSACIONES -->
+                    <div class="velvz-analytics-chart velvz-analytics-chart--large">
+                        <div class="velvz-analytics-chart__header">
+                            <h3 class="velvz-analytics-chart__title">
+                                <i class="fas fa-chart-area"></i>
+                                Conversaciones por Día
+                            </h3>
+                            <div class="velvz-analytics-chart__legend">
+                                <span class="velvz-legend-item velvz-legend-item--primary">
+                                    <span class="velvz-legend-dot"></span>
+                                    Este período
+                                </span>
+                                <span class="velvz-legend-item velvz-legend-item--secondary">
+                                    <span class="velvz-legend-dot"></span>
+                                    Período anterior
+                                </span>
+                            </div>
+                        </div>
+                        <div class="velvz-analytics-chart__body">
+                            <canvas id="conversationsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- GRÁFICA DE SATISFACCIÓN -->
+                    <div class="velvz-analytics-chart">
+                        <div class="velvz-analytics-chart__header">
+                            <h3 class="velvz-analytics-chart__title">
+                                <i class="fas fa-smile"></i>
+                                Distribución de Satisfacción
+                            </h3>
+                        </div>
+                        <div class="velvz-analytics-chart__body">
+                            <canvas id="satisfactionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGUNDA FILA DE GRÁFICAS -->
+                <div class="velvz-analytics__charts-row">
+                    <!-- RENDIMIENTO POR CHATBOT -->
+                    <div class="velvz-analytics-chart">
+                        <div class="velvz-analytics-chart__header">
+                            <h3 class="velvz-analytics-chart__title">
+                                <i class="fas fa-robot"></i>
+                                Rendimiento por Chatbot
+                            </h3>
+                        </div>
+                        <div class="velvz-analytics-chart__body">
+                            <canvas id="chatbotPerformanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- HORAS PICO -->
+                    <div class="velvz-analytics-chart">
+                        <div class="velvz-analytics-chart__header">
+                            <h3 class="velvz-analytics-chart__title">
+                                <i class="fas fa-clock"></i>
+                                Horas de Mayor Actividad
+                            </h3>
+                        </div>
+                        <div class="velvz-analytics-chart__body">
+                            <canvas id="peakHoursChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLA DE CHATBOTS -->
+                <div class="velvz-analytics__table-section">
+                    <div class="velvz-analytics-table">
+                        <div class="velvz-analytics-table__header">
+                            <h3 class="velvz-analytics-table__title">
+                                <i class="fas fa-table"></i>
+                                Desglose por Chatbot
+                            </h3>
+                            <button class="velvz-analytics-table__export">
+                                <i class="fas fa-download"></i>
+                                Exportar CSV
+                            </button>
+                        </div>
+                        <div class="velvz-analytics-table__body">
+                            <table class="velvz-table">
+                                <thead>
+                                    <tr>
+                                        <th>Chatbot</th>
+                                        <th>Conversaciones</th>
+                                        <th>Tasa Resolución</th>
+                                        <th>Tiempo Respuesta</th>
+                                        <th>Satisfacción</th>
+                                        <th>Tendencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="chatbotsTableBody">
+                                    <tr>
+                                        <td>
+                                            <div class="velvz-table__chatbot">
+                                                <div class="velvz-table__chatbot-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                                    <i class="fas fa-headset"></i>
+                                                </div>
+                                                <span>Soporte Técnico</span>
+                                            </div>
+                                        </td>
+                                        <td>1,234</td>
+                                        <td>
+                                            <span class="velvz-table__badge velvz-table__badge--success">96.4%</span>
+                                        </td>
+                                        <td>1.1s</td>
+                                        <td>
+                                            <div class="velvz-table__stars">
+                                                <i class="fas fa-star"></i>
+                                                <span>4.8</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="velvz-table__trend velvz-table__trend--up">
+                                                <i class="fas fa-arrow-up"></i>
+                                                +12%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="velvz-table__chatbot">
+                                                <div class="velvz-table__chatbot-avatar" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                </div>
+                                                <span>Ventas Online</span>
+                                            </div>
+                                        </td>
+                                        <td>987</td>
+                                        <td>
+                                            <span class="velvz-table__badge velvz-table__badge--success">92.1%</span>
+                                        </td>
+                                        <td>1.4s</td>
+                                        <td>
+                                            <div class="velvz-table__stars">
+                                                <i class="fas fa-star"></i>
+                                                <span>4.6</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="velvz-table__trend velvz-table__trend--up">
+                                                <i class="fas fa-arrow-up"></i>
+                                                +8%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="velvz-table__chatbot">
+                                                <div class="velvz-table__chatbot-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                                    <i class="fas fa-question-circle"></i>
+                                                </div>
+                                                <span>FAQ Assistant</span>
+                                            </div>
+                                        </td>
+                                        <td>626</td>
+                                        <td>
+                                            <span class="velvz-table__badge velvz-table__badge--warning">89.7%</span>
+                                        </td>
+                                        <td>0.9s</td>
+                                        <td>
+                                            <div class="velvz-table__stars">
+                                                <i class="fas fa-star"></i>
+                                                <span>4.5</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="velvz-table__trend velvz-table__trend--neutral">
+                                                <i class="fas fa-minus"></i>
+                                                0%
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INSIGHTS -->
+                <div class="velvz-analytics__insights">
+                    <h3 class="velvz-analytics__insights-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Insights Automáticos
+                    </h3>
+                    <div class="velvz-insights-grid">
+                        <div class="velvz-insight velvz-insight--positive">
+                            <div class="velvz-insight__icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="velvz-insight__content">
+                                <h4 class="velvz-insight__title">Mejor rendimiento</h4>
+                                <p class="velvz-insight__text">Tu chatbot "Soporte Técnico" tiene la mejor tasa de resolución este mes con un 96.4%</p>
+                            </div>
+                        </div>
+                        <div class="velvz-insight velvz-insight--info">
+                            <div class="velvz-insight__icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="velvz-insight__content">
+                                <h4 class="velvz-insight__title">Hora pico detectada</h4>
+                                <p class="velvz-insight__text">La mayor actividad ocurre entre las 10:00 y 12:00. Considera aumentar recursos en ese horario.</p>
+                            </div>
+                        </div>
+                        <div class="velvz-insight velvz-insight--warning">
+                            <div class="velvz-insight__icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="velvz-insight__content">
+                                <h4 class="velvz-insight__title">Área de mejora</h4>
+                                <p class="velvz-insight__text">El chatbot "FAQ Assistant" tiene un 10% de escalados a agente. Revisa las preguntas no resueltas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="velvz-footer__ambient">
+            <div class="velvz-footer__pulse"></div>
+            <div class="velvz-footer__pulse"></div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/error-cleanup.js"></script>
+    <script src="/assets/js/analytics.js"></script>
+    <script src="/assets/js/private-app.js"></script>
+</body>
+</html>
