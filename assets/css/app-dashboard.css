@@ -124,12 +124,33 @@ body {
     display: flex;
 }
 
-/* En el hub principal, centrar la búsqueda */
+/* En el hub principal, centrar SOLO la búsqueda */
 .velvz-header--hub .velvz-header__island--search {
     position: absolute !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     margin: 0 !important;
+}
+
+/* En el hub, ocultar el selector de servicios del header */
+.velvz-header--hub .velvz-header__island--services {
+    display: none !important;
+}
+
+/* Grupo centrado: selector + búsqueda en páginas del dashboard */
+.velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
+.velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
+    right: calc(50% + 10px);
+}
+
+.velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
+    left: calc(50% + 10px);
 }
 
 .velvz-header__island--cta {
@@ -157,7 +178,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     z-index: 5;
-    margin-left: auto;
+    /* Sin margin-left: auto para que quede junto a la búsqueda */
 }
 
 .svc-selector {
