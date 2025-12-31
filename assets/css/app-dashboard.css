@@ -878,7 +878,7 @@ a.velvz-header__logo {
 .velvz-main {
     background: var(--dark-bg);
     padding: 2rem;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-gutter: stable;
