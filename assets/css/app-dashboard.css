@@ -138,20 +138,22 @@ body {
 }
 
 /* Grupo centrado: selector + búsqueda en páginas del dashboard */
-.velvz-header:not(.velvz-header--hub) .velvz-header__container {
-    justify-content: flex-start;
+.velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
+.velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top) + 1rem + 40px) !important;
+    transform: translateY(-50%) !important;
+    z-index: 1001 !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    position: static !important;
-    transform: none !important;
-    margin-left: auto;
+    right: calc(50% + 10px) !important;
+    left: auto !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    position: static !important;
-    transform: none !important;
-    margin-right: auto;
+    left: calc(50% + 10px) !important;
+    right: auto !important;
 }
 
 .velvz-header__island--cta {
