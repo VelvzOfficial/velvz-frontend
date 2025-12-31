@@ -29,10 +29,14 @@ Velvz/
 │   │   └── index.html      # Panel de Chatbots
 │   └── rrhh/
 │       └── index.html      # Panel de RRHH
-└── cuenta/
-    ├── login.html
-    ├── register.html
-    └── ...
+├── cuenta/
+│   ├── login.html
+│   ├── register.html
+│   └── ...
+└── docs/
+    ├── ROADMAP.md          # Plan de funcionalidades
+    ├── TAREAS-PENDIENTES.md # Gestión de tareas
+    └── CHANGELOG.md        # Registro de cambios
 ```
 
 ## Backend
