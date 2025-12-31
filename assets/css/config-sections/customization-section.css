@@ -627,6 +627,21 @@
     color: var(--widget-color);
 }
 
+.chat-window--minimal .chat-window__avatar {
+    background: var(--widget-color);
+}
+
+.chat-window--minimal .chat-window__avatar i,
+.chat-window--minimal .chat-window__avatar img {
+    color: white;
+    filter: none;
+}
+
+.chat-window--minimal .chat-window__name,
+.chat-window--minimal .chat-window__status {
+    color: var(--widget-color);
+}
+
 /* Estilo Plano */
 .chat-bubble--flat {
     box-shadow: none;
