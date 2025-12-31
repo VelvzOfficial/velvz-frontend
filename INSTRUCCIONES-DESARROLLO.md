@@ -68,8 +68,23 @@ git push
 
 ## Trabajo en Equipo
 
-### Regla Principal
-**Comunicarse ANTES de empezar** qué archivos se van a modificar para evitar conflictos.
+### Regla Principal: ANUNCIAR ARCHIVOS
+**ANTES de empezar cualquier tarea**, listar los archivos que se van a modificar.
+
+Formato obligatorio al inicio de cada tarea:
+```
+📁 ARCHIVOS A MODIFICAR:
+- assets/css/app-dashboard.css
+- app/chatbots/index.html
+- app/rrhh/index.html
+```
+
+Esto aplica tanto a humanos como a IAs trabajando en el proyecto.
+
+### Por qué es importante
+- Evita conflictos de merge
+- Permite saber si alguien más está trabajando en el mismo archivo
+- Facilita la revisión de cambios
 
 ### Ejemplo de comunicación:
 - "Voy a trabajar en `rrhh.css` y `rrhh/index.html`"
