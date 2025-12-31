@@ -122,10 +122,13 @@ body {
     align-items: center;
     box-sizing: border-box;
     display: flex;
-    /* Sobrescribir inline styles para centrar con services */
-    position: static !important;
-    transform: none !important;
-    left: auto !important;
+}
+
+/* En el hub principal, centrar la búsqueda */
+.velvz-header--hub .velvz-header__island--search {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
     margin: 0 !important;
 }
 
