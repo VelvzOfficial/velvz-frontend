@@ -74,6 +74,35 @@
             border: 1px solid rgba(255,255,255,0.08) !important;
         }
 
+        /* Colores del header en el hub (evitar negro) */
+        .velvz-header--hub .velvz-header__logo-shape {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        }
+
+        .velvz-header--hub .velvz-header__logo-eye,
+        .velvz-header--hub .velvz-header__logo-mouth {
+            background: #fff !important;
+        }
+
+        .velvz-header--hub .velvz-header__search-input {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: rgba(255,255,255,0.12) !important;
+            color: #fff !important;
+        }
+
+        .velvz-header--hub .velvz-header__search-input::placeholder {
+            color: rgba(255,255,255,0.5) !important;
+        }
+
+        .velvz-header--hub .velvz-header__search-icon {
+            color: rgba(255,255,255,0.5) !important;
+        }
+
+        .velvz-header--hub .velvz-header__avatar-circle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: #fff !important;
+        }
+
         /* =====================================================
            SECCIONES CON SCROLL SNAP
            ===================================================== */
@@ -617,7 +646,7 @@
 
         const pts = new THREE.Points(geo, mat);
         pts.scale.set(1.4, 1.4, 1.4); // Escala reducida
-        pts.position.y = 5; // Subida
+        pts.position.y = -5; // Bajada
         scene.add(pts);
 
         /* =====================================================
