@@ -148,6 +148,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     z-index: 5;
+    margin-left: 80px;
 }
 
 .svc-selector {
