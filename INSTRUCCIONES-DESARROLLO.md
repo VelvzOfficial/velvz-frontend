@@ -170,6 +170,47 @@ git push
 4. Eliminar los marcadores
 5. `git add .` y `git commit`
 
+## Gestión del Roadmap y Tareas
+
+### Archivos de documentación
+- `docs/ROADMAP.md` - Plan de funcionalidades futuras
+- `docs/TAREAS-PENDIENTES.md` - Tareas activas del equipo
+- `docs/CHANGELOG.md` - Registro de cambios realizados
+
+### Reglas para el Roadmap
+
+1. **Al empezar una funcionalidad:**
+   - Marcar la tarea como "En progreso" en TAREAS-PENDIENTES.md
+   - Indicar quién la está haciendo
+
+2. **Al completar una funcionalidad:**
+   - Marcar con `[x]` en el ROADMAP.md
+   - Añadir fecha: `- [x] Funcionalidad (2025-01-15)`
+   - Mover a sección "Completado Recientemente"
+   - Actualizar CHANGELOG.md con los cambios
+
+3. **Formato de tareas:**
+   ```markdown
+   - [ ] Tarea pendiente
+   - [x] Tarea completada (YYYY-MM-DD)
+   ```
+
+4. **Al añadir nuevas funcionalidades al roadmap:**
+   - Incluir descripción breve
+   - Asignar prioridad (Alta/Media/Baja)
+
+### Ejemplo de flujo completo
+
+```
+1. Revisar ROADMAP.md y elegir tarea
+2. Marcar en TAREAS-PENDIENTES.md como "En progreso"
+3. Anunciar archivos a modificar
+4. Implementar
+5. Commit y push
+6. Marcar [x] en ROADMAP.md
+7. Actualizar CHANGELOG.md
+```
+
 ## URLs Importantes
 
 - **Producción**: https://velvz.com
