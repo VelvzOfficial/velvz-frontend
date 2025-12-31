@@ -828,12 +828,12 @@
             // Render inicial
             renderProcesses(processes);
 
-            // Botón nuevo proceso
+            // Botón nuevo proceso - redirigir al editor
             ['newProcessBtn', 'emptyNewProcess'].forEach(id => {
                 const btn = document.getElementById(id);
                 if (btn) {
                     btn.addEventListener('click', () => {
-                        alert('Modal de nuevo proceso - Por implementar');
+                        window.location.href = '/app/rrhh/processes/editor.html';
                     });
                 }
             });

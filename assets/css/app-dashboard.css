@@ -138,12 +138,15 @@ body {
 }
 
 /* Grupo centrado: selector + búsqueda en páginas del dashboard */
+/* Usamos position fixed para que esté centrado respecto al viewport, no al container */
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    position: absolute !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    z-index: 10 !important;
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 18px) !important;
+    z-index: 1001 !important;
+    /* Desactivar la animación breathe para estos elementos ya que interfiere con el posicionamiento */
+    animation: none !important;
+    transform: none !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
