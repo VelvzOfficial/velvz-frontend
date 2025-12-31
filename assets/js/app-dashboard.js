@@ -1,9 +1,7 @@
 // =====================================================
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
-console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v2');
-
-// Selector de servicios se maneja directamente en cada página HTML
+console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v3');
 
 // =====================================================
 // VERIFICACIÓN INMEDIATA DE SESIÓN (antes de DOM ready)
@@ -26,41 +24,6 @@ console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v2');
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("🔒 Inicializando dashboard privado...");
-  console.log("🔍 DEBUG APP-DASHBOARD: Script cargado y ejecutándose");
-
-  // =====================================================
-  // SELECTOR DE SERVICIOS - NUEVO DESDE CERO
-  // =====================================================
-  (function initServiceSelector() {
-    const selector = document.getElementById('serviceSelector');
-    if (!selector) return;
-
-    const trigger = selector.querySelector('.service-selector__trigger');
-    if (!trigger) return;
-
-    // Click en el botón: toggle open/close
-    trigger.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      selector.classList.toggle('open');
-    });
-
-    // Click fuera: cerrar
-    document.addEventListener('click', function(e) {
-      if (!selector.contains(e.target)) {
-        selector.classList.remove('open');
-      }
-    });
-
-    // Escape: cerrar
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        selector.classList.remove('open');
-      }
-    });
-
-    console.log('✅ Selector de servicios inicializado');
-  })();
 
   // =====================================================
   // PROTECCIÓN DE ACCESO - VERIFICAR SESIÓN
@@ -157,12 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Configurar menú móvil
     setupMobileMenu();
 
-    // Configurar selector de servicios
-    setupServiceSelector();
-  }
-
-  function setupServiceSelector() {
-    // Ya inicializado al inicio del DOMContentLoaded
   }
 
   function setupUserAvatar(user) {
