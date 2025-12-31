@@ -141,7 +141,7 @@ body {
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
     position: fixed !important;
-    top: calc(env(safe-area-inset-top, 0px) + 28px) !important;
+    top: calc(env(safe-area-inset-top, 0px) + 38px) !important;
     z-index: 1001 !important;
     animation: none !important;
 }
