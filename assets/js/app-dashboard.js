@@ -1,7 +1,32 @@
 // =====================================================
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
-console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v3');
+console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v4');
+
+// =====================================================
+// SELECTOR DE SERVICIOS
+// =====================================================
+(function() {
+  const btn = document.getElementById('svcSelector');
+  if (!btn) return;
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    btn.classList.toggle('open');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!btn.contains(e.target)) {
+      btn.classList.remove('open');
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      btn.classList.remove('open');
+    }
+  });
+})();
 
 // =====================================================
 // VERIFICACIÓN INMEDIATA DE SESIÓN (antes de DOM ready)
