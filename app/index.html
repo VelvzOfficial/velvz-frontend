@@ -638,14 +638,18 @@
         }
 
         /* =====================================================
-           INTERACCIÓN MOUSE
+           INTERACCIÓN MOUSE (solo desktop)
            ===================================================== */
 
         let tX = 0, tY = 0;
-        addEventListener('pointermove', (e) => {
-            tX = (e.clientY / innerHeight - 0.5) * 0.25;
-            tY = -(e.clientX / innerWidth - 0.5) * 0.25;
-        }, { passive: true });
+        const isMobile = innerWidth <= 768;
+
+        if (!isMobile) {
+            addEventListener('pointermove', (e) => {
+                tX = (e.clientY / innerHeight - 0.5) * 0.25;
+                tY = -(e.clientX / innerWidth - 0.5) * 0.25;
+            }, { passive: true });
+        }
 
         /* =====================================================
            ANIMACIÓN
