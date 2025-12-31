@@ -383,6 +383,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: var(--dark-bg-secondary);
         }
 
         .candidate-detail__inner {
@@ -677,6 +678,70 @@
             color: #fff;
         }
 
+        /* Modal para móvil */
+        .candidate-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: flex-end;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .candidate-modal--open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .candidate-modal__backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .candidate-modal__content {
+            position: relative;
+            background: var(--dark-bg-secondary);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .candidate-modal--open .candidate-modal__content {
+            transform: translateY(0);
+        }
+
+        .candidate-modal__close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .candidates-layout {
@@ -691,11 +756,13 @@
             }
 
             .candidates-list {
-                max-height: 50vh;
+                border-right: none;
+                border-radius: 16px;
+                border: 1px solid rgba(255,255,255,0.06);
             }
 
             .candidate-detail {
-                min-height: 50vh;
+                display: none;
             }
 
             .detail-header {
@@ -707,6 +774,11 @@
             .detail-header__meta {
                 justify-content: center;
                 flex-wrap: wrap;
+            }
+
+            .detail-header__actions {
+                width: 100%;
+                justify-content: center;
             }
 
             .contact-grid {
@@ -834,6 +906,19 @@
         <!-- MAIN -->
         <main class="velvz-main">
             <div class="rrhh-candidates-page">
+                <!-- BREADCRUMBS -->
+                <nav class="velvz-breadcrumbs">
+                    <a href="/app/" class="velvz-breadcrumbs__link">Hub</a>
+                    <span class="velvz-breadcrumbs__separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                    <a href="/app/rrhh/" class="velvz-breadcrumbs__link">RRHH</a>
+                    <span class="velvz-breadcrumbs__separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                    <span class="velvz-breadcrumbs__current">Candidatos</span>
+                </nav>
+
                 <!-- HERO SECTION -->
                 <div class="candidates-hero">
                     <div class="candidates-hero__content">
@@ -924,6 +1009,52 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para detalle en móvil -->
+    <div class="candidate-modal" id="candidateModal">
+        <div class="candidate-modal__backdrop"></div>
+        <div class="candidate-modal__content" id="candidateModalContent">
+            <!-- Contenido se carga dinámicamente -->
+        </div>
     </div>
 
     <script src="/assets/js/app-dashboard.js"></script>
@@ -1044,7 +1175,11 @@
             const listContainer = document.getElementById('candidatesList');
             const detailContainer = document.getElementById('candidateDetail');
             const countElement = document.getElementById('candidatesCount');
+            const modal = document.getElementById('candidateModal');
+            const modalContent = document.getElementById('candidateModalContent');
             let selectedId = null;
+
+            const isMobile = () => window.innerWidth <= 768;
 
             function renderList(data) {
                 countElement.textContent = `${data.length} candidato${data.length !== 1 ? 's' : ''}`;
@@ -1072,18 +1207,11 @@
                 });
             }
 
-            function selectCandidate(id) {
-                selectedId = id;
-                const candidate = candidates.find(c => c.id === id);
-
-                // Update active state in list
-                listContainer.querySelectorAll('.candidate-item').forEach(item => {
-                    item.classList.toggle('candidate-item--active', parseInt(item.dataset.id) === id);
-                });
-
-                // Render detail
-                detailContainer.classList.remove('candidate-detail--empty');
-                detailContainer.innerHTML = `
+            function getDetailHTML(candidate) {
+                return `
+                    <button class="candidate-modal__close" onclick="closeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
                     <div class="detail-header">
                         <div class="detail-header__avatar">${candidate.initials}</div>
                         <div class="detail-header__info">
@@ -1172,6 +1300,38 @@
                     </div>
                 `;
             }
+
+            function selectCandidate(id) {
+                selectedId = id;
+                const candidate = candidates.find(c => c.id === id);
+
+                // Update active state in list
+                listContainer.querySelectorAll('.candidate-item').forEach(item => {
+                    item.classList.toggle('candidate-item--active', parseInt(item.dataset.id) === id);
+                });
+
+                const html = getDetailHTML(candidate);
+
+                if (isMobile()) {
+                    // En móvil, abrir modal
+                    modalContent.innerHTML = html;
+                    modal.classList.add('candidate-modal--open');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    // En desktop, mostrar en panel lateral
+                    detailContainer.classList.remove('candidate-detail--empty');
+                    detailContainer.innerHTML = html;
+                }
+            }
+
+            // Cerrar modal
+            window.closeModal = function() {
+                modal.classList.remove('candidate-modal--open');
+                document.body.style.overflow = '';
+            };
+
+            // Cerrar modal al hacer click en backdrop
+            modal.querySelector('.candidate-modal__backdrop').addEventListener('click', closeModal);
 
             // Search
             document.getElementById('searchCandidates').addEventListener('input', (e) => {
