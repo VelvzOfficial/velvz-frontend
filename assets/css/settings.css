@@ -4,9 +4,7 @@
 
 /* Settings Container */
 .velvz-settings {
-    padding: 1.5rem 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: none;
     width: 100%;
     box-sizing: border-box;
 }

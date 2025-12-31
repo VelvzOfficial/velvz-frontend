@@ -4,9 +4,7 @@
 
 /* Analytics Container */
 .velvz-analytics {
-    padding: 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: none;
 }
 
 /* Header */
