@@ -249,47 +249,18 @@ function validateCurrentSection() {
 }
 
 function validatePositionSection() {
-    const profileSelect = document.getElementById("profileSelect");
-    const processName = document.getElementById("processName");
-    const jobDescription = document.getElementById("jobDescription");
-
-    if (!profileSelect || !profileSelect.value) {
-        showWarning("Selecciona un perfil para el proceso");
-        return false;
-    }
-
-    if (!processName || !processName.value.trim()) {
-        showWarning("Introduce el nombre del proceso");
-        processName?.focus();
-        return false;
-    }
-
-    if (!jobDescription || !jobDescription.value.trim()) {
-        showWarning("Introduce la descripción del puesto");
-        jobDescription?.focus();
-        return false;
-    }
-
+    // Validación desactivada durante desarrollo - siempre permitir navegación
+    // TODO: Reactivar validación cuando el editor esté completo
     return true;
 }
 
 function validateFilteringSection() {
-    // Validar que al menos hay un límite configurado
-    const candidateLimit = document.getElementById("candidateLimit");
-    if (!candidateLimit || !candidateLimit.value) {
-        showWarning("Establece un límite de candidatos");
-        return false;
-    }
+    // Validación desactivada durante desarrollo
     return true;
 }
 
 function validateInterviewSection() {
-    // Validar que hay un tipo de entrevista seleccionado
-    const selectedType = document.querySelector(".interview-type-card.selected");
-    if (!selectedType) {
-        showWarning("Selecciona un tipo de entrevista");
-        return false;
-    }
+    // Validación desactivada durante desarrollo
     return true;
 }
 
