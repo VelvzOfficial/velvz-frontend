@@ -39,7 +39,7 @@
         }
 
         body {
-            background: #0f0f1a;
+            background: #0f0f23;
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -322,10 +322,12 @@
             border: 2px solid rgba(255,255,255,0.3);
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 0 8px rgba(255,255,255,0.15);
         }
 
         .hub-nav__dot:hover {
             background: rgba(255,255,255,0.4);
+            box-shadow: 0 0 12px rgba(255,255,255,0.3);
         }
 
         .hub-nav__dot.active {
@@ -770,5 +772,46 @@
 
     <!-- Dashboard JS para auth y menú usuario -->
     <script src="/assets/js/app-dashboard.js" defer></script>
+
+    <!-- FOOTER -->
+    <footer class="hub-footer">
+        <div class="hub-footer__content">
+            <span class="hub-footer__brand">Velvz</span>
+            <span class="hub-footer__separator">·</span>
+            <span class="hub-footer__copyright">© 2025</span>
+        </div>
+    </footer>
+
+    <style>
+        .hub-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 1rem 2rem;
+            pointer-events: none;
+        }
+
+        .hub-footer__content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.05em;
+        }
+
+        .hub-footer__brand {
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .hub-footer__separator {
+            opacity: 0.5;
+        }
+    </style>
 </body>
 </html>
