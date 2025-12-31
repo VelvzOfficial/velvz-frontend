@@ -22,6 +22,7 @@
 - [ ] Revisar consistencia de los chatbots a lo largo del customizador, vista previa y real
 - [ ] Revisar funcionalidades de la sección de configuración
 - [ ] Menú de usuario: cerrar al hacer click en el avatar cuando está abierto
+- [ ] Añadir opción para editar el z-index de los chatbots
 
 ---
 
