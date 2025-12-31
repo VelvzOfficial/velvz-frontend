@@ -4,8 +4,8 @@
 
 /* Settings Container */
 .velvz-settings {
-    padding: 1.5rem;
-    max-width: 1000px;
+    padding: 1.5rem 2rem;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
@@ -84,7 +84,15 @@
 }
 
 .velvz-settings__section--active {
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.velvz-settings__section--active .velvz-settings-card:only-child,
+.velvz-settings__section--active .velvz-settings-card--full {
+    grid-column: 1 / -1;
 }
 
 /* Settings Card */
@@ -92,8 +100,8 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 1.5rem;
     overflow: hidden;
+    height: fit-content;
 }
 
 .velvz-settings-card--danger {
@@ -551,6 +559,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1100px) {
+    .velvz-settings__section--active {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .velvz-settings {
         padding: 1rem;
