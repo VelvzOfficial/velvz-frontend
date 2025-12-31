@@ -558,6 +558,202 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
+/* Plan Info */
+.velvz-plan-info {
+    margin-bottom: 1.5rem;
+}
+
+.velvz-plan-info__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.velvz-plan-info__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #818cf8;
+}
+
+.velvz-plan-info__price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.velvz-plan-info__price span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.velvz-plan-info__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.velvz-plan-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.velvz-plan-feature i {
+    color: #10b981;
+    font-size: 0.75rem;
+}
+
+/* Usage Bars */
+.velvz-usage-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.velvz-usage-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.velvz-usage-bar__header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.velvz-usage-bar__header span:last-child {
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.velvz-usage-bar__track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.velvz-usage-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #818cf8);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.velvz-usage-bar__fill--success {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.velvz-usage-bar__fill--warning {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.velvz-usage-bar__fill--danger {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+/* Export Options */
+.velvz-export-options {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Sessions List */
+.velvz-sessions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.velvz-session {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.5rem;
+}
+
+.velvz-session__icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 0.5rem;
+    color: #818cf8;
+    font-size: 1.1rem;
+}
+
+.velvz-session__info {
+    flex: 1;
+}
+
+.velvz-session__device {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.velvz-session__details {
+    display: block;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.velvz-session--current {
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.velvz-session--current .velvz-session__icon {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+/* API Stats */
+.velvz-api-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.velvz-api-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.velvz-api-stat__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.velvz-api-stat__label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
     .velvz-settings__section--active {

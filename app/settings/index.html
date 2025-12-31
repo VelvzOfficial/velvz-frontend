@@ -355,6 +355,87 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-crown"></i>
+                                    Tu Plan Actual
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-plan-info">
+                                    <div class="velvz-plan-info__header">
+                                        <span class="velvz-plan-info__name">Plan Pro</span>
+                                        <span class="velvz-plan-info__price">49€<span>/mes</span></span>
+                                    </div>
+                                    <div class="velvz-plan-info__features">
+                                        <div class="velvz-plan-feature">
+                                            <i class="fas fa-check"></i>
+                                            <span>10 Chatbots</span>
+                                        </div>
+                                        <div class="velvz-plan-feature">
+                                            <i class="fas fa-check"></i>
+                                            <span>10.000 mensajes/mes</span>
+                                        </div>
+                                        <div class="velvz-plan-feature">
+                                            <i class="fas fa-check"></i>
+                                            <span>Soporte prioritario</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="velvz-usage-bars">
+                                    <div class="velvz-usage-bar">
+                                        <div class="velvz-usage-bar__header">
+                                            <span>Chatbots</span>
+                                            <span>9 / 10</span>
+                                        </div>
+                                        <div class="velvz-usage-bar__track">
+                                            <div class="velvz-usage-bar__fill" style="width: 90%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="velvz-usage-bar">
+                                        <div class="velvz-usage-bar__header">
+                                            <span>Mensajes este mes</span>
+                                            <span>4.231 / 10.000</span>
+                                        </div>
+                                        <div class="velvz-usage-bar__track">
+                                            <div class="velvz-usage-bar__fill velvz-usage-bar__fill--success" style="width: 42%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="velvz-settings-card__footer">
+                                <a href="/app/billing/" class="velvz-btn velvz-btn--secondary">
+                                    <i class="fas fa-arrow-up"></i>
+                                    Mejorar Plan
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-download"></i>
+                                    Exportar Datos
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <p class="velvz-settings-card__text">
+                                    Descarga una copia de todos tus datos: chatbots, conversaciones, configuraciones y analytics.
+                                </p>
+                                <div class="velvz-export-options">
+                                    <button class="velvz-btn velvz-btn--secondary">
+                                        <i class="fas fa-file-csv"></i>
+                                        Exportar CSV
+                                    </button>
+                                    <button class="velvz-btn velvz-btn--secondary">
+                                        <i class="fas fa-file-code"></i>
+                                        Exportar JSON
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- SECCIÓN NOTIFICACIONES -->
@@ -404,6 +485,99 @@
                                     </div>
                                     <label class="velvz-toggle">
                                         <input type="checkbox" id="notifUpdates" checked>
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-desktop"></i>
+                                    Notificaciones en Navegador
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Notificaciones push</span>
+                                        <span class="velvz-setting-item__description">Recibe alertas en tiempo real en tu navegador</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifPush">
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Sonido de notificación</span>
+                                        <span class="velvz-setting-item__description">Reproduce un sonido cuando llegue una notificación</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifSound" checked>
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-clock"></i>
+                                    Horario de Notificaciones
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Modo No Molestar</span>
+                                        <span class="velvz-setting-item__description">Silenciar notificaciones fuera del horario laboral</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifDND">
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                                <div class="velvz-form-row">
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Desde</label>
+                                        <input type="time" class="velvz-form-input" id="dndFrom" value="09:00">
+                                    </div>
+                                    <div class="velvz-form-group">
+                                        <label class="velvz-form-label">Hasta</label>
+                                        <input type="time" class="velvz-form-input" id="dndTo" value="18:00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-filter"></i>
+                                    Filtros de Notificación
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Solo chatbots favoritos</span>
+                                        <span class="velvz-setting-item__description">Recibir notificaciones solo de chatbots marcados como favoritos</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifFavorites">
+                                        <span class="velvz-toggle__slider"></span>
+                                    </label>
+                                </div>
+                                <div class="velvz-setting-item">
+                                    <div class="velvz-setting-item__info">
+                                        <span class="velvz-setting-item__label">Agrupar notificaciones</span>
+                                        <span class="velvz-setting-item__description">Agrupar múltiples notificaciones en un solo resumen</span>
+                                    </div>
+                                    <label class="velvz-toggle">
+                                        <input type="checkbox" id="notifGroup" checked>
                                         <span class="velvz-toggle__slider"></span>
                                     </label>
                                 </div>
@@ -467,6 +641,54 @@
                                 <button class="velvz-btn velvz-btn--secondary" id="enable2FA">
                                     <i class="fas fa-shield-alt"></i>
                                     Activar 2FA
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-desktop"></i>
+                                    Sesiones Activas
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <p class="velvz-settings-card__text">
+                                    Dispositivos donde tu cuenta ha iniciado sesión.
+                                </p>
+                                <div class="velvz-sessions-list">
+                                    <div class="velvz-session velvz-session--current">
+                                        <div class="velvz-session__icon">
+                                            <i class="fas fa-laptop"></i>
+                                        </div>
+                                        <div class="velvz-session__info">
+                                            <span class="velvz-session__device">Windows - Chrome</span>
+                                            <span class="velvz-session__details">Madrid, España · Ahora (sesión actual)</span>
+                                        </div>
+                                        <span class="velvz-badge velvz-badge--success">
+                                            <i class="fas fa-check-circle"></i>
+                                            Actual
+                                        </span>
+                                    </div>
+                                    <div class="velvz-session">
+                                        <div class="velvz-session__icon">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                        <div class="velvz-session__info">
+                                            <span class="velvz-session__device">iPhone - Safari</span>
+                                            <span class="velvz-session__details">Madrid, España · Hace 2 horas</span>
+                                        </div>
+                                        <button class="velvz-btn velvz-btn--ghost velvz-btn--sm velvz-btn--danger">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            Cerrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="velvz-settings-card__footer">
+                                <button class="velvz-btn velvz-btn--secondary">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Cerrar todas las sesiones
                                 </button>
                             </div>
                         </div>
@@ -565,6 +787,75 @@
                                     <i class="fas fa-external-link-alt"></i>
                                     Ver Documentación
                                 </a>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Límites de API
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-usage-bars">
+                                    <div class="velvz-usage-bar">
+                                        <div class="velvz-usage-bar__header">
+                                            <span>Requests / minuto</span>
+                                            <span>45 / 100</span>
+                                        </div>
+                                        <div class="velvz-usage-bar__track">
+                                            <div class="velvz-usage-bar__fill velvz-usage-bar__fill--success" style="width: 45%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="velvz-usage-bar">
+                                        <div class="velvz-usage-bar__header">
+                                            <span>Requests / día</span>
+                                            <span>8.234 / 50.000</span>
+                                        </div>
+                                        <div class="velvz-usage-bar__track">
+                                            <div class="velvz-usage-bar__fill velvz-usage-bar__fill--success" style="width: 16%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="velvz-usage-bar">
+                                        <div class="velvz-usage-bar__header">
+                                            <span>Tokens / mes</span>
+                                            <span>1.2M / 5M</span>
+                                        </div>
+                                        <div class="velvz-usage-bar__track">
+                                            <div class="velvz-usage-bar__fill" style="width: 24%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="velvz-settings-card">
+                            <div class="velvz-settings-card__header">
+                                <h3 class="velvz-settings-card__title">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Uso de API este Mes
+                                </h3>
+                            </div>
+                            <div class="velvz-settings-card__body">
+                                <div class="velvz-api-stats">
+                                    <div class="velvz-api-stat">
+                                        <span class="velvz-api-stat__value">156.8K</span>
+                                        <span class="velvz-api-stat__label">Requests totales</span>
+                                    </div>
+                                    <div class="velvz-api-stat">
+                                        <span class="velvz-api-stat__value">99.2%</span>
+                                        <span class="velvz-api-stat__label">Uptime</span>
+                                    </div>
+                                    <div class="velvz-api-stat">
+                                        <span class="velvz-api-stat__value">45ms</span>
+                                        <span class="velvz-api-stat__label">Latencia media</span>
+                                    </div>
+                                    <div class="velvz-api-stat">
+                                        <span class="velvz-api-stat__value">0.3%</span>
+                                        <span class="velvz-api-stat__label">Tasa de error</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
