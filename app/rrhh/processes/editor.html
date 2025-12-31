@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Proceso - RRHH IA - Velvz</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/logoR.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logoR.png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+    <link rel="stylesheet" href="/assets/css/rrhh-process-editor.css">
+
+    <!-- Auth System -->
+    <script src="/assets/js/auth-config.js"></script>
+
+    <style>
+        :root {
+            --rrhh-primary: #10b981;
+            --rrhh-primary-light: rgba(16, 185, 129, 0.1);
+            --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
+            --rrhh-primary-dark: #059669;
+        }
+
+        /* Override sidebar: solo activo verde */
+        .velvz-sidebar__link--active {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #10b981 !important;
+        }
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #10b981 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <!-- LOGO -->
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__logo">
+                    <div class="velvz-header__logo-shape">
+                        <div class="velvz-header__logo-face">
+                            <div class="velvz-header__logo-eye"></div>
+                            <div class="velvz-header__logo-mouth"></div>
+                            <div class="velvz-header__logo-eye"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- SELECTOR DE SERVICIOS -->
+            <div class="velvz-header__island velvz-header__island--services">
+                <button class="svc-selector" id="svcSelector" data-current="rrhh">
+                    <i class="fas fa-users svc-selector__icon" style="color: #10b981;"></i>
+                    <span class="svc-selector__text">RRHH</span>
+                    <i class="fas fa-chevron-down svc-selector__arrow"></i>
+                </button>
+                <div class="svc-dropdown" id="svcDropdown">
+                    <a href="/app/chatbots/dashboard.html" class="svc-dropdown__item" data-service="chatbots">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </a>
+                    <a href="/app/rrhh/" class="svc-dropdown__item svc-dropdown__item--active" data-service="rrhh">
+                        <i class="fas fa-users"></i>
+                        <span>RRHH</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BUSQUEDA -->
+            <div class="velvz-header__island velvz-header__island--search">
+                <div class="velvz-header__search">
+                    <input type="text" class="velvz-header__search-input" placeholder="Buscar..." id="headerSearchInput">
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <!-- PERFIL -->
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        <span id="userInitials">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOGGLE MOVIL -->
+            <div class="velvz-header__mobile-toggle" id="mobileMenuToggle">
+                <div class="velvz-header__hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">RRHH IA</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-th-large"></i>
+                            <span>Panel Principal</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Gestión</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/processes/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-briefcase"></i>
+                            <span>Procesos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/candidates/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user-tie"></i>
+                            <span>Candidatos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/profiles/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-id-badge"></i>
+                            <span>Perfiles</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Ajustes</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/plans/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-gem"></i>
+                            <span>Planes</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="velvz-main">
+            <div class="process-editor">
+                <!-- HEADER DEL EDITOR -->
+                <div class="process-editor__header">
+                    <!-- Breadcrumbs -->
+                    <nav class="velvz-breadcrumbs">
+                        <a href="/app/rrhh/" class="velvz-breadcrumbs__link">
+                            <i class="fas fa-users" style="margin-right: 0.35rem;"></i>RRHH
+                        </a>
+                        <span class="velvz-breadcrumbs__separator">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                        <a href="/app/rrhh/processes/" class="velvz-breadcrumbs__link">Procesos</a>
+                        <span class="velvz-breadcrumbs__separator">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                        <span class="velvz-breadcrumbs__current">Nuevo Proceso</span>
+                    </nav>
+
+                    <!-- Titulo y acciones -->
+                    <div class="process-editor__title-row">
+                        <div class="process-editor__title-group">
+                            <h1 class="process-editor__title" id="processTitle">Nuevo Proceso de Selección</h1>
+                            <div class="process-editor__status">
+                                <span class="process-status process-status--draft">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    Borrador
+                                </span>
+                            </div>
+                        </div>
+                        <div class="process-editor__actions">
+                            <button class="btn btn--secondary" id="previewBtn">
+                                <i class="fas fa-eye"></i>
+                                <span>Vista Previa</span>
+                            </button>
+                            <button class="btn btn--primary" id="saveBtn">
+                                <i class="fas fa-save"></i>
+                                <span>Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NAVEGACIÓN DE SECCIONES -->
+                <div class="process-editor__tabs">
+                    <div class="process-editor__tabs-nav">
+                        <button class="process-tab process-tab--active" data-tab="position">
+                            <span class="process-tab__number">1</span>
+                            <span class="process-tab__label">Puesto y Requisitos</span>
+                        </button>
+                        <button class="process-tab" data-tab="filtering">
+                            <span class="process-tab__number">2</span>
+                            <span class="process-tab__label">Filtrado</span>
+                        </button>
+                        <button class="process-tab" data-tab="interview">
+                            <span class="process-tab__number">3</span>
+                            <span class="process-tab__label">Entrevista IA</span>
+                        </button>
+                        <button class="process-tab" data-tab="documents">
+                            <span class="process-tab__number">4</span>
+                            <span class="process-tab__label">Documentos</span>
+                        </button>
+                        <button class="process-tab" data-tab="summary">
+                            <span class="process-tab__number">5</span>
+                            <span class="process-tab__label">Resumen</span>
+                        </button>
+                    </div>
+                    <div class="process-editor__tabs-progress">
+                        <div class="progress-bar">
+                            <div class="progress-bar__fill" style="width: 20%;"></div>
+                        </div>
+                        <span class="progress-text">Paso 1 de 5</span>
+                    </div>
+                </div>
+
+                <!-- CONTENIDO DE LAS SECCIONES -->
+                <div class="process-editor__content">
+
+                    <!-- ===== SECCIÓN 1: PUESTO Y REQUISITOS ===== -->
+                    <section class="process-section process-section--active" data-tab="position">
+
+                        <!-- Panel: Información Básica -->
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Información del Puesto</h2>
+                                    <p>Define los datos generales del proceso de selección</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <!-- Perfil asociado -->
+                                <div class="form-field">
+                                    <label class="form-label">
+                                        Perfil de Empresa
+                                        <span class="form-required">*</span>
+                                    </label>
+                                    <div class="form-select-wrapper">
+                                        <select class="form-select" id="profileSelect">
+                                            <option value="">Selecciona un perfil existente...</option>
+                                            <option value="new">+ Crear nuevo perfil</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down form-select-icon"></i>
+                                    </div>
+                                    <span class="form-hint">El perfil define el tipo de puesto y departamento</span>
+                                </div>
+
+                                <!-- Grid 2 columnas -->
+                                <div class="form-grid form-grid--2">
+                                    <div class="form-field">
+                                        <label class="form-label">
+                                            Título del Proceso
+                                            <span class="form-required">*</span>
+                                        </label>
+                                        <input type="text" class="form-input" id="processName" placeholder="Ej: Senior Backend Developer - Q1 2025">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Departamento</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="departmentSelect">
+                                                <option value="">Seleccionar...</option>
+                                                <option value="tech">Tecnología</option>
+                                                <option value="sales">Ventas</option>
+                                                <option value="marketing">Marketing</option>
+                                                <option value="hr">Recursos Humanos</option>
+                                                <option value="finance">Finanzas</option>
+                                                <option value="operations">Operaciones</option>
+                                                <option value="other">Otro</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Grid 4 columnas -->
+                                <div class="form-grid form-grid--4">
+                                    <div class="form-field">
+                                        <label class="form-label">Modalidad</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="modalitySelect">
+                                                <option value="remote">Remoto</option>
+                                                <option value="hybrid">Híbrido</option>
+                                                <option value="onsite">Presencial</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Ubicación</label>
+                                        <input type="text" class="form-input" id="locationInput" placeholder="Madrid, España">
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Contrato</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="contractSelect">
+                                                <option value="permanent">Indefinido</option>
+                                                <option value="temporary">Temporal</option>
+                                                <option value="freelance">Freelance</option>
+                                                <option value="internship">Prácticas</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Experiencia</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="minExperience">
+                                                <option value="0">Sin experiencia</option>
+                                                <option value="1">1+ año</option>
+                                                <option value="2">2+ años</option>
+                                                <option value="3">3+ años</option>
+                                                <option value="5">5+ años</option>
+                                                <option value="7">7+ años</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Descripción del puesto -->
+                                <div class="form-field">
+                                    <label class="form-label">
+                                        Descripción del Puesto
+                                        <span class="form-required">*</span>
+                                    </label>
+                                    <textarea class="form-textarea" id="jobDescription" rows="4" placeholder="Describe el puesto, su importancia en la empresa, el equipo con el que trabajará, responsabilidades principales..."></textarea>
+                                    <div class="form-field__footer">
+                                        <span class="form-hint">Incluye responsabilidades, equipo y expectativas</span>
+                                        <span class="form-counter"><span id="descriptionCount">0</span>/2000</span>
+                                    </div>
+                                </div>
+
+                                <!-- Rango salarial -->
+                                <div class="form-field">
+                                    <label class="form-label">Rango Salarial (opcional)</label>
+                                    <div class="salary-range">
+                                        <div class="salary-range__input">
+                                            <span class="salary-range__currency">€</span>
+                                            <input type="number" class="form-input" id="salaryMin" placeholder="Mínimo">
+                                        </div>
+                                        <span class="salary-range__separator">-</span>
+                                        <div class="salary-range__input">
+                                            <span class="salary-range__currency">€</span>
+                                            <input type="number" class="form-input" id="salaryMax" placeholder="Máximo">
+                                        </div>
+                                        <div class="form-select-wrapper salary-range__period">
+                                            <select class="form-select" id="salaryPeriod">
+                                                <option value="year">/ año</option>
+                                                <option value="month">/ mes</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel: Requisitos -->
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-list-check"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Requisitos del Candidato</h2>
+                                    <p>Define qué necesitas del candidato ideal</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <!-- Requisitos Esenciales -->
+                                <div class="requirements-block requirements-block--essential">
+                                    <div class="requirements-block__header">
+                                        <div class="requirements-block__icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div>
+                                            <h3>Requisitos Esenciales</h3>
+                                            <p>Sin estos requisitos, el candidato será descartado automáticamente</p>
+                                        </div>
+                                    </div>
+                                    <div class="requirements-list" id="essentialRequirements">
+                                        <!-- Se añaden dinámicamente -->
+                                    </div>
+                                    <button class="btn btn--add-requirement" id="addEssentialBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Añadir requisito esencial
+                                    </button>
+                                </div>
+
+                                <!-- Requisitos Deseables -->
+                                <div class="requirements-block requirements-block--desired">
+                                    <div class="requirements-block__header">
+                                        <div class="requirements-block__icon">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </div>
+                                        <div>
+                                            <h3>Requisitos Deseables</h3>
+                                            <p>Puntos extra si el candidato los cumple, pero no son eliminatorios</p>
+                                        </div>
+                                    </div>
+                                    <div class="requirements-list" id="desiredRequirements">
+                                        <!-- Se añaden dinámicamente -->
+                                    </div>
+                                    <button class="btn btn--add-requirement" id="addDesiredBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Añadir requisito deseable
+                                    </button>
+                                </div>
+
+                                <!-- Nice to Have -->
+                                <div class="requirements-block requirements-block--nice">
+                                    <div class="requirements-block__header">
+                                        <div class="requirements-block__icon">
+                                            <i class="fas fa-gift"></i>
+                                        </div>
+                                        <div>
+                                            <h3>Nice to Have</h3>
+                                            <p>Características que serían un plus pero no se esperan</p>
+                                        </div>
+                                    </div>
+                                    <div class="requirements-list" id="niceRequirements">
+                                        <!-- Se añaden dinámicamente -->
+                                    </div>
+                                    <button class="btn btn--add-requirement" id="addNiceBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Añadir nice to have
+                                    </button>
+                                </div>
+
+                                <!-- Idiomas -->
+                                <div class="form-field" style="margin-top: 1.5rem;">
+                                    <label class="form-label">Idiomas Requeridos</label>
+                                    <div class="languages-list" id="languagesList">
+                                        <!-- Se añaden dinámicamente -->
+                                    </div>
+                                    <button class="btn btn--add-requirement" id="addLanguageBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Añadir idioma
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="section-nav">
+                            <div></div>
+                            <button class="btn btn--primary btn--next" data-next="filtering">
+                                Siguiente: Filtrado
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- ===== SECCIÓN 2: FILTRADO ===== -->
+                    <section class="process-section" data-tab="filtering">
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-filter"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Configuración de Filtrado</h2>
+                                    <p>Define cómo la IA filtrará y priorizará candidatos</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <!-- Límites de candidatos -->
+                                <div class="filtering-card">
+                                    <div class="filtering-card__header">
+                                        <i class="fas fa-users"></i>
+                                        <h3>Límites de Candidatos</h3>
+                                    </div>
+                                    <div class="filtering-card__body">
+                                        <div class="form-grid form-grid--3">
+                                            <div class="form-field">
+                                                <label class="form-label">Candidatos Máximos</label>
+                                                <input type="number" class="form-input" id="maxCandidates" placeholder="100" value="100">
+                                                <span class="form-hint">Total de candidatos a aceptar</span>
+                                            </div>
+                                            <div class="form-field">
+                                                <label class="form-label">Descarte Inicial (%)</label>
+                                                <input type="number" class="form-input" id="initialDiscard" placeholder="50" value="50" min="0" max="100">
+                                                <span class="form-hint">% a descartar tras análisis de CV</span>
+                                            </div>
+                                            <div class="form-field">
+                                                <label class="form-label">Finalistas</label>
+                                                <input type="number" class="form-input" id="finalists" placeholder="10" value="10">
+                                                <span class="form-hint">Candidatos para fase final</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pesos de evaluación -->
+                                <div class="filtering-card">
+                                    <div class="filtering-card__header">
+                                        <i class="fas fa-balance-scale"></i>
+                                        <h3>Pesos de Evaluación</h3>
+                                    </div>
+                                    <div class="filtering-card__body">
+                                        <p class="filtering-card__description">Ajusta la importancia de cada factor en la puntuación final</p>
+
+                                        <div class="weight-sliders">
+                                            <div class="weight-slider">
+                                                <div class="weight-slider__header">
+                                                    <span class="weight-slider__label">Experiencia Relevante</span>
+                                                    <span class="weight-slider__value" id="weightExpValue">30%</span>
+                                                </div>
+                                                <input type="range" class="weight-slider__input" id="weightExperience" min="0" max="100" value="30">
+                                            </div>
+                                            <div class="weight-slider">
+                                                <div class="weight-slider__header">
+                                                    <span class="weight-slider__label">Habilidades Técnicas</span>
+                                                    <span class="weight-slider__value" id="weightSkillsValue">25%</span>
+                                                </div>
+                                                <input type="range" class="weight-slider__input" id="weightSkills" min="0" max="100" value="25">
+                                            </div>
+                                            <div class="weight-slider">
+                                                <div class="weight-slider__header">
+                                                    <span class="weight-slider__label">Formación Académica</span>
+                                                    <span class="weight-slider__value" id="weightEducationValue">15%</span>
+                                                </div>
+                                                <input type="range" class="weight-slider__input" id="weightEducation" min="0" max="100" value="15">
+                                            </div>
+                                            <div class="weight-slider">
+                                                <div class="weight-slider__header">
+                                                    <span class="weight-slider__label">Entrevista IA</span>
+                                                    <span class="weight-slider__value" id="weightInterviewValue">30%</span>
+                                                </div>
+                                                <input type="range" class="weight-slider__input" id="weightInterview" min="0" max="100" value="30">
+                                            </div>
+                                        </div>
+
+                                        <div class="weight-total">
+                                            <span>Total:</span>
+                                            <span id="weightTotal" class="weight-total__value">100%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Opciones de filtrado -->
+                                <div class="filtering-card">
+                                    <div class="filtering-card__header">
+                                        <i class="fas fa-sliders-h"></i>
+                                        <h3>Opciones Adicionales</h3>
+                                    </div>
+                                    <div class="filtering-card__body">
+                                        <div class="toggle-options">
+                                            <label class="toggle-option">
+                                                <input type="checkbox" id="autoReject" checked>
+                                                <span class="toggle-option__slider"></span>
+                                                <div class="toggle-option__content">
+                                                    <span class="toggle-option__label">Rechazo automático</span>
+                                                    <span class="toggle-option__hint">Rechazar automáticamente candidatos sin requisitos esenciales</span>
+                                                </div>
+                                            </label>
+                                            <label class="toggle-option">
+                                                <input type="checkbox" id="cvRequired" checked>
+                                                <span class="toggle-option__slider"></span>
+                                                <div class="toggle-option__content">
+                                                    <span class="toggle-option__label">CV obligatorio</span>
+                                                    <span class="toggle-option__hint">Requerir currículum para aplicar al proceso</span>
+                                                </div>
+                                            </label>
+                                            <label class="toggle-option">
+                                                <input type="checkbox" id="coverLetterRequired">
+                                                <span class="toggle-option__slider"></span>
+                                                <div class="toggle-option__content">
+                                                    <span class="toggle-option__label">Carta de presentación</span>
+                                                    <span class="toggle-option__hint">Solicitar carta de presentación opcional</span>
+                                                </div>
+                                            </label>
+                                            <label class="toggle-option">
+                                                <input type="checkbox" id="anonymousScreening">
+                                                <span class="toggle-option__slider"></span>
+                                                <div class="toggle-option__content">
+                                                    <span class="toggle-option__label">Screening anónimo</span>
+                                                    <span class="toggle-option__hint">Ocultar datos personales durante la evaluación inicial</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="section-nav">
+                            <button class="btn btn--secondary btn--prev" data-prev="position">
+                                <i class="fas fa-arrow-left"></i>
+                                Anterior
+                            </button>
+                            <button class="btn btn--primary btn--next" data-next="interview">
+                                Siguiente: Entrevista IA
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- ===== SECCIÓN 3: ENTREVISTA IA ===== -->
+                    <section class="process-section" data-tab="interview">
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Configuración de Entrevista IA</h2>
+                                    <p>Define cómo la IA entrevistará a los candidatos</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <!-- Tipo de entrevista -->
+                                <div class="form-field">
+                                    <label class="form-label">Tipo de Entrevista</label>
+                                    <div class="interview-types">
+                                        <label class="interview-type interview-type--selected">
+                                            <input type="radio" name="interviewType" value="conversational" checked>
+                                            <div class="interview-type__content">
+                                                <i class="fas fa-comments"></i>
+                                                <span class="interview-type__title">Conversacional</span>
+                                                <span class="interview-type__desc">Chat natural que evalúa al candidato</span>
+                                            </div>
+                                        </label>
+                                        <label class="interview-type">
+                                            <input type="radio" name="interviewType" value="structured">
+                                            <div class="interview-type__content">
+                                                <i class="fas fa-list-ol"></i>
+                                                <span class="interview-type__title">Estructurada</span>
+                                                <span class="interview-type__desc">Preguntas predefinidas en orden</span>
+                                            </div>
+                                        </label>
+                                        <label class="interview-type">
+                                            <input type="radio" name="interviewType" value="technical">
+                                            <div class="interview-type__content">
+                                                <i class="fas fa-code"></i>
+                                                <span class="interview-type__title">Técnica</span>
+                                                <span class="interview-type__desc">Incluye ejercicios y casos prácticos</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Instrucciones para la IA -->
+                                <div class="form-field form-field--highlight">
+                                    <div class="form-label-row">
+                                        <label class="form-label">
+                                            <i class="fas fa-brain"></i>
+                                            Instrucciones para la IA
+                                            <span class="form-required">*</span>
+                                        </label>
+                                    </div>
+                                    <textarea class="form-textarea form-textarea--large" id="aiInstructions" rows="6" placeholder="Define el objetivo de la entrevista, qué información debe obtener la IA, cómo debe comportarse, qué tono usar...
+
+Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar la experiencia técnica del candidato en Python y AWS, su capacidad de trabajo en equipo, y su motivación para unirse a nuestra empresa. Haz preguntas abiertas y profundiza en las respuestas interesantes.'"></textarea>
+                                    <div class="form-field__footer">
+                                        <span class="form-hint">Sé específico sobre qué quieres que la IA descubra del candidato</span>
+                                        <span class="form-counter"><span id="aiInstructionsCount">0</span>/3000</span>
+                                    </div>
+                                </div>
+
+                                <!-- Aspectos a evaluar -->
+                                <div class="form-field">
+                                    <label class="form-label">Aspectos a Evaluar</label>
+                                    <div class="evaluation-aspects" id="evaluationAspects">
+                                        <div class="evaluation-aspect">
+                                            <input type="checkbox" id="aspectMotivation" checked>
+                                            <label for="aspectMotivation">
+                                                <i class="fas fa-fire"></i>
+                                                Motivación
+                                            </label>
+                                        </div>
+                                        <div class="evaluation-aspect">
+                                            <input type="checkbox" id="aspectCulture" checked>
+                                            <label for="aspectCulture">
+                                                <i class="fas fa-handshake"></i>
+                                                Fit Cultural
+                                            </label>
+                                        </div>
+                                        <div class="evaluation-aspect">
+                                            <input type="checkbox" id="aspectCommunication" checked>
+                                            <label for="aspectCommunication">
+                                                <i class="fas fa-comment-dots"></i>
+                                                Comunicación
+                                            </label>
+                                        </div>
+                                        <div class="evaluation-aspect">
+                                            <input type="checkbox" id="aspectProblemSolving" checked>
+                                            <label for="aspectProblemSolving">
+                                                <i class="fas fa-lightbulb"></i>
+                                                Resolución de Problemas
+                                            </label>
+                                        </div>
+                                        <div class="evaluation-aspect">
+                                            <input type="checkbox" id="aspectLeadership">
+                                            <label for="aspectLeadership">
+                                                <i class="fas fa-crown"></i>
+                                                Liderazgo
+                                            </label>
+                                        </div>
+                                        <div class="evaluation-aspect">
+                                            <input type="checkbox" id="aspectTeamwork" checked>
+                                            <label for="aspectTeamwork">
+                                                <i class="fas fa-users"></i>
+                                                Trabajo en Equipo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Configuración adicional -->
+                                <div class="form-grid form-grid--2">
+                                    <div class="form-field">
+                                        <label class="form-label">Duración Estimada</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="interviewDuration">
+                                                <option value="10">10 minutos</option>
+                                                <option value="15" selected>15 minutos</option>
+                                                <option value="20">20 minutos</option>
+                                                <option value="30">30 minutos</option>
+                                                <option value="45">45 minutos</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Idioma de la Entrevista</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="interviewLanguage">
+                                                <option value="es" selected>Español</option>
+                                                <option value="en">Inglés</option>
+                                                <option value="auto">Detectar automáticamente</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Preguntas personalizadas -->
+                                <div class="form-field">
+                                    <label class="form-label">Preguntas Personalizadas (opcional)</label>
+                                    <div class="custom-questions" id="customQuestions">
+                                        <!-- Se añaden dinámicamente -->
+                                    </div>
+                                    <button class="btn btn--add-requirement" id="addQuestionBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Añadir pregunta que la IA debe hacer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="section-nav">
+                            <button class="btn btn--secondary btn--prev" data-prev="filtering">
+                                <i class="fas fa-arrow-left"></i>
+                                Anterior
+                            </button>
+                            <button class="btn btn--primary btn--next" data-next="documents">
+                                Siguiente: Documentos
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- ===== SECCIÓN 4: DOCUMENTOS ===== -->
+                    <section class="process-section" data-tab="documents">
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Documentos de Contexto</h2>
+                                    <p>Sube documentos que la IA usará durante las entrevistas</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <!-- Explicación -->
+                                <div class="info-box">
+                                    <div class="info-box__icon">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="info-box__content">
+                                        <h4>¿Para qué sirven estos documentos?</h4>
+                                        <p>Puedes subir documentos de tu empresa (resúmenes, proyectos, organigramas) y dar instrucciones a la IA sobre cómo usarlos. Por ejemplo, la IA puede verificar sutilmente si el candidato ha trabajado con empresas mencionadas en tus documentos.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Zona de subida -->
+                                <div class="upload-zone" id="uploadZone">
+                                    <div class="upload-zone__content">
+                                        <div class="upload-zone__icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <h3>Arrastra documentos aquí</h3>
+                                        <p>o haz clic para seleccionar archivos</p>
+                                        <span class="upload-zone__hint">PDF, DOC, DOCX, TXT - Máx. 10MB por archivo</span>
+                                    </div>
+                                    <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt" hidden>
+                                </div>
+
+                                <!-- Lista de documentos -->
+                                <div class="documents-list" id="documentsList">
+                                    <!-- Se añaden dinámicamente -->
+                                </div>
+
+                                <!-- Instrucciones para documentos -->
+                                <div class="form-field form-field--highlight" style="margin-top: 2rem;">
+                                    <div class="form-label-row">
+                                        <label class="form-label">
+                                            <i class="fas fa-magic"></i>
+                                            Instrucciones de Uso de Documentos
+                                        </label>
+                                    </div>
+                                    <textarea class="form-textarea form-textarea--large" id="documentInstructions" rows="5" placeholder="Explica a la IA cómo usar estos documentos. Ejemplos:
+
+• 'Usa el resumen de la empresa para verificar sutilmente si el candidato ha trabajado con las empresas mencionadas'
+• 'Compara la experiencia del candidato con los proyectos del documento de casos de éxito'
+• 'No menciones directamente estos documentos al candidato'
+• 'Si el candidato menciona alguna empresa del documento, profundiza en esa experiencia'"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel: CVs de candidatos -->
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Currículums de Candidatos</h2>
+                                    <p>Sube los CVs de los candidatos para que la IA los analice</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <div class="upload-zone upload-zone--secondary" id="cvUploadZone">
+                                    <div class="upload-zone__content">
+                                        <div class="upload-zone__icon">
+                                            <i class="fas fa-file-user"></i>
+                                        </div>
+                                        <h3>Sube currículums</h3>
+                                        <p>La IA analizará cada CV y lo comparará con los requisitos</p>
+                                        <span class="upload-zone__hint">Puedes subir múltiples CVs a la vez</span>
+                                    </div>
+                                    <input type="file" id="cvFileInput" multiple accept=".pdf,.doc,.docx" hidden>
+                                </div>
+
+                                <div class="cv-stats" id="cvStats" style="display: none;">
+                                    <div class="cv-stat">
+                                        <span class="cv-stat__number" id="cvCount">0</span>
+                                        <span class="cv-stat__label">CVs subidos</span>
+                                    </div>
+                                    <div class="cv-stat">
+                                        <span class="cv-stat__number" id="cvAnalyzed">0</span>
+                                        <span class="cv-stat__label">Analizados</span>
+                                    </div>
+                                    <div class="cv-stat">
+                                        <span class="cv-stat__number" id="cvPending">0</span>
+                                        <span class="cv-stat__label">Pendientes</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="section-nav">
+                            <button class="btn btn--secondary btn--prev" data-prev="interview">
+                                <i class="fas fa-arrow-left"></i>
+                                Anterior
+                            </button>
+                            <button class="btn btn--primary btn--next" data-next="summary">
+                                Siguiente: Resumen
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- ===== SECCIÓN 5: RESUMEN ===== -->
+                    <section class="process-section" data-tab="summary">
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Resumen del Proceso</h2>
+                                    <p>Vista general y estado del proceso de selección</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <!-- Estado del proceso -->
+                                <div class="summary-status">
+                                    <div class="summary-status__badge summary-status__badge--draft">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Borrador
+                                    </div>
+                                    <p>Este proceso aún no ha sido publicado. Revisa la configuración y publícalo cuando esté listo.</p>
+                                </div>
+
+                                <!-- Resumen de configuración -->
+                                <div class="summary-grid">
+                                    <div class="summary-card">
+                                        <div class="summary-card__header">
+                                            <i class="fas fa-briefcase"></i>
+                                            <h3>Puesto</h3>
+                                            <button class="summary-card__edit" data-goto="position">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="summary-card__body">
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Título:</span>
+                                                <span class="summary-item__value" id="summaryTitle">Sin definir</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Departamento:</span>
+                                                <span class="summary-item__value" id="summaryDepartment">Sin definir</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Modalidad:</span>
+                                                <span class="summary-item__value" id="summaryModality">Sin definir</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="summary-card">
+                                        <div class="summary-card__header">
+                                            <i class="fas fa-list-check"></i>
+                                            <h3>Requisitos</h3>
+                                            <button class="summary-card__edit" data-goto="position">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="summary-card__body">
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Esenciales:</span>
+                                                <span class="summary-item__value" id="summaryEssential">0</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Deseables:</span>
+                                                <span class="summary-item__value" id="summaryDesired">0</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Nice to have:</span>
+                                                <span class="summary-item__value" id="summaryNice">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="summary-card">
+                                        <div class="summary-card__header">
+                                            <i class="fas fa-filter"></i>
+                                            <h3>Filtrado</h3>
+                                            <button class="summary-card__edit" data-goto="filtering">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="summary-card__body">
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Máx. candidatos:</span>
+                                                <span class="summary-item__value" id="summaryMaxCandidates">100</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Descarte inicial:</span>
+                                                <span class="summary-item__value" id="summaryDiscard">50%</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Finalistas:</span>
+                                                <span class="summary-item__value" id="summaryFinalists">10</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="summary-card">
+                                        <div class="summary-card__header">
+                                            <i class="fas fa-robot"></i>
+                                            <h3>Entrevista IA</h3>
+                                            <button class="summary-card__edit" data-goto="interview">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </div>
+                                        <div class="summary-card__body">
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Tipo:</span>
+                                                <span class="summary-item__value" id="summaryInterviewType">Conversacional</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Duración:</span>
+                                                <span class="summary-item__value" id="summaryDuration">15 min</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-item__label">Documentos:</span>
+                                                <span class="summary-item__value" id="summaryDocs">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Métricas (cuando esté activo) -->
+                                <div class="summary-metrics" id="summaryMetrics" style="display: none;">
+                                    <h3>Métricas del Proceso</h3>
+                                    <div class="metrics-grid">
+                                        <div class="metric-card">
+                                            <div class="metric-card__value" id="metricTotal">0</div>
+                                            <div class="metric-card__label">Candidatos Totales</div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-card__value" id="metricInterviews">0</div>
+                                            <div class="metric-card__label">Entrevistas Completadas</div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-card__value" id="metricPending">0</div>
+                                            <div class="metric-card__label">Pendientes de Revisión</div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-card__value" id="metricConversion">0%</div>
+                                            <div class="metric-card__label">Tasa de Conversión</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Acciones finales -->
+                                <div class="summary-actions">
+                                    <button class="btn btn--secondary btn--large" id="saveDraftBtn">
+                                        <i class="fas fa-save"></i>
+                                        Guardar Borrador
+                                    </button>
+                                    <button class="btn btn--primary btn--large" id="publishBtn">
+                                        <i class="fas fa-rocket"></i>
+                                        Publicar Proceso
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="section-nav">
+                            <button class="btn btn--secondary btn--prev" data-prev="documents">
+                                <i class="fas fa-arrow-left"></i>
+                                Anterior
+                            </button>
+                            <div></div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/rrhh-process-editor.js"></script>
+</body>
+</html>
