@@ -200,7 +200,7 @@ body {
     background: var(--dark-bg-secondary);
     border: 1px solid var(--dark-border);
     border-radius: 14px;
-    padding: 0.4rem;
+    padding: 0.5rem;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -208,6 +208,9 @@ body {
     transform: translateY(-4px);
     z-index: 9999;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 .svc-selector.open + .svc-dropdown {
