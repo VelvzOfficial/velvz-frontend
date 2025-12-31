@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Velvz - Centro de Control</title>
 
     <!-- Favicons -->
@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="/logoR.png">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,222 +22,334 @@
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
 
-    <!-- Dashboard JS (para menú de usuario) -->
-    <script src="/assets/js/app-dashboard.js" defer></script>
-
     <style>
-        /* Hub specific styles */
-        .hub-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 140px 2rem 4rem;
+        /* =====================================================
+           HUB INMERSIVO - ESTILOS
+           ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .hub-welcome {
-            text-align: center;
-            margin-bottom: 3rem;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .hub-welcome__greeting {
-            font-size: 1rem;
-            color: var(--dark-text-secondary);
-            margin-bottom: 0.5rem;
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
-        .hub-welcome__title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark-text);
-            margin-bottom: 0.5rem;
-        }
-
-        .hub-welcome__subtitle {
-            font-size: 1rem;
-            color: var(--dark-text-secondary);
-        }
-
-        /* Services Grid */
-        .hub-services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .hub-service-card {
-            background: var(--dark-bg-secondary);
-            border: 1px solid var(--dark-border);
-            border-radius: 20px;
-            padding: 2rem;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hub-service-card::before {
-            content: '';
-            position: absolute;
+        /* Canvas de partículas - fijo en el fondo */
+        #particleCanvas {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--service-color, var(--primary-gradient));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .hub-service-card:hover {
-            border-color: var(--service-color-solid, var(--dark-accent));
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .hub-service-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Service card colors */
-        .hub-service-card--chatbots {
-            --service-color: linear-gradient(90deg, #667eea, #764ba2);
-            --service-color-solid: #667eea;
-        }
-
-        .hub-service-card--rrhh {
-            --service-color: linear-gradient(90deg, #10b981, #059669);
-            --service-color-solid: #10b981;
-        }
-
-        .hub-service-card__header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .hub-service-card__icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-            background: var(--service-color, var(--primary-gradient));
-        }
-
-        .hub-service-card__badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .hub-service-card__badge--active {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
-        }
-
-        .hub-service-card__badge--coming {
-            background: rgba(245, 158, 11, 0.15);
-            color: #f59e0b;
-        }
-
-        .hub-service-card__title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark-text);
-            margin-bottom: 0.5rem;
-        }
-
-        .hub-service-card__description {
-            font-size: 0.9rem;
-            color: var(--dark-text-secondary);
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-        }
-
-        .hub-service-card__stats {
-            display: flex;
-            gap: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--dark-border);
-        }
-
-        .hub-service-card__stat {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hub-service-card__stat-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--dark-text);
-        }
-
-        .hub-service-card__stat-label {
-            font-size: 0.75rem;
-            color: var(--dark-text-secondary);
-        }
-
-        .hub-service-card__arrow {
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--dark-bg-tertiary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-text-secondary);
-            transition: all 0.3s ease;
-        }
-
-        .hub-service-card:hover .hub-service-card__arrow {
-            background: var(--service-color-solid, var(--dark-accent));
-            color: white;
-            transform: translateX(4px);
-        }
-
-        /* Coming soon card */
-        .hub-service-card--coming-soon {
-            opacity: 0.6;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             pointer-events: none;
         }
 
-        .hub-service-card--coming-soon:hover {
-            transform: none;
-            box-shadow: none;
+        /* Header transparente en el hub */
+        .velvz-header--hub {
+            background: transparent !important;
+            border-bottom: none !important;
+            transition: background 0.4s ease, border 0.4s ease;
         }
 
-        /* Responsive */
+        .velvz-header--hub.scrolled {
+            background: rgba(10, 10, 15, 0.9) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+        }
+
+        /* =====================================================
+           SECCIONES SCROLL
+           ===================================================== */
+
+        .hub-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        /* =====================================================
+           HERO - LOGO VELVZ
+           ===================================================== */
+
+        .hub-hero {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hub-hero__title {
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-shadow: 0 0 80px rgba(102, 126, 234, 0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroFadeIn 1s ease forwards 0.3s;
+        }
+
+        .hub-hero__subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 400;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: heroFadeIn 1s ease forwards 0.6s;
+        }
+
+        .hub-hero__scroll-hint {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: heroFadeIn 1s ease forwards 1s, bounce 2s ease-in-out infinite 2s;
+        }
+
+        .hub-hero__scroll-hint span {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .hub-hero__scroll-hint i {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        @keyframes heroFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* =====================================================
+           SECCIONES DE SERVICIOS
+           ===================================================== */
+
+        .hub-service {
+            padding-top: 120px;
+        }
+
+        .hub-service__content {
+            max-width: 600px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hub-service__content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hub-service__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            color: var(--service-color, #667eea);
+        }
+
+        .hub-service__badge i {
+            font-size: 0.9rem;
+        }
+
+        .hub-service__title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hub-service__description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
+        }
+
+        .hub-service__stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hub-service__stat {
+            text-align: center;
+        }
+
+        .hub-service__stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--service-color, #667eea);
+        }
+
+        .hub-service__stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hub-service__cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--service-color, #667eea);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .hub-service__cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .hub-service__cta i {
+            transition: transform 0.3s ease;
+        }
+
+        .hub-service__cta:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Colores específicos por servicio */
+        .hub-service--chatbots {
+            --service-color: #667eea;
+        }
+
+        .hub-service--chatbots .hub-service__cta {
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .hub-service--rrhh {
+            --service-color: #10b981;
+        }
+
+        .hub-service--rrhh .hub-service__cta {
+            background: #10b981;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .hub-service--rrhh .hub-service__cta:hover {
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.4);
+        }
+
+        /* =====================================================
+           INDICADOR DE SCROLL / NAVEGACIÓN
+           ===================================================== */
+
+        .hub-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hub-nav__dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hub-nav__dot:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .hub-nav__dot.active {
+            background: var(--active-color, #667eea);
+            border-color: var(--active-color, #667eea);
+            box-shadow: 0 0 20px var(--active-color, #667eea);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
         @media (max-width: 768px) {
-            .hub-container {
-                padding: 120px 1rem 2rem;
+            .hub-service__stats {
+                gap: 1.5rem;
             }
 
-            .hub-welcome__title {
-                font-size: 1.5rem;
+            .hub-service__stat-value {
+                font-size: 2rem;
             }
 
-            .hub-services {
-                grid-template-columns: 1fr;
+            .hub-nav {
+                right: 1rem;
             }
 
-            .hub-service-card {
-                padding: 1.5rem;
+            .hub-nav__dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .hub-hero__scroll-hint {
+                bottom: 2rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- CANVAS DE PARTÍCULAS -->
+    <canvas id="particleCanvas"></canvas>
+
     <!-- HEADER -->
-    <header class="velvz-header">
+    <header class="velvz-header velvz-header--hub" id="hubHeader">
         <div class="velvz-header__container">
             <!-- LOGO -->
             <div class="velvz-header__island velvz-header__island--brand">
@@ -258,7 +370,7 @@
                     <input
                         type="text"
                         class="velvz-header__search-input"
-                        placeholder="Buscar en todos los servicios..."
+                        placeholder="Buscar..."
                         id="globalSearch"
                     >
                     <i class="fas fa-search velvz-header__search-icon"></i>
@@ -276,165 +388,333 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="hub-container">
-        <!-- Welcome -->
-        <section class="hub-welcome">
-            <p class="hub-welcome__greeting">Bienvenido de nuevo</p>
-            <h1 class="hub-welcome__title" id="welcomeUserName">Cargando...</h1>
-            <p class="hub-welcome__subtitle">Selecciona un servicio para comenzar</p>
-        </section>
+    <!-- NAVEGACIÓN LATERAL -->
+    <nav class="hub-nav" id="hubNav">
+        <div class="hub-nav__dot active" data-section="hero" data-color="#667eea"></div>
+        <div class="hub-nav__dot" data-section="chatbots" data-color="#667eea"></div>
+        <div class="hub-nav__dot" data-section="rrhh" data-color="#10b981"></div>
+    </nav>
 
-        <!-- Services -->
-        <section class="hub-services">
-            <!-- Chatbots -->
-            <a href="/app/chatbots/dashboard.html" class="hub-service-card hub-service-card--chatbots">
-                <div class="hub-service-card__header">
-                    <div class="hub-service-card__icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
-                </div>
-                <h2 class="hub-service-card__title">Chatbots IA</h2>
-                <p class="hub-service-card__description">
-                    Crea asistentes virtuales inteligentes entrenados con tus documentos.
-                    Responden preguntas de clientes 24/7.
-                </p>
-                <div class="hub-service-card__stats">
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value" id="chatbotsCount">-</span>
-                        <span class="hub-service-card__stat-label">Chatbots</span>
-                    </div>
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value" id="conversationsCount">-</span>
-                        <span class="hub-service-card__stat-label">Conversaciones</span>
-                    </div>
-                </div>
-                <div class="hub-service-card__arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            </a>
+    <!-- SECCIÓN HERO -->
+    <section class="hub-section hub-hero" id="hero" data-color="#667eea">
+        <h1 class="hub-hero__title">VELVZ</h1>
+        <p class="hub-hero__subtitle">Centro de Control</p>
 
-            <!-- RRHH -->
-            <a href="/app/rrhh/" class="hub-service-card hub-service-card--rrhh">
-                <div class="hub-service-card__header">
-                    <div class="hub-service-card__icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <span class="hub-service-card__badge hub-service-card__badge--active">Activo</span>
-                </div>
-                <h2 class="hub-service-card__title">RRHH IA</h2>
-                <p class="hub-service-card__description">
-                    Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
-                    dinámicos y encuentra el talento ideal.
-                </p>
-                <div class="hub-service-card__stats">
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value" id="rrhhProcessesCount">-</span>
-                        <span class="hub-service-card__stat-label">Procesos</span>
-                    </div>
-                    <div class="hub-service-card__stat">
-                        <span class="hub-service-card__stat-value" id="rrhhCandidatesCount">-</span>
-                        <span class="hub-service-card__stat-label">Candidatos</span>
-                    </div>
-                </div>
-                <div class="hub-service-card__arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            </a>
-        </section>
-    </main>
+        <div class="hub-hero__scroll-hint">
+            <span>Explora</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
 
-    <!-- FOOTER -->
-    <footer class="velvz-footer">
-        <div class="velvz-footer__container">
-            <div class="velvz-footer__brand">
-                <a href="/" class="velvz-footer__logo-link">
-                    <div class="velvz-footer__logo">
-                        <div class="velvz-footer__logo-shape">
-                            <div class="velvz-footer__logo-face">
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
-                                <div class="velvz-footer__logo-mouth"></div>
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="velvz-footer__brand-name">Velvz</span>
-                </a>
-                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+    <!-- SECCIÓN CHATBOTS -->
+    <section class="hub-section hub-service hub-service--chatbots" id="chatbots" data-color="#667eea">
+        <div class="hub-service__content">
+            <div class="hub-service__badge">
+                <i class="fas fa-robot"></i>
+                <span>Servicio Activo</span>
             </div>
-
-            <nav class="velvz-footer__links">
-                <a href="/" class="velvz-footer__link">Inicio</a>
-                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
-                <a href="/precios/" class="velvz-footer__link">Precios</a>
-                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
-            </nav>
-
-            <div class="velvz-footer__legal">
-                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
-                <div>
-                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
-                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
-                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+            <h2 class="hub-service__title">Chatbots IA</h2>
+            <p class="hub-service__description">
+                Crea asistentes virtuales inteligentes entrenados con tus documentos.
+                Responden preguntas de clientes 24/7 con la personalidad de tu marca.
+            </p>
+            <div class="hub-service__stats">
+                <div class="hub-service__stat">
+                    <div class="hub-service__stat-value" id="chatbotsCount">-</div>
+                    <div class="hub-service__stat-label">Chatbots</div>
+                </div>
+                <div class="hub-service__stat">
+                    <div class="hub-service__stat-value" id="conversationsCount">-</div>
+                    <div class="hub-service__stat-label">Conversaciones</div>
                 </div>
             </div>
+            <a href="/app/chatbots/dashboard.html" class="hub-service__cta">
+                <span>Ir a Chatbots</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
+    </section>
 
-        <div class="velvz-footer__ambient">
-            <div class="velvz-footer__pulse"></div>
-            <div class="velvz-footer__pulse"></div>
+    <!-- SECCIÓN RRHH -->
+    <section class="hub-section hub-service hub-service--rrhh" id="rrhh" data-color="#10b981">
+        <div class="hub-service__content">
+            <div class="hub-service__badge">
+                <i class="fas fa-users"></i>
+                <span>Próximamente</span>
+            </div>
+            <h2 class="hub-service__title">RRHH IA</h2>
+            <p class="hub-service__description">
+                Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
+                dinámicos y encuentra el talento ideal para tu empresa.
+            </p>
+            <div class="hub-service__stats">
+                <div class="hub-service__stat">
+                    <div class="hub-service__stat-value" id="rrhhProcessesCount">0</div>
+                    <div class="hub-service__stat-label">Procesos</div>
+                </div>
+                <div class="hub-service__stat">
+                    <div class="hub-service__stat-value" id="rrhhCandidatesCount">0</div>
+                    <div class="hub-service__stat-label">Candidatos</div>
+                </div>
+            </div>
+            <a href="/app/rrhh/" class="hub-service__cta">
+                <span>Ir a RRHH</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-    </footer>
+    </section>
 
-    <script>
-        // Hub-specific: cargar stats y nombre de bienvenida
-        // La autenticación, menú de usuario y selector de servicios lo maneja app-dashboard.js
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Esperar a que app-dashboard.js verifique la auth
-            // Luego cargar datos específicos del hub
-            setTimeout(async () => {
-                // Actualizar nombre de bienvenida
-                const welcomeName = document.getElementById('welcomeUserName');
-                if (welcomeName) {
-                    const cachedUser = localStorage.getItem('velvz_user');
-                    if (cachedUser) {
-                        try {
-                            const user = JSON.parse(cachedUser);
-                            welcomeName.textContent = user.name || user.email.split('@')[0];
-                        } catch (e) {}
-                    }
-                }
+    <!-- THREE.JS y Post-processing -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
 
-                // Cargar estadísticas de chatbots
-                loadChatbotStats();
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-                // Cargar estadísticas de RRHH
-                loadRRHHStats();
-            }, 100);
+        /* =====================================================
+           CONFIGURACIÓN THREE.JS
+           ===================================================== */
+
+        const canvas = document.getElementById('particleCanvas');
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(
+            40,
+            innerWidth / innerHeight,
+            0.1,
+            600
+        );
+        camera.position.z = 160;
+
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            alpha: true,
+            antialias: true
+        });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        renderer.setSize(innerWidth, innerHeight);
+
+        /* =====================================================
+           BLOOM (GLOW)
+           ===================================================== */
+
+        const composer = new EffectComposer(renderer);
+        composer.addPass(new RenderPass(scene, camera));
+        composer.addPass(
+            new UnrealBloomPass(
+                new THREE.Vector2(innerWidth, innerHeight),
+                1.2,   // strength
+                0.8,   // radius
+                0.01   // threshold
+            )
+        );
+
+        /* =====================================================
+           ESFERA DE PARTÍCULAS
+           ===================================================== */
+
+        const R = 26, SEG = 100;
+        const geo = new THREE.SphereGeometry(R, SEG, SEG).toNonIndexed();
+        const posAttr = geo.getAttribute('position');
+        const basePos = posAttr.array.slice();
+        const colAttr = new Float32Array(posAttr.count * 3);
+        geo.setAttribute('color', new THREE.BufferAttribute(colAttr, 3));
+
+        const mat = new THREE.PointsMaterial({
+            size: 0.25,
+            transparent: true,
+            opacity: 0.9,
+            vertexColors: true,
+            depthWrite: false
         });
 
-        async function loadChatbotStats() {
+        const pts = new THREE.Points(geo, mat);
+        pts.scale.set(1.7, 1.7, 1.7);
+        scene.add(pts);
+
+        /* =====================================================
+           COLORES POR SECCIÓN
+           ===================================================== */
+
+        // Colores en formato HSL
+        const sectionColors = {
+            hero: { h: 0.68, s: 0.7, l: 0.65 },      // Morado/índigo Velvz
+            chatbots: { h: 0.65, s: 0.75, l: 0.60 }, // Azul índigo
+            rrhh: { h: 0.42, s: 0.85, l: 0.45 }      // Verde
+        };
+
+        let currentColor = { ...sectionColors.hero };
+        let targetColor = { ...sectionColors.hero };
+
+        function lerpColor(current, target, speed) {
+            current.h += (target.h - current.h) * speed;
+            current.s += (target.s - current.s) * speed;
+            current.l += (target.l - current.l) * speed;
+        }
+
+        /* =====================================================
+           INTERACCIÓN MOUSE
+           ===================================================== */
+
+        let tX = 0, tY = 0;
+        addEventListener('pointermove', (e) => {
+            tX = (e.clientY / innerHeight - 0.5) * 0.25;
+            tY = -(e.clientX / innerWidth - 0.5) * 0.25;
+        }, { passive: true });
+
+        /* =====================================================
+           ANIMACIÓN
+           ===================================================== */
+
+        const clock = new THREE.Clock();
+        const WAVES = 5, AMP = 3;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const t = clock.getElapsedTime();
+
+            // Interpolar color suavemente
+            lerpColor(currentColor, targetColor, 0.03);
+
+            for (let i = 0; i < posAttr.count; i++) {
+                const id = i * 3;
+                const nx = basePos[id] / R,
+                      ny = basePos[id + 1] / R,
+                      nz = basePos[id + 2] / R;
+
+                const d = (
+                    Math.sin(nx * WAVES + t) +
+                    Math.sin(ny * WAVES + t * 0.8) +
+                    Math.sin(nz * WAVES + t * 1.2)
+                ) / 3;
+                const swell = d * AMP;
+
+                posAttr.array[id] = basePos[id] + nx * swell;
+                posAttr.array[id + 1] = basePos[id + 1] + ny * swell;
+                posAttr.array[id + 2] = basePos[id + 2] + nz * swell;
+
+                // Color basado en la sección actual + variación
+                const hue = (currentColor.h + d * 0.08) % 1;
+                const c = new THREE.Color().setHSL(hue, currentColor.s, currentColor.l);
+                colAttr[id] = c.r;
+                colAttr[id + 1] = c.g;
+                colAttr[id + 2] = c.b;
+            }
+
+            posAttr.needsUpdate = true;
+            geo.attributes.color.needsUpdate = true;
+
+            pts.rotation.y += 0.002;
+            pts.rotation.x += (tX - pts.rotation.x) * 0.05;
+            pts.rotation.y += (tY - pts.rotation.y) * 0.05;
+
+            composer.render();
+        }
+        animate();
+
+        /* =====================================================
+           SCROLL DETECTION
+           ===================================================== */
+
+        const sections = document.querySelectorAll('.hub-section');
+        const navDots = document.querySelectorAll('.hub-nav__dot');
+        const header = document.getElementById('hubHeader');
+
+        const observerOptions = {
+            root: null,
+            threshold: 0.5
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    const sectionColor = entry.target.dataset.color;
+
+                    // Cambiar color de la esfera
+                    if (sectionColors[sectionId]) {
+                        targetColor = { ...sectionColors[sectionId] };
+                    }
+
+                    // Actualizar navegación
+                    navDots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.dataset.section === sectionId) {
+                            dot.classList.add('active');
+                            dot.style.setProperty('--active-color', sectionColor);
+                        }
+                    });
+
+                    // Mostrar contenido de servicios
+                    const content = entry.target.querySelector('.hub-service__content');
+                    if (content) {
+                        content.classList.add('visible');
+                    }
+
+                    // Header background
+                    if (sectionId === 'hero') {
+                        header.classList.remove('scrolled');
+                    } else {
+                        header.classList.add('scrolled');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // Click en navegación lateral
+        navDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const sectionId = dot.dataset.section;
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        addEventListener('resize', () => {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+            composer.setSize(innerWidth, innerHeight);
+        });
+
+        /* =====================================================
+           CARGAR ESTADÍSTICAS
+           ===================================================== */
+
+        async function loadStats() {
             try {
                 const token = localStorage.getItem('velvz_token');
                 if (!token) return;
 
                 const response = await fetch(window.API_CONFIG?.API_URL + '/api/chatbots', {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
+                    headers: { 'Authorization': 'Bearer ' + token }
                 });
 
                 if (response.ok) {
                     const data = await response.json();
-                    // Asegurar que chatbots sea un array
                     let chatbots = data.data || data.chatbots || [];
-                    if (!Array.isArray(chatbots)) {
-                        chatbots = [];
-                    }
+                    if (!Array.isArray(chatbots)) chatbots = [];
+
                     document.getElementById('chatbotsCount').textContent = chatbots.length;
 
-                    // Calculate total conversations (if available)
                     let totalConversations = 0;
                     chatbots.forEach(bot => {
                         totalConversations += bot.total_conversations || 0;
@@ -446,19 +726,13 @@
             }
         }
 
-        function loadRRHHStats() {
-            // Cargar estadísticas de RRHH desde localStorage
-            const processes = JSON.parse(localStorage.getItem('velvz_rrhh_processes') || '[]');
-            const activeProcesses = processes.filter(p => p.status === 'active').length;
-            const totalCandidates = processes.reduce((sum, p) => sum + (p.candidates || 0), 0);
-
-            const processesEl = document.getElementById('rrhhProcessesCount');
-            const candidatesEl = document.getElementById('rrhhCandidatesCount');
-
-            if (processesEl) processesEl.textContent = activeProcesses;
-            if (candidatesEl) candidatesEl.textContent = totalCandidates;
-        }
+        // Cargar stats después de un momento
+        setTimeout(loadStats, 500);
     </script>
+
+    <!-- Dashboard JS para auth y menú usuario -->
+    <script src="/assets/js/app-dashboard.js" defer></script>
+
     <script
       src="https://velvz-unified-backend-production.up.railway.app/api/widget/script/11"
       async
