@@ -252,22 +252,13 @@ body {
     color: var(--dark-accent);
 }
 
-/* RRHH usa color verde */
+/* RRHH usa color verde solo cuando está activo */
 .svc-dropdown__item[data-service="rrhh"].svc-dropdown__item--active {
     background: rgba(16, 185, 129, 0.15);
     color: #10b981;
 }
 
 .svc-dropdown__item[data-service="rrhh"].svc-dropdown__item--active i {
-    color: #10b981;
-}
-
-.svc-dropdown__item[data-service="rrhh"]:hover {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-}
-
-.svc-dropdown__item[data-service="rrhh"]:hover i {
     color: #10b981;
 }
 
