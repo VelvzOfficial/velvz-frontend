@@ -869,6 +869,7 @@ a.velvz-header__logo {
     background: var(--dark-bg);
     padding: 2rem;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     display: flex;
     flex-direction: column;
 }
