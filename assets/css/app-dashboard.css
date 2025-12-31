@@ -85,7 +85,6 @@ body {
     padding: 0 2rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 80px;
     position: relative;
     z-index: 10;
@@ -126,6 +125,7 @@ body {
     border: 1px solid var(--dark-border);
     padding: 0.8rem;
     flex-shrink: 0;
+    margin-left: auto;
 }
 
 /* =====================================================
