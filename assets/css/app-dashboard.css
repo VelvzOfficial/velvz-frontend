@@ -138,19 +138,20 @@ body {
 }
 
 /* Grupo centrado: selector + búsqueda en páginas del dashboard */
-.velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
-.velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    right: calc(50% + 10px);
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: auto !important;
+    right: calc(50% + 5px) !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    left: calc(50% + 10px);
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: calc(50% + 5px) !important;
+    right: auto !important;
 }
 
 .velvz-header__island--cta {
