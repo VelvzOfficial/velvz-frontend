@@ -141,19 +141,19 @@ body {
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
     position: fixed !important;
-    top: calc(env(safe-area-inset-top, 0px) + 18px) !important;
+    top: calc(env(safe-area-inset-top, 0px) + 28px) !important;
     z-index: 1001 !important;
     animation: none !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    left: 50% !important;
+    left: 45% !important;
     right: auto !important;
     transform: translateX(calc(-100% - 5px)) !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    left: 50% !important;
+    left: 45% !important;
     right: auto !important;
     transform: translateX(5px) !important;
 }
