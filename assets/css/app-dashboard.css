@@ -140,19 +140,19 @@ body {
 /* Grupo centrado: selector + búsqueda en páginas del dashboard */
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    position: fixed !important;
-    top: calc(env(safe-area-inset-top) + 1rem + 40px) !important;
+    position: absolute !important;
+    top: 50% !important;
     transform: translateY(-50%) !important;
-    z-index: 1001 !important;
+    z-index: 10 !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    right: calc(50% + 10px) !important;
+    right: calc(50% + 5px) !important;
     left: auto !important;
 }
 
 .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    left: calc(50% + 10px) !important;
+    left: calc(50% + 5px) !important;
     right: auto !important;
 }
 
