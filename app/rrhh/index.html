@@ -29,6 +29,17 @@
             --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
         }
 
+        /* Override sidebar hover color */
+        .velvz-sidebar__link:hover,
+        .velvz-sidebar__link--active {
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: #10b981 !important;
+        }
+        .velvz-sidebar__link:hover .velvz-sidebar__icon,
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #10b981 !important;
+        }
+
         /* =====================================================
            PANEL PRINCIPAL - HEADER
            ===================================================== */
@@ -453,18 +464,18 @@
             </div>
 
             <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <h3 class="velvz-sidebar__title">Ajustes</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
-                        <a href="/app/profile/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-user"></i>
-                            <span>Mi Perfil</span>
+                        <a href="/app/plans/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-gem"></i>
+                            <span>Planes</span>
                         </a>
                     </li>
                     <li class="velvz-sidebar__item">
-                        <a href="#" class="velvz-sidebar__link" id="logoutLink">
-                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
-                            <span>Cerrar Sesión</span>
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
                         </a>
                     </li>
                 </ul>

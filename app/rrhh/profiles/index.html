@@ -29,28 +29,212 @@
             --profiles-light: rgba(139, 92, 246, 0.1);
         }
 
-        /* Page Header */
-        .page-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        /* Override sidebar hover color */
+        .velvz-sidebar__link:hover,
+        .velvz-sidebar__link--active {
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: #10b981 !important;
+        }
+        .velvz-sidebar__link:hover .velvz-sidebar__icon,
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #10b981 !important;
         }
 
-        .page-header__info h1 {
-            font-size: 1.75rem;
+        /* Main Content Layout */
+        .profiles-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 0;
+            height: calc(100vh - 80px);
+            margin: -2rem;
+        }
+
+        /* Left Panel - Lista */
+        .profiles-list {
+            background: var(--dark-bg-secondary);
+            border-right: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .profiles-list__header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .profiles-list__title {
+            font-size: 1.25rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
-        .page-header__info h1 i { color: var(--profiles-color); }
-        .page-header__info p { color: rgba(255,255,255,0.5); font-size: 0.95rem; }
-        .page-header__actions { display: flex; gap: 0.75rem; }
+        .profiles-list__title i { color: var(--profiles-color); }
+
+        .profiles-list__count {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .profiles-list__actions {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .profiles-list__search {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--profiles-color);
+            box-shadow: 0 0 0 3px var(--profiles-light);
+        }
+
+        .search-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+
+        .profiles-list__items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        /* Profile Item en la lista */
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .profile-item--active {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .profile-item__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .profile-item__info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-item__title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-item__department {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .profile-item__count {
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .profile-item__count-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--profiles-color);
+        }
+
+        .profile-item__count-label {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+        }
+
+        /* Right Panel - Detalle */
+        .profile-detail {
+            background: var(--dark-bg);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .profile-detail--empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-empty {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .detail-empty__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .detail-empty__text {
+            font-size: 1rem;
+        }
 
         /* Buttons */
         .btn {
@@ -68,158 +252,258 @@
         }
 
         .btn--primary { background: var(--profiles-color); color: #fff; }
-        .btn--primary:hover { background: #7c3aed; transform: translateY(-2px); box-shadow: 0 4px 20px var(--profiles-light); }
+        .btn--primary:hover { background: #7c3aed; transform: translateY(-2px); }
         .btn--secondary { background: var(--dark-bg-secondary); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
         .btn--secondary:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
-        .btn--ghost { background: transparent; color: rgba(255,255,255,0.6); padding: 0.5rem; }
-        .btn--ghost:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .btn--icon { padding: 0.75rem; }
+        .btn--full { width: 100%; justify-content: center; }
+        .btn--danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .btn--danger:hover { background: rgba(239, 68, 68, 0.2); }
 
-        /* Toolbar */
-        .toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .toolbar__left { display: flex; align-items: center; gap: 1rem; flex: 1; }
-        .toolbar__right { display: flex; align-items: center; gap: 0.75rem; }
-
-        .search-box { position: relative; max-width: 300px; flex: 1; }
-        .search-box__input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            background: var(--dark-bg-secondary);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-        .search-box__input:focus { outline: none; border-color: var(--profiles-color); box-shadow: 0 0 0 3px var(--profiles-light); }
-        .search-box__input::placeholder { color: rgba(255,255,255,0.3); }
-        .search-box__icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 0.85rem; }
-
-        /* Grid */
-        .profiles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.25rem;
-        }
-
-        /* Profile Card */
-        .profile-card {
-            background: var(--dark-bg-secondary);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .profile-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
-        .profile-card__header {
+        /* Detail Header */
+        .detail-header {
             display: flex;
             align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
-        .profile-card__icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+        .detail-header__icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
             background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.75rem;
             color: #fff;
-            font-size: 1.25rem;
+            flex-shrink: 0;
         }
 
-        .profile-card__menu {
-            background: transparent;
-            border: none;
-            color: rgba(255,255,255,0.4);
-            cursor: pointer;
-            padding: 0.25rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
+        .detail-header__info {
+            flex: 1;
         }
 
-        .profile-card__menu:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .detail-header__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.35rem;
+        }
 
-        .profile-card__title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.35rem; }
-        .profile-card__department {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 1rem;
+        .detail-header__department {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
             display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
+            margin-bottom: 0.75rem;
         }
 
-        .profile-card__requirements { margin-bottom: 1rem; }
-        .profile-card__requirements-title {
-            font-size: 0.75rem;
+        .detail-header__meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .detail-header__meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .detail-header__actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Detail Sections */
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-section__title {
+            font-size: 0.8rem;
+            font-weight: 600;
             color: rgba(255,255,255,0.4);
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
-        .profile-card__requirements-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .profile-card__requirement {
-            padding: 0.25rem 0.6rem;
+        /* Requirements Grid */
+        .requirements-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .requirement-tag {
+            padding: 0.5rem 1rem;
             background: rgba(139, 92, 246, 0.1);
-            border-radius: 6px;
-            font-size: 0.75rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 8px;
+            font-size: 0.85rem;
             color: #a78bfa;
         }
 
-        .profile-card__footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
+        /* Description */
+        .profile-description {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1.25rem;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
         }
 
-        .profile-card__processes { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
-        .profile-card__processes strong { color: #fff; }
+        /* Salary Range */
+        .salary-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
 
-        /* Empty State */
-        .empty-state { text-align: center; padding: 4rem 2rem; }
-        .empty-state__icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: var(--dark-bg-tertiary);
-            border-radius: 20px;
+        .salary-card__range {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--rrhh-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .salary-card__label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card__value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card__label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Recent Processes */
+        .process-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .process-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: rgba(255,255,255,0.2);
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
         }
-        .empty-state__title { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
-        .empty-state__text { color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+
+        .process-item__status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .process-item__status--active { background: var(--rrhh-primary); }
+        .process-item__status--paused { background: #f59e0b; }
+        .process-item__status--closed { background: rgba(255,255,255,0.3); }
+
+        .process-item__info { flex: 1; }
+
+        .process-item__title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 0.15rem;
+        }
+
+        .process-item__date {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .process-item__candidates {
+            text-align: right;
+        }
+
+        .process-item__candidates-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .process-item__candidates-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+        }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .profiles-layout {
+                grid-template-columns: 320px 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
-            .page-header { flex-direction: column; }
-            .page-header__actions { width: 100%; }
-            .page-header__actions .btn { flex: 1; justify-content: center; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .toolbar__left, .toolbar__right { width: 100%; }
-            .search-box { max-width: none; }
-            .profiles-grid { grid-template-columns: 1fr; }
+            .profiles-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .profiles-list {
+                max-height: 50vh;
+            }
+
+            .profile-detail {
+                min-height: 50vh;
+            }
+
+            .detail-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .detail-header__meta {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -321,18 +605,18 @@
             </div>
 
             <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <h3 class="velvz-sidebar__title">Ajustes</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
-                        <a href="/app/profile/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-user"></i>
-                            <span>Mi Perfil</span>
+                        <a href="/app/plans/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-gem"></i>
+                            <span>Planes</span>
                         </a>
                     </li>
                     <li class="velvz-sidebar__item">
-                        <a href="#" class="velvz-sidebar__link" id="logoutLink">
-                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
-                            <span>Cerrar Sesión</span>
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
                         </a>
                     </li>
                 </ul>
@@ -342,88 +626,44 @@
         <!-- MAIN -->
         <main class="velvz-main">
             <div class="velvz-dashboard">
-                <!-- PAGE HEADER -->
-                <div class="page-header">
-                    <div class="page-header__info">
-                        <h1><i class="fas fa-id-badge"></i> Perfiles de Empresa</h1>
-                        <p>Plantillas de puestos con requisitos predefinidos</p>
-                    </div>
-                    <div class="page-header__actions">
-                        <button class="btn btn--primary" id="newProfileBtn">
-                            <i class="fas fa-plus"></i>
-                            <span>Nuevo Perfil</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- TOOLBAR -->
-                <div class="toolbar">
-                    <div class="toolbar__left">
-                        <div class="search-box">
-                            <i class="fas fa-search search-box__icon"></i>
-                            <input type="text" class="search-box__input" placeholder="Buscar perfiles..." id="searchProfiles">
+                <div class="profiles-layout">
+                    <!-- Lista de Perfiles -->
+                    <div class="profiles-list">
+                        <div class="profiles-list__header">
+                            <h1 class="profiles-list__title">
+                                <i class="fas fa-id-badge"></i> Perfiles
+                            </h1>
+                            <p class="profiles-list__count" id="profilesCount">4 perfiles</p>
+                        </div>
+                        <div class="profiles-list__actions">
+                            <button class="btn btn--primary btn--full" id="newProfileBtn">
+                                <i class="fas fa-plus"></i> Nuevo Perfil
+                            </button>
+                        </div>
+                        <div class="profiles-list__search">
+                            <div class="search-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="search-input" placeholder="Buscar..." id="searchProfiles">
+                            </div>
+                        </div>
+                        <div class="profiles-list__items" id="profilesList">
+                            <!-- Items se cargan dinámicamente -->
                         </div>
                     </div>
-                </div>
 
-                <!-- PROFILES GRID -->
-                <div class="profiles-grid" id="profilesGrid">
-                    <!-- Cards se cargan dinámicamente -->
-                </div>
-
-                <!-- EMPTY STATE -->
-                <div class="empty-state" id="emptyState" style="display: none;">
-                    <div class="empty-state__icon">
-                        <i class="fas fa-id-badge"></i>
+                    <!-- Panel de Detalle -->
+                    <div class="profile-detail profile-detail--empty" id="profileDetail">
+                        <div class="detail-empty">
+                            <div class="detail-empty__icon">
+                                <i class="fas fa-id-badge"></i>
+                            </div>
+                            <p class="detail-empty__text">Selecciona un perfil para ver sus detalles</p>
+                        </div>
                     </div>
-                    <h3 class="empty-state__title">Define los perfiles de tu empresa</h3>
-                    <p class="empty-state__text">
-                        Crea plantillas de puestos con requisitos predefinidos para acelerar la creación de procesos
-                    </p>
-                    <button class="btn btn--primary" id="emptyNewProfile">
-                        <i class="fas fa-plus"></i>
-                        <span>Crear Perfil</span>
-                    </button>
                 </div>
             </div>
         </main>
     </div>
-
-    <!-- FOOTER -->
-    <footer class="velvz-footer">
-        <div class="velvz-footer__container">
-            <div class="velvz-footer__brand">
-                <a href="/" class="velvz-footer__logo-link">
-                    <div class="velvz-footer__logo">
-                        <div class="velvz-footer__logo-shape">
-                            <div class="velvz-footer__logo-face">
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
-                                <div class="velvz-footer__logo-mouth"></div>
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="velvz-footer__brand-name">Velvz</span>
-                </a>
-                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
-            </div>
-            <nav class="velvz-footer__links">
-                <a href="/" class="velvz-footer__link">Inicio</a>
-                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
-                <a href="/precios/" class="velvz-footer__link">Precios</a>
-                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
-                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
-            </nav>
-            <div class="velvz-footer__legal">
-                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
-                <div>
-                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
-                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
-                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script src="/assets/js/app-dashboard.js"></script>
     <script>
@@ -433,98 +673,224 @@
                     id: 1,
                     title: 'Desarrollador Backend',
                     department: 'Tecnología',
-                    requirements: ['Python', 'SQL', 'APIs REST', 'Docker'],
-                    processesUsed: 3
+                    description: 'Responsable del desarrollo y mantenimiento de APIs, servicios backend y bases de datos. Debe tener experiencia en arquitecturas escalables y mejores prácticas de desarrollo.',
+                    requirements: ['Python', 'SQL', 'APIs REST', 'Docker', 'Git', 'Testing'],
+                    salaryRange: '45.000€ - 65.000€',
+                    processesUsed: 3,
+                    candidatesTotal: 127,
+                    avgMatchScore: 84,
+                    createdDate: '15 Oct 2024',
+                    recentProcesses: [
+                        { title: 'Backend Developer - Q1 2025', status: 'active', date: '20 Ene 2025', candidates: 45 },
+                        { title: 'Senior Backend Engineer', status: 'closed', date: '15 Dic 2024', candidates: 38 },
+                        { title: 'Python Developer', status: 'closed', date: '01 Nov 2024', candidates: 44 }
+                    ]
                 },
                 {
                     id: 2,
                     title: 'Desarrollador Frontend',
                     department: 'Tecnología',
-                    requirements: ['React', 'TypeScript', 'CSS', 'Testing'],
-                    processesUsed: 2
+                    description: 'Encargado del desarrollo de interfaces de usuario modernas y responsivas. Debe dominar frameworks de frontend y tener buen ojo para el diseño.',
+                    requirements: ['React', 'TypeScript', 'CSS/SASS', 'Testing', 'Git', 'Accesibilidad'],
+                    salaryRange: '40.000€ - 60.000€',
+                    processesUsed: 2,
+                    candidatesTotal: 89,
+                    avgMatchScore: 81,
+                    createdDate: '20 Oct 2024',
+                    recentProcesses: [
+                        { title: 'React Developer Senior', status: 'active', date: '18 Ene 2025', candidates: 32 },
+                        { title: 'Frontend Engineer', status: 'paused', date: '10 Dic 2024', candidates: 57 }
+                    ]
                 },
                 {
                     id: 3,
                     title: 'Product Manager',
                     department: 'Producto',
-                    requirements: ['Scrum', 'Analytics', 'Roadmapping', 'Stakeholder Management'],
-                    processesUsed: 4
+                    description: 'Lidera la estrategia y roadmap de producto. Trabaja estrechamente con equipos técnicos y stakeholders para definir y priorizar funcionalidades.',
+                    requirements: ['Scrum', 'Analytics', 'Roadmapping', 'Stakeholder Management', 'SQL', 'Jira'],
+                    salaryRange: '55.000€ - 80.000€',
+                    processesUsed: 4,
+                    candidatesTotal: 156,
+                    avgMatchScore: 87,
+                    createdDate: '01 Sep 2024',
+                    recentProcesses: [
+                        { title: 'Product Manager - Growth', status: 'active', date: '22 Ene 2025', candidates: 28 },
+                        { title: 'Senior PM - Platform', status: 'active', date: '15 Ene 2025', candidates: 34 },
+                        { title: 'PM - Mobile', status: 'closed', date: '20 Nov 2024', candidates: 52 },
+                        { title: 'Associate PM', status: 'closed', date: '05 Oct 2024', candidates: 42 }
+                    ]
                 },
                 {
                     id: 4,
                     title: 'Diseñador UX/UI',
                     department: 'Diseño',
-                    requirements: ['Figma', 'User Research', 'Prototyping', 'Design Systems'],
-                    processesUsed: 1
+                    description: 'Responsable del diseño de experiencias de usuario e interfaces visuales. Debe combinar creatividad con metodologías de investigación de usuarios.',
+                    requirements: ['Figma', 'User Research', 'Prototyping', 'Design Systems', 'Adobe Suite', 'HTML/CSS'],
+                    salaryRange: '38.000€ - 55.000€',
+                    processesUsed: 1,
+                    candidatesTotal: 64,
+                    avgMatchScore: 79,
+                    createdDate: '10 Nov 2024',
+                    recentProcesses: [
+                        { title: 'Senior UX Designer', status: 'active', date: '25 Ene 2025', candidates: 64 }
+                    ]
                 }
             ];
 
-            const grid = document.getElementById('profilesGrid');
-            const emptyState = document.getElementById('emptyState');
+            const listContainer = document.getElementById('profilesList');
+            const detailContainer = document.getElementById('profileDetail');
+            const countElement = document.getElementById('profilesCount');
+            let selectedId = null;
 
-            function renderProfiles(data) {
-                if (data.length === 0) {
-                    grid.style.display = 'none';
-                    emptyState.style.display = 'block';
-                    return;
-                }
+            function renderList(data) {
+                countElement.textContent = `${data.length} perfil${data.length !== 1 ? 'es' : ''}`;
 
-                grid.style.display = 'grid';
-                emptyState.style.display = 'none';
-
-                grid.innerHTML = data.map(profile => `
-                    <div class="profile-card" data-id="${profile.id}">
-                        <div class="profile-card__header">
-                            <div class="profile-card__icon">
-                                <i class="fas fa-id-badge"></i>
-                            </div>
-                            <button class="profile-card__menu">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
+                listContainer.innerHTML = data.map(p => `
+                    <div class="profile-item ${selectedId === p.id ? 'profile-item--active' : ''}" data-id="${p.id}">
+                        <div class="profile-item__icon">
+                            <i class="fas fa-id-badge"></i>
                         </div>
-                        <h3 class="profile-card__title">${profile.title}</h3>
-                        <p class="profile-card__department">
-                            <i class="fas fa-building"></i> ${profile.department}
-                        </p>
-                        <div class="profile-card__requirements">
-                            <div class="profile-card__requirements-title">Requisitos clave</div>
-                            <div class="profile-card__requirements-list">
-                                ${profile.requirements.map(req => `<span class="profile-card__requirement">${req}</span>`).join('')}
+                        <div class="profile-item__info">
+                            <div class="profile-item__title">${p.title}</div>
+                            <div class="profile-item__department">
+                                <i class="fas fa-building"></i> ${p.department}
                             </div>
                         </div>
-                        <div class="profile-card__footer">
-                            <span class="profile-card__processes">
-                                Usado en <strong>${profile.processesUsed}</strong> procesos
-                            </span>
-                            <button class="btn btn--ghost">
-                                <i class="fas fa-edit"></i>
-                            </button>
+                        <div class="profile-item__count">
+                            <div class="profile-item__count-value">${p.processesUsed}</div>
+                            <div class="profile-item__count-label">Procesos</div>
                         </div>
                     </div>
                 `).join('');
+
+                // Add click handlers
+                listContainer.querySelectorAll('.profile-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const id = parseInt(item.dataset.id);
+                        selectProfile(id);
+                    });
+                });
             }
 
-            // Búsqueda
+            function selectProfile(id) {
+                selectedId = id;
+                const profile = profiles.find(p => p.id === id);
+
+                // Update active state in list
+                listContainer.querySelectorAll('.profile-item').forEach(item => {
+                    item.classList.toggle('profile-item--active', parseInt(item.dataset.id) === id);
+                });
+
+                // Render detail
+                detailContainer.classList.remove('profile-detail--empty');
+                detailContainer.innerHTML = `
+                    <div class="detail-header">
+                        <div class="detail-header__icon">
+                            <i class="fas fa-id-badge"></i>
+                        </div>
+                        <div class="detail-header__info">
+                            <h2 class="detail-header__title">${profile.title}</h2>
+                            <p class="detail-header__department">
+                                <i class="fas fa-building"></i> ${profile.department}
+                            </p>
+                            <div class="detail-header__meta">
+                                <span><i class="fas fa-calendar"></i> Creado ${profile.createdDate}</span>
+                            </div>
+                        </div>
+                        <div class="detail-header__actions">
+                            <button class="btn btn--primary">
+                                <i class="fas fa-plus"></i> Crear Proceso
+                            </button>
+                            <button class="btn btn--secondary">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Estadísticas</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-card__value">${profile.processesUsed}</div>
+                                <div class="stat-card__label">Procesos creados</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card__value">${profile.candidatesTotal}</div>
+                                <div class="stat-card__label">Candidatos totales</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card__value">${profile.avgMatchScore}%</div>
+                                <div class="stat-card__label">Match promedio</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Descripción</h3>
+                        <div class="profile-description">
+                            ${profile.description}
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Requisitos clave</h3>
+                        <div class="requirements-grid">
+                            ${profile.requirements.map(req => `<span class="requirement-tag">${req}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Rango Salarial</h3>
+                        <div class="salary-card">
+                            <div class="salary-card__range">${profile.salaryRange}</div>
+                            <div class="salary-card__label">Bruto anual</div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Procesos que usan este perfil</h3>
+                        <div class="process-list">
+                            ${profile.recentProcesses.map(proc => `
+                                <div class="process-item">
+                                    <div class="process-item__status process-item__status--${proc.status}"></div>
+                                    <div class="process-item__info">
+                                        <div class="process-item__title">${proc.title}</div>
+                                        <div class="process-item__date">${proc.date}</div>
+                                    </div>
+                                    <div class="process-item__candidates">
+                                        <div class="process-item__candidates-value">${proc.candidates}</div>
+                                        <div class="process-item__candidates-label">candidatos</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="detail-section" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06);">
+                        <button class="btn btn--danger">
+                            <i class="fas fa-trash"></i> Eliminar perfil
+                        </button>
+                    </div>
+                `;
+            }
+
+            // Search
             document.getElementById('searchProfiles').addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
-                renderProfiles(profiles.filter(p =>
+                renderList(profiles.filter(p =>
                     p.title.toLowerCase().includes(query) ||
                     p.department.toLowerCase().includes(query) ||
                     p.requirements.some(r => r.toLowerCase().includes(query))
                 ));
             });
 
-            renderProfiles(profiles);
-
-            // Botón nuevo perfil
-            ['newProfileBtn', 'emptyNewProfile'].forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    btn.addEventListener('click', () => {
-                        alert('Modal de nuevo perfil - Por implementar');
-                    });
-                }
+            // New profile button
+            document.getElementById('newProfileBtn').addEventListener('click', () => {
+                alert('Modal de nuevo perfil - Por implementar');
             });
+
+            // Initial render
+            renderList(profiles);
         });
     </script>
 </body>

@@ -29,30 +29,268 @@
             --candidates-light: rgba(59, 130, 246, 0.1);
         }
 
-        /* Page Header */
-        .page-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+        /* Override sidebar hover color */
+        .velvz-sidebar__link:hover,
+        .velvz-sidebar__link--active {
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: #10b981 !important;
+        }
+        .velvz-sidebar__link:hover .velvz-sidebar__icon,
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #10b981 !important;
         }
 
-        .page-header__info h1 {
-            font-size: 1.75rem;
+        /* Main Content Layout */
+        .candidates-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 0;
+            height: calc(100vh - 80px);
+            margin: -2rem;
+        }
+
+        /* Left Panel - Lista */
+        .candidates-list {
+            background: var(--dark-bg-secondary);
+            border-right: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .candidates-list__header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .candidates-list__title {
+            font-size: 1.25rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
+            gap: 0.5rem;
+        }
+
+        .candidates-list__title i { color: var(--candidates-color); }
+
+        .candidates-list__count {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .candidates-list__search {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--candidates-color);
+            box-shadow: 0 0 0 3px var(--candidates-light);
+        }
+
+        .search-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+
+        .candidates-list__items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        /* Candidate Item en la lista */
+        .candidate-item {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+        }
+
+        .candidate-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .candidate-item--active {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .candidate-item__avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .candidate-item__info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .candidate-item__name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .candidate-item__role {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .candidate-item__score {
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .candidate-item__score-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--rrhh-primary);
+        }
+
+        .candidate-item__score-label {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+        }
+
+        /* Right Panel - Detalle */
+        .candidate-detail {
+            background: var(--dark-bg);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .candidate-detail--empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-empty {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .detail-empty__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .detail-empty__text {
+            font-size: 1rem;
+        }
+
+        /* Detail Header */
+        .detail-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .detail-header__avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .detail-header__info {
+            flex: 1;
+        }
+
+        .detail-header__name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-header__role {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-header__meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .detail-header__meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .detail-header__actions {
+            display: flex;
             gap: 0.75rem;
         }
 
-        .page-header__info h1 i { color: var(--candidates-color); }
-        .page-header__info p { color: rgba(255,255,255,0.5); font-size: 0.95rem; }
-        .page-header__actions { display: flex; gap: 0.75rem; }
-
-        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -71,133 +309,230 @@
         .btn--primary:hover { background: #2563eb; transform: translateY(-2px); }
         .btn--secondary { background: var(--dark-bg-secondary); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
         .btn--secondary:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
-        .btn--ghost { background: transparent; color: rgba(255,255,255,0.6); padding: 0.5rem; }
-        .btn--ghost:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .btn--icon { padding: 0.75rem; }
 
-        /* Toolbar */
-        .toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+        /* Score Badge */
+        .detail-score {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
         }
 
-        .toolbar__left { display: flex; align-items: center; gap: 1rem; flex: 1; }
-        .toolbar__right { display: flex; align-items: center; gap: 0.75rem; }
-
-        .search-box { position: relative; max-width: 300px; flex: 1; }
-        .search-box__input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            background: var(--dark-bg-secondary);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-        .search-box__input:focus { outline: none; border-color: var(--candidates-color); box-shadow: 0 0 0 3px var(--candidates-light); }
-        .search-box__input::placeholder { color: rgba(255,255,255,0.3); }
-        .search-box__icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 0.85rem; }
-
-        /* Grid */
-        .candidates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.25rem;
+        .detail-score__value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--rrhh-primary);
         }
 
-        /* Candidate Card */
-        .candidate-card {
-            background: var(--dark-bg-secondary);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+        .detail-score__label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
         }
 
-        .candidate-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        /* Detail Sections */
+        .detail-section {
+            margin-bottom: 2rem;
         }
 
-        .candidate-card__header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .detail-section__title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             margin-bottom: 1rem;
         }
 
-        .candidate-card__avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        /* Skills */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #93c5fd;
+        }
+
+        /* Process Info */
+        .process-card {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .process-card__title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-card__phase {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--rrhh-primary);
+            margin-bottom: 1rem;
+        }
+
+        .process-card__progress {
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar__fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rrhh-primary), #34d399);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0.5rem;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.25rem;
+        }
+
+        .timeline-item:last-child { padding-bottom: 0; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.4rem;
+            width: 8px;
+            height: 8px;
+            background: var(--candidates-color);
+            border-radius: 50%;
+            transform: translateX(-3px);
+        }
+
+        .timeline-item__date {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-item__content {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Contact Info */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--dark-bg-secondary);
+            border-radius: 10px;
+        }
+
+        .contact-item__icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 600;
+            color: var(--candidates-color);
+        }
+
+        .contact-item__label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .contact-item__value {
+            font-size: 0.9rem;
             color: #fff;
         }
 
-        .candidate-card__info { flex: 1; }
-        .candidate-card__name { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
-        .candidate-card__role { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
-
-        .candidate-card__score { display: flex; flex-direction: column; align-items: center; }
-        .candidate-card__score-value { font-size: 1.5rem; font-weight: 700; color: var(--rrhh-primary); }
-        .candidate-card__score-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; }
-
-        .candidate-card__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-        .candidate-card__tag {
-            padding: 0.25rem 0.6rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.6);
-        }
-
-        .candidate-card__process {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .candidate-card__process-info { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
-        .candidate-card__process-info strong { color: rgba(255,255,255,0.8); }
-
-        /* Empty State */
-        .empty-state { text-align: center; padding: 4rem 2rem; }
-        .empty-state__icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: var(--dark-bg-tertiary);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: rgba(255,255,255,0.2);
-        }
-        .empty-state__title { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
-        .empty-state__text { color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
-
         /* Responsive */
+        @media (max-width: 1024px) {
+            .candidates-layout {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
-            .page-header { flex-direction: column; }
-            .page-header__actions { width: 100%; }
-            .page-header__actions .btn { flex: 1; justify-content: center; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .toolbar__left, .toolbar__right { width: 100%; }
-            .search-box { max-width: none; }
-            .candidates-grid { grid-template-columns: 1fr; }
+            .candidates-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .candidates-list {
+                max-height: 50vh;
+            }
+
+            .candidate-detail {
+                min-height: 50vh;
+            }
+
+            .detail-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .detail-header__meta {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -299,18 +634,18 @@
             </div>
 
             <div class="velvz-sidebar__section">
-                <h3 class="velvz-sidebar__title">Cuenta</h3>
+                <h3 class="velvz-sidebar__title">Ajustes</h3>
                 <ul class="velvz-sidebar__menu">
                     <li class="velvz-sidebar__item">
-                        <a href="/app/profile/" class="velvz-sidebar__link">
-                            <i class="velvz-sidebar__icon fas fa-user"></i>
-                            <span>Mi Perfil</span>
+                        <a href="/app/plans/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-gem"></i>
+                            <span>Planes</span>
                         </a>
                     </li>
                     <li class="velvz-sidebar__item">
-                        <a href="#" class="velvz-sidebar__link" id="logoutLink">
-                            <i class="velvz-sidebar__icon fas fa-sign-out-alt"></i>
-                            <span>Cerrar Sesión</span>
+                        <a href="/app/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuración</span>
                         </a>
                     </li>
                 </ul>
@@ -320,88 +655,39 @@
         <!-- MAIN -->
         <main class="velvz-main">
             <div class="velvz-dashboard">
-                <!-- PAGE HEADER -->
-                <div class="page-header">
-                    <div class="page-header__info">
-                        <h1><i class="fas fa-user-tie"></i> Candidatos</h1>
-                        <p>Base de datos centralizada de todos los candidatos</p>
-                    </div>
-                    <div class="page-header__actions">
-                        <button class="btn btn--secondary">
-                            <i class="fas fa-filter"></i>
-                            <span>Filtrar</span>
-                        </button>
-                        <button class="btn btn--secondary">
-                            <i class="fas fa-download"></i>
-                            <span>Exportar</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- TOOLBAR -->
-                <div class="toolbar">
-                    <div class="toolbar__left">
-                        <div class="search-box">
-                            <i class="fas fa-search search-box__icon"></i>
-                            <input type="text" class="search-box__input" placeholder="Buscar candidatos..." id="searchCandidates">
+                <div class="candidates-layout">
+                    <!-- Lista de Candidatos -->
+                    <div class="candidates-list">
+                        <div class="candidates-list__header">
+                            <h1 class="candidates-list__title">
+                                <i class="fas fa-user-tie"></i> Candidatos
+                            </h1>
+                            <p class="candidates-list__count" id="candidatesCount">5 candidatos</p>
+                        </div>
+                        <div class="candidates-list__search">
+                            <div class="search-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" class="search-input" placeholder="Buscar..." id="searchCandidates">
+                            </div>
+                        </div>
+                        <div class="candidates-list__items" id="candidatesList">
+                            <!-- Items se cargan dinámicamente -->
                         </div>
                     </div>
-                </div>
 
-                <!-- CANDIDATES GRID -->
-                <div class="candidates-grid" id="candidatesGrid">
-                    <!-- Cards se cargan dinámicamente -->
-                </div>
-
-                <!-- EMPTY STATE -->
-                <div class="empty-state" id="emptyState" style="display: none;">
-                    <div class="empty-state__icon">
-                        <i class="fas fa-user-tie"></i>
+                    <!-- Panel de Detalle -->
+                    <div class="candidate-detail candidate-detail--empty" id="candidateDetail">
+                        <div class="detail-empty">
+                            <div class="detail-empty__icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <p class="detail-empty__text">Selecciona un candidato para ver su perfil</p>
+                        </div>
                     </div>
-                    <h3 class="empty-state__title">Sin candidatos aún</h3>
-                    <p class="empty-state__text">
-                        Los candidatos aparecerán aquí cuando se inscriban a tus procesos de selección
-                    </p>
                 </div>
             </div>
         </main>
     </div>
-
-    <!-- FOOTER -->
-    <footer class="velvz-footer">
-        <div class="velvz-footer__container">
-            <div class="velvz-footer__brand">
-                <a href="/" class="velvz-footer__logo-link">
-                    <div class="velvz-footer__logo">
-                        <div class="velvz-footer__logo-shape">
-                            <div class="velvz-footer__logo-face">
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
-                                <div class="velvz-footer__logo-mouth"></div>
-                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="velvz-footer__brand-name">Velvz</span>
-                </a>
-                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
-            </div>
-            <nav class="velvz-footer__links">
-                <a href="/" class="velvz-footer__link">Inicio</a>
-                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
-                <a href="/precios/" class="velvz-footer__link">Precios</a>
-                <a href="/documentacion/" class="velvz-footer__link">Documentación</a>
-                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
-            </nav>
-            <div class="velvz-footer__legal">
-                <div class="velvz-footer__copyright">© 2025 Velvz SL</div>
-                <div>
-                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
-                    <a href="/terminos/" class="velvz-footer__link">Términos</a> ·
-                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script src="/assets/js/app-dashboard.js"></script>
     <script>
@@ -412,106 +698,256 @@
                     name: 'María García',
                     initials: 'MG',
                     role: 'Full Stack Developer',
+                    email: 'maria.garcia@email.com',
+                    phone: '+34 612 345 678',
+                    location: 'Madrid, España',
                     score: 92,
-                    skills: ['React', 'Node.js', 'Python'],
+                    skills: ['React', 'Node.js', 'Python', 'PostgreSQL', 'AWS', 'Docker'],
                     process: 'Desarrollador Full Stack Senior',
-                    phase: 'Formulario 2'
+                    phase: 'Formulario 2',
+                    progress: 65,
+                    appliedDate: '15 Ene 2025',
+                    experience: '5 años',
+                    timeline: [
+                        { date: '20 Ene 2025', content: 'Completó Formulario 2 - Técnico' },
+                        { date: '18 Ene 2025', content: 'Pasó filtro de IA con 92% de match' },
+                        { date: '15 Ene 2025', content: 'Completó Formulario 1 - General' },
+                        { date: '15 Ene 2025', content: 'Se inscribió al proceso' }
+                    ]
                 },
                 {
                     id: 2,
                     name: 'Carlos López',
                     initials: 'CL',
                     role: 'Senior Developer',
+                    email: 'carlos.lopez@email.com',
+                    phone: '+34 623 456 789',
+                    location: 'Barcelona, España',
                     score: 87,
-                    skills: ['Vue.js', 'Django', 'AWS'],
+                    skills: ['Vue.js', 'Django', 'AWS', 'MongoDB', 'Redis'],
                     process: 'Desarrollador Full Stack Senior',
-                    phase: 'Preseleccionado'
+                    phase: 'Preseleccionado',
+                    progress: 80,
+                    appliedDate: '12 Ene 2025',
+                    experience: '7 años',
+                    timeline: [
+                        { date: '22 Ene 2025', content: 'Marcado como preseleccionado' },
+                        { date: '19 Ene 2025', content: 'Completó Formulario 2 - Técnico' },
+                        { date: '14 Ene 2025', content: 'Pasó filtro de IA con 87% de match' },
+                        { date: '12 Ene 2025', content: 'Se inscribió al proceso' }
+                    ]
                 },
                 {
                     id: 3,
                     name: 'Ana Martínez',
                     initials: 'AM',
                     role: 'Product Lead',
+                    email: 'ana.martinez@email.com',
+                    phone: '+34 634 567 890',
+                    location: 'Valencia, España',
                     score: 95,
-                    skills: ['Scrum', 'Analytics', 'UX'],
+                    skills: ['Scrum', 'Analytics', 'UX', 'Jira', 'Confluence', 'SQL'],
                     process: 'Product Manager',
-                    phase: 'Entrevista'
+                    phase: 'Entrevista',
+                    progress: 90,
+                    appliedDate: '10 Ene 2025',
+                    experience: '6 años',
+                    timeline: [
+                        { date: '25 Ene 2025', content: 'Entrevista programada para 28 Ene' },
+                        { date: '20 Ene 2025', content: 'Completó todos los formularios' },
+                        { date: '12 Ene 2025', content: 'Pasó filtro de IA con 95% de match' },
+                        { date: '10 Ene 2025', content: 'Se inscribió al proceso' }
+                    ]
                 },
                 {
                     id: 4,
                     name: 'Pedro Sánchez',
                     initials: 'PS',
                     role: 'Backend Developer',
+                    email: 'pedro.sanchez@email.com',
+                    phone: '+34 645 678 901',
+                    location: 'Sevilla, España',
                     score: 78,
-                    skills: ['Java', 'Spring', 'SQL'],
+                    skills: ['Java', 'Spring', 'SQL', 'Kubernetes'],
                     process: 'Desarrollador Full Stack Senior',
-                    phase: 'Formulario 1'
+                    phase: 'Formulario 1',
+                    progress: 25,
+                    appliedDate: '20 Ene 2025',
+                    experience: '3 años',
+                    timeline: [
+                        { date: '21 Ene 2025', content: 'Completó Formulario 1 - General' },
+                        { date: '20 Ene 2025', content: 'Pasó filtro de IA con 78% de match' },
+                        { date: '20 Ene 2025', content: 'Se inscribió al proceso' }
+                    ]
                 },
                 {
                     id: 5,
                     name: 'Laura Fernández',
                     initials: 'LF',
                     role: 'UX Designer',
+                    email: 'laura.fernandez@email.com',
+                    phone: '+34 656 789 012',
+                    location: 'Bilbao, España',
                     score: 89,
-                    skills: ['Figma', 'User Research', 'Prototyping'],
+                    skills: ['Figma', 'User Research', 'Prototyping', 'Adobe XD', 'Sketch'],
                     process: 'Diseñador UX/UI',
-                    phase: 'Preseleccionado'
+                    phase: 'Preseleccionado',
+                    progress: 75,
+                    appliedDate: '8 Ene 2025',
+                    experience: '4 años',
+                    timeline: [
+                        { date: '18 Ene 2025', content: 'Marcada como preseleccionada' },
+                        { date: '15 Ene 2025', content: 'Completó Formulario 2 - Portfolio' },
+                        { date: '10 Ene 2025', content: 'Pasó filtro de IA con 89% de match' },
+                        { date: '8 Ene 2025', content: 'Se inscribió al proceso' }
+                    ]
                 }
             ];
 
-            const grid = document.getElementById('candidatesGrid');
-            const emptyState = document.getElementById('emptyState');
+            const listContainer = document.getElementById('candidatesList');
+            const detailContainer = document.getElementById('candidateDetail');
+            const countElement = document.getElementById('candidatesCount');
+            let selectedId = null;
 
-            function renderCandidates(data) {
-                if (data.length === 0) {
-                    grid.style.display = 'none';
-                    emptyState.style.display = 'block';
-                    return;
-                }
+            function renderList(data) {
+                countElement.textContent = `${data.length} candidato${data.length !== 1 ? 's' : ''}`;
 
-                grid.style.display = 'grid';
-                emptyState.style.display = 'none';
-
-                grid.innerHTML = data.map(candidate => `
-                    <div class="candidate-card" data-id="${candidate.id}">
-                        <div class="candidate-card__header">
-                            <div class="candidate-card__avatar">${candidate.initials}</div>
-                            <div class="candidate-card__info">
-                                <div class="candidate-card__name">${candidate.name}</div>
-                                <div class="candidate-card__role">${candidate.role}</div>
-                            </div>
-                            <div class="candidate-card__score">
-                                <div class="candidate-card__score-value">${candidate.score}</div>
-                                <div class="candidate-card__score-label">Match</div>
-                            </div>
+                listContainer.innerHTML = data.map(c => `
+                    <div class="candidate-item ${selectedId === c.id ? 'candidate-item--active' : ''}" data-id="${c.id}">
+                        <div class="candidate-item__avatar">${c.initials}</div>
+                        <div class="candidate-item__info">
+                            <div class="candidate-item__name">${c.name}</div>
+                            <div class="candidate-item__role">${c.role}</div>
                         </div>
-                        <div class="candidate-card__tags">
-                            ${candidate.skills.map(skill => `<span class="candidate-card__tag">${skill}</span>`).join('')}
-                        </div>
-                        <div class="candidate-card__process">
-                            <div class="candidate-card__process-info">
-                                <strong>${candidate.process}</strong><br>
-                                Fase: ${candidate.phase}
-                            </div>
-                            <button class="btn btn--ghost">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                        <div class="candidate-item__score">
+                            <div class="candidate-item__score-value">${c.score}</div>
+                            <div class="candidate-item__score-label">Match</div>
                         </div>
                     </div>
                 `).join('');
+
+                // Add click handlers
+                listContainer.querySelectorAll('.candidate-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const id = parseInt(item.dataset.id);
+                        selectCandidate(id);
+                    });
+                });
             }
 
-            // Búsqueda
+            function selectCandidate(id) {
+                selectedId = id;
+                const candidate = candidates.find(c => c.id === id);
+
+                // Update active state in list
+                listContainer.querySelectorAll('.candidate-item').forEach(item => {
+                    item.classList.toggle('candidate-item--active', parseInt(item.dataset.id) === id);
+                });
+
+                // Render detail
+                detailContainer.classList.remove('candidate-detail--empty');
+                detailContainer.innerHTML = `
+                    <div class="detail-header">
+                        <div class="detail-header__avatar">${candidate.initials}</div>
+                        <div class="detail-header__info">
+                            <h2 class="detail-header__name">${candidate.name}</h2>
+                            <p class="detail-header__role">${candidate.role}</p>
+                            <div class="detail-header__meta">
+                                <span><i class="fas fa-map-marker-alt"></i> ${candidate.location}</span>
+                                <span><i class="fas fa-briefcase"></i> ${candidate.experience}</span>
+                                <span><i class="fas fa-calendar"></i> Aplicó ${candidate.appliedDate}</span>
+                            </div>
+                        </div>
+                        <div class="detail-score">
+                            <div class="detail-score__value">${candidate.score}%</div>
+                            <div class="detail-score__label">Match Score</div>
+                        </div>
+                    </div>
+
+                    <div class="detail-header__actions" style="margin-bottom: 2rem;">
+                        <button class="btn btn--primary">
+                            <i class="fas fa-envelope"></i> Contactar
+                        </button>
+                        <button class="btn btn--secondary">
+                            <i class="fas fa-file-alt"></i> Ver CV
+                        </button>
+                        <button class="btn btn--secondary btn--icon">
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Proceso Actual</h3>
+                        <div class="process-card">
+                            <div class="process-card__title">${candidate.process}</div>
+                            <span class="process-card__phase">
+                                <i class="fas fa-layer-group"></i> ${candidate.phase}
+                            </span>
+                            <div class="process-card__progress">
+                                <div class="progress-bar">
+                                    <div class="progress-bar__fill" style="width: ${candidate.progress}%"></div>
+                                </div>
+                                <div class="progress-label">
+                                    <span>Progreso</span>
+                                    <span>${candidate.progress}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Habilidades</h3>
+                        <div class="skills-grid">
+                            ${candidate.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Información de Contacto</h3>
+                        <div class="contact-grid">
+                            <div class="contact-item">
+                                <div class="contact-item__icon"><i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <div class="contact-item__label">Email</div>
+                                    <div class="contact-item__value">${candidate.email}</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-item__icon"><i class="fas fa-phone"></i></div>
+                                <div>
+                                    <div class="contact-item__label">Teléfono</div>
+                                    <div class="contact-item__value">${candidate.phone}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Historial</h3>
+                        <div class="timeline">
+                            ${candidate.timeline.map(item => `
+                                <div class="timeline-item">
+                                    <div class="timeline-item__date">${item.date}</div>
+                                    <div class="timeline-item__content">${item.content}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Search
             document.getElementById('searchCandidates').addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
-                renderCandidates(candidates.filter(c =>
+                renderList(candidates.filter(c =>
                     c.name.toLowerCase().includes(query) ||
                     c.role.toLowerCase().includes(query) ||
                     c.skills.some(s => s.toLowerCase().includes(query))
                 ));
             });
 
-            renderCandidates(candidates);
+            // Initial render
+            renderList(candidates);
         });
     </script>
 </body>
