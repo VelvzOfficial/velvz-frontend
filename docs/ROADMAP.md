@@ -12,15 +12,23 @@
 
 ## Próximas Funcionalidades
 
-*Añadir aquí las funcionalidades planificadas*
+### Prioridad Alta
+
+*Añadir funcionalidades aquí*
+
+### Prioridad Media
+
+*Añadir funcionalidades aquí*
+
+### Prioridad Baja
+
+*Añadir funcionalidades aquí*
 
 ---
 
-## Completado Recientemente
+## Completado
 
-- [x] Selector de servicios en header (2025-12-31)
-- [x] Sistema de login/registro
-- [x] Deploy automático Hostinger
+*Mover aquí las funcionalidades completadas con fecha*
 
 ---
 
