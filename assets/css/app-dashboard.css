@@ -144,10 +144,10 @@ body {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
-    margin-left: auto;
     height: 44px;
     align-items: center;
     box-sizing: border-box;
+    z-index: 5;
 }
 
 .svc-selector {
