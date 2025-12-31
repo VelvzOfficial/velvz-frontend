@@ -253,12 +253,21 @@ body {
 }
 
 /* RRHH usa color verde */
-.svc-dropdown__item--rrhh.svc-dropdown__item--active {
+.svc-dropdown__item[data-service="rrhh"].svc-dropdown__item--active {
     background: rgba(16, 185, 129, 0.15);
     color: #10b981;
 }
 
-.svc-dropdown__item--rrhh.svc-dropdown__item--active i {
+.svc-dropdown__item[data-service="rrhh"].svc-dropdown__item--active i {
+    color: #10b981;
+}
+
+.svc-dropdown__item[data-service="rrhh"]:hover {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.svc-dropdown__item[data-service="rrhh"]:hover i {
     color: #10b981;
 }
 
