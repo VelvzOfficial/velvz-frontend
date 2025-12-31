@@ -112,11 +112,15 @@ body {
     gap: 0.5rem;
 }
 
-.velvz-header__island--search { 
+.velvz-header__island--search {
     animation-delay: 1.3s;
     flex: 1;
     max-width: 500px;
     padding: 0.6rem 1.2rem;
+    height: 44px;
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
 }
 
 .velvz-header__island--cta {
@@ -140,6 +144,10 @@ body {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
+    margin-left: auto;
+    height: 44px;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .svc-selector {
