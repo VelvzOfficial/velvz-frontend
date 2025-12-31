@@ -46,6 +46,35 @@
             gap: 1.5rem;
         }
 
+        /* Breadcrumbs */
+        .velvz-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .velvz-breadcrumbs__link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .velvz-breadcrumbs__link:hover {
+            color: var(--profiles-color);
+        }
+
+        .velvz-breadcrumbs__separator {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.7rem;
+        }
+
+        .velvz-breadcrumbs__current {
+            color: #fff;
+            font-weight: 500;
+        }
+
         /* Button styles */
         .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; border: none; text-decoration: none; }
         .btn--primary { background: var(--profiles-color); color: #fff; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35); }
@@ -431,6 +460,7 @@
             margin-bottom: 2rem;
             padding-bottom: 2rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-wrap: wrap;
         }
 
         .detail-header__icon {
@@ -482,6 +512,8 @@
         .detail-header__actions {
             display: flex;
             gap: 0.75rem;
+            flex-wrap: wrap;
+            flex-shrink: 0;
         }
 
         /* Detail Sections */
@@ -775,7 +807,7 @@
                 </div>
             </div>
 
-            <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
+            <div class="velvz-header__island velvz-header__island--search">
                 <div class="velvz-header__search">
                     <input type="text" class="velvz-header__search-input" placeholder="Buscar perfiles..." id="headerSearchInput">
                     <i class="fas fa-search velvz-header__search-icon"></i>
@@ -862,15 +894,13 @@
             <div class="rrhh-profiles-page">
                 <!-- BREADCRUMBS -->
                 <nav class="velvz-breadcrumbs">
-                    <a href="/app/" class="velvz-breadcrumbs__link">Hub</a>
+                    <a href="/app/rrhh/" class="velvz-breadcrumbs__link">
+                        <i class="fas fa-users" style="margin-right: 0.35rem;"></i>RRHH
+                    </a>
                     <span class="velvz-breadcrumbs__separator">
                         <i class="fas fa-chevron-right"></i>
                     </span>
-                    <a href="/app/rrhh/" class="velvz-breadcrumbs__link">RRHH</a>
-                    <span class="velvz-breadcrumbs__separator">
-                        <i class="fas fa-chevron-right"></i>
-                    </span>
-                    <span class="velvz-breadcrumbs__current">Perfiles</span>
+                    <span class="velvz-breadcrumbs__current">Perfiles de Empresa</span>
                 </nav>
 
                 <!-- HERO SECTION -->
