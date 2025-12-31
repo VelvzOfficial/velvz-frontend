@@ -512,49 +512,43 @@
     background: white;
 }
 
-/* Widget container - posicionamiento del chatbot */
+/* Widget container - ocupa todo el preview area para permitir posicionamiento dinámico */
 .velvz-preview-modal__widget-container {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 1000;
     /* NO limitar tamaño - dejar que el widget se expanda */
     overflow: visible !important;
-    /* Tamaño mínimo para el botón */
-    min-width: 60px;
-    min-height: 60px;
+    pointer-events: none; /* Solo el widget debe recibir eventos */
 }
 
 /* CRÍTICO: El contenedor interno del widget */
 .velvz-preview-modal__widget-container #velvz-widget-container {
-    position: relative !important;
-    bottom: auto !important;
-    right: auto !important;
-    left: auto !important;
-    top: auto !important;
+    position: absolute !important;
     z-index: 1000 !important;
-    transform: none !important;
     overflow: visible !important;
+    pointer-events: auto; /* Restaurar eventos para el widget */
 }
 
-/* El botón del widget */
+/* El botón del widget - posicionado por JS dinámicamente */
 .velvz-preview-modal__widget-container #velvz-widget-button {
-    position: relative !important;
+    position: absolute !important;
     z-index: 1000 !important;
+    pointer-events: auto !important;
 }
 
-/* La ventana del chat - DEBE poder expandirse fuera del contenedor */
+/* La ventana del chat - posicionada por JS dinámicamente */
 .velvz-preview-modal__widget-container #velvz-widget-chat {
     position: absolute !important;
-    bottom: 70px !important;
-    right: 0 !important;
-    left: auto !important;
-    top: auto !important;
     z-index: 1001 !important;
     max-height: 450px !important;
     max-width: 380px !important;
     border-radius: 16px !important;
     overflow: hidden !important;
+    pointer-events: auto !important;
 }
 
 /* Loading state for iframe */

@@ -597,28 +597,39 @@ function repositionWidgetInPreview() {
     console.log("✅ Widget encontrado: #velvz-widget-container");
     console.log("📍 Widget parent antes:", widget.parentElement?.id || widget.parentElement?.className);
 
+    // Obtener la posición configurada desde customizationSettings
+    const position = window.getCustomizationSettings ? window.getCustomizationSettings().position : 'bottom-right';
+    console.log("📍 Posición configurada:", position);
+
     // CRÍTICO: Eliminar o modificar la etiqueta <style> interna del widget
     // que contiene position: fixed y sobrescribe nuestros estilos
     const internalStyle = widget.querySelector('style');
     if (internalStyle) {
-      // Modificar el CSS interno para usar position: relative y permitir overflow
+      // Modificar el CSS interno para usar position: absolute y permitir overflow
       let cssText = internalStyle.textContent;
-      cssText = cssText.replace(/position:\s*fixed\s*;?/gi, 'position: relative;');
+      cssText = cssText.replace(/position:\s*fixed\s*;?/gi, 'position: absolute;');
       cssText = cssText.replace(/z-index:\s*\d+\s*;?/gi, 'z-index: 1000;');
       // Asegurar que el chat window pueda expandirse
       cssText = cssText.replace(/overflow:\s*hidden\s*;?/gi, 'overflow: visible;');
       internalStyle.textContent = cssText;
-      console.log("🔧 Estilos internos del widget modificados (fixed → relative, overflow → visible)");
+      console.log("🔧 Estilos internos del widget modificados (fixed → absolute, overflow → visible)");
     }
 
     // Verificar que no esté ya dentro del preview
     if (!widgetContainer.contains(widget)) {
-      // Ajustar estilos inline para asegurar posicionamiento correcto
+      // Ajustar estilos inline - el widget container debe ocupar todo el área
       widget.style.cssText = `
-        position: relative !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
         z-index: 1000 !important;
         transform: none !important;
         overflow: visible !important;
+        pointer-events: none !important;
       `;
 
       // Mover al container
@@ -628,45 +639,125 @@ function repositionWidgetInPreview() {
 
       // Asegurar que el container padre permita overflow
       widgetContainer.style.overflow = 'visible';
-
-      // Ajustar también el chat window si existe
-      const chatWindow = document.getElementById('velvz-widget-chat');
-      if (chatWindow) {
-        chatWindow.style.cssText = `
-          position: absolute !important;
-          bottom: 70px !important;
-          right: 0 !important;
-          left: auto !important;
-          top: auto !important;
-          max-height: 450px !important;
-          max-width: 380px !important;
-          z-index: 1001 !important;
-          border-radius: 16px !important;
-          overflow: hidden !important;
-        `;
-        console.log("🔧 Chat window ajustado con border-radius: 16px");
-      }
-
-      // Verificar visibilidad del widget
-      const button = document.getElementById('velvz-widget-button');
-      if (button) {
-        const rect = button.getBoundingClientRect();
-        console.log("📐 Botón del widget - posición:", {
-          top: rect.top,
-          left: rect.left,
-          width: rect.width,
-          height: rect.height,
-          visible: rect.width > 0 && rect.height > 0
-        });
-      }
-
-      repositionAttempts = 0;
-      return;
-    } else {
-      console.log("✅ Widget ya está en el preview container");
-      repositionAttempts = 0;
-      return;
     }
+
+    // Aplicar posición al botón del widget
+    const button = document.getElementById('velvz-widget-button');
+    if (button) {
+      // Resetear estilos de posición
+      button.style.top = 'auto';
+      button.style.bottom = 'auto';
+      button.style.left = 'auto';
+      button.style.right = 'auto';
+      button.style.transform = 'none';
+      button.style.position = 'absolute';
+      button.style.pointerEvents = 'auto'; // Asegurar que sea clicable
+
+      // Aplicar posición según configuración
+      switch (position) {
+        case 'top-left':
+          button.style.top = '20px';
+          button.style.left = '20px';
+          break;
+        case 'top-center':
+          button.style.top = '20px';
+          button.style.left = '50%';
+          button.style.transform = 'translateX(-50%)';
+          break;
+        case 'top-right':
+          button.style.top = '20px';
+          button.style.right = '20px';
+          break;
+        case 'center-left':
+          button.style.top = '50%';
+          button.style.left = '20px';
+          button.style.transform = 'translateY(-50%)';
+          break;
+        case 'center-right':
+          button.style.top = '50%';
+          button.style.right = '20px';
+          button.style.transform = 'translateY(-50%)';
+          break;
+        case 'bottom-left':
+          button.style.bottom = '20px';
+          button.style.left = '20px';
+          break;
+        case 'bottom-center':
+          button.style.bottom = '20px';
+          button.style.left = '50%';
+          button.style.transform = 'translateX(-50%)';
+          break;
+        case 'bottom-right':
+        default:
+          button.style.bottom = '20px';
+          button.style.right = '20px';
+          break;
+      }
+      console.log("📐 Botón del widget posicionado en:", position);
+    }
+
+    // Ajustar también el chat window si existe
+    const chatWindow = document.getElementById('velvz-widget-chat');
+    if (chatWindow) {
+      // Resetear estilos de posición
+      chatWindow.style.top = 'auto';
+      chatWindow.style.bottom = 'auto';
+      chatWindow.style.left = 'auto';
+      chatWindow.style.right = 'auto';
+      chatWindow.style.transform = 'none';
+      chatWindow.style.position = 'absolute';
+      chatWindow.style.maxHeight = '450px';
+      chatWindow.style.maxWidth = '380px';
+      chatWindow.style.zIndex = '1001';
+      chatWindow.style.borderRadius = '16px';
+      chatWindow.style.overflow = 'hidden';
+      chatWindow.style.pointerEvents = 'auto'; // Asegurar que sea interactivo
+
+      // Aplicar posición según configuración
+      switch (position) {
+        case 'top-left':
+          chatWindow.style.top = '90px';
+          chatWindow.style.left = '20px';
+          break;
+        case 'top-center':
+          chatWindow.style.top = '90px';
+          chatWindow.style.left = '50%';
+          chatWindow.style.transform = 'translateX(-50%)';
+          break;
+        case 'top-right':
+          chatWindow.style.top = '90px';
+          chatWindow.style.right = '20px';
+          break;
+        case 'center-left':
+          chatWindow.style.top = '50%';
+          chatWindow.style.left = '100px';
+          chatWindow.style.transform = 'translateY(-50%)';
+          break;
+        case 'center-right':
+          chatWindow.style.top = '50%';
+          chatWindow.style.right = '100px';
+          chatWindow.style.transform = 'translateY(-50%)';
+          break;
+        case 'bottom-left':
+          chatWindow.style.bottom = '90px';
+          chatWindow.style.left = '20px';
+          break;
+        case 'bottom-center':
+          chatWindow.style.bottom = '90px';
+          chatWindow.style.left = '50%';
+          chatWindow.style.transform = 'translateX(-50%)';
+          break;
+        case 'bottom-right':
+        default:
+          chatWindow.style.bottom = '90px';
+          chatWindow.style.right = '20px';
+          break;
+      }
+      console.log("🔧 Chat window posicionado en:", position);
+    }
+
+    repositionAttempts = 0;
+    return;
   }
 
   // Si no encontramos el widget, reintentar
