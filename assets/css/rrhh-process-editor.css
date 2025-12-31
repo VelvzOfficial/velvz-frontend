@@ -122,102 +122,21 @@
 }
 
 /* =====================================================
-   TABS NAVIGATION
+   TABS OVERRIDE PARA RRHH (color verde)
    ===================================================== */
 
-.process-editor__tabs {
-    background: var(--dark-bg-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+/* Override del color de tabs para usar verde de RRHH en lugar de morado */
+.velvz-config__tab--active {
+    background: linear-gradient(135deg, var(--rrhh-primary) 0%, var(--rrhh-primary-dark) 100%) !important;
+    box-shadow: 0 4px 15px var(--rrhh-primary-glow) !important;
 }
 
-.process-editor__tabs-nav {
-    display: flex;
-    gap: 0.5rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    scrollbar-width: none;
-}
-
-.process-editor__tabs-nav::-webkit-scrollbar {
-    display: none;
-}
-
-.process-tab {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.process-tab:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.process-tab--active {
+.velvz-config__tab:hover {
     background: var(--rrhh-primary-light);
-    border-color: var(--rrhh-primary);
-    color: var(--rrhh-primary);
 }
 
-.process-tab__number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.process-tab--active .process-tab__number {
-    background: var(--rrhh-primary);
-    color: #fff;
-}
-
-.process-editor__tabs-progress {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.progress-bar {
-    flex: 1;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.progress-bar__fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--rrhh-primary), var(--rrhh-primary-dark));
-    border-radius: 3px;
-    transition: width 0.5s ease;
-}
-
-.progress-text {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
-    white-space: nowrap;
+.velvz-config__tab--active:hover {
+    box-shadow: 0 6px 20px var(--rrhh-primary-glow) !important;
 }
 
 /* =====================================================

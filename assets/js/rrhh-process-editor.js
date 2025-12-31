@@ -19,15 +19,9 @@ const totalSections = 5;
 document.addEventListener("DOMContentLoaded", async function () {
     console.log("🔧 DOM cargado, inicializando editor de procesos...");
 
-    // Esperar a que dashboard API esté disponible
+    // La autenticación ya la maneja app-dashboard.js
+    // Solo esperamos a que el sistema esté listo
     await waitForDashboardAPI();
-
-    // Verificar autenticación
-    if (!window.dashboardAPI || !window.dashboardAPI.token) {
-        console.warn("❌ No hay autenticación, redirigiendo...");
-        window.location.href = "/cuenta/";
-        return;
-    }
 
     // Obtener ID del proceso (si es edición)
     const processId = getProcessIdFromUrl();
@@ -118,10 +112,9 @@ async function initializeApp(processId) {
 function setupTabNavigation() {
     console.log("🔧 Configurando navegación por secciones...");
 
-    const tabs = document.querySelectorAll(".process-tab");
+    // Usar las clases de tabs estilo chatbots
+    const tabs = document.querySelectorAll(".velvz-config__tab");
     const sections = document.querySelectorAll(".process-section");
-    const progressBar = document.querySelector(".progress-bar__fill");
-    const progressText = document.querySelector(".progress-text");
 
     // Mapeo de tabs por nombre
     const tabOrder = ["position", "filtering", "interview", "documents", "summary"];
@@ -177,18 +170,16 @@ function navigateToSection(sectionNumber) {
     const tabOrder = ["position", "filtering", "interview", "documents", "summary"];
     const currentTabName = tabOrder[currentSection - 1];
 
-    // Actualizar tabs
-    const tabs = document.querySelectorAll(".process-tab");
+    // Actualizar tabs (estilo chatbots)
+    const tabs = document.querySelectorAll(".velvz-config__tab");
     tabs.forEach((tab) => {
         const tabName = tab.dataset.tab;
         const tabIndex = tabOrder.indexOf(tabName) + 1;
 
-        tab.classList.remove("process-tab--active", "process-tab--completed");
+        tab.classList.remove("velvz-config__tab--active");
 
         if (tabIndex === currentSection) {
-            tab.classList.add("process-tab--active");
-        } else if (tabIndex < currentSection) {
-            tab.classList.add("process-tab--completed");
+            tab.classList.add("velvz-config__tab--active");
         }
     });
 
@@ -205,9 +196,6 @@ function navigateToSection(sectionNumber) {
         }
     });
 
-    // Actualizar barra de progreso
-    updateProgressBar();
-
     // Actualizar botones de navegación
     updateNavigationButtons();
 
@@ -222,19 +210,7 @@ function navigateToSection(sectionNumber) {
     console.log(`📍 Sección actual: ${currentSection}/${totalSections} (${currentTabName})`);
 }
 
-function updateProgressBar() {
-    const progressBar = document.querySelector(".progress-bar__fill");
-    const progressText = document.querySelector(".progress-text");
-
-    if (progressBar) {
-        const percentage = (currentSection / totalSections) * 100;
-        progressBar.style.width = `${percentage}%`;
-    }
-
-    if (progressText) {
-        progressText.textContent = `Paso ${currentSection} de ${totalSections}`;
-    }
-}
+// updateProgressBar eliminado - ya no usamos barra de progreso con el nuevo estilo de tabs
 
 function updateNavigationButtons() {
     // Los botones de navegación están dentro de cada sección (section-nav)
