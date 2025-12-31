@@ -115,6 +115,7 @@ body {
 .velvz-header__island--search {
     animation-delay: 1.3s;
     flex: 0 1 auto;
+    min-width: 280px;
     max-width: 500px;
     padding: 0.6rem 1.2rem;
     height: 44px;
