@@ -215,8 +215,10 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: var(--shortcut-color);
+            bottom: 0;
+            border-radius: 20px;
+            box-shadow: inset 0 0 0 2px var(--shortcut-color);
+            pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -240,7 +242,6 @@
             justify-content: center;
             font-size: 1.5rem;
             margin-bottom: 1.25rem;
-            background: var(--shortcut-color);
             color: #fff;
         }
 
