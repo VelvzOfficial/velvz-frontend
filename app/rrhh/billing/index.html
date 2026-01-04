@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes - RRHH IA - Velvz</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/logoR.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logoR.png">
+
+    <!-- Estilos base del dashboard -->
+    <link rel="stylesheet" href="/assets/css/app-dashboard.css">
+
+    <!-- Estilos específicos de facturación -->
+    <link rel="stylesheet" href="/assets/css/billing.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --rrhh-primary: #10b981;
+            --rrhh-primary-light: rgba(16, 185, 129, 0.1);
+            --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Override sidebar: solo activo verde */
+        .velvz-sidebar__link--active {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #10b981 !important;
+        }
+        .velvz-sidebar__link--active .velvz-sidebar__icon {
+            color: #10b981 !important;
+        }
+
+        /* Breadcrumbs */
+        .velvz-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .velvz-breadcrumbs__link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .velvz-breadcrumbs__link:hover {
+            color: var(--rrhh-primary);
+        }
+
+        .velvz-breadcrumbs__separator {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.7rem;
+        }
+
+        .velvz-breadcrumbs__current {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Override billing colors for RRHH */
+        .billing__hero-icon {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+        }
+
+        .billing__plan-badge {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #10b981 !important;
+        }
+
+        .billing__usage-progress {
+            background: linear-gradient(90deg, #10b981, #34d399) !important;
+        }
+
+        .billing__plan-option--recommended {
+            border-color: #10b981 !important;
+        }
+
+        .billing__plan-recommended-badge {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+        }
+
+        .billing__plan-option-btn {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+        }
+
+        .billing__plan-option-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857) !important;
+        }
+
+        .billing__modal-icon {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+        }
+
+        .billing__modal-btn--confirm {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+        }
+
+        .billing__plan-option-features li i.fa-check {
+            color: #10b981 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="velvz-header">
+        <div class="velvz-header__container">
+            <!-- BRAND -->
+            <div class="velvz-header__island velvz-header__island--brand">
+                <a href="/app/" class="velvz-header__brand">
+                    <div class="velvz-header__logo">
+                        <div class="velvz-header__logo-shape">
+                            <div class="velvz-header__logo-face">
+                                <div class="velvz-header__logo-eye"></div>
+                                <div class="velvz-header__logo-mouth"></div>
+                                <div class="velvz-header__logo-eye"></div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- SELECTOR DE SERVICIOS -->
+            <div class="velvz-header__island velvz-header__island--services">
+                <button class="svc-selector" id="svcSelector" data-current="rrhh">
+                    <i class="fas fa-users svc-selector__icon" style="color: #10b981;"></i>
+                    <span class="svc-selector__text">RRHH</span>
+                    <i class="fas fa-chevron-down svc-selector__arrow"></i>
+                </button>
+                <div class="svc-dropdown" id="svcDropdown">
+                    <a href="/app/chatbots/dashboard.html" class="svc-dropdown__item" data-service="chatbots">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </a>
+                    <a href="/app/rrhh/" class="svc-dropdown__item svc-dropdown__item--active" data-service="rrhh">
+                        <i class="fas fa-users"></i>
+                        <span>RRHH</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- BUSQUEDA -->
+            <div class="velvz-header__island velvz-header__island--search">
+                <div class="velvz-header__search">
+                    <input type="text" class="velvz-header__search-input" placeholder="Buscar procesos..." id="headerSearchInput">
+                    <i class="fas fa-search velvz-header__search-icon"></i>
+                </div>
+            </div>
+
+            <!-- PERFIL -->
+            <div class="velvz-header__island velvz-header__island--cta">
+                <div class="velvz-header__avatar" id="userAvatar">
+                    <div class="velvz-header__avatar-circle">
+                        <span id="userInitials">U</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOGGLE MOVIL -->
+            <div class="velvz-header__mobile-toggle" id="mobileMenuToggle">
+                <div class="velvz-header__hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU MOVIL -->
+        <div class="velvz-header__mobile-backdrop"></div>
+        <div class="velvz-header__mobile-menu" id="mobileMenu">
+            <button class="velvz-header__mobile-close"></button>
+            <div class="velvz-header__mobile-content">
+                <div class="velvz-header__mobile-search">
+                    <div class="velvz-header__mobile-search-container">
+                        <i class="fas fa-search velvz-header__mobile-search-icon"></i>
+                        <input type="text" class="velvz-header__mobile-search-input" placeholder="Buscar..." id="mobileSearchInput">
+                    </div>
+                </div>
+
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Principal</h3>
+                    <a href="/app/rrhh/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/app/rrhh/processes/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-briefcase"></i>
+                        <span>Procesos</span>
+                    </a>
+                    <a href="/app/rrhh/candidates/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-user-tie"></i>
+                        <span>Candidatos</span>
+                    </a>
+                </div>
+
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Configuracion</h3>
+                    <a href="/app/rrhh/settings/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-cog"></i>
+                        <span>Configuracion</span>
+                    </a>
+                    <a href="/app/rrhh/billing/" class="velvz-header__mobile-link velvz-header__mobile-link--active">
+                        <i class="velvz-header__mobile-link-icon fas fa-credit-card"></i>
+                        <span>Facturacion</span>
+                    </a>
+                </div>
+
+                <div class="velvz-header__mobile-section">
+                    <h3 class="velvz-header__mobile-section-title">Cuenta</h3>
+                    <a href="/app/profile/" class="velvz-header__mobile-link">
+                        <i class="velvz-header__mobile-link-icon fas fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </a>
+                    <a href="#" class="velvz-header__mobile-link" id="mobileLogout">
+                        <i class="velvz-header__mobile-link-icon fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesion</span>
+                    </a>
+                </div>
+            </div>
+            <div class="velvz-header__mobile-user-card">
+                <div class="velvz-header__mobile-user-avatar" id="mobileUserAvatar">
+                    <span id="mobileUserInitials">U</span>
+                </div>
+                <div class="velvz-header__mobile-user-info">
+                    <div class="velvz-header__mobile-user-name" id="mobileUserName">Usuario</div>
+                    <div class="velvz-header__mobile-user-email" id="mobileUserEmail">usuario@email.com</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="velvz-app">
+        <!-- SIDEBAR -->
+        <aside class="velvz-sidebar">
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">RRHH</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-th-large"></i>
+                            <span>Panel Principal</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Gestion</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/processes/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-briefcase"></i>
+                            <span>Procesos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/candidates/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-user-tie"></i>
+                            <span>Candidatos</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/forms/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-file-alt"></i>
+                            <span>Formularios</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="velvz-sidebar__section">
+                <h3 class="velvz-sidebar__title">Ajustes</h3>
+                <ul class="velvz-sidebar__menu">
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/billing/" class="velvz-sidebar__link velvz-sidebar__link--active">
+                            <i class="velvz-sidebar__icon fas fa-gem"></i>
+                            <span>Planes</span>
+                        </a>
+                    </li>
+                    <li class="velvz-sidebar__item">
+                        <a href="/app/rrhh/settings/" class="velvz-sidebar__link">
+                            <i class="velvz-sidebar__icon fas fa-cog"></i>
+                            <span>Configuracion</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="velvz-main">
+            <div class="billing">
+                <!-- BREADCRUMBS -->
+                <nav class="velvz-breadcrumbs">
+                    <a href="/app/rrhh/" class="velvz-breadcrumbs__link">
+                        <i class="fas fa-users" style="margin-right: 0.35rem;"></i>RRHH
+                    </a>
+                    <span class="velvz-breadcrumbs__separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                    <span class="velvz-breadcrumbs__current">Planes</span>
+                </nav>
+
+                <!-- HERO HEADER -->
+                <div class="billing__hero">
+                    <div class="billing__hero-content">
+                        <div class="billing__hero-text">
+                            <h1 class="billing__hero-title">
+                                <span class="billing__hero-icon">
+                                    <i class="fas fa-gem"></i>
+                                </span>
+                                Planes
+                            </h1>
+                            <p class="billing__hero-subtitle">
+                                Gestiona tu suscripcion, consulta tu uso y elige el plan perfecto para ti
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENIDO PRINCIPAL -->
+                <div class="billing__content">
+                    <div class="billing__main">
+                        <!-- TARJETA PLAN ACTUAL -->
+                        <section class="billing__card billing__plan-card" id="currentPlanCard">
+                            <div class="billing__plan-header">
+                                <div class="billing__plan-info">
+                                    <span class="billing__plan-badge" id="planBadge">STARTER</span>
+                                    <h2 class="billing__plan-name" id="planName">Plan Gratuito</h2>
+                                </div>
+                                <div class="billing__plan-price">
+                                    <span class="billing__plan-amount" id="planAmount">0&#8364;</span>
+                                    <span class="billing__plan-period">/mes</span>
+                                </div>
+                            </div>
+
+                            <!-- Banner de trial (oculto por defecto) -->
+                            <div class="billing__trial-banner" id="trialBanner" style="display: none;">
+                                <i class="fas fa-gift"></i>
+                                <span>Te quedan <strong id="trialDays">14</strong> dias de prueba gratuita</span>
+                            </div>
+
+                            <!-- Proxima facturacion (oculto si plan gratuito) -->
+                            <div class="billing__next-billing" id="nextBillingInfo" style="display: none;">
+                                <span class="billing__next-billing-label">Proxima facturacion</span>
+                                <span class="billing__next-billing-date" id="nextBillingDate">15 enero 2025</span>
+                            </div>
+                        </section>
+
+                        <!-- TARJETA USO -->
+                        <section class="billing__card">
+                            <h3 class="billing__card-title">
+                                <i class="fas fa-th-large"></i>
+                                Uso este mes
+                            </h3>
+                            <div class="billing__usage-list">
+                                <!-- Procesos -->
+                                <div class="billing__usage-item">
+                                    <div class="billing__usage-header">
+                                        <span class="billing__usage-label">Procesos activos</span>
+                                        <span class="billing__usage-value"><span id="chatbotsUsed">1</span> / <span id="chatbotsLimit">3</span></span>
+                                    </div>
+                                    <div class="billing__usage-bar">
+                                        <div class="billing__usage-progress billing__usage-progress--chatbots" id="chatbotsProgress" style="width: 33%"></div>
+                                    </div>
+                                </div>
+                                <!-- Candidatos -->
+                                <div class="billing__usage-item">
+                                    <div class="billing__usage-header">
+                                        <span class="billing__usage-label">Candidatos evaluados</span>
+                                        <span class="billing__usage-value"><span id="messagesUsed">45</span> / <span id="messagesLimit">100</span></span>
+                                    </div>
+                                    <div class="billing__usage-bar">
+                                        <div class="billing__usage-progress billing__usage-progress--messages" id="messagesProgress" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <!-- Formularios -->
+                                <div class="billing__usage-item">
+                                    <div class="billing__usage-header">
+                                        <span class="billing__usage-label">Formularios</span>
+                                        <span class="billing__usage-value"><span id="docsUsed">2</span> / <span id="docsLimit">5</span></span>
+                                    </div>
+                                    <div class="billing__usage-bar">
+                                        <div class="billing__usage-progress billing__usage-progress--docs" id="docsProgress" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="billing__usage-reset">Se reinicia el <strong id="usageResetDate">1 de febrero</strong></p>
+                        </section>
+
+                        <!-- SECCION DE PLANES - GRID DE 3 COLUMNAS -->
+                        <section class="billing__plans-section">
+                            <h3 class="billing__plans-title">
+                                <i class="fas fa-layer-group"></i>
+                                Planes disponibles
+                            </h3>
+                            <div class="billing__plans-grid">
+                                <!-- PLAN STARTER -->
+                                <div class="billing__plan-option billing__plan-option--current" data-plan="starter">
+                                    <div class="billing__plan-option-header">
+                                        <div class="billing__plan-option-info">
+                                            <h4 class="billing__plan-option-name">Starter</h4>
+                                            <p class="billing__plan-option-price">Gratis</p>
+                                            <span class="billing__plan-option-badge billing__plan-option-badge--current">Tu plan actual</span>
+                                        </div>
+                                    </div>
+                                    <ul class="billing__plan-option-features">
+                                        <li><i class="fas fa-check"></i> <strong>3</strong> procesos activos</li>
+                                        <li><i class="fas fa-check"></i> <strong>100</strong> candidatos/mes</li>
+                                        <li><i class="fas fa-check"></i> <strong>5</strong> formularios</li>
+                                        <li><i class="fas fa-check"></i> Evaluacion basica IA</li>
+                                        <li class="billing__feature--disabled"><i class="fas fa-times"></i> Entrevistas automaticas</li>
+                                        <li class="billing__feature--disabled"><i class="fas fa-times"></i> Reportes avanzados</li>
+                                    </ul>
+                                </div>
+
+                                <!-- PLAN PRO -->
+                                <div class="billing__plan-option billing__plan-option--recommended" data-plan="pro">
+                                    <div class="billing__plan-recommended-badge">Recomendado</div>
+                                    <div class="billing__plan-option-header">
+                                        <div class="billing__plan-option-info">
+                                            <h4 class="billing__plan-option-name">Pro</h4>
+                                            <p class="billing__plan-option-price">49&#8364;<span>/mes</span></p>
+                                        </div>
+                                    </div>
+                                    <ul class="billing__plan-option-features">
+                                        <li><i class="fas fa-check"></i> <strong>20</strong> procesos activos</li>
+                                        <li><i class="fas fa-check"></i> <strong>1,000</strong> candidatos/mes</li>
+                                        <li><i class="fas fa-check"></i> <strong>50</strong> formularios</li>
+                                        <li><i class="fas fa-check"></i> Evaluacion avanzada IA</li>
+                                        <li><i class="fas fa-check"></i> Entrevistas automaticas</li>
+                                        <li><i class="fas fa-check"></i> Reportes completos</li>
+                                    </ul>
+                                    <button class="billing__plan-option-btn" data-plan="pro">
+                                        Probar 14 dias gratis
+                                    </button>
+                                </div>
+
+                                <!-- PLAN BUSINESS -->
+                                <div class="billing__plan-option billing__plan-option--business" data-plan="business">
+                                    <div class="billing__plan-business-badge">Empresas</div>
+                                    <div class="billing__plan-option-header">
+                                        <div class="billing__plan-option-info">
+                                            <h4 class="billing__plan-option-name">Business</h4>
+                                            <p class="billing__plan-option-price">149&#8364;<span>/mes</span></p>
+                                        </div>
+                                    </div>
+                                    <ul class="billing__plan-option-features">
+                                        <li><i class="fas fa-check"></i> Procesos <strong>ilimitados</strong></li>
+                                        <li><i class="fas fa-check"></i> <strong>10,000</strong> candidatos/mes</li>
+                                        <li><i class="fas fa-check"></i> Formularios <strong>ilimitados</strong></li>
+                                        <li><i class="fas fa-check"></i> IA personalizada</li>
+                                        <li><i class="fas fa-check"></i> Integraciones ATS</li>
+                                        <li><i class="fas fa-check"></i> API completa</li>
+                                        <li><i class="fas fa-check"></i> Soporte dedicado</li>
+                                    </ul>
+                                    <button class="billing__plan-option-btn" data-plan="business">
+                                        Probar 14 dias gratis
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="billing__plans-info">
+                                <p><i class="fas fa-shield-alt"></i> Pago seguro con Stripe</p>
+                                <p><i class="fas fa-undo"></i> Cancela cuando quieras</p>
+                                <p><i class="fas fa-gift"></i> 14 dias de prueba en planes de pago</p>
+                            </div>
+                        </section>
+
+                        <!-- METODO DE PAGO (solo para planes de pago) -->
+                        <section class="billing__card" id="paymentMethodCard" style="display: none;">
+                            <h3 class="billing__card-title">
+                                <i class="fas fa-credit-card"></i>
+                                Metodo de pago
+                            </h3>
+                            <div class="billing__payment" id="paymentMethod">
+                                <!-- Se rellena dinamicamente -->
+                            </div>
+                        </section>
+
+                        <!-- HISTORIAL DE FACTURAS (solo para planes de pago) -->
+                        <section class="billing__card" id="invoicesCard" style="display: none;">
+                            <h3 class="billing__card-title">
+                                <i class="fas fa-file-invoice"></i>
+                                Historial de facturas
+                            </h3>
+                            <div class="billing__invoices" id="invoicesList">
+                                <!-- Se rellena dinamicamente -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- ZONA DE PELIGRO (solo para planes de pago) -->
+                <section class="billing__danger-zone" id="dangerZone" style="display: none;">
+                    <h3 class="billing__danger-title">Zona de peligro</h3>
+                    <div class="billing__danger-card">
+                        <div class="billing__danger-info">
+                            <h4>Cancelar suscripcion</h4>
+                            <p>Tu cuenta volvera al plan Starter al final del periodo de facturacion.</p>
+                        </div>
+                        <button class="billing__danger-btn" id="cancelSubscriptionBtn">
+                            Cancelar suscripcion
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="velvz-footer">
+        <div class="velvz-footer__container">
+            <div class="velvz-footer__brand">
+                <a href="/" class="velvz-footer__logo-link">
+                    <div class="velvz-footer__logo">
+                        <div class="velvz-footer__logo-shape">
+                            <div class="velvz-footer__logo-face">
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--left"></div>
+                                <div class="velvz-footer__logo-mouth"></div>
+                                <div class="velvz-footer__logo-eye velvz-footer__logo-eye--right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="velvz-footer__brand-name">Velvz</span>
+                </a>
+                <p class="velvz-footer__tagline">IA conversacional para empresas</p>
+            </div>
+
+            <nav class="velvz-footer__links">
+                <a href="/" class="velvz-footer__link">Inicio</a>
+                <a href="/servicios/" class="velvz-footer__link">Servicios</a>
+                <a href="/precios/" class="velvz-footer__link">Precios</a>
+                <a href="/documentacion/" class="velvz-footer__link">Documentacion</a>
+                <a href="/contacto/" class="velvz-footer__link">Contacto</a>
+            </nav>
+
+            <div class="velvz-footer__legal">
+                <div class="velvz-footer__copyright">2025 Velvz SL</div>
+                <div>
+                    <a href="/privacidad/" class="velvz-footer__link">Privacidad</a> ·
+                    <a href="/terminos/" class="velvz-footer__link">Terminos</a> ·
+                    <a href="/cookies/" class="velvz-footer__link">Cookies</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="velvz-footer__ambient">
+            <div class="velvz-footer__pulse"></div>
+            <div class="velvz-footer__pulse"></div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE UPGRADE -->
+    <div class="billing__modal" id="upgradeModal">
+        <div class="billing__modal-backdrop"></div>
+        <div class="billing__modal-content">
+            <button class="billing__modal-close" id="closeUpgradeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="billing__modal-header">
+                <div class="billing__modal-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h2 id="modalPlanTitle">Upgrade a Pro</h2>
+                <p class="billing__modal-price" id="modalPlanPrice">49&#8364;/mes</p>
+            </div>
+            <div class="billing__modal-body">
+                <div class="billing__modal-trial">
+                    <i class="fas fa-gift"></i>
+                    <span>14 dias de prueba gratuita</span>
+                </div>
+                <div class="billing__modal-features" id="modalFeatures">
+                    <!-- Se rellena dinamicamente -->
+                </div>
+                <div class="billing__modal-payment" id="stripePaymentForm">
+                    <p class="billing__modal-payment-info">
+                        <i class="fas fa-lock"></i>
+                        No se te cobrara hasta que termine el periodo de prueba
+                    </p>
+                </div>
+            </div>
+            <div class="billing__modal-footer">
+                <button class="billing__modal-btn billing__modal-btn--cancel" id="cancelUpgradeBtn">
+                    Cancelar
+                </button>
+                <button class="billing__modal-btn billing__modal-btn--confirm" id="confirmUpgradeBtn">
+                    <i class="fas fa-check"></i>
+                    Comenzar prueba gratis
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/error-cleanup.js"></script>
+    <script src="/assets/js/auth-config.js"></script>
+    <script src="/assets/js/notifications.js"></script>
+    <script src="/assets/js/dashboard-api.js"></script>
+    <script src="/assets/js/billing.js"></script>
+    <script src="/assets/js/private-app.js"></script>
+</body>
+</html>
