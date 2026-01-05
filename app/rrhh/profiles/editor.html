@@ -19,20 +19,23 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/app-dashboard.css">
     <link rel="stylesheet" href="/assets/css/chatbot-config.css">
-    <link rel="stylesheet" href="/assets/css/rrhh-process-editor.css">
 
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
 
     <style>
         :root {
+            /* Paleta morada para Perfiles */
+            --profile-primary: #8b5cf6;
+            --profile-primary-light: rgba(139, 92, 246, 0.1);
+            --profile-primary-glow: rgba(139, 92, 246, 0.3);
+            --profile-primary-dark: #7c3aed;
+
+            /* RRHH general sigue siendo verde para sidebar */
             --rrhh-primary: #10b981;
-            --rrhh-primary-light: rgba(16, 185, 129, 0.1);
-            --rrhh-primary-glow: rgba(16, 185, 129, 0.3);
-            --rrhh-primary-dark: #059669;
         }
 
-        /* Override sidebar: solo activo verde */
+        /* Override sidebar: activo verde (RRHH general) */
         .velvz-sidebar__link--active {
             background: rgba(16, 185, 129, 0.15) !important;
             color: #10b981 !important;
@@ -41,19 +44,489 @@
             color: #10b981 !important;
         }
 
-        /* Tags para requisitos */
+        /* =====================================================
+           LAYOUT DEL EDITOR
+           ===================================================== */
+        .profile-editor {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .profile-editor__header {
+            margin-bottom: 2rem;
+        }
+
+        /* Breadcrumbs */
+        .velvz-breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .velvz-breadcrumbs__link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .velvz-breadcrumbs__link:hover {
+            color: var(--profile-primary);
+        }
+
+        .velvz-breadcrumbs__separator {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.7rem;
+        }
+
+        .velvz-breadcrumbs__current {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Title row */
+        .profile-editor__title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .profile-editor__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .profile-editor__title-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--profile-primary) 0%, var(--profile-primary-dark) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+            box-shadow: 0 4px 15px var(--profile-primary-glow);
+        }
+
+        .profile-editor__actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn--primary {
+            background: linear-gradient(135deg, var(--profile-primary) 0%, var(--profile-primary-dark) 100%);
+            color: #fff;
+        }
+        .btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--profile-primary-glow);
+        }
+
+        .btn--secondary {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.8);
+        }
+        .btn--secondary:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+
+        /* =====================================================
+           SECCIONES / PANELS
+           ===================================================== */
+        .section-panel {
+            background: var(--dark-bg-secondary);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .section-panel__header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .section-panel__icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--profile-primary) 0%, var(--profile-primary-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px var(--profile-primary-glow);
+        }
+
+        .section-panel__title h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 0.25rem;
+        }
+
+        .section-panel__title p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin: 0;
+        }
+
+        .section-panel__body {
+            padding: 1.5rem;
+        }
+
+        /* =====================================================
+           FORMULARIOS
+           ===================================================== */
+        .form-field {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-required {
+            color: #ef4444;
+            margin-left: 0.25rem;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--profile-primary);
+            box-shadow: 0 0 0 3px var(--profile-primary-light);
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .form-hint {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.35rem;
+        }
+
+        .form-select-wrapper {
+            position: relative;
+        }
+
+        .form-select {
+            appearance: none;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        .form-select-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.4);
+            pointer-events: none;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-grid--2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .form-grid--3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid--2, .form-grid--3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Textarea */
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-field__footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.35rem;
+        }
+
+        .form-counter {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Salary range */
+        .salary-range {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .salary-range__input {
+            position: relative;
+            flex: 1;
+        }
+
+        .salary-range__currency {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        .salary-range__input .form-input {
+            padding-left: 2rem;
+        }
+
+        .salary-range__separator {
+            color: rgba(255,255,255,0.3);
+            font-weight: 500;
+        }
+
+        .salary-range__period {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        /* Toggle option */
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .toggle-option input {
+            display: none;
+        }
+
+        .toggle-option__slider {
+            width: 44px;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-option__slider::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s;
+        }
+
+        .toggle-option input:checked + .toggle-option__slider {
+            background: var(--profile-primary);
+        }
+
+        .toggle-option input:checked + .toggle-option__slider::after {
+            transform: translateX(20px);
+        }
+
+        .toggle-option__label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Modality cards */
+        .modality-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 600px) {
+            .modality-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modality-option {
+            cursor: pointer;
+        }
+
+        .modality-option input {
+            display: none;
+        }
+
+        .modality-option__content {
+            padding: 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .modality-option__content i {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .modality-option__title {
+            font-weight: 600;
+            color: #fff;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .modality-option__desc {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .modality-option input:checked + .modality-option__content {
+            border-color: var(--profile-primary);
+            background: var(--profile-primary-light);
+        }
+
+        .modality-option input:checked + .modality-option__content i {
+            color: var(--profile-primary);
+        }
+
+        .modality-option:hover .modality-option__content {
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        /* =====================================================
+           REQUISITOS (Tags)
+           ===================================================== */
+        .requirements-block {
+            padding: 1.25rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .requirements-block__header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .requirements-block__icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .requirements-block--essential .requirements-block__icon {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .requirements-block--desired .requirements-block__icon {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .requirements-block--nice .requirements-block__icon {
+            background: rgba(139, 92, 246, 0.15);
+            color: #8b5cf6;
+        }
+
+        .requirements-block__header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 0.25rem;
+        }
+
+        .requirements-block__header p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            margin: 0;
+        }
+
         .requirements-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            min-height: 32px;
         }
 
         .requirement-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
+            padding: 0.4rem 0.75rem;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
@@ -82,33 +555,30 @@
         .requirement-tag__remove {
             background: none;
             border: none;
-            color: rgba(255,255,255,0.4);
+            color: inherit;
+            opacity: 0.5;
             cursor: pointer;
             padding: 0;
-            font-size: 0.75rem;
-            transition: color 0.2s;
+            font-size: 0.7rem;
+            transition: opacity 0.2s;
         }
 
         .requirement-tag__remove:hover {
-            color: #ef4444;
+            opacity: 1;
         }
 
-        /* Input para añadir requisitos */
         .add-requirement-row {
             display: flex;
             gap: 0.5rem;
-            margin-top: 0.5rem;
         }
 
         .add-requirement-row .form-input {
             flex: 1;
         }
 
-        .add-requirement-row .btn {
-            flex-shrink: 0;
-        }
-
-        /* Idiomas list */
+        /* =====================================================
+           IDIOMAS
+           ===================================================== */
         .language-item {
             display: flex;
             align-items: center;
@@ -137,13 +607,58 @@
         .language-item__remove:hover {
             color: #ef4444;
         }
+
+        .btn--add {
+            width: 100%;
+            justify-content: center;
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.5rem;
+        }
+
+        .btn--add:hover {
+            border-color: var(--profile-primary);
+            color: var(--profile-primary);
+            background: var(--profile-primary-light);
+        }
+
+        /* =====================================================
+           ACCIONES FINALES
+           ===================================================== */
+        .editor-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            padding: 1.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .profile-editor__title-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .profile-editor__actions {
+                width: 100%;
+            }
+            .profile-editor__actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            .editor-actions {
+                flex-direction: column;
+            }
+            .editor-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- HEADER -->
     <header class="velvz-header">
         <div class="velvz-header__container">
-            <!-- LOGO -->
             <div class="velvz-header__island velvz-header__island--brand">
                 <a href="/app/" class="velvz-header__logo">
                     <div class="velvz-header__logo-shape">
@@ -156,7 +671,6 @@
                 </a>
             </div>
 
-            <!-- SELECTOR DE SERVICIOS -->
             <div class="velvz-header__island velvz-header__island--services">
                 <button class="svc-selector" id="svcSelector" data-current="rrhh">
                     <i class="fas fa-users svc-selector__icon" style="color: #10b981;"></i>
@@ -175,7 +689,6 @@
                 </div>
             </div>
 
-            <!-- BUSQUEDA -->
             <div class="velvz-header__island velvz-header__island--search">
                 <div class="velvz-header__search">
                     <input type="text" class="velvz-header__search-input" placeholder="Buscar..." id="headerSearchInput">
@@ -183,7 +696,6 @@
                 </div>
             </div>
 
-            <!-- PERFIL -->
             <div class="velvz-header__island velvz-header__island--cta">
                 <div class="velvz-header__avatar" id="userAvatar">
                     <div class="velvz-header__avatar-circle">
@@ -192,18 +704,15 @@
                 </div>
             </div>
 
-            <!-- TOGGLE MOVIL -->
             <div class="velvz-header__mobile-toggle" id="mobileMenuToggle">
                 <div class="velvz-header__hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- LAYOUT PRINCIPAL -->
+    <!-- LAYOUT -->
     <div class="velvz-app">
         <!-- SIDEBAR -->
         <aside class="velvz-sidebar">
@@ -264,10 +773,9 @@
 
         <!-- MAIN -->
         <main class="velvz-main">
-            <div class="process-editor">
-                <!-- HEADER DEL EDITOR -->
-                <div class="process-editor__header">
-                    <!-- Breadcrumbs -->
+            <div class="profile-editor">
+                <!-- HEADER -->
+                <div class="profile-editor__header">
                     <nav class="velvz-breadcrumbs">
                         <a href="/app/rrhh/" class="velvz-breadcrumbs__link">
                             <i class="fas fa-users" style="margin-right: 0.35rem;"></i>RRHH
@@ -282,655 +790,273 @@
                         <span class="velvz-breadcrumbs__current" id="breadcrumbTitle">Nuevo Perfil</span>
                     </nav>
 
-                    <!-- Titulo y acciones -->
-                    <div class="process-editor__title-row">
-                        <div class="process-editor__title-group">
-                            <h1 class="process-editor__title" id="profileTitle">Nuevo Perfil de Puesto</h1>
-                        </div>
-                        <div class="process-editor__actions">
+                    <div class="profile-editor__title-row">
+                        <h1 class="profile-editor__title">
+                            <span class="profile-editor__title-icon">
+                                <i class="fas fa-id-badge"></i>
+                            </span>
+                            <span id="pageTitle">Nuevo Perfil de Puesto</span>
+                        </h1>
+                        <div class="profile-editor__actions">
                             <button class="btn btn--secondary" id="cancelBtn">
                                 <i class="fas fa-times"></i>
                                 <span>Cancelar</span>
                             </button>
                             <button class="btn btn--primary" id="saveBtn">
                                 <i class="fas fa-save"></i>
-                                <span>Guardar Perfil</span>
+                                <span>Guardar</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- NAVEGACIÓN DE SECCIONES -->
-                <div class="velvz-config__tabs">
-                    <div class="velvz-config__tabs-nav">
-                        <button class="velvz-config__tab velvz-config__tab--active" data-tab="basic">
+                <!-- SECCIÓN 1: INFORMACIÓN BÁSICA -->
+                <div class="section-panel">
+                    <div class="section-panel__header">
+                        <div class="section-panel__icon">
                             <i class="fas fa-info-circle"></i>
-                            <span>Información Básica</span>
-                        </button>
-                        <button class="velvz-config__tab" data-tab="requirements">
-                            <i class="fas fa-list-check"></i>
-                            <span>Requisitos</span>
-                        </button>
-                        <button class="velvz-config__tab" data-tab="filtering">
-                            <i class="fas fa-filter"></i>
-                            <span>Filtrado IA</span>
-                        </button>
-                        <button class="velvz-config__tab" data-tab="interview">
-                            <i class="fas fa-robot"></i>
-                            <span>Entrevista IA</span>
-                        </button>
-                        <button class="velvz-config__tab" data-tab="documents">
-                            <i class="fas fa-folder"></i>
-                            <span>Documentos</span>
-                        </button>
+                        </div>
+                        <div class="section-panel__title">
+                            <h2>Información Básica</h2>
+                            <p>Datos generales del puesto de trabajo</p>
+                        </div>
+                    </div>
+
+                    <div class="section-panel__body">
+                        <div class="form-field">
+                            <label class="form-label">
+                                Nombre del Puesto
+                                <span class="form-required">*</span>
+                            </label>
+                            <input type="text" class="form-input" id="profileName" placeholder="Ej: Desarrollador Frontend Senior">
+                            <span class="form-hint">Este nombre será único en tu empresa</span>
+                        </div>
+
+                        <div class="form-grid form-grid--2">
+                            <div class="form-field">
+                                <label class="form-label">
+                                    Departamento
+                                    <span class="form-required">*</span>
+                                </label>
+                                <div class="form-select-wrapper">
+                                    <select class="form-select" id="departmentSelect">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="tech">Tecnología</option>
+                                        <option value="product">Producto</option>
+                                        <option value="design">Diseño</option>
+                                        <option value="sales">Ventas</option>
+                                        <option value="marketing">Marketing</option>
+                                        <option value="hr">Recursos Humanos</option>
+                                        <option value="finance">Finanzas</option>
+                                        <option value="operations">Operaciones</option>
+                                        <option value="other">Otro</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="form-label">
+                                    Ubicación
+                                    <span class="form-required">*</span>
+                                </label>
+                                <input type="text" class="form-input" id="locationInput" placeholder="Ej: Madrid, Barcelona, Remoto...">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="form-label">
+                                Modalidad de Trabajo
+                                <span class="form-required">*</span>
+                            </label>
+                            <div class="modality-options">
+                                <label class="modality-option">
+                                    <input type="radio" name="modality" value="onsite">
+                                    <div class="modality-option__content">
+                                        <i class="fas fa-building"></i>
+                                        <span class="modality-option__title">Presencial</span>
+                                        <span class="modality-option__desc">100% en oficina</span>
+                                    </div>
+                                </label>
+                                <label class="modality-option">
+                                    <input type="radio" name="modality" value="hybrid" checked>
+                                    <div class="modality-option__content">
+                                        <i class="fas fa-laptop-house"></i>
+                                        <span class="modality-option__title">Híbrido</span>
+                                        <span class="modality-option__desc">Oficina + remoto</span>
+                                    </div>
+                                </label>
+                                <label class="modality-option">
+                                    <input type="radio" name="modality" value="remote">
+                                    <div class="modality-option__content">
+                                        <i class="fas fa-home"></i>
+                                        <span class="modality-option__title">Remoto</span>
+                                        <span class="modality-option__desc">100% teletrabajo</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="form-label">
+                                Descripción del Puesto
+                                <span class="form-required">*</span>
+                            </label>
+                            <textarea class="form-textarea" id="jobDescription" rows="4" placeholder="Describe el puesto, responsabilidades principales, el equipo con el que trabajará..."></textarea>
+                            <div class="form-field__footer">
+                                <span class="form-hint">Esta descripción se mostrará a los candidatos</span>
+                                <span class="form-counter"><span id="descriptionCount">0</span>/2000</span>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label class="form-label">Rango Salarial</label>
+                            <div class="salary-range">
+                                <div class="salary-range__input">
+                                    <span class="salary-range__currency">€</span>
+                                    <input type="number" class="form-input" id="salaryMin" placeholder="Mínimo">
+                                </div>
+                                <span class="salary-range__separator">-</span>
+                                <div class="salary-range__input">
+                                    <span class="salary-range__currency">€</span>
+                                    <input type="number" class="form-input" id="salaryMax" placeholder="Máximo">
+                                </div>
+                                <div class="form-select-wrapper salary-range__period">
+                                    <select class="form-select" id="salaryPeriod">
+                                        <option value="year">/ año</option>
+                                        <option value="month">/ mes</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                </div>
+                            </div>
+                            <label class="toggle-option" style="margin-top: 0.75rem;">
+                                <input type="checkbox" id="salaryVisible" checked>
+                                <span class="toggle-option__slider"></span>
+                                <span class="toggle-option__label">Mostrar salario en la oferta pública</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <!-- CONTENIDO DE LAS SECCIONES -->
-                <div class="process-editor__content">
+                <!-- SECCIÓN 2: REQUISITOS -->
+                <div class="section-panel">
+                    <div class="section-panel__header">
+                        <div class="section-panel__icon">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div class="section-panel__title">
+                            <h2>Requisitos del Candidato</h2>
+                            <p>Define qué necesitas del candidato ideal para este puesto</p>
+                        </div>
+                    </div>
 
-                    <!-- ===== SECCIÓN 1: INFORMACIÓN BÁSICA ===== -->
-                    <section class="process-section process-section--active" data-tab="basic">
-                        <div class="section-panel">
-                            <div class="section-panel__header">
-                                <div class="section-panel__icon">
-                                    <i class="fas fa-info-circle"></i>
-                                </div>
-                                <div class="section-panel__title">
-                                    <h2>Información del Puesto</h2>
-                                    <p>Define los datos generales del perfil de puesto</p>
-                                </div>
-                            </div>
-
-                            <div class="section-panel__body">
-                                <!-- Nombre del puesto -->
-                                <div class="form-field">
-                                    <label class="form-label">
-                                        Nombre del Puesto
-                                        <span class="form-required">*</span>
-                                    </label>
-                                    <input type="text" class="form-input" id="profileName" placeholder="Ej: Desarrollador Frontend Senior">
-                                    <span class="form-hint">Este nombre será único en tu empresa</span>
-                                </div>
-
-                                <!-- Grid 2 columnas -->
-                                <div class="form-grid form-grid--2">
-                                    <div class="form-field">
-                                        <label class="form-label">
-                                            Departamento
-                                            <span class="form-required">*</span>
-                                        </label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="departmentSelect">
-                                                <option value="">Seleccionar...</option>
-                                                <option value="tech">Tecnología</option>
-                                                <option value="product">Producto</option>
-                                                <option value="design">Diseño</option>
-                                                <option value="sales">Ventas</option>
-                                                <option value="marketing">Marketing</option>
-                                                <option value="hr">Recursos Humanos</option>
-                                                <option value="finance">Finanzas</option>
-                                                <option value="operations">Operaciones</option>
-                                                <option value="other">Otro</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label class="form-label">
-                                            Ubicación
-                                            <span class="form-required">*</span>
-                                        </label>
-                                        <input type="text" class="form-input" id="locationInput" placeholder="Ej: Madrid, Barcelona, Remoto...">
-                                    </div>
-                                </div>
-
-                                <!-- Modalidad -->
-                                <div class="form-field">
-                                    <label class="form-label">
-                                        Modalidad de Trabajo
-                                        <span class="form-required">*</span>
-                                    </label>
-                                    <div class="interview-types">
-                                        <label class="interview-type interview-type--selected">
-                                            <input type="radio" name="modality" value="onsite">
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-building"></i>
-                                                <span class="interview-type__title">Presencial</span>
-                                                <span class="interview-type__desc">100% en oficina</span>
-                                            </div>
-                                        </label>
-                                        <label class="interview-type">
-                                            <input type="radio" name="modality" value="hybrid" checked>
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-laptop-house"></i>
-                                                <span class="interview-type__title">Híbrido</span>
-                                                <span class="interview-type__desc">Oficina + remoto</span>
-                                            </div>
-                                        </label>
-                                        <label class="interview-type">
-                                            <input type="radio" name="modality" value="remote">
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-home"></i>
-                                                <span class="interview-type__title">Remoto</span>
-                                                <span class="interview-type__desc">100% teletrabajo</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Descripción -->
-                                <div class="form-field">
-                                    <label class="form-label">
-                                        Descripción del Puesto
-                                        <span class="form-required">*</span>
-                                    </label>
-                                    <textarea class="form-textarea" id="jobDescription" rows="4" placeholder="Describe el puesto, responsabilidades principales, el equipo con el que trabajará..."></textarea>
-                                    <div class="form-field__footer">
-                                        <span class="form-hint">Esta descripción se mostrará a los candidatos</span>
-                                        <span class="form-counter"><span id="descriptionCount">0</span>/2000</span>
-                                    </div>
-                                </div>
-
-                                <!-- Rango salarial -->
-                                <div class="form-field">
-                                    <label class="form-label">Rango Salarial</label>
-                                    <div class="salary-range">
-                                        <div class="salary-range__input">
-                                            <span class="salary-range__currency">€</span>
-                                            <input type="number" class="form-input" id="salaryMin" placeholder="Mínimo">
-                                        </div>
-                                        <span class="salary-range__separator">-</span>
-                                        <div class="salary-range__input">
-                                            <span class="salary-range__currency">€</span>
-                                            <input type="number" class="form-input" id="salaryMax" placeholder="Máximo">
-                                        </div>
-                                        <div class="form-select-wrapper salary-range__period">
-                                            <select class="form-select" id="salaryPeriod">
-                                                <option value="year">/ año</option>
-                                                <option value="month">/ mes</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
-                                    <label class="toggle-option" style="margin-top: 0.75rem;">
-                                        <input type="checkbox" id="salaryVisible" checked>
-                                        <span class="toggle-option__slider"></span>
-                                        <div class="toggle-option__content">
-                                            <span class="toggle-option__label">Mostrar salario en la oferta pública</span>
-                                        </div>
-                                    </label>
+                    <div class="section-panel__body">
+                        <div class="form-grid form-grid--2" style="margin-bottom: 1.5rem;">
+                            <div class="form-field" style="margin-bottom: 0;">
+                                <label class="form-label">
+                                    Experiencia Mínima
+                                    <span class="form-required">*</span>
+                                </label>
+                                <div class="form-select-wrapper">
+                                    <select class="form-select" id="minExperience">
+                                        <option value="0">Sin experiencia</option>
+                                        <option value="1">1+ año</option>
+                                        <option value="2">2+ años</option>
+                                        <option value="3" selected>3+ años</option>
+                                        <option value="5">5+ años</option>
+                                        <option value="7">7+ años</option>
+                                        <option value="10">10+ años</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down form-select-icon"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Navegación -->
-                        <div class="section-nav">
-                            <div></div>
-                            <button class="btn btn--primary btn--next" data-next="requirements">
-                                Siguiente: Requisitos
-                                <i class="fas fa-arrow-right"></i>
+                        <!-- Requisitos Esenciales -->
+                        <div class="requirements-block requirements-block--essential">
+                            <div class="requirements-block__header">
+                                <div class="requirements-block__icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div>
+                                    <h3>Requisitos Esenciales</h3>
+                                    <p>Obligatorios para el puesto</p>
+                                </div>
+                            </div>
+                            <div class="requirements-tags" id="essentialTags"></div>
+                            <div class="add-requirement-row">
+                                <input type="text" class="form-input" id="essentialInput" placeholder="Escribe un requisito y pulsa Enter...">
+                                <button class="btn btn--secondary" id="addEssentialBtn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Requisitos Deseables -->
+                        <div class="requirements-block requirements-block--desired">
+                            <div class="requirements-block__header">
+                                <div class="requirements-block__icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div>
+                                    <h3>Requisitos Deseables</h3>
+                                    <p>Se valorarán positivamente</p>
+                                </div>
+                            </div>
+                            <div class="requirements-tags" id="desiredTags"></div>
+                            <div class="add-requirement-row">
+                                <input type="text" class="form-input" id="desiredInput" placeholder="Escribe un requisito y pulsa Enter...">
+                                <button class="btn btn--secondary" id="addDesiredBtn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Nice to Have -->
+                        <div class="requirements-block requirements-block--nice">
+                            <div class="requirements-block__header">
+                                <div class="requirements-block__icon">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                                <div>
+                                    <h3>Se Valorará (Nice to Have)</h3>
+                                    <p>Un plus, pero no esperado</p>
+                                </div>
+                            </div>
+                            <div class="requirements-tags" id="niceTags"></div>
+                            <div class="add-requirement-row">
+                                <input type="text" class="form-input" id="niceInput" placeholder="Escribe un requisito y pulsa Enter...">
+                                <button class="btn btn--secondary" id="addNiceBtn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Idiomas -->
+                        <div class="form-field" style="margin-top: 1.5rem;">
+                            <label class="form-label">
+                                <i class="fas fa-globe" style="margin-right: 0.5rem; color: #3b82f6;"></i>
+                                Idiomas Requeridos
+                            </label>
+                            <div id="languagesList"></div>
+                            <button class="btn btn--add" id="addLanguageBtn">
+                                <i class="fas fa-plus"></i>
+                                Añadir idioma
                             </button>
                         </div>
-                    </section>
+                    </div>
+                </div>
 
-                    <!-- ===== SECCIÓN 2: REQUISITOS ===== -->
-                    <section class="process-section" data-tab="requirements">
-                        <div class="section-panel">
-                            <div class="section-panel__header">
-                                <div class="section-panel__icon">
-                                    <i class="fas fa-list-check"></i>
-                                </div>
-                                <div class="section-panel__title">
-                                    <h2>Requisitos del Candidato</h2>
-                                    <p>Define qué necesitas del candidato ideal. Estos criterios se usarán para el filtrado automático.</p>
-                                </div>
-                            </div>
-
-                            <div class="section-panel__body">
-                                <!-- Experiencia mínima -->
-                                <div class="form-field">
-                                    <label class="form-label">
-                                        Experiencia Mínima Requerida
-                                        <span class="form-required">*</span>
-                                    </label>
-                                    <div class="form-select-wrapper" style="max-width: 200px;">
-                                        <select class="form-select" id="minExperience">
-                                            <option value="0">Sin experiencia</option>
-                                            <option value="1">1+ año</option>
-                                            <option value="2">2+ años</option>
-                                            <option value="3" selected>3+ años</option>
-                                            <option value="5">5+ años</option>
-                                            <option value="7">7+ años</option>
-                                            <option value="10">10+ años</option>
-                                        </select>
-                                        <i class="fas fa-chevron-down form-select-icon"></i>
-                                    </div>
-                                </div>
-
-                                <!-- Requisitos Esenciales -->
-                                <div class="requirements-block requirements-block--essential">
-                                    <div class="requirements-block__header">
-                                        <div class="requirements-block__icon">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                        <div>
-                                            <h3>Requisitos Esenciales</h3>
-                                            <p>Sin estos requisitos, el candidato será descartado automáticamente</p>
-                                        </div>
-                                    </div>
-                                    <div class="requirements-tags" id="essentialTags">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <div class="add-requirement-row">
-                                        <input type="text" class="form-input" id="essentialInput" placeholder="Escribe y pulsa Enter o el botón...">
-                                        <button class="btn btn--secondary" id="addEssentialBtn">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Requisitos Deseables -->
-                                <div class="requirements-block requirements-block--desired">
-                                    <div class="requirements-block__header">
-                                        <div class="requirements-block__icon">
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <div>
-                                            <h3>Requisitos Deseables</h3>
-                                            <p>Suman puntos en la evaluación, pero no son eliminatorios</p>
-                                        </div>
-                                    </div>
-                                    <div class="requirements-tags" id="desiredTags">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <div class="add-requirement-row">
-                                        <input type="text" class="form-input" id="desiredInput" placeholder="Escribe y pulsa Enter o el botón...">
-                                        <button class="btn btn--secondary" id="addDesiredBtn">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Nice to Have -->
-                                <div class="requirements-block requirements-block--nice">
-                                    <div class="requirements-block__header">
-                                        <div class="requirements-block__icon">
-                                            <i class="fas fa-plus-circle"></i>
-                                        </div>
-                                        <div>
-                                            <h3>Se Valorará (Nice to Have)</h3>
-                                            <p>Características que serían un plus pero no se esperan</p>
-                                        </div>
-                                    </div>
-                                    <div class="requirements-tags" id="niceTags">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <div class="add-requirement-row">
-                                        <input type="text" class="form-input" id="niceInput" placeholder="Escribe y pulsa Enter o el botón...">
-                                        <button class="btn btn--secondary" id="addNiceBtn">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Idiomas -->
-                                <div class="form-field" style="margin-top: 2rem;">
-                                    <label class="form-label">
-                                        <i class="fas fa-globe" style="margin-right: 0.5rem; color: #3b82f6;"></i>
-                                        Idiomas Requeridos
-                                    </label>
-                                    <div id="languagesList">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <button class="btn btn--add-requirement" id="addLanguageBtn" style="margin-top: 0.5rem;">
-                                        <i class="fas fa-plus"></i>
-                                        Añadir idioma
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navegación -->
-                        <div class="section-nav">
-                            <button class="btn btn--secondary btn--prev" data-prev="basic">
-                                <i class="fas fa-arrow-left"></i>
-                                Anterior
-                            </button>
-                            <button class="btn btn--primary btn--next" data-next="filtering">
-                                Siguiente: Filtrado IA
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- ===== SECCIÓN 3: FILTRADO IA ===== -->
-                    <section class="process-section" data-tab="filtering">
-                        <div class="section-panel">
-                            <div class="section-panel__header">
-                                <div class="section-panel__icon">
-                                    <i class="fas fa-filter"></i>
-                                </div>
-                                <div class="section-panel__title">
-                                    <h2>Configuración de Filtrado IA</h2>
-                                    <p>Define cómo la IA evaluará y priorizará los candidatos</p>
-                                </div>
-                            </div>
-
-                            <div class="section-panel__body">
-                                <!-- Pesos de evaluación -->
-                                <div class="filtering-card">
-                                    <div class="filtering-card__header">
-                                        <i class="fas fa-balance-scale"></i>
-                                        <h3>Pesos de Evaluación</h3>
-                                    </div>
-                                    <div class="filtering-card__body">
-                                        <p class="filtering-card__description">Ajusta la importancia de cada factor en la puntuación del candidato. El total debe sumar 100%.</p>
-
-                                        <div class="weight-sliders">
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Experiencia Relevante</span>
-                                                    <span class="weight-slider__value" id="weightExpValue">30%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightExperience" min="0" max="100" value="30">
-                                            </div>
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Habilidades/Skills</span>
-                                                    <span class="weight-slider__value" id="weightSkillsValue">40%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightSkills" min="0" max="100" value="40">
-                                            </div>
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Formación Académica</span>
-                                                    <span class="weight-slider__value" id="weightEducationValue">15%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightEducation" min="0" max="100" value="15">
-                                            </div>
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Idiomas</span>
-                                                    <span class="weight-slider__value" id="weightLanguagesValue">15%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightLanguages" min="0" max="100" value="15">
-                                            </div>
-                                        </div>
-
-                                        <div class="weight-total">
-                                            <span>Total:</span>
-                                            <span id="weightTotal" class="weight-total__value">100%</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Límites -->
-                                <div class="filtering-card">
-                                    <div class="filtering-card__header">
-                                        <i class="fas fa-users"></i>
-                                        <h3>Límites de Candidatos</h3>
-                                    </div>
-                                    <div class="filtering-card__body">
-                                        <div class="form-grid form-grid--2">
-                                            <div class="form-field">
-                                                <label class="form-label">Candidatos máximos a entrevista</label>
-                                                <input type="number" class="form-input" id="maxCandidatesInterview" placeholder="20" value="20">
-                                                <span class="form-hint">Número máximo de candidatos que pasarán a la fase de entrevista IA</span>
-                                            </div>
-                                            <div class="form-field">
-                                                <label class="form-label">Puntuación mínima (%)</label>
-                                                <input type="number" class="form-input" id="minScore" placeholder="40" value="40" min="0" max="100">
-                                                <span class="form-hint">Candidatos por debajo de esta puntuación serán descartados automáticamente</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navegación -->
-                        <div class="section-nav">
-                            <button class="btn btn--secondary btn--prev" data-prev="requirements">
-                                <i class="fas fa-arrow-left"></i>
-                                Anterior
-                            </button>
-                            <button class="btn btn--primary btn--next" data-next="interview">
-                                Siguiente: Entrevista IA
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- ===== SECCIÓN 4: ENTREVISTA IA ===== -->
-                    <section class="process-section" data-tab="interview">
-                        <div class="section-panel">
-                            <div class="section-panel__header">
-                                <div class="section-panel__icon">
-                                    <i class="fas fa-robot"></i>
-                                </div>
-                                <div class="section-panel__title">
-                                    <h2>Configuración de Entrevista IA</h2>
-                                    <p>Define cómo la IA entrevistará a los candidatos para este perfil</p>
-                                </div>
-                            </div>
-
-                            <div class="section-panel__body">
-                                <!-- Tipo de entrevista -->
-                                <div class="form-field">
-                                    <label class="form-label">Tipo de Entrevista</label>
-                                    <div class="interview-types">
-                                        <label class="interview-type">
-                                            <input type="radio" name="interviewType" value="technical">
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-code"></i>
-                                                <span class="interview-type__title">Técnica</span>
-                                                <span class="interview-type__desc">Enfocada en skills técnicos</span>
-                                            </div>
-                                        </label>
-                                        <label class="interview-type interview-type--selected">
-                                            <input type="radio" name="interviewType" value="competency" checked>
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-brain"></i>
-                                                <span class="interview-type__title">Competencias</span>
-                                                <span class="interview-type__desc">Soft skills y experiencia</span>
-                                            </div>
-                                        </label>
-                                        <label class="interview-type">
-                                            <input type="radio" name="interviewType" value="cultural">
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-handshake"></i>
-                                                <span class="interview-type__title">Cultural</span>
-                                                <span class="interview-type__desc">Fit cultural y valores</span>
-                                            </div>
-                                        </label>
-                                        <label class="interview-type">
-                                            <input type="radio" name="interviewType" value="mixed">
-                                            <div class="interview-type__content">
-                                                <i class="fas fa-layer-group"></i>
-                                                <span class="interview-type__title">Mixta</span>
-                                                <span class="interview-type__desc">Combinación de todas</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Duración -->
-                                <div class="form-grid form-grid--2">
-                                    <div class="form-field">
-                                        <label class="form-label">Duración Estimada</label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="interviewDuration">
-                                                <option value="15">15 minutos</option>
-                                                <option value="20" selected>20 minutos</option>
-                                                <option value="30">30 minutos</option>
-                                                <option value="45">45 minutos</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
-                                    <div class="form-field">
-                                        <label class="form-label">Idioma Principal</label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="interviewLanguage">
-                                                <option value="es" selected>Español</option>
-                                                <option value="en">Inglés</option>
-                                                <option value="auto">Detectar automáticamente</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Aspectos a evaluar -->
-                                <div class="form-field">
-                                    <label class="form-label">Aspectos a Evaluar en la Entrevista</label>
-                                    <div class="evaluation-aspects" id="evaluationAspects">
-                                        <div class="evaluation-aspect">
-                                            <input type="checkbox" id="aspectProblemSolving" checked>
-                                            <label for="aspectProblemSolving">
-                                                <i class="fas fa-lightbulb"></i>
-                                                Resolución de Problemas
-                                            </label>
-                                        </div>
-                                        <div class="evaluation-aspect">
-                                            <input type="checkbox" id="aspectCommunication" checked>
-                                            <label for="aspectCommunication">
-                                                <i class="fas fa-comment-dots"></i>
-                                                Comunicación
-                                            </label>
-                                        </div>
-                                        <div class="evaluation-aspect">
-                                            <input type="checkbox" id="aspectTeamwork" checked>
-                                            <label for="aspectTeamwork">
-                                                <i class="fas fa-users"></i>
-                                                Trabajo en Equipo
-                                            </label>
-                                        </div>
-                                        <div class="evaluation-aspect">
-                                            <input type="checkbox" id="aspectTechnical" checked>
-                                            <label for="aspectTechnical">
-                                                <i class="fas fa-cogs"></i>
-                                                Conocimiento Técnico
-                                            </label>
-                                        </div>
-                                        <div class="evaluation-aspect">
-                                            <input type="checkbox" id="aspectMotivation">
-                                            <label for="aspectMotivation">
-                                                <i class="fas fa-fire"></i>
-                                                Motivación
-                                            </label>
-                                        </div>
-                                        <div class="evaluation-aspect">
-                                            <input type="checkbox" id="aspectLeadership">
-                                            <label for="aspectLeadership">
-                                                <i class="fas fa-crown"></i>
-                                                Liderazgo
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Preguntas personalizadas -->
-                                <div class="form-field">
-                                    <label class="form-label">Preguntas Personalizadas (opcional)</label>
-                                    <span class="form-hint" style="display: block; margin-bottom: 0.75rem;">Añade preguntas específicas que la IA debe hacer a los candidatos</span>
-                                    <div id="customQuestions">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <button class="btn btn--add-requirement" id="addQuestionBtn">
-                                        <i class="fas fa-plus"></i>
-                                        Añadir pregunta personalizada
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navegación -->
-                        <div class="section-nav">
-                            <button class="btn btn--secondary btn--prev" data-prev="filtering">
-                                <i class="fas fa-arrow-left"></i>
-                                Anterior
-                            </button>
-                            <button class="btn btn--primary btn--next" data-next="documents">
-                                Siguiente: Documentos
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- ===== SECCIÓN 5: DOCUMENTOS ===== -->
-                    <section class="process-section" data-tab="documents">
-                        <div class="section-panel">
-                            <div class="section-panel__header">
-                                <div class="section-panel__icon">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <div class="section-panel__title">
-                                    <h2>Documentos del Puesto</h2>
-                                    <p>Sube documentos que describan el puesto o que la IA pueda usar como contexto</p>
-                                </div>
-                            </div>
-
-                            <div class="section-panel__body">
-                                <!-- Info -->
-                                <div class="info-box">
-                                    <div class="info-box__icon">
-                                        <i class="fas fa-lightbulb"></i>
-                                    </div>
-                                    <div class="info-box__content">
-                                        <h4>¿Para qué sirven estos documentos?</h4>
-                                        <p>Puedes subir la descripción oficial del puesto (PDF), documentos de la empresa, o cualquier material que ayude a la IA a entender mejor el contexto del puesto y evaluar mejor a los candidatos.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Zona de subida -->
-                                <div class="upload-zone" id="uploadZone">
-                                    <div class="upload-zone__content">
-                                        <div class="upload-zone__icon">
-                                            <i class="fas fa-cloud-upload-alt"></i>
-                                        </div>
-                                        <h3>Arrastra documentos aquí</h3>
-                                        <p>o haz clic para seleccionar archivos</p>
-                                        <span class="upload-zone__hint">PDF, DOC, DOCX, TXT - Máx. 10MB por archivo</span>
-                                    </div>
-                                    <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt" hidden>
-                                </div>
-
-                                <!-- Lista de documentos -->
-                                <div class="documents-list" id="documentsList">
-                                    <!-- Se añaden dinámicamente -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Acciones finales -->
-                        <div class="section-panel">
-                            <div class="section-panel__body">
-                                <div class="summary-actions" style="justify-content: flex-end;">
-                                    <button class="btn btn--secondary btn--large" id="cancelBtnFinal">
-                                        <i class="fas fa-times"></i>
-                                        Cancelar
-                                    </button>
-                                    <button class="btn btn--primary btn--large" id="saveBtnFinal">
-                                        <i class="fas fa-save"></i>
-                                        Guardar Perfil
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Navegación -->
-                        <div class="section-nav">
-                            <button class="btn btn--secondary btn--prev" data-prev="interview">
-                                <i class="fas fa-arrow-left"></i>
-                                Anterior
-                            </button>
-                            <div></div>
-                        </div>
-                    </section>
-
+                <!-- ACCIONES FINALES -->
+                <div class="editor-actions">
+                    <button class="btn btn--secondary" id="cancelBtnBottom">
+                        <i class="fas fa-times"></i>
+                        Cancelar
+                    </button>
+                    <button class="btn btn--primary" id="saveBtnBottom">
+                        <i class="fas fa-save"></i>
+                        Guardar Perfil
+                    </button>
                 </div>
             </div>
         </main>
@@ -984,40 +1110,8 @@
                 essential: [],
                 desired: [],
                 niceToHave: [],
-                languages: [],
-                customQuestions: [],
-                documents: []
+                languages: []
             };
-
-            // =====================================================
-            // Navegación de tabs
-            // =====================================================
-            const tabs = document.querySelectorAll('.velvz-config__tab');
-            const sections = document.querySelectorAll('.process-section');
-
-            function switchTab(tabId) {
-                tabs.forEach(t => t.classList.remove('velvz-config__tab--active'));
-                sections.forEach(s => s.classList.remove('process-section--active'));
-
-                const activeTab = document.querySelector(`.velvz-config__tab[data-tab="${tabId}"]`);
-                const activeSection = document.querySelector(`.process-section[data-tab="${tabId}"]`);
-
-                if (activeTab) activeTab.classList.add('velvz-config__tab--active');
-                if (activeSection) activeSection.classList.add('process-section--active');
-            }
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-            });
-
-            // Botones siguiente/anterior
-            document.querySelectorAll('.btn--next').forEach(btn => {
-                btn.addEventListener('click', () => switchTab(btn.dataset.next));
-            });
-
-            document.querySelectorAll('.btn--prev').forEach(btn => {
-                btn.addEventListener('click', () => switchTab(btn.dataset.prev));
-            });
 
             // =====================================================
             // Requisitos (tags)
@@ -1078,13 +1172,10 @@
             // Idiomas
             // =====================================================
             const languagesList = document.getElementById('languagesList');
-            let languageIdCounter = 0;
 
             function addLanguage(lang = '', level = 'professional') {
-                const id = languageIdCounter++;
                 const item = document.createElement('div');
                 item.className = 'language-item';
-                item.dataset.id = id;
                 item.innerHTML = `
                     <div class="form-select-wrapper">
                         <select class="form-select lang-select">
@@ -1114,10 +1205,7 @@
                     </button>
                 `;
 
-                item.querySelector('.language-item__remove').addEventListener('click', () => {
-                    item.remove();
-                });
-
+                item.querySelector('.language-item__remove').addEventListener('click', () => item.remove());
                 languagesList.appendChild(item);
             }
 
@@ -1127,128 +1215,7 @@
             addLanguage('es', 'native');
 
             // =====================================================
-            // Preguntas personalizadas
-            // =====================================================
-            const questionsContainer = document.getElementById('customQuestions');
-            let questionIdCounter = 0;
-
-            function addQuestion(text = '') {
-                const id = questionIdCounter++;
-                const item = document.createElement('div');
-                item.className = 'language-item';
-                item.dataset.id = id;
-                item.innerHTML = `
-                    <input type="text" class="form-input question-input" placeholder="Escribe la pregunta..." value="${text}">
-                    <button class="language-item__remove" title="Eliminar">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                `;
-
-                item.querySelector('.language-item__remove').addEventListener('click', () => {
-                    item.remove();
-                });
-
-                questionsContainer.appendChild(item);
-            }
-
-            document.getElementById('addQuestionBtn').addEventListener('click', () => addQuestion());
-
-            // =====================================================
-            // Modalidad (radio buttons styling)
-            // =====================================================
-            document.querySelectorAll('.interview-type input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', () => {
-                    const name = radio.name;
-                    document.querySelectorAll(`.interview-type input[name="${name}"]`).forEach(r => {
-                        r.closest('.interview-type').classList.remove('interview-type--selected');
-                    });
-                    radio.closest('.interview-type').classList.add('interview-type--selected');
-                });
-            });
-
-            // =====================================================
-            // Pesos de filtrado
-            // =====================================================
-            const weightInputs = ['weightExperience', 'weightSkills', 'weightEducation', 'weightLanguages'];
-            const weightValues = ['weightExpValue', 'weightSkillsValue', 'weightEducationValue', 'weightLanguagesValue'];
-
-            function updateWeights() {
-                let total = 0;
-                weightInputs.forEach((id, idx) => {
-                    const input = document.getElementById(id);
-                    const value = parseInt(input.value) || 0;
-                    document.getElementById(weightValues[idx]).textContent = value + '%';
-                    total += value;
-                });
-
-                const totalEl = document.getElementById('weightTotal');
-                totalEl.textContent = total + '%';
-                totalEl.style.color = total === 100 ? '#10b981' : '#ef4444';
-            }
-
-            weightInputs.forEach(id => {
-                document.getElementById(id).addEventListener('input', updateWeights);
-            });
-
-            // =====================================================
-            // Upload de documentos
-            // =====================================================
-            const uploadZone = document.getElementById('uploadZone');
-            const fileInput = document.getElementById('fileInput');
-            const documentsList = document.getElementById('documentsList');
-
-            uploadZone.addEventListener('click', () => fileInput.click());
-
-            uploadZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadZone.classList.add('upload-zone--dragover');
-            });
-
-            uploadZone.addEventListener('dragleave', () => {
-                uploadZone.classList.remove('upload-zone--dragover');
-            });
-
-            uploadZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadZone.classList.remove('upload-zone--dragover');
-                handleFiles(e.dataTransfer.files);
-            });
-
-            fileInput.addEventListener('change', () => handleFiles(fileInput.files));
-
-            function handleFiles(files) {
-                Array.from(files).forEach(file => {
-                    if (file.size > 10 * 1024 * 1024) {
-                        alert(`El archivo ${file.name} es demasiado grande (máx 10MB)`);
-                        return;
-                    }
-
-                    const docItem = document.createElement('div');
-                    docItem.className = 'document-item';
-                    docItem.innerHTML = `
-                        <div class="document-item__icon">
-                            <i class="fas fa-file-pdf"></i>
-                        </div>
-                        <div class="document-item__info">
-                            <span class="document-item__name">${file.name}</span>
-                            <span class="document-item__size">${(file.size / 1024).toFixed(1)} KB</span>
-                        </div>
-                        <button class="document-item__remove">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    `;
-
-                    docItem.querySelector('.document-item__remove').addEventListener('click', () => {
-                        docItem.remove();
-                    });
-
-                    documentsList.appendChild(docItem);
-                    profileData.documents.push(file);
-                });
-            }
-
-            // =====================================================
-            // Contador de caracteres descripción
+            // Contador de caracteres
             // =====================================================
             const descriptionInput = document.getElementById('jobDescription');
             const descriptionCount = document.getElementById('descriptionCount');
@@ -1264,11 +1231,10 @@
                 const name = document.getElementById('profileName').value.trim();
                 if (!name) {
                     alert('Por favor, introduce el nombre del puesto');
-                    switchTab('basic');
+                    document.getElementById('profileName').focus();
                     return;
                 }
 
-                // Recopilar todos los datos
                 const data = {
                     name: name,
                     department: document.getElementById('departmentSelect').value,
@@ -1288,24 +1254,7 @@
                     languages: Array.from(document.querySelectorAll('.language-item')).map(item => ({
                         language: item.querySelector('.lang-select').value,
                         level: item.querySelector('.level-select').value
-                    })).filter(l => l.language),
-                    filtering: {
-                        weights: {
-                            experience: parseInt(document.getElementById('weightExperience').value),
-                            skills: parseInt(document.getElementById('weightSkills').value),
-                            education: parseInt(document.getElementById('weightEducation').value),
-                            languages: parseInt(document.getElementById('weightLanguages').value)
-                        },
-                        maxCandidatesInterview: parseInt(document.getElementById('maxCandidatesInterview').value) || 20,
-                        autoRejectBelow: parseInt(document.getElementById('minScore').value) || 40
-                    },
-                    interview: {
-                        type: document.querySelector('input[name="interviewType"]:checked')?.value || 'competency',
-                        durationMinutes: parseInt(document.getElementById('interviewDuration').value) || 20,
-                        language: document.getElementById('interviewLanguage').value,
-                        evaluationAspects: Array.from(document.querySelectorAll('.evaluation-aspect input:checked')).map(cb => cb.id.replace('aspect', '').toLowerCase()),
-                        customQuestions: Array.from(document.querySelectorAll('.question-input')).map(i => i.value.trim()).filter(q => q)
-                    }
+                    })).filter(l => l.language)
                 };
 
                 console.log('Guardando perfil:', data);
@@ -1320,9 +1269,9 @@
             }
 
             document.getElementById('saveBtn').addEventListener('click', saveProfile);
-            document.getElementById('saveBtnFinal').addEventListener('click', saveProfile);
+            document.getElementById('saveBtnBottom').addEventListener('click', saveProfile);
             document.getElementById('cancelBtn').addEventListener('click', cancel);
-            document.getElementById('cancelBtnFinal').addEventListener('click', cancel);
+            document.getElementById('cancelBtnBottom').addEventListener('click', cancel);
 
             // =====================================================
             // Cargar perfil existente (si hay ?id= en URL)
@@ -1331,7 +1280,7 @@
             const profileId = urlParams.get('id');
 
             if (profileId) {
-                document.getElementById('profileTitle').textContent = 'Editar Perfil de Puesto';
+                document.getElementById('pageTitle').textContent = 'Editar Perfil';
                 document.getElementById('breadcrumbTitle').textContent = 'Editar Perfil';
                 // TODO: Cargar datos del perfil desde API
             }
