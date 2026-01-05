@@ -1667,19 +1667,23 @@ a.velvz-header__logo {
         grid-template-columns: 1fr;
         margin-top: 100px;
     }
-    
+
     .velvz-sidebar {
         display: none;
     }
-    
+
     .velvz-header__island--search {
         display: none;
     }
-    
+
+    .velvz-header__island--services {
+        display: none;
+    }
+
     .velvz-header__island--cta {
         display: none;
     }
-    
+
     .velvz-header__mobile-toggle {
         display: flex;
     }
