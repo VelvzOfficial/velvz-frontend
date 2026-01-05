@@ -396,6 +396,52 @@
             background: rgba(16, 185, 129, 0.15);
             color: #10b981;
         }
+
+        /* Info box sutil (para explicaciones secundarias) */
+        .info-box--subtle {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-box--subtle .info-box__icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-box--subtle .info-box__icon i {
+            color: #10b981;
+            font-size: 1rem;
+        }
+
+        .info-box--subtle h4 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem;
+        }
+
+        .info-box--subtle p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .info-box--subtle p strong {
+            color: #10b981;
+        }
     </style>
 </head>
 <body>
@@ -862,22 +908,22 @@
                             </div>
                         </div>
 
-                        <!-- Panel: Gestión del proceso -->
+                        <!-- Panel: Límite de candidaturas -->
                         <div class="section-panel">
                             <div class="section-panel__header">
                                 <div class="section-panel__icon">
-                                    <i class="fas fa-tasks"></i>
+                                    <i class="fas fa-inbox"></i>
                                 </div>
                                 <div class="section-panel__title">
-                                    <h2>Gestión del Proceso</h2>
-                                    <p>Configura cómo se gestionará el flujo de candidatos</p>
+                                    <h2>Límite de Candidaturas</h2>
+                                    <p>Gestiona la capacidad de recepción de este proceso</p>
                                 </div>
                             </div>
 
                             <div class="section-panel__body">
-                                <div class="form-grid form-grid--3">
+                                <div class="form-grid form-grid--2">
                                     <div class="form-field">
-                                        <label class="form-label">Candidatos máximos</label>
+                                        <label class="form-label">Candidaturas máximas</label>
                                         <div class="number-input-custom">
                                             <input type="number" class="form-input" id="maxCandidates" value="100" min="1">
                                             <div class="number-input-custom__controls">
@@ -889,39 +935,31 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <span class="form-hint">Límite de candidaturas a aceptar</span>
+                                        <span class="form-hint">Número máximo de CVs a recibir (por orden de llegada)</span>
                                     </div>
 
                                     <div class="form-field">
-                                        <label class="form-label">Candidatos a entrevistar</label>
-                                        <div class="number-input-custom">
-                                            <input type="number" class="form-input" id="interviewCandidates" value="20" min="1">
-                                            <div class="number-input-custom__controls">
-                                                <button type="button" class="number-input-custom__btn" data-action="increment">
-                                                    <i class="fas fa-chevron-up"></i>
-                                                </button>
-                                                <button type="button" class="number-input-custom__btn" data-action="decrement">
-                                                    <i class="fas fa-chevron-down"></i>
-                                                </button>
-                                            </div>
+                                        <label class="form-label">Al alcanzar el límite</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="limitAction">
+                                                <option value="close">Cerrar proceso automáticamente</option>
+                                                <option value="notify">Solo notificarme</option>
+                                                <option value="waitlist">Añadir a lista de espera</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
                                         </div>
-                                        <span class="form-hint">Candidatos que pasarán a entrevista IA</span>
+                                        <span class="form-hint">Qué hacer cuando se alcance el límite</span>
                                     </div>
+                                </div>
 
-                                    <div class="form-field">
-                                        <label class="form-label">Finalistas</label>
-                                        <div class="number-input-custom">
-                                            <input type="number" class="form-input" id="finalists" value="5" min="1">
-                                            <div class="number-input-custom__controls">
-                                                <button type="button" class="number-input-custom__btn" data-action="increment">
-                                                    <i class="fas fa-chevron-up"></i>
-                                                </button>
-                                                <button type="button" class="number-input-custom__btn" data-action="decrement">
-                                                    <i class="fas fa-chevron-down"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <span class="form-hint">Candidatos para revisión final</span>
+                                <!-- Info sobre el rol de la IA -->
+                                <div class="info-box info-box--subtle">
+                                    <div class="info-box__icon">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="info-box__content">
+                                        <h4>Rol de la IA en el proceso</h4>
+                                        <p>La IA analizará todos los CVs recibidos y te proporcionará un ranking con puntuaciones y recomendaciones. <strong>Tú decides</strong> qué candidatos pasan a cada fase. La decisión final siempre es humana.</p>
                                     </div>
                                 </div>
                             </div>
