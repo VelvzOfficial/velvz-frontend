@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfiles de Empresa - RRHH IA - Velvz</title>
+    <title>Perfiles de Puesto - RRHH IA - Velvz</title>
 
     <!-- Favicons -->
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -900,7 +900,7 @@
                     <span class="velvz-breadcrumbs__separator">
                         <i class="fas fa-chevron-right"></i>
                     </span>
-                    <span class="velvz-breadcrumbs__current">Perfiles de Empresa</span>
+                    <span class="velvz-breadcrumbs__current">Perfiles de Puesto</span>
                 </nav>
 
                 <!-- HERO SECTION -->
@@ -911,9 +911,9 @@
                                 <span class="profiles-hero__icon">
                                     <i class="fas fa-id-badge"></i>
                                 </span>
-                                Perfiles de Empresa
+                                Perfiles de Puesto
                             </h1>
-                            <p>Define y gestiona los perfiles ideales para tus procesos de selección</p>
+                            <p>Define una vez los puestos de tu empresa con todos sus requisitos, y reutilízalos en múltiples procesos de selección</p>
                         </div>
                         <button class="btn btn--primary" id="newProfileBtn">
                             <i class="fas fa-plus"></i>
@@ -1044,11 +1044,23 @@
             const profiles = [
                 {
                     id: 1,
-                    title: 'Desarrollador Backend',
+                    title: 'Desarrollador Backend Senior',
                     department: 'Tecnología',
                     description: 'Responsable del desarrollo y mantenimiento de APIs, servicios backend y bases de datos. Debe tener experiencia en arquitecturas escalables y mejores prácticas de desarrollo.',
-                    requirements: ['Python', 'SQL', 'APIs REST', 'Docker', 'Git', 'Testing'],
-                    salaryRange: '45.000€ - 65.000€',
+                    location: 'Madrid',
+                    modality: 'hybrid',
+                    salaryMin: 45000,
+                    salaryMax: 65000,
+                    minExperienceYears: 4,
+                    requirements: {
+                        essential: ['Python 3+', 'SQL avanzado', 'APIs REST', 'Docker', 'Git'],
+                        desired: ['AWS/GCP', 'Kubernetes', 'Testing (pytest)'],
+                        niceToHave: ['GraphQL', 'Redis', 'Elasticsearch']
+                    },
+                    languages: [
+                        { lang: 'Español', level: 'Nativo' },
+                        { lang: 'Inglés', level: 'Profesional (B2+)' }
+                    ],
                     processesUsed: 3,
                     candidatesTotal: 127,
                     avgMatchScore: 84,
@@ -1061,11 +1073,23 @@
                 },
                 {
                     id: 2,
-                    title: 'Desarrollador Frontend',
+                    title: 'Desarrollador Frontend Senior',
                     department: 'Tecnología',
                     description: 'Encargado del desarrollo de interfaces de usuario modernas y responsivas. Debe dominar frameworks de frontend y tener buen ojo para el diseño.',
-                    requirements: ['React', 'TypeScript', 'CSS/SASS', 'Testing', 'Git', 'Accesibilidad'],
-                    salaryRange: '40.000€ - 60.000€',
+                    location: 'Barcelona',
+                    modality: 'remote',
+                    salaryMin: 40000,
+                    salaryMax: 55000,
+                    minExperienceYears: 3,
+                    requirements: {
+                        essential: ['React 18+', 'TypeScript', 'CSS/SASS', 'Git'],
+                        desired: ['Next.js', 'Testing (Jest/Cypress)', 'Accesibilidad'],
+                        niceToHave: ['GraphQL', 'Diseño UI básico', 'Figma']
+                    },
+                    languages: [
+                        { lang: 'Español', level: 'Nativo' },
+                        { lang: 'Inglés', level: 'Conversacional (B1+)' }
+                    ],
                     processesUsed: 2,
                     candidatesTotal: 89,
                     avgMatchScore: 81,
@@ -1080,8 +1104,20 @@
                     title: 'Product Manager',
                     department: 'Producto',
                     description: 'Lidera la estrategia y roadmap de producto. Trabaja estrechamente con equipos técnicos y stakeholders para definir y priorizar funcionalidades.',
-                    requirements: ['Scrum', 'Analytics', 'Roadmapping', 'Stakeholder Management', 'SQL', 'Jira'],
-                    salaryRange: '55.000€ - 80.000€',
+                    location: 'Madrid',
+                    modality: 'hybrid',
+                    salaryMin: 55000,
+                    salaryMax: 80000,
+                    minExperienceYears: 5,
+                    requirements: {
+                        essential: ['Metodologías ágiles (Scrum)', 'Roadmapping', 'Stakeholder Management'],
+                        desired: ['Analytics (SQL básico)', 'Jira/Linear', 'User Research'],
+                        niceToHave: ['Background técnico', 'Experiencia B2B SaaS']
+                    },
+                    languages: [
+                        { lang: 'Español', level: 'Nativo' },
+                        { lang: 'Inglés', level: 'Profesional (C1)' }
+                    ],
                     processesUsed: 4,
                     candidatesTotal: 156,
                     avgMatchScore: 87,
@@ -1098,8 +1134,19 @@
                     title: 'Diseñador UX/UI',
                     department: 'Diseño',
                     description: 'Responsable del diseño de experiencias de usuario e interfaces visuales. Debe combinar creatividad con metodologías de investigación de usuarios.',
-                    requirements: ['Figma', 'User Research', 'Prototyping', 'Design Systems', 'Adobe Suite', 'HTML/CSS'],
-                    salaryRange: '38.000€ - 55.000€',
+                    location: 'Valencia',
+                    modality: 'onsite',
+                    salaryMin: 38000,
+                    salaryMax: 52000,
+                    minExperienceYears: 3,
+                    requirements: {
+                        essential: ['Figma', 'User Research', 'Prototyping', 'Design Systems'],
+                        desired: ['Adobe Suite', 'HTML/CSS básico', 'Usability Testing'],
+                        niceToHave: ['Motion design', 'Ilustración', 'Framer']
+                    },
+                    languages: [
+                        { lang: 'Español', level: 'Nativo' }
+                    ],
                     processesUsed: 1,
                     candidatesTotal: 64,
                     avgMatchScore: 79,
@@ -1119,6 +1166,18 @@
 
             const isMobile = () => window.innerWidth <= 768;
 
+            // Helper para formatear modalidad
+            function formatModality(mod) {
+                const labels = { onsite: 'Presencial', remote: 'Remoto', hybrid: 'Híbrido' };
+                return labels[mod] || mod;
+            }
+
+            // Helper para formatear salario
+            function formatSalary(min, max) {
+                const fmt = n => n >= 1000 ? Math.round(n/1000) + 'k' : n;
+                return `${fmt(min)} - ${fmt(max)}€`;
+            }
+
             function renderList(data) {
                 countElement.textContent = `${data.length} perfil${data.length !== 1 ? 'es' : ''}`;
 
@@ -1131,6 +1190,8 @@
                             <div class="profile-item__title">${p.title}</div>
                             <div class="profile-item__department">
                                 <i class="fas fa-building"></i> ${p.department}
+                                <span style="margin-left: 0.5rem; color: rgba(255,255,255,0.3);">|</span>
+                                <i class="fas fa-map-marker-alt" style="margin-left: 0.5rem;"></i> ${p.location}
                             </div>
                         </div>
                         <div class="profile-item__count">
@@ -1164,6 +1225,8 @@
                                 <i class="fas fa-building"></i> ${profile.department}
                             </p>
                             <div class="detail-header__meta">
+                                <span><i class="fas fa-map-marker-alt"></i> ${profile.location}</span>
+                                <span><i class="fas fa-laptop-house"></i> ${formatModality(profile.modality)}</span>
                                 <span><i class="fas fa-calendar"></i> Creado ${profile.createdDate}</span>
                             </div>
                         </div>
@@ -1171,14 +1234,74 @@
                             <button class="btn btn--primary">
                                 <i class="fas fa-plus"></i> Crear Proceso
                             </button>
-                            <button class="btn btn--secondary">
+                            <a href="/app/rrhh/profiles/editor.html?id=${profile.id}" class="btn btn--secondary">
                                 <i class="fas fa-edit"></i> Editar
-                            </button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Info rápida: salario + experiencia + idiomas -->
+                    <div class="detail-section">
+                        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="stat-card">
+                                <div class="stat-card__value" style="color: var(--rrhh-primary);">${formatSalary(profile.salaryMin, profile.salaryMax)}</div>
+                                <div class="stat-card__label">Salario bruto anual</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card__value">${profile.minExperienceYears}+ años</div>
+                                <div class="stat-card__label">Experiencia mínima</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card__value">${profile.languages.length}</div>
+                                <div class="stat-card__label">Idiomas requeridos</div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="detail-section">
-                        <h3 class="detail-section__title">Estadísticas</h3>
+                        <h3 class="detail-section__title">Descripción</h3>
+                        <div class="profile-description">
+                            ${profile.description}
+                        </div>
+                    </div>
+
+                    <!-- Requisitos esenciales -->
+                    <div class="detail-section">
+                        <h3 class="detail-section__title"><i class="fas fa-check-circle" style="color: #10b981; margin-right: 0.5rem;"></i>Requisitos Esenciales</h3>
+                        <div class="requirements-grid">
+                            ${profile.requirements.essential.map(req => `<span class="requirement-tag" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #34d399;">${req}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Requisitos deseables -->
+                    <div class="detail-section">
+                        <h3 class="detail-section__title"><i class="fas fa-star" style="color: #f59e0b; margin-right: 0.5rem;"></i>Requisitos Deseables</h3>
+                        <div class="requirements-grid">
+                            ${profile.requirements.desired.map(req => `<span class="requirement-tag" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24;">${req}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Nice to have -->
+                    ${profile.requirements.niceToHave.length > 0 ? `
+                    <div class="detail-section">
+                        <h3 class="detail-section__title"><i class="fas fa-plus-circle" style="color: #8b5cf6; margin-right: 0.5rem;"></i>Se Valorará</h3>
+                        <div class="requirements-grid">
+                            ${profile.requirements.niceToHave.map(req => `<span class="requirement-tag">${req}</span>`).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Idiomas -->
+                    <div class="detail-section">
+                        <h3 class="detail-section__title"><i class="fas fa-globe" style="color: #3b82f6; margin-right: 0.5rem;"></i>Idiomas</h3>
+                        <div class="requirements-grid">
+                            ${profile.languages.map(l => `<span class="requirement-tag" style="background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); color: #60a5fa;">${l.lang} - ${l.level}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Estadísticas de uso -->
+                    <div class="detail-section">
+                        <h3 class="detail-section__title">Estadísticas de Uso</h3>
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-card__value">${profile.processesUsed}</div>
@@ -1195,28 +1318,7 @@
                         </div>
                     </div>
 
-                    <div class="detail-section">
-                        <h3 class="detail-section__title">Descripción</h3>
-                        <div class="profile-description">
-                            ${profile.description}
-                        </div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h3 class="detail-section__title">Requisitos clave</h3>
-                        <div class="requirements-grid">
-                            ${profile.requirements.map(req => `<span class="requirement-tag">${req}</span>`).join('')}
-                        </div>
-                    </div>
-
-                    <div class="detail-section">
-                        <h3 class="detail-section__title">Rango Salarial</h3>
-                        <div class="salary-card">
-                            <div class="salary-card__range">${profile.salaryRange}</div>
-                            <div class="salary-card__label">Bruto anual</div>
-                        </div>
-                    </div>
-
+                    <!-- Procesos recientes -->
                     <div class="detail-section">
                         <h3 class="detail-section__title">Procesos que usan este perfil</h3>
                         <div class="process-list">
@@ -1282,13 +1384,16 @@
                 renderList(profiles.filter(p =>
                     p.title.toLowerCase().includes(query) ||
                     p.department.toLowerCase().includes(query) ||
-                    p.requirements.some(r => r.toLowerCase().includes(query))
+                    p.location.toLowerCase().includes(query) ||
+                    p.requirements.essential.some(r => r.toLowerCase().includes(query)) ||
+                    p.requirements.desired.some(r => r.toLowerCase().includes(query)) ||
+                    p.requirements.niceToHave.some(r => r.toLowerCase().includes(query))
                 ));
             });
 
-            // New profile button
+            // New profile button - ir al editor
             document.getElementById('newProfileBtn').addEventListener('click', () => {
-                alert('Modal de nuevo perfil - Por implementar');
+                window.location.href = '/app/rrhh/profiles/editor.html';
             });
 
             // Initial render
