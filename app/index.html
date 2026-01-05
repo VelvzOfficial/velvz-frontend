@@ -56,7 +56,7 @@
             z-index: -1;
         }
 
-        /* Canvas de partículas - fijo en el fondo */
+        /* Canvas de partículas - fijo en el fondo, transparente */
         #particleCanvas {
             position: fixed;
             top: 0;
@@ -67,6 +67,7 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.8s ease;
+            background: transparent !important;
         }
 
         #particleCanvas.visible {
@@ -191,7 +192,7 @@
         }
 
         /* =====================================================
-           CARRUSEL DE SERVICIOS
+           CARRUSEL DE SERVICIOS - FULLWIDTH CON FADE
            ===================================================== */
 
         .hub-services-section {
@@ -201,92 +202,122 @@
             align-items: center;
             justify-content: center;
             z-index: 1;
-            padding: 2rem;
+            padding: 2rem 0;
+            width: 100%;
         }
 
         .hub-services-carousel {
             position: relative;
             width: 100%;
-            max-width: 700px;
-            overflow: hidden;
-        }
-
-        .hub-services-track {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hub-service {
-            flex: 0 0 100%;
+            max-width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 1rem;
+        }
+
+        /* Contenedor central del contenido */
+        .hub-service-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hub-service {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        .hub-service.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .hub-service.exit-left {
+            opacity: 0;
+            transform: translateX(-60px);
+        }
+
+        .hub-service.exit-right {
+            opacity: 0;
+            transform: translateX(60px);
         }
 
         .hub-service__content {
             max-width: 600px;
             text-align: center;
-            opacity: 1;
         }
 
-        /* Flechas de navegación */
+        /* Flechas de navegación - fijas a los lados */
         .hub-carousel-nav {
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            z-index: 10;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.2rem;
+            z-index: 100;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.4rem;
         }
 
         .hub-carousel-nav:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             color: #fff;
             transform: translateY(-50%) scale(1.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .hub-carousel-nav--prev {
-            left: -80px;
+            left: 3rem;
         }
 
         .hub-carousel-nav--next {
-            right: -80px;
+            right: 3rem;
         }
 
-        .hub-carousel-nav:disabled,
         .hub-carousel-nav.disabled {
-            opacity: 0.3;
+            opacity: 0.2;
             cursor: not-allowed;
+            pointer-events: none;
         }
 
-        .hub-carousel-nav:disabled:hover,
-        .hub-carousel-nav.disabled:hover {
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Indicadores de puntos */
+        /* Indicadores de puntos debajo */
         .hub-carousel-dots {
+            position: absolute;
+            bottom: -3rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             justify-content: center;
             gap: 0.75rem;
-            margin-top: 2rem;
         }
 
         .hub-carousel-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             border: none;
@@ -300,7 +331,9 @@
 
         .hub-carousel-dot.active {
             background: var(--dot-color, #667eea);
-            box-shadow: 0 0 15px var(--dot-color, #667eea);
+            box-shadow: 0 0 12px var(--dot-color, #667eea);
+            width: 24px;
+            border-radius: 4px;
         }
 
         .hub-service__badge {
@@ -415,43 +448,6 @@
         }
 
         /* =====================================================
-           INDICADOR DE SCROLL / NAVEGACIÓN
-           ===================================================== */
-
-        .hub-nav {
-            position: fixed;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .hub-nav__dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 8px rgba(255,255,255,0.15);
-        }
-
-        .hub-nav__dot:hover {
-            background: rgba(255,255,255,0.4);
-            box-shadow: 0 0 12px rgba(255,255,255,0.3);
-        }
-
-        .hub-nav__dot.active {
-            background: var(--active-color, #667eea);
-            border-color: var(--active-color, #667eea);
-            box-shadow: 0 0 20px var(--active-color, #667eea);
-        }
-
-        /* =====================================================
            RESPONSIVE
            ===================================================== */
 
@@ -474,17 +470,22 @@
                 font-size: 2rem;
             }
 
-            .hub-nav {
-                right: 1rem;
-            }
-
-            .hub-nav__dot {
-                width: 10px;
-                height: 10px;
-            }
-
             .hub-hero__scroll-hint {
                 bottom: 2rem;
+            }
+
+            .hub-carousel-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .hub-carousel-nav--prev {
+                left: 1rem;
+            }
+
+            .hub-carousel-nav--next {
+                right: 1rem;
             }
         }
 
@@ -497,33 +498,19 @@
             z-index: 1;
         }
 
-        /* =====================================================
-           RESPONSIVE - CARRUSEL
-           ===================================================== */
+        @media (max-width: 500px) {
+            .hub-carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
 
-        @media (max-width: 900px) {
             .hub-carousel-nav--prev {
                 left: 0.5rem;
             }
 
             .hub-carousel-nav--next {
                 right: 0.5rem;
-            }
-
-            .hub-carousel-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hub-carousel-nav {
-                display: none;
-            }
-
-            .hub-services-carousel {
-                padding: 0;
             }
         }
     </style>
@@ -572,12 +559,6 @@
         </div>
     </header>
 
-    <!-- NAVEGACIÓN LATERAL -->
-    <nav class="hub-nav" id="hubNav">
-        <div class="hub-nav__dot active" data-section="hero" data-color="#ffffff"></div>
-        <div class="hub-nav__dot" data-section="services" data-color="#667eea"></div>
-    </nav>
-
     <!-- SECCIÓN HERO -->
     <section class="hub-section hub-hero" id="hero" data-color="none">
         <div class="hub-hero__content" id="heroContent">
@@ -593,16 +574,15 @@
 
     <!-- SECCIÓN SERVICIOS (CARRUSEL) -->
     <section class="hub-services-section" id="services">
-        <div class="hub-services-carousel">
-            <!-- Flecha izquierda -->
-            <button class="hub-carousel-nav hub-carousel-nav--prev disabled" id="carouselPrev">
-                <i class="fas fa-chevron-left"></i>
-            </button>
+        <!-- Flecha izquierda -->
+        <button class="hub-carousel-nav hub-carousel-nav--prev disabled" id="carouselPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
 
-            <!-- Track del carrusel -->
-            <div class="hub-services-track" id="servicesTrack">
+        <div class="hub-services-carousel">
+            <div class="hub-service-wrapper">
                 <!-- CHATBOTS -->
-                <div class="hub-service hub-service--chatbots" data-color="#667eea">
+                <div class="hub-service hub-service--chatbots active" data-index="0" data-color="#667eea">
                     <div class="hub-service__content">
                         <div class="hub-service__badge">
                             <i class="fas fa-robot"></i>
@@ -631,7 +611,7 @@
                 </div>
 
                 <!-- RRHH -->
-                <div class="hub-service hub-service--rrhh" data-color="#10b981">
+                <div class="hub-service hub-service--rrhh" data-index="1" data-color="#10b981">
                     <div class="hub-service__content">
                         <div class="hub-service__badge">
                             <i class="fas fa-users"></i>
@@ -658,19 +638,19 @@
                         </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Flecha derecha -->
-            <button class="hub-carousel-nav hub-carousel-nav--next" id="carouselNext">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-
-            <!-- Dots indicadores -->
-            <div class="hub-carousel-dots" id="carouselDots">
-                <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
-                <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
+                <!-- Dots indicadores -->
+                <div class="hub-carousel-dots" id="carouselDots">
+                    <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
+                    <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
+                </div>
             </div>
         </div>
+
+        <!-- Flecha derecha -->
+        <button class="hub-carousel-nav hub-carousel-nav--next" id="carouselNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </section>
 
     <!-- FOOTER (como última sección del scroll) -->
@@ -873,28 +853,51 @@
         animate();
 
         /* =====================================================
-           SCROLL DETECTION + CARRUSEL
+           SCROLL DETECTION + CARRUSEL FADE
            ===================================================== */
 
         const heroSection = document.getElementById('hero');
         const servicesSection = document.getElementById('services');
-        const navDots = document.querySelectorAll('.hub-nav__dot');
         const canvasEl = document.getElementById('particleCanvas');
 
         // Carrusel elements
-        const track = document.getElementById('servicesTrack');
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
         const carouselDots = document.querySelectorAll('.hub-carousel-dot');
         const services = document.querySelectorAll('.hub-service');
+        const wrapper = document.querySelector('.hub-service-wrapper');
         let currentSlide = 0;
         const totalSlides = services.length;
 
-        // Función para actualizar el carrusel
-        function updateCarousel() {
-            // Mover track
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Función para cambiar slide con fade
+        function goToSlide(newIndex, direction) {
+            if (newIndex === currentSlide || newIndex < 0 || newIndex >= totalSlides) return;
 
+            const currentService = services[currentSlide];
+            const nextService = services[newIndex];
+
+            // Determinar dirección de salida
+            const exitClass = direction === 'next' ? 'exit-left' : 'exit-right';
+
+            // Quitar active del actual y añadir clase de salida
+            currentService.classList.remove('active');
+            currentService.classList.add(exitClass);
+
+            // Preparar el siguiente para entrar desde el lado correcto
+            nextService.classList.remove('exit-left', 'exit-right');
+
+            // Pequeño delay para que la transición se vea
+            setTimeout(() => {
+                currentService.classList.remove(exitClass);
+                nextService.classList.add('active');
+            }, 50);
+
+            currentSlide = newIndex;
+            updateCarouselUI();
+        }
+
+        // Actualizar UI del carrusel (flechas, dots, color esfera)
+        function updateCarouselUI() {
             // Actualizar flechas
             prevBtn.classList.toggle('disabled', currentSlide === 0);
             nextBtn.classList.toggle('disabled', currentSlide === totalSlides - 1);
@@ -910,35 +913,25 @@
 
             // Cambiar color de la esfera según servicio actual
             targetColor = { ...serviceColors[currentSlide] };
-
-            // Actualizar color del nav dot de servicios
-            const servicesNavDot = document.querySelector('.hub-nav__dot[data-section="services"]');
-            if (servicesNavDot) {
-                const colors = ['#667eea', '#10b981'];
-                servicesNavDot.dataset.color = colors[currentSlide];
-                servicesNavDot.style.setProperty('--active-color', colors[currentSlide]);
-            }
         }
 
         // Event listeners del carrusel
         prevBtn.addEventListener('click', () => {
             if (currentSlide > 0) {
-                currentSlide--;
-                updateCarousel();
+                goToSlide(currentSlide - 1, 'prev');
             }
         });
 
         nextBtn.addEventListener('click', () => {
             if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateCarousel();
+                goToSlide(currentSlide + 1, 'next');
             }
         });
 
         carouselDots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
-                currentSlide = index;
-                updateCarousel();
+                const direction = index > currentSlide ? 'next' : 'prev';
+                goToSlide(index, direction);
             });
         });
 
@@ -946,20 +939,18 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
-        track.addEventListener('touchstart', (e) => {
+        wrapper.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
 
-        track.addEventListener('touchend', (e) => {
+        wrapper.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
             const diff = touchStartX - touchEndX;
             if (Math.abs(diff) > 50) {
                 if (diff > 0 && currentSlide < totalSlides - 1) {
-                    currentSlide++;
-                    updateCarousel();
+                    goToSlide(currentSlide + 1, 'next');
                 } else if (diff < 0 && currentSlide > 0) {
-                    currentSlide--;
-                    updateCarousel();
+                    goToSlide(currentSlide - 1, 'prev');
                 }
             }
         }, { passive: true });
@@ -981,33 +972,12 @@
                     } else if (sectionId === 'services') {
                         canvasEl.classList.add('visible');
                     }
-
-                    // Actualizar navegación lateral
-                    navDots.forEach(dot => {
-                        dot.classList.remove('active');
-                        if (dot.dataset.section === sectionId) {
-                            dot.classList.add('active');
-                            const dotColor = dot.dataset.color || '#667eea';
-                            dot.style.setProperty('--active-color', dotColor);
-                        }
-                    });
                 }
             });
         }, observerOptions);
 
         sectionObserver.observe(heroSection);
         sectionObserver.observe(servicesSection);
-
-        // Click en navegación lateral
-        navDots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const sectionId = dot.dataset.section;
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
 
         /* =====================================================
            RESPONSIVE
