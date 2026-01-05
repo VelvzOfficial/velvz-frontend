@@ -204,9 +204,6 @@ function navigateToSection(sectionNumber) {
         updateSummary();
     }
 
-    // Scroll al inicio de la sección
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
     console.log(`📍 Sección actual: ${currentSection}/${totalSections} (${currentTabName})`);
 }
 
