@@ -40,6 +40,168 @@
         .velvz-sidebar__link--active .velvz-sidebar__icon {
             color: #10b981 !important;
         }
+
+        /* Breadcrumbs hover verde */
+        .velvz-breadcrumbs__link:hover {
+            color: #10b981 !important;
+        }
+
+        /* Estilos para selector de perfil grande */
+        .form-select--large {
+            padding: 1rem 2.5rem 1rem 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Vista previa del perfil */
+        .profile-preview {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .profile-preview__header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-preview__header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0;
+        }
+
+        .profile-preview__dept {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .profile-preview__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .profile-preview__item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .profile-preview__item i {
+            color: #10b981;
+            width: 16px;
+        }
+
+        .profile-preview__requirements {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-preview__requirements h4 {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0 0 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-preview__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .profile-preview__tag {
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .profile-preview__tag--essential {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .profile-preview__tag--desired {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .profile-preview__tag--nice {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .profile-preview__edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: #10b981;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .profile-preview__edit:hover {
+            color: #059669;
+        }
+
+        /* Estado vacío del perfil */
+        .profile-empty {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .profile-empty__icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-empty__icon i {
+            font-size: 1.75rem;
+            color: #10b981;
+        }
+
+        .profile-empty h3 {
+            font-size: 1.25rem;
+            color: #fff;
+            margin: 0 0 0.5rem;
+        }
+
+        .profile-empty p {
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0 0 1.5rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -213,8 +375,8 @@
                 <div class="velvz-config__tabs">
                     <div class="velvz-config__tabs-nav">
                         <button class="velvz-config__tab velvz-config__tab--active" data-tab="position">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Puesto</span>
+                            <i class="fas fa-id-badge"></i>
+                            <span>Perfil</span>
                         </button>
                         <button class="velvz-config__tab" data-tab="filtering">
                             <i class="fas fa-filter"></i>
@@ -238,235 +400,136 @@
                 <!-- CONTENIDO DE LAS SECCIONES -->
                 <div class="process-editor__content">
 
-                    <!-- ===== SECCIÓN 1: PUESTO Y REQUISITOS ===== -->
+                    <!-- ===== SECCIÓN 1: SELECCIÓN DE PERFIL ===== -->
                     <section class="process-section process-section--active" data-tab="position">
 
-                        <!-- Panel: Información Básica -->
+                        <!-- Panel: Selección de Perfil -->
                         <div class="section-panel">
                             <div class="section-panel__header">
                                 <div class="section-panel__icon">
-                                    <i class="fas fa-briefcase"></i>
+                                    <i class="fas fa-id-badge"></i>
                                 </div>
                                 <div class="section-panel__title">
-                                    <h2>Información del Puesto</h2>
-                                    <p>Define los datos generales del proceso de selección</p>
+                                    <h2>Selección de Perfil</h2>
+                                    <p>Selecciona el perfil de puesto para este proceso de selección</p>
                                 </div>
                             </div>
 
                             <div class="section-panel__body">
-                                <!-- Perfil asociado -->
+                                <!-- Selector de perfil -->
                                 <div class="form-field">
                                     <label class="form-label">
-                                        Perfil de Empresa
+                                        Perfil de Puesto
                                         <span class="form-required">*</span>
                                     </label>
                                     <div class="form-select-wrapper">
-                                        <select class="form-select" id="profileSelect">
+                                        <select class="form-select form-select--large" id="profileSelect">
                                             <option value="">Selecciona un perfil existente...</option>
                                             <option value="new">+ Crear nuevo perfil</option>
                                         </select>
                                         <i class="fas fa-chevron-down form-select-icon"></i>
                                     </div>
-                                    <span class="form-hint">El perfil define el tipo de puesto y departamento</span>
+                                    <span class="form-hint">El perfil contiene toda la información del puesto (requisitos, salario, ubicación, etc.)</span>
                                 </div>
 
-                                <!-- Grid 2 columnas -->
-                                <div class="form-grid form-grid--2">
-                                    <div class="form-field">
-                                        <label class="form-label">
-                                            Título del Proceso
-                                            <span class="form-required">*</span>
-                                        </label>
-                                        <input type="text" class="form-input" id="processName" placeholder="Ej: Senior Backend Developer - Q1 2025">
+                                <!-- Vista previa del perfil seleccionado -->
+                                <div class="profile-preview" id="profilePreview" style="display: none;">
+                                    <div class="profile-preview__header">
+                                        <h3 id="previewTitle">-</h3>
+                                        <span class="profile-preview__dept" id="previewDept">-</span>
                                     </div>
-
-                                    <div class="form-field">
-                                        <label class="form-label">Departamento</label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="departmentSelect">
-                                                <option value="">Seleccionar...</option>
-                                                <option value="tech">Tecnología</option>
-                                                <option value="sales">Ventas</option>
-                                                <option value="marketing">Marketing</option>
-                                                <option value="hr">Recursos Humanos</option>
-                                                <option value="finance">Finanzas</option>
-                                                <option value="operations">Operaciones</option>
-                                                <option value="other">Otro</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                    <div class="profile-preview__grid">
+                                        <div class="profile-preview__item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span id="previewLocation">-</span>
+                                        </div>
+                                        <div class="profile-preview__item">
+                                            <i class="fas fa-building"></i>
+                                            <span id="previewModality">-</span>
+                                        </div>
+                                        <div class="profile-preview__item">
+                                            <i class="fas fa-euro-sign"></i>
+                                            <span id="previewSalary">-</span>
+                                        </div>
+                                        <div class="profile-preview__item">
+                                            <i class="fas fa-clock"></i>
+                                            <span id="previewExperience">-</span>
                                         </div>
                                     </div>
+                                    <div class="profile-preview__requirements">
+                                        <h4>Requisitos del Perfil</h4>
+                                        <div class="profile-preview__tags" id="previewRequirements">
+                                            <!-- Tags de requisitos -->
+                                        </div>
+                                    </div>
+                                    <a href="/app/rrhh/profiles/editor.html" class="profile-preview__edit" id="editProfileLink">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        Editar perfil
+                                    </a>
                                 </div>
 
-                                <!-- Grid 4 columnas -->
-                                <div class="form-grid form-grid--4">
-                                    <div class="form-field">
-                                        <label class="form-label">Modalidad</label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="modalitySelect">
-                                                <option value="remote">Remoto</option>
-                                                <option value="hybrid">Híbrido</option>
-                                                <option value="onsite">Presencial</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
+                                <!-- Mensaje cuando no hay perfil -->
+                                <div class="profile-empty" id="profileEmpty">
+                                    <div class="profile-empty__icon">
+                                        <i class="fas fa-id-badge"></i>
                                     </div>
-
-                                    <div class="form-field">
-                                        <label class="form-label">Ubicación</label>
-                                        <input type="text" class="form-input" id="locationInput" placeholder="Madrid, España">
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label class="form-label">Contrato</label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="contractSelect">
-                                                <option value="permanent">Indefinido</option>
-                                                <option value="temporary">Temporal</option>
-                                                <option value="freelance">Freelance</option>
-                                                <option value="internship">Prácticas</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-field">
-                                        <label class="form-label">Experiencia</label>
-                                        <div class="form-select-wrapper">
-                                            <select class="form-select" id="minExperience">
-                                                <option value="0">Sin experiencia</option>
-                                                <option value="1">1+ año</option>
-                                                <option value="2">2+ años</option>
-                                                <option value="3">3+ años</option>
-                                                <option value="5">5+ años</option>
-                                                <option value="7">7+ años</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Descripción del puesto -->
-                                <div class="form-field">
-                                    <label class="form-label">
-                                        Descripción del Puesto
-                                        <span class="form-required">*</span>
-                                    </label>
-                                    <textarea class="form-textarea" id="jobDescription" rows="4" placeholder="Describe el puesto, su importancia en la empresa, el equipo con el que trabajará, responsabilidades principales..."></textarea>
-                                    <div class="form-field__footer">
-                                        <span class="form-hint">Incluye responsabilidades, equipo y expectativas</span>
-                                        <span class="form-counter"><span id="descriptionCount">0</span>/2000</span>
-                                    </div>
-                                </div>
-
-                                <!-- Rango salarial -->
-                                <div class="form-field">
-                                    <label class="form-label">Rango Salarial (opcional)</label>
-                                    <div class="salary-range">
-                                        <div class="salary-range__input">
-                                            <span class="salary-range__currency">€</span>
-                                            <input type="number" class="form-input" id="salaryMin" placeholder="Mínimo">
-                                        </div>
-                                        <span class="salary-range__separator">-</span>
-                                        <div class="salary-range__input">
-                                            <span class="salary-range__currency">€</span>
-                                            <input type="number" class="form-input" id="salaryMax" placeholder="Máximo">
-                                        </div>
-                                        <div class="form-select-wrapper salary-range__period">
-                                            <select class="form-select" id="salaryPeriod">
-                                                <option value="year">/ año</option>
-                                                <option value="month">/ mes</option>
-                                            </select>
-                                            <i class="fas fa-chevron-down form-select-icon"></i>
-                                        </div>
-                                    </div>
+                                    <h3>Selecciona un perfil</h3>
+                                    <p>Elige un perfil de puesto existente o crea uno nuevo para configurar este proceso de selección.</p>
+                                    <a href="/app/rrhh/profiles/editor.html?new=1" class="btn btn--secondary">
+                                        <i class="fas fa-plus"></i>
+                                        Crear nuevo perfil
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Panel: Requisitos -->
+                        <!-- Panel: Configuración del Proceso -->
                         <div class="section-panel">
                             <div class="section-panel__header">
                                 <div class="section-panel__icon">
-                                    <i class="fas fa-list-check"></i>
+                                    <i class="fas fa-cog"></i>
                                 </div>
                                 <div class="section-panel__title">
-                                    <h2>Requisitos del Candidato</h2>
-                                    <p>Define qué necesitas del candidato ideal</p>
+                                    <h2>Configuración del Proceso</h2>
+                                    <p>Datos específicos de este proceso de selección</p>
                                 </div>
                             </div>
 
                             <div class="section-panel__body">
-                                <!-- Requisitos Esenciales -->
-                                <div class="requirements-block requirements-block--essential">
-                                    <div class="requirements-block__header">
-                                        <div class="requirements-block__icon">
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <div>
-                                            <h3>Requisitos Esenciales</h3>
-                                            <p>Sin estos requisitos, el candidato será descartado automáticamente</p>
-                                        </div>
+                                <div class="form-grid form-grid--2">
+                                    <div class="form-field">
+                                        <label class="form-label">
+                                            Nombre del Proceso
+                                            <span class="form-required">*</span>
+                                        </label>
+                                        <input type="text" class="form-input" id="processName" placeholder="Ej: Backend Developer - Enero 2025">
+                                        <span class="form-hint">Identifica este proceso de selección específico</span>
                                     </div>
-                                    <div class="requirements-list" id="essentialRequirements">
-                                        <!-- Se añaden dinámicamente -->
+
+                                    <div class="form-field">
+                                        <label class="form-label">Vacantes</label>
+                                        <input type="number" class="form-input" id="vacancies" value="1" min="1">
+                                        <span class="form-hint">Número de posiciones a cubrir</span>
                                     </div>
-                                    <button class="btn btn--add-requirement" id="addEssentialBtn">
-                                        <i class="fas fa-plus"></i>
-                                        Añadir requisito esencial
-                                    </button>
                                 </div>
 
-                                <!-- Requisitos Deseables -->
-                                <div class="requirements-block requirements-block--desired">
-                                    <div class="requirements-block__header">
-                                        <div class="requirements-block__icon">
-                                            <i class="fas fa-thumbs-up"></i>
-                                        </div>
-                                        <div>
-                                            <h3>Requisitos Deseables</h3>
-                                            <p>Puntos extra si el candidato los cumple, pero no son eliminatorios</p>
-                                        </div>
+                                <div class="form-grid form-grid--2">
+                                    <div class="form-field">
+                                        <label class="form-label">Fecha de Inicio</label>
+                                        <input type="date" class="form-input" id="startDate">
+                                        <span class="form-hint">Cuándo se abre el proceso</span>
                                     </div>
-                                    <div class="requirements-list" id="desiredRequirements">
-                                        <!-- Se añaden dinámicamente -->
+
+                                    <div class="form-field">
+                                        <label class="form-label">Fecha Límite</label>
+                                        <input type="date" class="form-input" id="endDate">
+                                        <span class="form-hint">Fecha límite para aplicar</span>
                                     </div>
-                                    <button class="btn btn--add-requirement" id="addDesiredBtn">
-                                        <i class="fas fa-plus"></i>
-                                        Añadir requisito deseable
-                                    </button>
                                 </div>
 
-                                <!-- Nice to Have -->
-                                <div class="requirements-block requirements-block--nice">
-                                    <div class="requirements-block__header">
-                                        <div class="requirements-block__icon">
-                                            <i class="fas fa-gift"></i>
-                                        </div>
-                                        <div>
-                                            <h3>Nice to Have</h3>
-                                            <p>Características que serían un plus pero no se esperan</p>
-                                        </div>
-                                    </div>
-                                    <div class="requirements-list" id="niceRequirements">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <button class="btn btn--add-requirement" id="addNiceBtn">
-                                        <i class="fas fa-plus"></i>
-                                        Añadir nice to have
-                                    </button>
-                                </div>
-
-                                <!-- Idiomas -->
-                                <div class="form-field" style="margin-top: 1.5rem;">
-                                    <label class="form-label">Idiomas Requeridos</label>
-                                    <div class="languages-list" id="languagesList">
-                                        <!-- Se añaden dinámicamente -->
-                                    </div>
-                                    <button class="btn btn--add-requirement" id="addLanguageBtn">
-                                        <i class="fas fa-plus"></i>
-                                        Añadir idioma
-                                    </button>
+                                <div class="form-field">
+                                    <label class="form-label">Notas Internas (opcional)</label>
+                                    <textarea class="form-textarea" id="internalNotes" rows="3" placeholder="Notas privadas sobre este proceso (solo visibles para el equipo de RRHH)"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -938,48 +1001,48 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                                 <div class="summary-grid">
                                     <div class="summary-card">
                                         <div class="summary-card__header">
-                                            <i class="fas fa-briefcase"></i>
-                                            <h3>Puesto</h3>
+                                            <i class="fas fa-id-badge"></i>
+                                            <h3>Perfil</h3>
                                             <button class="summary-card__edit" data-goto="position">
                                                 <i class="fas fa-pen"></i>
                                             </button>
                                         </div>
                                         <div class="summary-card__body">
                                             <div class="summary-item">
-                                                <span class="summary-item__label">Título:</span>
-                                                <span class="summary-item__value" id="summaryTitle">Sin definir</span>
+                                                <span class="summary-item__label">Perfil:</span>
+                                                <span class="summary-item__value" id="summaryProfile">Sin seleccionar</span>
                                             </div>
                                             <div class="summary-item">
                                                 <span class="summary-item__label">Departamento:</span>
-                                                <span class="summary-item__value" id="summaryDepartment">Sin definir</span>
+                                                <span class="summary-item__value" id="summaryDepartment">-</span>
                                             </div>
                                             <div class="summary-item">
-                                                <span class="summary-item__label">Modalidad:</span>
-                                                <span class="summary-item__value" id="summaryModality">Sin definir</span>
+                                                <span class="summary-item__label">Ubicación:</span>
+                                                <span class="summary-item__value" id="summaryLocation">-</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="summary-card">
                                         <div class="summary-card__header">
-                                            <i class="fas fa-list-check"></i>
-                                            <h3>Requisitos</h3>
+                                            <i class="fas fa-cog"></i>
+                                            <h3>Proceso</h3>
                                             <button class="summary-card__edit" data-goto="position">
                                                 <i class="fas fa-pen"></i>
                                             </button>
                                         </div>
                                         <div class="summary-card__body">
                                             <div class="summary-item">
-                                                <span class="summary-item__label">Esenciales:</span>
-                                                <span class="summary-item__value" id="summaryEssential">0</span>
+                                                <span class="summary-item__label">Nombre:</span>
+                                                <span class="summary-item__value" id="summaryTitle">Sin definir</span>
                                             </div>
                                             <div class="summary-item">
-                                                <span class="summary-item__label">Deseables:</span>
-                                                <span class="summary-item__value" id="summaryDesired">0</span>
+                                                <span class="summary-item__label">Vacantes:</span>
+                                                <span class="summary-item__value" id="summaryVacancies">1</span>
                                             </div>
                                             <div class="summary-item">
-                                                <span class="summary-item__label">Nice to have:</span>
-                                                <span class="summary-item__value" id="summaryNice">0</span>
+                                                <span class="summary-item__label">Fecha límite:</span>
+                                                <span class="summary-item__value" id="summaryDeadline">Sin definir</span>
                                             </div>
                                         </div>
                                     </div>
