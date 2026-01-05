@@ -51,6 +51,58 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("🔒 Inicializando dashboard privado...");
 
   // =====================================================
+  // CONFIGURAR MENÚ MÓVIL INMEDIATAMENTE (sin esperar auth)
+  // =====================================================
+  setupMobileMenuImmediate();
+
+  function setupMobileMenuImmediate() {
+    const mobileToggle = document.querySelector(".velvz-header__mobile-toggle");
+    const mobileMenu = document.querySelector(".velvz-header__mobile-menu");
+    const mobileBackdrop = document.querySelector(".velvz-header__mobile-backdrop");
+    const mobileClose = document.querySelector(".velvz-header__mobile-close");
+    const hamburger = document.querySelector(".velvz-header__hamburger");
+
+    console.log("🔧 setupMobileMenuImmediate - Toggle:", !!mobileToggle, "Menu:", !!mobileMenu);
+
+    if (!mobileToggle || !mobileMenu) {
+      console.log("⚠️ Elementos del menú móvil no encontrados");
+      return;
+    }
+
+    function openMenu() {
+      console.log("📱 Abriendo menú móvil");
+      mobileMenu.classList.add("velvz-header__mobile-menu--active");
+      if (mobileBackdrop) mobileBackdrop.classList.add("velvz-header__mobile-backdrop--active");
+      if (hamburger) hamburger.classList.add("velvz-header__hamburger--active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMenu() {
+      console.log("📱 Cerrando menú móvil");
+      mobileMenu.classList.remove("velvz-header__mobile-menu--active");
+      if (mobileBackdrop) mobileBackdrop.classList.remove("velvz-header__mobile-backdrop--active");
+      if (hamburger) hamburger.classList.remove("velvz-header__hamburger--active");
+      document.body.style.overflow = "";
+    }
+
+    mobileToggle.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openMenu();
+    });
+
+    if (mobileClose) {
+      mobileClose.addEventListener("click", closeMenu);
+    }
+
+    if (mobileBackdrop) {
+      mobileBackdrop.addEventListener("click", closeMenu);
+    }
+
+    console.log("✅ Menú móvil configurado correctamente");
+  }
+
+  // =====================================================
   // PROTECCIÓN DE ACCESO - VERIFICAR SESIÓN
   // =====================================================
 
@@ -601,7 +653,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const mobileClose = document.querySelector(".velvz-header__mobile-close");
     const hamburger = document.querySelector(".velvz-header__hamburger");
 
+    console.log("🔧 setupMobileMenu - Toggle encontrado:", !!mobileToggle);
+    console.log("🔧 setupMobileMenu - Menu encontrado:", !!mobileMenu);
+
     function openMobileMenu() {
+      console.log("📱 Abriendo menú móvil...");
       if (mobileMenu && mobileBackdrop && hamburger) {
         mobileMenu.classList.add("velvz-header__mobile-menu--active");
         mobileBackdrop.classList.add("velvz-header__mobile-backdrop--active");
@@ -611,6 +667,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function closeMobileMenu() {
+      console.log("📱 Cerrando menú móvil...");
       if (mobileMenu && mobileBackdrop && hamburger) {
         mobileMenu.classList.remove("velvz-header__mobile-menu--active");
         mobileBackdrop.classList.remove(
@@ -622,7 +679,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (mobileToggle) {
-      mobileToggle.addEventListener("click", openMobileMenu);
+      // Remover listeners previos para evitar duplicados
+      mobileToggle.replaceWith(mobileToggle.cloneNode(true));
+      const newToggle = document.querySelector(".velvz-header__mobile-toggle");
+      newToggle.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openMobileMenu();
+      });
+      console.log("✅ Event listener añadido al toggle móvil");
     }
 
     if (mobileClose) {
