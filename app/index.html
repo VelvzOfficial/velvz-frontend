@@ -86,6 +86,15 @@
             backdrop-filter: blur(20px);
         }
 
+        /* Search centrado en desktop */
+        .hub-search {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0 !important;
+            animation: none !important;
+        }
+
         /* =====================================================
            SECCIONES
            ===================================================== */
@@ -292,6 +301,12 @@
             pointer-events: auto;
         }
 
+        .hub-carousel-nav.visible.disabled {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+        }
+
         .hub-carousel-nav:hover {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
@@ -305,11 +320,6 @@
 
         .hub-carousel-nav--next {
             right: 3rem;
-        }
-
-        .hub-carousel-nav.disabled {
-            opacity: 0.3;
-            cursor: default;
         }
 
         /* Indicadores de puntos - dentro de la sección de servicios */
@@ -485,13 +495,17 @@
             }
 
             /* Header móvil - mostrar y posicionar correctamente */
+            .hub-search {
+                position: static !important;
+                left: auto !important;
+                transform: none !important;
+                flex: 1;
+                min-width: 100px;
+                max-width: none;
+            }
+
             .velvz-header--hub .velvz-header__island--search {
                 display: flex !important;
-                position: static !important;
-                transform: none !important;
-                min-width: 120px;
-                flex: 1;
-                max-width: 200px;
             }
 
             .velvz-header--hub .velvz-header__container {
@@ -536,7 +550,7 @@
             </div>
 
             <!-- SEARCH CENTRADO -->
-            <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
+            <div class="velvz-header__island velvz-header__island--search hub-search">
                 <div class="velvz-header__search">
                     <input
                         type="text"
@@ -740,11 +754,12 @@
         geo.setAttribute('color', new THREE.BufferAttribute(colAttr, 3));
 
         const mat = new THREE.PointsMaterial({
-            size: 0.25,
+            size: 0.35,
             transparent: true,
-            opacity: 0.9,
+            opacity: 1.0,
             vertexColors: true,
-            depthWrite: false
+            depthWrite: false,
+            sizeAttenuation: true
         });
 
         const pts = new THREE.Points(geo, mat);
@@ -757,12 +772,12 @@
            ===================================================== */
 
         const serviceColors = [
-            { h: 0.65, s: 0.75, l: 0.60 }, // Azul índigo - Chatbots
-            { h: 0.42, s: 0.85, l: 0.45 }  // Verde - RRHH
+            { h: 0.65, s: 0.85, l: 0.70 }, // Azul índigo - Chatbots (más brillante)
+            { h: 0.42, s: 0.90, l: 0.55 }  // Verde - RRHH (más brillante)
         ];
 
-        let currentColor = { h: 0.65, s: 0.75, l: 0.60 };
-        let targetColor = { h: 0.65, s: 0.75, l: 0.60 };
+        let currentColor = { h: 0.65, s: 0.85, l: 0.70 };
+        let targetColor = { h: 0.65, s: 0.85, l: 0.70 };
 
         function lerpColor(current, target, speed) {
             current.h += (target.h - current.h) * speed;
