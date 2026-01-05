@@ -16,23 +16,38 @@ const totalSections = 5;
 // INICIALIZACIÓN PRINCIPAL
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("🔧 DOM cargado, inicializando editor de procesos...");
 
-    // La autenticación ya la maneja app-dashboard.js
-    // Solo esperamos a que el sistema esté listo
-    await waitForDashboardAPI();
+    // Configurar navegación inmediatamente (no depende de la API)
+    setupTabNavigation();
+    setupEventListeners();
+    setupDynamicElements();
 
     // Obtener ID del proceso (si es edición)
     const processId = getProcessIdFromUrl();
 
-    try {
-        // Inicializar la aplicación
-        await initializeApp(processId);
-    } catch (error) {
-        console.error("❌ Error inicializando aplicación:", error);
-        showError("Error al cargar el editor: " + error.message);
-    }
+    // Las funciones que dependen de la API las ejecutamos después
+    waitForDashboardAPI().then(() => {
+        try {
+            setupWeightSliders();
+            setupFileUploads();
+
+            // Si hay ID, cargar proceso existente
+            if (processId) {
+                loadProcessData(processId);
+            } else {
+                // Nuevo proceso - inicializar valores por defecto
+                initializeNewProcess();
+            }
+
+            hideLoading();
+            console.log("✅ Editor inicializado correctamente");
+        } catch (error) {
+            console.error("❌ Error inicializando aplicación:", error);
+            hideLoading();
+        }
+    });
 });
 
 // =====================================================
@@ -53,14 +68,14 @@ function waitForDashboardAPI() {
                 clearInterval(checkInterval);
                 resolve();
             }
-        }, 100);
+        }, 50); // Más rápido
 
-        // Timeout de seguridad
+        // Timeout de seguridad más corto
         setTimeout(() => {
             clearInterval(checkInterval);
             console.warn("⚠️ Timeout esperando Dashboard API");
             resolve();
-        }, 5000);
+        }, 2000);
     });
 }
 

@@ -34,8 +34,7 @@
         }
 
         html {
-            scroll-snap-type: y mandatory;
-            overflow-y: scroll;
+            overflow-y: auto;
         }
 
         body {
@@ -43,6 +42,18 @@
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+        }
+
+        /* Fondo azul Velvz constante */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #1a1a3e 0%, #0f0f23 70%);
+            z-index: -1;
         }
 
         /* Canvas de partículas - fijo en el fondo */
@@ -74,19 +85,17 @@
         }
 
         /* =====================================================
-           SECCIONES CON SCROLL SNAP
+           SECCIONES
            ===================================================== */
 
         .hub-section {
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1;
             padding: 2rem;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
         }
 
         /* =====================================================
@@ -182,24 +191,116 @@
         }
 
         /* =====================================================
-           SECCIONES DE SERVICIOS
+           CARRUSEL DE SERVICIOS
            ===================================================== */
 
+        .hub-services-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .hub-services-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            overflow: hidden;
+        }
+
+        .hub-services-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .hub-service {
-            padding-top: 0;
+            flex: 0 0 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem;
         }
 
         .hub-service__content {
             max-width: 600px;
             text-align: center;
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 1;
         }
 
-        .hub-service__content.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
+        /* Flechas de navegación */
+        .hub-carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+        }
+
+        .hub-carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .hub-carousel-nav--prev {
+            left: -80px;
+        }
+
+        .hub-carousel-nav--next {
+            right: -80px;
+        }
+
+        .hub-carousel-nav:disabled,
+        .hub-carousel-nav.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .hub-carousel-nav:disabled:hover,
+        .hub-carousel-nav.disabled:hover {
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Indicadores de puntos */
+        .hub-carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .hub-carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hub-carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .hub-carousel-dot.active {
+            background: var(--dot-color, #667eea);
+            box-shadow: 0 0 15px var(--dot-color, #667eea);
         }
 
         .hub-service__badge {
@@ -394,7 +495,36 @@
         .hub-footer-section {
             position: relative;
             z-index: 1;
-            scroll-snap-align: end;
+        }
+
+        /* =====================================================
+           RESPONSIVE - CARRUSEL
+           ===================================================== */
+
+        @media (max-width: 900px) {
+            .hub-carousel-nav--prev {
+                left: 0.5rem;
+            }
+
+            .hub-carousel-nav--next {
+                right: 0.5rem;
+            }
+
+            .hub-carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hub-carousel-nav {
+                display: none;
+            }
+
+            .hub-services-carousel {
+                padding: 0;
+            }
         }
     </style>
 </head>
@@ -445,8 +575,7 @@
     <!-- NAVEGACIÓN LATERAL -->
     <nav class="hub-nav" id="hubNav">
         <div class="hub-nav__dot active" data-section="hero" data-color="#ffffff"></div>
-        <div class="hub-nav__dot" data-section="chatbots" data-color="#667eea"></div>
-        <div class="hub-nav__dot" data-section="rrhh" data-color="#10b981"></div>
+        <div class="hub-nav__dot" data-section="services" data-color="#667eea"></div>
     </nav>
 
     <!-- SECCIÓN HERO -->
@@ -462,61 +591,85 @@
         </div>
     </section>
 
-    <!-- SECCIÓN CHATBOTS -->
-    <section class="hub-section hub-service hub-service--chatbots" id="chatbots" data-color="#667eea">
-        <div class="hub-service__content">
-            <div class="hub-service__badge">
-                <i class="fas fa-robot"></i>
-                <span>Servicio Activo</span>
-            </div>
-            <h2 class="hub-service__title">Chatbots IA</h2>
-            <p class="hub-service__description">
-                Crea asistentes virtuales inteligentes entrenados con tus documentos.
-                Responden preguntas de clientes 24/7 con la personalidad de tu marca.
-            </p>
-            <div class="hub-service__stats">
-                <div class="hub-service__stat">
-                    <div class="hub-service__stat-value" id="chatbotsCount">-</div>
-                    <div class="hub-service__stat-label">Chatbots</div>
-                </div>
-                <div class="hub-service__stat">
-                    <div class="hub-service__stat-value" id="conversationsCount">-</div>
-                    <div class="hub-service__stat-label">Conversaciones</div>
-                </div>
-            </div>
-            <a href="/app/chatbots/dashboard.html" class="hub-service__cta">
-                <span>Ir a Chatbots</span>
-                <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
+    <!-- SECCIÓN SERVICIOS (CARRUSEL) -->
+    <section class="hub-services-section" id="services">
+        <div class="hub-services-carousel">
+            <!-- Flecha izquierda -->
+            <button class="hub-carousel-nav hub-carousel-nav--prev disabled" id="carouselPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
 
-    <!-- SECCIÓN RRHH -->
-    <section class="hub-section hub-service hub-service--rrhh" id="rrhh" data-color="#10b981">
-        <div class="hub-service__content">
-            <div class="hub-service__badge">
-                <i class="fas fa-users"></i>
-                <span>Próximamente</span>
-            </div>
-            <h2 class="hub-service__title">RRHH IA</h2>
-            <p class="hub-service__description">
-                Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
-                dinámicos y encuentra el talento ideal para tu empresa.
-            </p>
-            <div class="hub-service__stats">
-                <div class="hub-service__stat">
-                    <div class="hub-service__stat-value" id="rrhhProcessesCount">0</div>
-                    <div class="hub-service__stat-label">Procesos</div>
+            <!-- Track del carrusel -->
+            <div class="hub-services-track" id="servicesTrack">
+                <!-- CHATBOTS -->
+                <div class="hub-service hub-service--chatbots" data-color="#667eea">
+                    <div class="hub-service__content">
+                        <div class="hub-service__badge">
+                            <i class="fas fa-robot"></i>
+                            <span>Servicio Activo</span>
+                        </div>
+                        <h2 class="hub-service__title">Chatbots IA</h2>
+                        <p class="hub-service__description">
+                            Crea asistentes virtuales inteligentes entrenados con tus documentos.
+                            Responden preguntas de clientes 24/7 con la personalidad de tu marca.
+                        </p>
+                        <div class="hub-service__stats">
+                            <div class="hub-service__stat">
+                                <div class="hub-service__stat-value" id="chatbotsCount">0</div>
+                                <div class="hub-service__stat-label">Chatbots</div>
+                            </div>
+                            <div class="hub-service__stat">
+                                <div class="hub-service__stat-value" id="conversationsCount">0</div>
+                                <div class="hub-service__stat-label">Conversaciones</div>
+                            </div>
+                        </div>
+                        <a href="/app/chatbots/dashboard.html" class="hub-service__cta">
+                            <span>Ir a Chatbots</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="hub-service__stat">
-                    <div class="hub-service__stat-value" id="rrhhCandidatesCount">0</div>
-                    <div class="hub-service__stat-label">Candidatos</div>
+
+                <!-- RRHH -->
+                <div class="hub-service hub-service--rrhh" data-color="#10b981">
+                    <div class="hub-service__content">
+                        <div class="hub-service__badge">
+                            <i class="fas fa-users"></i>
+                            <span>Servicio Activo</span>
+                        </div>
+                        <h2 class="hub-service__title">RRHH IA</h2>
+                        <p class="hub-service__description">
+                            Automatiza el filtrado de candidatos con IA. Analiza CVs, genera formularios
+                            dinámicos y encuentra el talento ideal para tu empresa.
+                        </p>
+                        <div class="hub-service__stats">
+                            <div class="hub-service__stat">
+                                <div class="hub-service__stat-value" id="rrhhProcessesCount">0</div>
+                                <div class="hub-service__stat-label">Procesos</div>
+                            </div>
+                            <div class="hub-service__stat">
+                                <div class="hub-service__stat-value" id="rrhhCandidatesCount">0</div>
+                                <div class="hub-service__stat-label">Candidatos</div>
+                            </div>
+                        </div>
+                        <a href="/app/rrhh/" class="hub-service__cta">
+                            <span>Ir a RRHH</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <a href="/app/rrhh/" class="hub-service__cta">
-                <span>Ir a RRHH</span>
-                <i class="fas fa-arrow-right"></i>
-            </a>
+
+            <!-- Flecha derecha -->
+            <button class="hub-carousel-nav hub-carousel-nav--next" id="carouselNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <!-- Dots indicadores -->
+            <div class="hub-carousel-dots" id="carouselDots">
+                <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
+                <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
+            </div>
         </div>
     </section>
 
@@ -637,13 +790,13 @@
         scene.add(pts);
 
         /* =====================================================
-           COLORES POR SECCIÓN
+           COLORES POR SERVICIO
            ===================================================== */
 
-        const sectionColors = {
-            chatbots: { h: 0.65, s: 0.75, l: 0.60 }, // Azul índigo
-            rrhh: { h: 0.42, s: 0.85, l: 0.45 }      // Verde
-        };
+        const serviceColors = [
+            { h: 0.65, s: 0.75, l: 0.60 }, // Azul índigo - Chatbots
+            { h: 0.42, s: 0.85, l: 0.45 }  // Verde - RRHH
+        ];
 
         let currentColor = { h: 0.65, s: 0.75, l: 0.60 };
         let targetColor = { h: 0.65, s: 0.75, l: 0.60 };
@@ -720,66 +873,130 @@
         animate();
 
         /* =====================================================
-           SCROLL DETECTION
+           SCROLL DETECTION + CARRUSEL
            ===================================================== */
 
-        const sections = document.querySelectorAll('.hub-section');
+        const heroSection = document.getElementById('hero');
+        const servicesSection = document.getElementById('services');
         const navDots = document.querySelectorAll('.hub-nav__dot');
         const canvasEl = document.getElementById('particleCanvas');
 
+        // Carrusel elements
+        const track = document.getElementById('servicesTrack');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const carouselDots = document.querySelectorAll('.hub-carousel-dot');
+        const services = document.querySelectorAll('.hub-service');
+        let currentSlide = 0;
+        const totalSlides = services.length;
+
+        // Función para actualizar el carrusel
+        function updateCarousel() {
+            // Mover track
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Actualizar flechas
+            prevBtn.classList.toggle('disabled', currentSlide === 0);
+            nextBtn.classList.toggle('disabled', currentSlide === totalSlides - 1);
+
+            // Actualizar dots del carrusel
+            carouselDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+                if (index === currentSlide) {
+                    const dotColor = dot.dataset.color || '#667eea';
+                    dot.style.setProperty('--dot-color', dotColor);
+                }
+            });
+
+            // Cambiar color de la esfera según servicio actual
+            targetColor = { ...serviceColors[currentSlide] };
+
+            // Actualizar color del nav dot de servicios
+            const servicesNavDot = document.querySelector('.hub-nav__dot[data-section="services"]');
+            if (servicesNavDot) {
+                const colors = ['#667eea', '#10b981'];
+                servicesNavDot.dataset.color = colors[currentSlide];
+                servicesNavDot.style.setProperty('--active-color', colors[currentSlide]);
+            }
+        }
+
+        // Event listeners del carrusel
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateCarousel();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateCarousel();
+            }
+        });
+
+        carouselDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+
+        // Swipe support para móvil
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                } else if (diff < 0 && currentSlide > 0) {
+                    currentSlide--;
+                    updateCarousel();
+                }
+            }
+        }, { passive: true });
+
+        // Observer para mostrar/ocultar esfera
         const observerOptions = {
             root: null,
-            threshold: 0.6
+            threshold: 0.5
         };
 
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const sectionId = entry.target.id;
-                    const sectionColor = entry.target.dataset.color;
 
                     // Mostrar/ocultar esfera según sección
                     if (sectionId === 'hero') {
-                        // Hero: ocultar esfera
                         canvasEl.classList.remove('visible');
-                    } else {
-                        // Servicios: mostrar esfera
+                    } else if (sectionId === 'services') {
                         canvasEl.classList.add('visible');
-
-                        // Cambiar color de la esfera
-                        if (sectionColors[sectionId]) {
-                            targetColor = { ...sectionColors[sectionId] };
-                        }
                     }
 
-                    // Actualizar navegación
+                    // Actualizar navegación lateral
                     navDots.forEach(dot => {
                         dot.classList.remove('active');
                         if (dot.dataset.section === sectionId) {
                             dot.classList.add('active');
-                            // Usar el color del data-color del dot (blanco para hero)
                             const dotColor = dot.dataset.color || '#667eea';
                             dot.style.setProperty('--active-color', dotColor);
                         }
                     });
-
-                    // Ocultar contenidos de servicios no visibles
-                    document.querySelectorAll('.hub-service__content').forEach(content => {
-                        content.classList.remove('visible');
-                    });
-
-                    // Mostrar contenido de servicio actual
-                    const content = entry.target.querySelector('.hub-service__content');
-                    if (content) {
-                        setTimeout(() => {
-                            content.classList.add('visible');
-                        }, 100);
-                    }
                 }
             });
         }, observerOptions);
 
-        sections.forEach(section => sectionObserver.observe(section));
+        sectionObserver.observe(heroSection);
+        sectionObserver.observe(servicesSection);
 
         // Click en navegación lateral
         navDots.forEach(dot => {
