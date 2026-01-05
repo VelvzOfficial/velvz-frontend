@@ -202,6 +202,200 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        /* =====================================================
+           INPUT NUMBER CUSTOM
+           ===================================================== */
+        .number-input-custom {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .number-input-custom input {
+            flex: 1;
+            padding-right: 3rem;
+            -moz-appearance: textfield;
+        }
+
+        .number-input-custom input::-webkit-outer-spin-button,
+        .number-input-custom input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .number-input-custom__controls {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            width: 2.5rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .number-input-custom__btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .number-input-custom__btn:hover {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .number-input-custom__btn:active {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        .number-input-custom__btn:first-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 8px 0 0;
+        }
+
+        .number-input-custom__btn:last-child {
+            border-radius: 0 0 8px 0;
+        }
+
+        .number-input-custom__btn i {
+            font-size: 0.7rem;
+        }
+
+        /* =====================================================
+           INFO BOX LEGAL
+           ===================================================== */
+        .section-panel--info {
+            padding: 0;
+        }
+
+        .section-panel--info .info-box {
+            margin: 0;
+        }
+
+        .info-box--legal {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-box--legal .info-box__icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-box--legal .info-box__icon i {
+            color: #10b981;
+            font-size: 1.1rem;
+        }
+
+        .info-box--legal h4 {
+            color: #10b981;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0 0 0.35rem;
+        }
+
+        .info-box--legal p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           PROFILE CRITERIA (vista previa del perfil en filtrado)
+           ===================================================== */
+        .profile-criteria__empty {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .profile-criteria__empty i {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .profile-criteria__content {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .profile-criteria__row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .profile-criteria__item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .profile-criteria__item-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-criteria__item-label i {
+            color: #10b981;
+            font-size: 0.75rem;
+        }
+
+        .profile-criteria__item-value {
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .profile-criteria__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .profile-criteria__tag {
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
     </style>
 </head>
 <body>
@@ -508,7 +702,17 @@
 
                                     <div class="form-field">
                                         <label class="form-label">Vacantes</label>
-                                        <input type="number" class="form-input" id="vacancies" value="1" min="1">
+                                        <div class="number-input-custom">
+                                            <input type="number" class="form-input" id="vacancies" value="1" min="1">
+                                            <div class="number-input-custom__controls">
+                                                <button type="button" class="number-input-custom__btn" data-action="increment">
+                                                    <i class="fas fa-chevron-up"></i>
+                                                </button>
+                                                <button type="button" class="number-input-custom__btn" data-action="decrement">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                         <span class="form-hint">Número de posiciones a cubrir</span>
                                     </div>
                                 </div>
@@ -546,134 +750,229 @@
 
                     <!-- ===== SECCIÓN 2: FILTRADO ===== -->
                     <section class="process-section" data-tab="filtering">
+
+                        <!-- Panel: Info legal -->
+                        <div class="section-panel section-panel--info">
+                            <div class="info-box info-box--legal">
+                                <div class="info-box__icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="info-box__content">
+                                    <h4>Filtrado basado en criterios objetivos</h4>
+                                    <p>Los criterios de filtrado disponibles cumplen con la normativa de igualdad de oportunidades. Solo se evalúan cualificaciones profesionales relevantes para el puesto.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel: Criterios de filtrado del perfil -->
                         <div class="section-panel">
                             <div class="section-panel__header">
                                 <div class="section-panel__icon">
-                                    <i class="fas fa-filter"></i>
+                                    <i class="fas fa-clipboard-check"></i>
                                 </div>
                                 <div class="section-panel__title">
-                                    <h2>Configuración de Filtrado</h2>
-                                    <p>Define cómo la IA filtrará y priorizará candidatos</p>
+                                    <h2>Criterios del Perfil</h2>
+                                    <p>Estos criterios se heredan del perfil seleccionado y se usarán para filtrar candidatos</p>
                                 </div>
                             </div>
 
                             <div class="section-panel__body">
-                                <!-- Límites de candidatos -->
-                                <div class="filtering-card">
-                                    <div class="filtering-card__header">
-                                        <i class="fas fa-users"></i>
-                                        <h3>Límites de Candidatos</h3>
+                                <!-- Resumen de criterios del perfil (solo lectura) -->
+                                <div class="profile-criteria" id="profileCriteria">
+                                    <div class="profile-criteria__empty">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span>Selecciona un perfil en la pestaña anterior para ver los criterios de filtrado</span>
                                     </div>
-                                    <div class="filtering-card__body">
-                                        <div class="form-grid form-grid--3">
-                                            <div class="form-field">
-                                                <label class="form-label">Candidatos Máximos</label>
-                                                <input type="number" class="form-input" id="maxCandidates" placeholder="100" value="100">
-                                                <span class="form-hint">Total de candidatos a aceptar</span>
-                                            </div>
-                                            <div class="form-field">
-                                                <label class="form-label">Descarte Inicial (%)</label>
-                                                <input type="number" class="form-input" id="initialDiscard" placeholder="50" value="50" min="0" max="100">
-                                                <span class="form-hint">% a descartar tras análisis de CV</span>
-                                            </div>
-                                            <div class="form-field">
-                                                <label class="form-label">Finalistas</label>
-                                                <input type="number" class="form-input" id="finalists" placeholder="10" value="10">
-                                                <span class="form-hint">Candidatos para fase final</span>
-                                            </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel: Requisitos legales -->
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-gavel"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Requisitos Legales</h2>
+                                    <p>Criterios adicionales relacionados con permisos y disponibilidad</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <div class="form-grid form-grid--2">
+                                    <div class="form-field">
+                                        <label class="form-label">Permiso de trabajo</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="workPermit">
+                                                <option value="not_required">No requerido</option>
+                                                <option value="spain">Permiso de trabajo en España</option>
+                                                <option value="eu">Permiso de trabajo en la UE</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
                                         </div>
+                                        <span class="form-hint">Solo si es requisito legal para el puesto</span>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Disponibilidad de incorporación</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="availability">
+                                                <option value="any">Cualquier momento</option>
+                                                <option value="immediate">Inmediata</option>
+                                                <option value="15days">En 15 días</option>
+                                                <option value="1month">En 1 mes</option>
+                                                <option value="2months">En 2 meses</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                        <span class="form-hint">Tiempo máximo para incorporarse</span>
                                     </div>
                                 </div>
 
-                                <!-- Pesos de evaluación -->
-                                <div class="filtering-card">
-                                    <div class="filtering-card__header">
-                                        <i class="fas fa-balance-scale"></i>
-                                        <h3>Pesos de Evaluación</h3>
+                                <div class="form-grid form-grid--2">
+                                    <div class="form-field">
+                                        <label class="form-label">Disponibilidad para viajar</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="travelAvailability">
+                                                <option value="not_required">No requerido</option>
+                                                <option value="occasional">Ocasional (< 25%)</option>
+                                                <option value="frequent">Frecuente (25-50%)</option>
+                                                <option value="high">Alta (> 50%)</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
+                                        </div>
+                                        <span class="form-hint">Solo si el puesto lo requiere</span>
                                     </div>
-                                    <div class="filtering-card__body">
-                                        <p class="filtering-card__description">Ajusta la importancia de cada factor en la puntuación final</p>
 
-                                        <div class="weight-sliders">
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Experiencia Relevante</span>
-                                                    <span class="weight-slider__value" id="weightExpValue">30%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightExperience" min="0" max="100" value="30">
-                                            </div>
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Habilidades Técnicas</span>
-                                                    <span class="weight-slider__value" id="weightSkillsValue">25%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightSkills" min="0" max="100" value="25">
-                                            </div>
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Formación Académica</span>
-                                                    <span class="weight-slider__value" id="weightEducationValue">15%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightEducation" min="0" max="100" value="15">
-                                            </div>
-                                            <div class="weight-slider">
-                                                <div class="weight-slider__header">
-                                                    <span class="weight-slider__label">Entrevista IA</span>
-                                                    <span class="weight-slider__value" id="weightInterviewValue">30%</span>
-                                                </div>
-                                                <input type="range" class="weight-slider__input" id="weightInterview" min="0" max="100" value="30">
-                                            </div>
+                                    <div class="form-field">
+                                        <label class="form-label">Carnet de conducir</label>
+                                        <div class="form-select-wrapper">
+                                            <select class="form-select" id="drivingLicense">
+                                                <option value="not_required">No requerido</option>
+                                                <option value="b">Tipo B (coche)</option>
+                                                <option value="c">Tipo C (camión)</option>
+                                                <option value="d">Tipo D (autobús)</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down form-select-icon"></i>
                                         </div>
-
-                                        <div class="weight-total">
-                                            <span>Total:</span>
-                                            <span id="weightTotal" class="weight-total__value">100%</span>
-                                        </div>
+                                        <span class="form-hint">Solo si es necesario para el puesto</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Opciones de filtrado -->
-                                <div class="filtering-card">
-                                    <div class="filtering-card__header">
-                                        <i class="fas fa-sliders-h"></i>
-                                        <h3>Opciones Adicionales</h3>
-                                    </div>
-                                    <div class="filtering-card__body">
-                                        <div class="toggle-options">
-                                            <label class="toggle-option">
-                                                <input type="checkbox" id="autoReject" checked>
-                                                <span class="toggle-option__slider"></span>
-                                                <div class="toggle-option__content">
-                                                    <span class="toggle-option__label">Rechazo automático</span>
-                                                    <span class="toggle-option__hint">Rechazar automáticamente candidatos sin requisitos esenciales</span>
-                                                </div>
-                                            </label>
-                                            <label class="toggle-option">
-                                                <input type="checkbox" id="cvRequired" checked>
-                                                <span class="toggle-option__slider"></span>
-                                                <div class="toggle-option__content">
-                                                    <span class="toggle-option__label">CV obligatorio</span>
-                                                    <span class="toggle-option__hint">Requerir currículum para aplicar al proceso</span>
-                                                </div>
-                                            </label>
-                                            <label class="toggle-option">
-                                                <input type="checkbox" id="coverLetterRequired">
-                                                <span class="toggle-option__slider"></span>
-                                                <div class="toggle-option__content">
-                                                    <span class="toggle-option__label">Carta de presentación</span>
-                                                    <span class="toggle-option__hint">Solicitar carta de presentación opcional</span>
-                                                </div>
-                                            </label>
-                                            <label class="toggle-option">
-                                                <input type="checkbox" id="anonymousScreening">
-                                                <span class="toggle-option__slider"></span>
-                                                <div class="toggle-option__content">
-                                                    <span class="toggle-option__label">Screening anónimo</span>
-                                                    <span class="toggle-option__hint">Ocultar datos personales durante la evaluación inicial</span>
-                                                </div>
-                                            </label>
+                        <!-- Panel: Gestión del proceso -->
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Gestión del Proceso</h2>
+                                    <p>Configura cómo se gestionará el flujo de candidatos</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <div class="form-grid form-grid--3">
+                                    <div class="form-field">
+                                        <label class="form-label">Candidatos máximos</label>
+                                        <div class="number-input-custom">
+                                            <input type="number" class="form-input" id="maxCandidates" value="100" min="1">
+                                            <div class="number-input-custom__controls">
+                                                <button type="button" class="number-input-custom__btn" data-action="increment">
+                                                    <i class="fas fa-chevron-up"></i>
+                                                </button>
+                                                <button type="button" class="number-input-custom__btn" data-action="decrement">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                            </div>
                                         </div>
+                                        <span class="form-hint">Límite de candidaturas a aceptar</span>
                                     </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Candidatos a entrevistar</label>
+                                        <div class="number-input-custom">
+                                            <input type="number" class="form-input" id="interviewCandidates" value="20" min="1">
+                                            <div class="number-input-custom__controls">
+                                                <button type="button" class="number-input-custom__btn" data-action="increment">
+                                                    <i class="fas fa-chevron-up"></i>
+                                                </button>
+                                                <button type="button" class="number-input-custom__btn" data-action="decrement">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <span class="form-hint">Candidatos que pasarán a entrevista IA</span>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label class="form-label">Finalistas</label>
+                                        <div class="number-input-custom">
+                                            <input type="number" class="form-input" id="finalists" value="5" min="1">
+                                            <div class="number-input-custom__controls">
+                                                <button type="button" class="number-input-custom__btn" data-action="increment">
+                                                    <i class="fas fa-chevron-up"></i>
+                                                </button>
+                                                <button type="button" class="number-input-custom__btn" data-action="decrement">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <span class="form-hint">Candidatos para revisión final</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel: Opciones adicionales -->
+                        <div class="section-panel">
+                            <div class="section-panel__header">
+                                <div class="section-panel__icon">
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+                                <div class="section-panel__title">
+                                    <h2>Opciones del Proceso</h2>
+                                    <p>Configura aspectos adicionales de la evaluación</p>
+                                </div>
+                            </div>
+
+                            <div class="section-panel__body">
+                                <div class="toggle-options">
+                                    <label class="toggle-option">
+                                        <input type="checkbox" id="cvRequired" checked>
+                                        <span class="toggle-option__slider"></span>
+                                        <div class="toggle-option__content">
+                                            <span class="toggle-option__label">CV obligatorio</span>
+                                            <span class="toggle-option__hint">Requerir currículum para aplicar al proceso</span>
+                                        </div>
+                                    </label>
+                                    <label class="toggle-option">
+                                        <input type="checkbox" id="coverLetterOptional">
+                                        <span class="toggle-option__slider"></span>
+                                        <div class="toggle-option__content">
+                                            <span class="toggle-option__label">Carta de presentación</span>
+                                            <span class="toggle-option__hint">Permitir adjuntar carta de presentación (opcional)</span>
+                                        </div>
+                                    </label>
+                                    <label class="toggle-option">
+                                        <input type="checkbox" id="anonymousScreening">
+                                        <span class="toggle-option__slider"></span>
+                                        <div class="toggle-option__content">
+                                            <span class="toggle-option__label">Evaluación ciega</span>
+                                            <span class="toggle-option__hint">Ocultar nombre y foto durante la evaluación inicial (recomendado)</span>
+                                        </div>
+                                    </label>
+                                    <label class="toggle-option">
+                                        <input type="checkbox" id="autoNotifications" checked>
+                                        <span class="toggle-option__slider"></span>
+                                        <div class="toggle-option__content">
+                                            <span class="toggle-option__label">Notificaciones automáticas</span>
+                                            <span class="toggle-option__hint">Enviar emails automáticos de confirmación y actualización de estado</span>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -1188,5 +1487,70 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
     <script src="/assets/js/app-dashboard.js"></script>
     <script src="/assets/js/rrhh-process-editor.js"></script>
+    <script>
+        // =====================================================
+        // INPUTS NUMBER CUSTOM
+        // =====================================================
+        document.querySelectorAll('.number-input-custom').forEach(wrapper => {
+            const input = wrapper.querySelector('input');
+            const btnUp = wrapper.querySelector('[data-action="increment"]');
+            const btnDown = wrapper.querySelector('[data-action="decrement"]');
+
+            if (btnUp) {
+                btnUp.addEventListener('click', () => {
+                    const max = input.max ? parseInt(input.max) : Infinity;
+                    const current = parseInt(input.value) || 0;
+                    if (current < max) {
+                        input.value = current + 1;
+                        input.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+
+            if (btnDown) {
+                btnDown.addEventListener('click', () => {
+                    const min = input.min ? parseInt(input.min) : 0;
+                    const current = parseInt(input.value) || 0;
+                    if (current > min) {
+                        input.value = current - 1;
+                        input.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+        });
+
+        // =====================================================
+        // NOMBRE PROCESO POR DEFECTO = PERFIL + MES
+        // =====================================================
+        const profileSelect = document.getElementById('profileSelect');
+        const processNameInput = document.getElementById('processName');
+
+        function getMonthName() {
+            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const now = new Date();
+            return `${months[now.getMonth()]} ${now.getFullYear()}`;
+        }
+
+        if (profileSelect && processNameInput) {
+            profileSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const profileTitle = selectedOption.text;
+
+                // Solo actualizar si el campo está vacío o tiene un valor generado automáticamente
+                if (!processNameInput.value || processNameInput.dataset.autoGenerated === 'true') {
+                    if (this.value && this.value !== 'new' && this.value !== '') {
+                        processNameInput.value = `${profileTitle} - ${getMonthName()}`;
+                        processNameInput.dataset.autoGenerated = 'true';
+                    }
+                }
+            });
+
+            // Si el usuario modifica el nombre, ya no es auto-generado
+            processNameInput.addEventListener('input', function() {
+                this.dataset.autoGenerated = 'false';
+            });
+        }
+    </script>
 </body>
 </html>
