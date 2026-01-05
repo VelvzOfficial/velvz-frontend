@@ -137,25 +137,27 @@ body {
     display: none !important;
 }
 
-/* Grupo centrado: selector + búsqueda en páginas del dashboard */
-.velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
-.velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    position: fixed !important;
-    top: calc(env(safe-area-inset-top, 0px) + 33px) !important;
-    z-index: 1001 !important;
-    animation: none !important;
-}
+/* Grupo centrado: selector + búsqueda en páginas del dashboard (solo desktop) */
+@media (min-width: 1025px) {
+    .velvz-header:not(.velvz-header--hub) .velvz-header__island--services,
+    .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
+        position: fixed !important;
+        top: calc(env(safe-area-inset-top, 0px) + 33px) !important;
+        z-index: 1001 !important;
+        animation: none !important;
+    }
 
-.velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
-    left: 45% !important;
-    right: auto !important;
-    transform: translateX(calc(-100% - 5px)) !important;
-}
+    .velvz-header:not(.velvz-header--hub) .velvz-header__island--services {
+        left: 45% !important;
+        right: auto !important;
+        transform: translateX(calc(-100% - 5px)) !important;
+    }
 
-.velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
-    left: 45% !important;
-    right: auto !important;
-    transform: translateX(5px) !important;
+    .velvz-header:not(.velvz-header--hub) .velvz-header__island--search {
+        left: 45% !important;
+        right: auto !important;
+        transform: translateX(5px) !important;
+    }
 }
 
 .velvz-header__island--cta {
@@ -1822,10 +1824,21 @@ a.velvz-header__logo {
         transform: translate(-50%, -50%);
     }
     
+    /* Avatar igual que logo: island 64x64, avatar 44x44 */
+    .velvz-header__island--cta {
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem;
+    }
+
     .velvz-header__avatar-circle {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        border-radius: 14px;
     }
     
     .velvz-app {
