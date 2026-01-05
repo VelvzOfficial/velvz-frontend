@@ -1674,20 +1674,33 @@ a.velvz-header__logo {
         display: none;
     }
 
+    /* Ocultar búsqueda y perfil en móvil - usar menú hamburguesa */
     .velvz-header__island--search {
-        display: none;
-    }
-
-    .velvz-header__island--services {
-        display: none;
+        display: none !important;
     }
 
     .velvz-header__island--cta {
-        display: none;
+        display: none !important;
     }
 
+    /* Header móvil: logo izquierda, selector centro, hamburguesa derecha */
+    .velvz-header__container {
+        justify-content: space-between;
+    }
+
+    /* Selector de servicios visible y centrado en móvil */
+    .velvz-header__island--services {
+        display: flex !important;
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 10;
+    }
+
+    /* Hamburguesa visible y a la derecha */
     .velvz-header__mobile-toggle {
         display: flex;
+        margin-left: auto;
     }
 }
 
