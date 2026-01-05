@@ -715,6 +715,18 @@ a.velvz-header__logo {
     color: var(--dark-accent);
 }
 
+/* En páginas de RRHH, el link activo es verde */
+.velvz-header--rrhh .velvz-header__mobile-link--active,
+body[data-service="rrhh"] .velvz-header__mobile-link--active {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.velvz-header--rrhh .velvz-header__mobile-link--active .velvz-header__mobile-link-icon,
+body[data-service="rrhh"] .velvz-header__mobile-link--active .velvz-header__mobile-link-icon {
+    color: #10b981;
+}
+
 .velvz-header__mobile-link-icon {
     font-size: 1.1rem;
     width: 20px;
@@ -1695,6 +1707,8 @@ a.velvz-header__logo {
         left: 50% !important;
         transform: translateX(-50%) !important;
         z-index: 10;
+        /* IMPORTANTE: Desactivar animación que interfiere con el transform */
+        animation: none !important;
     }
 
     /* Mantener centrado cuando el dropdown está abierto */
@@ -1876,6 +1890,8 @@ a.velvz-header__logo {
         left: 50% !important;
         transform: translateX(-50%) !important;
         z-index: 10;
+        /* IMPORTANTE: Desactivar animación que interfiere con el transform */
+        animation: none !important;
     }
 
     /* Dropdown centrado en móvil */
