@@ -44,7 +44,7 @@
             overflow-x: hidden;
         }
 
-        /* Fondo azul Velvz constante */
+        /* Fondo azul Velvz constante - siempre visible */
         body::before {
             content: '';
             position: fixed;
@@ -53,7 +53,8 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(ellipse at center, #1a1a3e 0%, #0f0f23 70%);
-            z-index: -1;
+            z-index: -2;
+            pointer-events: none;
         }
 
         /* Canvas de partículas - fijo en el fondo, transparente */
@@ -277,10 +278,17 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, opacity 0.3s ease;
             z-index: 100;
             color: rgba(255, 255, 255, 0.6);
             font-size: 1.4rem;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .hub-carousel-nav.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .hub-carousel-nav:hover {
@@ -301,18 +309,30 @@
         .hub-carousel-nav.disabled {
             opacity: 0.2;
             cursor: not-allowed;
-            pointer-events: none;
         }
 
-        /* Indicadores de puntos debajo */
+        .hub-carousel-nav.disabled.visible {
+            opacity: 0.2;
+        }
+
+        /* Indicadores de puntos - posición fija respecto a la sección */
         .hub-carousel-dots {
-            position: absolute;
-            bottom: -3rem;
+            position: fixed;
+            bottom: 3rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             justify-content: center;
             gap: 0.75rem;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .hub-carousel-dots.visible {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .hub-carousel-dot {
@@ -474,18 +494,20 @@
                 bottom: 2rem;
             }
 
+            /* Ocultar flechas en móvil - usar swipe */
             .hub-carousel-nav {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
+                display: none !important;
             }
 
-            .hub-carousel-nav--prev {
-                left: 1rem;
+            /* Header móvil - centrar search correctamente */
+            .velvz-header__island--search {
+                position: static !important;
+                transform: none !important;
+                order: 2;
             }
 
-            .hub-carousel-nav--next {
-                right: 1rem;
+            .velvz-header__container {
+                justify-content: space-between;
             }
         }
 
@@ -498,21 +520,6 @@
             z-index: 1;
         }
 
-        @media (max-width: 500px) {
-            .hub-carousel-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .hub-carousel-nav--prev {
-                left: 0.5rem;
-            }
-
-            .hub-carousel-nav--next {
-                right: 0.5rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -639,11 +646,6 @@
                     </div>
                 </div>
 
-                <!-- Dots indicadores -->
-                <div class="hub-carousel-dots" id="carouselDots">
-                    <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
-                    <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
-                </div>
             </div>
         </div>
 
@@ -652,6 +654,12 @@
             <i class="fas fa-chevron-right"></i>
         </button>
     </section>
+
+    <!-- Dots indicadores - fuera del flujo, posición fija -->
+    <div class="hub-carousel-dots" id="carouselDots">
+        <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
+        <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
+    </div>
 
     <!-- FOOTER (como última sección del scroll) -->
     <footer class="velvz-footer hub-footer-section">
@@ -725,17 +733,27 @@
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             alpha: true,
-            antialias: true
+            antialias: true,
+            premultipliedAlpha: false
         });
         renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
         renderer.setSize(innerWidth, innerHeight);
+        renderer.setClearColor(0x000000, 0); // Fondo completamente transparente
 
         /* =====================================================
            BLOOM (GLOW)
            ===================================================== */
 
-        const composer = new EffectComposer(renderer);
-        composer.addPass(new RenderPass(scene, camera));
+        // Crear render target con alpha para mantener transparencia
+        const renderTarget = new THREE.WebGLRenderTarget(innerWidth, innerHeight, {
+            format: THREE.RGBAFormat,
+            type: THREE.HalfFloatType
+        });
+
+        const composer = new EffectComposer(renderer, renderTarget);
+        const renderPass = new RenderPass(scene, camera);
+        renderPass.clearAlpha = 0;
+        composer.addPass(renderPass);
         composer.addPass(
             new UnrealBloomPass(
                 new THREE.Vector2(innerWidth, innerHeight),
@@ -863,6 +881,7 @@
         // Carrusel elements
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
+        const dotsContainer = document.getElementById('carouselDots');
         const carouselDots = document.querySelectorAll('.hub-carousel-dot');
         const services = document.querySelectorAll('.hub-service');
         const wrapper = document.querySelector('.hub-service-wrapper');
@@ -955,28 +974,34 @@
             }
         }, { passive: true });
 
-        // Observer para mostrar/ocultar esfera
+        // Observer para mostrar/ocultar esfera, flechas y dots
         const observerOptions = {
             root: null,
-            threshold: 0.5
+            threshold: 0.3
         };
 
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
+                const sectionId = entry.target.id;
 
-                    // Mostrar/ocultar esfera según sección
-                    if (sectionId === 'hero') {
-                        canvasEl.classList.remove('visible');
-                    } else if (sectionId === 'services') {
+                if (sectionId === 'services') {
+                    if (entry.isIntersecting) {
+                        // Mostrar esfera, flechas y dots
                         canvasEl.classList.add('visible');
+                        prevBtn.classList.add('visible');
+                        nextBtn.classList.add('visible');
+                        dotsContainer.classList.add('visible');
+                    } else {
+                        // Ocultar esfera, flechas y dots
+                        canvasEl.classList.remove('visible');
+                        prevBtn.classList.remove('visible');
+                        nextBtn.classList.remove('visible');
+                        dotsContainer.classList.remove('visible');
                     }
                 }
             });
         }, observerOptions);
 
-        sectionObserver.observe(heroSection);
         sectionObserver.observe(servicesSection);
 
         /* =====================================================
