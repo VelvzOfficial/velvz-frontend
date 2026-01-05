@@ -1868,7 +1868,26 @@ a.velvz-header__logo {
         font-size: 18px;
         border-radius: 14px;
     }
-    
+
+    /* Selector de servicios centrado en móvil */
+    .velvz-header__island--services {
+        display: flex !important;
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 10;
+    }
+
+    /* Dropdown centrado en móvil */
+    .velvz-header__island--services .svc-dropdown {
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-4px) !important;
+    }
+
+    .velvz-header__island--services .svc-selector.open + .svc-dropdown {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+
     .velvz-app {
         margin-top: 76px;
         min-height: calc(100vh - 76px);
