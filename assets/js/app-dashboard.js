@@ -1,32 +1,7 @@
 // =====================================================
 // DASHBOARD DE LA APLICACIÓN - CON PROTECCIÓN DE ACCESO ACTUALIZADA
 // =====================================================
-console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v6');
-
-// =====================================================
-// SELECTOR DE SERVICIOS
-// =====================================================
-(function() {
-  const btn = document.getElementById('svcSelector');
-  if (!btn) return;
-
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    btn.classList.toggle('open');
-  });
-
-  document.addEventListener('click', function(e) {
-    if (!btn.contains(e.target)) {
-      btn.classList.remove('open');
-    }
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      btn.classList.remove('open');
-    }
-  });
-})();
+console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v7');
 
 // =====================================================
 // VERIFICACIÓN INMEDIATA DE SESIÓN (antes de DOM ready)
@@ -47,28 +22,21 @@ console.log('🔵 APP-DASHBOARD.JS CARGADO - VERSION 2025-12-31-v6');
   document.documentElement.style.visibility = "hidden";
 })();
 
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("🔒 Inicializando dashboard privado...");
+// =====================================================
+// MENÚ MÓVIL - CONFIGURAR INMEDIATAMENTE CUANDO DOM ESTÉ LISTO
+// (Antes de cualquier verificación de auth)
+// =====================================================
+document.addEventListener("DOMContentLoaded", function() {
+  // Configurar menú móvil PRIMERO
+  const mobileToggle = document.querySelector(".velvz-header__mobile-toggle");
+  const mobileMenu = document.querySelector(".velvz-header__mobile-menu");
+  const mobileBackdrop = document.querySelector(".velvz-header__mobile-backdrop");
+  const mobileClose = document.querySelector(".velvz-header__mobile-close");
+  const hamburger = document.querySelector(".velvz-header__hamburger");
 
-  // =====================================================
-  // CONFIGURAR MENÚ MÓVIL INMEDIATAMENTE (sin esperar auth)
-  // =====================================================
-  setupMobileMenuImmediate();
+  console.log("🍔 Configurando menú móvil - Toggle:", !!mobileToggle, "Menu:", !!mobileMenu);
 
-  function setupMobileMenuImmediate() {
-    const mobileToggle = document.querySelector(".velvz-header__mobile-toggle");
-    const mobileMenu = document.querySelector(".velvz-header__mobile-menu");
-    const mobileBackdrop = document.querySelector(".velvz-header__mobile-backdrop");
-    const mobileClose = document.querySelector(".velvz-header__mobile-close");
-    const hamburger = document.querySelector(".velvz-header__hamburger");
-
-    console.log("🔧 setupMobileMenuImmediate - Toggle:", !!mobileToggle, "Menu:", !!mobileMenu);
-
-    if (!mobileToggle || !mobileMenu) {
-      console.log("⚠️ Elementos del menú móvil no encontrados");
-      return;
-    }
-
+  if (mobileToggle && mobileMenu) {
     function openMenu() {
       console.log("📱 Abriendo menú móvil");
       mobileMenu.classList.add("velvz-header__mobile-menu--active");
@@ -91,16 +59,37 @@ document.addEventListener("DOMContentLoaded", function () {
       openMenu();
     });
 
-    if (mobileClose) {
-      mobileClose.addEventListener("click", closeMenu);
-    }
+    if (mobileClose) mobileClose.addEventListener("click", closeMenu);
+    if (mobileBackdrop) mobileBackdrop.addEventListener("click", closeMenu);
 
-    if (mobileBackdrop) {
-      mobileBackdrop.addEventListener("click", closeMenu);
-    }
-
-    console.log("✅ Menú móvil configurado correctamente");
+    console.log("✅ Menú móvil configurado");
   }
+
+  // Configurar selector de servicios
+  const svcBtn = document.getElementById('svcSelector');
+  if (svcBtn) {
+    svcBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      svcBtn.classList.toggle('open');
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!svcBtn.contains(e.target)) {
+        svcBtn.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        svcBtn.classList.remove('open');
+      }
+    });
+    console.log("✅ Selector de servicios configurado");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("🔒 Inicializando dashboard privado...");
 
   // =====================================================
   // PROTECCIÓN DE ACCESO - VERIFICAR SESIÓN

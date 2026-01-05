@@ -1697,6 +1697,21 @@ a.velvz-header__logo {
         z-index: 10;
     }
 
+    /* Mantener centrado cuando el dropdown está abierto */
+    .velvz-header__island--services .svc-selector.open {
+        /* No cambiar el transform del padre */
+    }
+
+    /* Dropdown centrado en móvil */
+    .velvz-header__island--services .svc-dropdown {
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-4px) !important;
+    }
+
+    .velvz-header__island--services .svc-selector.open + .svc-dropdown {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+
     /* Hamburguesa visible y a la derecha */
     .velvz-header__mobile-toggle {
         display: flex;
