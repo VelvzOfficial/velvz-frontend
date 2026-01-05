@@ -212,6 +212,7 @@
             width: 100%;
             max-width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -307,32 +308,16 @@
         }
 
         .hub-carousel-nav.disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
+            opacity: 0.3;
+            cursor: default;
         }
 
-        .hub-carousel-nav.disabled.visible {
-            opacity: 0.2;
-        }
-
-        /* Indicadores de puntos - posición fija respecto a la sección */
+        /* Indicadores de puntos - dentro de la sección de servicios */
         .hub-carousel-dots {
-            position: fixed;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             justify-content: center;
             gap: 0.75rem;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .hub-carousel-dots.visible {
-            opacity: 1;
-            pointer-events: auto;
+            margin-top: 2rem;
         }
 
         .hub-carousel-dot {
@@ -499,15 +484,23 @@
                 display: none !important;
             }
 
-            /* Header móvil - centrar search correctamente */
-            .velvz-header__island--search {
+            /* Header móvil - mostrar y posicionar correctamente */
+            .velvz-header--hub .velvz-header__island--search {
+                display: flex !important;
                 position: static !important;
                 transform: none !important;
-                order: 2;
+                min-width: 120px;
+                flex: 1;
+                max-width: 200px;
             }
 
-            .velvz-header__container {
+            .velvz-header--hub .velvz-header__container {
                 justify-content: space-between;
+                gap: 0.5rem;
+            }
+
+            .velvz-header--hub .velvz-header__island--cta {
+                display: flex !important;
             }
         }
 
@@ -647,6 +640,12 @@
                 </div>
 
             </div>
+
+            <!-- Dots indicadores - dentro del carrusel -->
+            <div class="hub-carousel-dots" id="carouselDots">
+                <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
+                <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
+            </div>
         </div>
 
         <!-- Flecha derecha -->
@@ -654,12 +653,6 @@
             <i class="fas fa-chevron-right"></i>
         </button>
     </section>
-
-    <!-- Dots indicadores - fuera del flujo, posición fija -->
-    <div class="hub-carousel-dots" id="carouselDots">
-        <button class="hub-carousel-dot active" data-index="0" data-color="#667eea"></button>
-        <button class="hub-carousel-dot" data-index="1" data-color="#10b981"></button>
-    </div>
 
     <!-- FOOTER (como última sección del scroll) -->
     <footer class="velvz-footer hub-footer-section">
@@ -699,24 +692,20 @@
         </div>
     </footer>
 
-    <!-- THREE.JS y Post-processing -->
+    <!-- THREE.JS -->
     <script type="importmap">
     {
         "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
         }
     }
     </script>
 
     <script type="module">
         import * as THREE from 'three';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
         /* =====================================================
-           CONFIGURACIÓN THREE.JS
+           CONFIGURACIÓN THREE.JS - SIN BLOOM (no soporta transparencia)
            ===================================================== */
 
         const canvas = document.getElementById('particleCanvas');
@@ -733,35 +722,11 @@
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             alpha: true,
-            antialias: true,
-            premultipliedAlpha: false
+            antialias: true
         });
         renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
         renderer.setSize(innerWidth, innerHeight);
-        renderer.setClearColor(0x000000, 0); // Fondo completamente transparente
-
-        /* =====================================================
-           BLOOM (GLOW)
-           ===================================================== */
-
-        // Crear render target con alpha para mantener transparencia
-        const renderTarget = new THREE.WebGLRenderTarget(innerWidth, innerHeight, {
-            format: THREE.RGBAFormat,
-            type: THREE.HalfFloatType
-        });
-
-        const composer = new EffectComposer(renderer, renderTarget);
-        const renderPass = new RenderPass(scene, camera);
-        renderPass.clearAlpha = 0;
-        composer.addPass(renderPass);
-        composer.addPass(
-            new UnrealBloomPass(
-                new THREE.Vector2(innerWidth, innerHeight),
-                1.2,   // strength
-                0.8,   // radius
-                0.01   // threshold
-            )
-        );
+        renderer.setClearColor(0x000000, 0); // Fondo transparente
 
         /* =====================================================
            ESFERA DE PARTÍCULAS (MÁS GRANDE)
@@ -866,7 +831,7 @@
             pts.rotation.x += (tX - pts.rotation.x) * 0.05;
             pts.rotation.y += (tY - pts.rotation.y) * 0.05;
 
-            composer.render();
+            renderer.render(scene, camera);
         }
         animate();
 
@@ -881,7 +846,6 @@
         // Carrusel elements
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
-        const dotsContainer = document.getElementById('carouselDots');
         const carouselDots = document.querySelectorAll('.hub-carousel-dot');
         const services = document.querySelectorAll('.hub-service');
         const wrapper = document.querySelector('.hub-service-wrapper');
@@ -986,17 +950,15 @@
 
                 if (sectionId === 'services') {
                     if (entry.isIntersecting) {
-                        // Mostrar esfera, flechas y dots
+                        // Mostrar esfera y flechas
                         canvasEl.classList.add('visible');
                         prevBtn.classList.add('visible');
                         nextBtn.classList.add('visible');
-                        dotsContainer.classList.add('visible');
                     } else {
-                        // Ocultar esfera, flechas y dots
+                        // Ocultar esfera y flechas
                         canvasEl.classList.remove('visible');
                         prevBtn.classList.remove('visible');
                         nextBtn.classList.remove('visible');
-                        dotsContainer.classList.remove('visible');
                     }
                 }
             });
@@ -1012,7 +974,6 @@
             camera.aspect = innerWidth / innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(innerWidth, innerHeight);
-            composer.setSize(innerWidth, innerHeight);
         });
 
         /* =====================================================
