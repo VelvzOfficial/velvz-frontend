@@ -938,6 +938,166 @@
                 gap: 0.75rem;
             }
         }
+
+        /* =====================================================
+           ZONA DE PELIGRO - Estilos
+           ===================================================== */
+        .danger-section {
+            margin-top: 2rem;
+        }
+
+        .danger-section .section-header {
+            border-left: 3px solid #ef4444;
+        }
+
+        .section-header__icon--danger {
+            background: rgba(239, 68, 68, 0.15) !important;
+            color: #ef4444 !important;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.03) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .danger-box__header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .danger-box__header > i {
+            font-size: 1.5rem;
+            color: #ef4444;
+            margin-top: 0.25rem;
+        }
+
+        .danger-box__header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 0.25rem;
+        }
+
+        .danger-box__header p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .danger-box__list {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .danger-box__list-title {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .danger-box__list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .danger-box__list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .danger-box__list li i {
+            color: #ef4444;
+            width: 16px;
+            font-size: 0.85rem;
+        }
+
+        .danger-box__confirm {
+            margin-bottom: 1.25rem;
+        }
+
+        .danger-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .danger-checkbox input {
+            display: none;
+        }
+
+        .danger-checkbox__box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .danger-checkbox input:checked + .danger-checkbox__box {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .danger-checkbox input:checked + .danger-checkbox__box::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .danger-checkbox__text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .danger-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            color: #ef4444;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: not-allowed;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .danger-btn:not(:disabled) {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .danger-btn:not(:disabled):hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
     </style>
 </head>
 <body>
@@ -2031,6 +2191,56 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         </div>
                     </section>
 
+                    <!-- =====================================================
+                         ZONA DE PELIGRO (Solo visible en modo edición)
+                         ===================================================== -->
+                    <section class="process-section danger-section" id="dangerZoneSection" style="display: none;">
+                        <div class="section-header">
+                            <div class="section-header__icon section-header__icon--danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="section-header__content">
+                                <h2>Zona de Peligro</h2>
+                                <p>Acciones irreversibles que afectarán permanentemente a este proceso</p>
+                            </div>
+                        </div>
+
+                        <div class="section-body">
+                            <div class="danger-box">
+                                <div class="danger-box__header">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <div>
+                                        <h3>Eliminar Proceso</h3>
+                                        <p>Esta acción eliminará permanentemente este proceso de selección y toda su información.</p>
+                                    </div>
+                                </div>
+
+                                <div class="danger-box__list">
+                                    <span class="danger-box__list-title">Se eliminará:</span>
+                                    <ul>
+                                        <li><i class="fas fa-clipboard-list"></i> Configuración del proceso</li>
+                                        <li><i class="fas fa-users"></i> Todos los candidatos asociados</li>
+                                        <li><i class="fas fa-comments"></i> Entrevistas y evaluaciones</li>
+                                        <li><i class="fas fa-chart-line"></i> Estadísticas e historial</li>
+                                    </ul>
+                                </div>
+
+                                <div class="danger-box__confirm">
+                                    <label class="danger-checkbox">
+                                        <input type="checkbox" id="confirmDeletion">
+                                        <span class="danger-checkbox__box"></span>
+                                        <span class="danger-checkbox__text">Entiendo que esta acción no se puede deshacer</span>
+                                    </label>
+                                </div>
+
+                                <button type="button" class="danger-btn" id="deleteProcessBtn" disabled>
+                                    <i class="fas fa-trash-alt"></i>
+                                    Eliminar Proceso Permanentemente
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
                 </div>
             </div>
         </main>
@@ -2861,6 +3071,81 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 close: closeModal,
                 getAdjustments: () => profileAdjustments
             };
+        })();
+
+        // =====================================================
+        // ZONA DE PELIGRO - Eliminar proceso
+        // =====================================================
+        (function() {
+            const dangerSection = document.getElementById('dangerZoneSection');
+            const confirmCheckbox = document.getElementById('confirmDeletion');
+            const deleteBtn = document.getElementById('deleteProcessBtn');
+
+            // Mostrar sección solo en modo edición
+            if (processId && dangerSection) {
+                dangerSection.style.display = 'block';
+            }
+
+            // Habilitar/deshabilitar botón según checkbox
+            if (confirmCheckbox && deleteBtn) {
+                confirmCheckbox.addEventListener('change', function() {
+                    deleteBtn.disabled = !this.checked;
+                });
+            }
+
+            // Manejar click en eliminar
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', async function() {
+                    if (!confirmCheckbox.checked) return;
+
+                    const processName = document.getElementById('processName')?.value || 'este proceso';
+
+                    // Doble confirmación
+                    const confirmed = confirm(
+                        `¿Estás seguro de que quieres eliminar "${processName}"?\n\n` +
+                        'Esta acción eliminará permanentemente:\n' +
+                        '• El proceso de selección\n' +
+                        '• Todos los candidatos\n' +
+                        '• Entrevistas y evaluaciones\n\n' +
+                        'Esta acción NO se puede deshacer.'
+                    );
+
+                    if (!confirmed) return;
+
+                    try {
+                        deleteBtn.disabled = true;
+                        deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+
+                        const token = window.velvzAuth?.getToken();
+                        if (!token) {
+                            alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                            window.location.href = '/auth/login.html';
+                            return;
+                        }
+
+                        const response = await fetch(`${API_URL}/api/rrhh/processes/${currentProcessId}?force=true`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            alert('Proceso eliminado correctamente');
+                            window.location.href = '/app/rrhh/processes/';
+                        } else {
+                            throw new Error(result.message || 'Error al eliminar el proceso');
+                        }
+                    } catch (error) {
+                        console.error('Error eliminando proceso:', error);
+                        alert('Error al eliminar el proceso: ' + error.message);
+                        deleteBtn.disabled = false;
+                        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Eliminar Proceso Permanentemente';
+                    }
+                });
+            }
         })();
     </script>
 </body>
