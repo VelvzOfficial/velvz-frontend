@@ -442,6 +442,502 @@
         .info-box--subtle p strong {
             color: #10b981;
         }
+
+        /* =====================================================
+           PROFILE PREVIEW ACTIONS
+           ===================================================== */
+        .profile-preview__actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn--sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* =====================================================
+           MODAL EDITOR SIMPLIFICADO DE PERFIL
+           ===================================================== */
+        .profile-adjust-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .profile-adjust-overlay--active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-adjust-overlay__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+        }
+
+        .profile-adjust-modal {
+            position: relative;
+            width: 95%;
+            max-width: 700px;
+            max-height: 90vh;
+            background: linear-gradient(145deg, #1e1e2e 0%, #16161e 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(16, 185, 129, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-adjust-overlay--active .profile-adjust-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .profile-adjust-modal__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            background: rgba(16, 185, 129, 0.08);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .profile-adjust-modal__header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .profile-adjust-modal__icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .profile-adjust-modal__title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0;
+        }
+
+        .profile-adjust-modal__subtitle {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0.15rem 0 0;
+        }
+
+        .profile-adjust-modal__close {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .profile-adjust-modal__close:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .profile-adjust-modal__body {
+            padding: 1.5rem;
+            max-height: calc(90vh - 160px);
+            overflow-y: auto;
+        }
+
+        .profile-adjust-modal__body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .profile-adjust-modal__body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .profile-adjust-modal__body::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Nota informativa */
+        .profile-adjust-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-adjust-note i {
+            color: #3b82f6;
+            font-size: 1rem;
+            margin-top: 0.1rem;
+        }
+
+        .profile-adjust-note p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .profile-adjust-note strong {
+            color: #60a5fa;
+        }
+
+        /* Secciones del modal */
+        .profile-adjust-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-adjust-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .profile-adjust-section__title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .profile-adjust-section__title i {
+            color: #10b981;
+            font-size: 0.85rem;
+        }
+
+        /* Requisitos editables */
+        .adjust-requirements {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .adjust-requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .adjust-requirement:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .adjust-requirement--excluded {
+            opacity: 0.5;
+            background: rgba(239, 68, 68, 0.05);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .adjust-requirement--excluded .adjust-requirement__name {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .adjust-requirement__checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #10b981;
+            cursor: pointer;
+        }
+
+        .adjust-requirement__info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .adjust-requirement__name {
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .adjust-requirement__type {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.15rem;
+        }
+
+        .adjust-requirement__badge {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .adjust-requirement__badge--essential {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .adjust-requirement__badge--desired {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .adjust-requirement__badge--nice {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        /* Añadir requisito extra */
+        .adjust-add-requirement {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .adjust-add-requirement input {
+            flex: 1;
+            padding: 0.6rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        .adjust-add-requirement input:focus {
+            outline: none;
+            border-color: rgba(16, 185, 129, 0.5);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .adjust-add-requirement input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .adjust-add-requirement button {
+            padding: 0.6rem 1rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            color: #10b981;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .adjust-add-requirement button:hover {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        /* Requisitos añadidos para este proceso */
+        .adjust-extras {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .adjust-extras__title {
+            font-size: 0.8rem;
+            color: rgba(16, 185, 129, 0.8);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .adjust-extra-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .adjust-extra-item span {
+            flex: 1;
+            font-size: 0.85rem;
+            color: #10b981;
+        }
+
+        .adjust-extra-item button {
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .adjust-extra-item button:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        /* Campos editables simples */
+        .adjust-field {
+            margin-bottom: 1rem;
+        }
+
+        .adjust-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .adjust-field label {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.4rem;
+        }
+
+        .adjust-field input,
+        .adjust-field select {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .adjust-field input:focus,
+        .adjust-field select:focus {
+            outline: none;
+            border-color: rgba(16, 185, 129, 0.5);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .adjust-field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Footer del modal */
+        .profile-adjust-modal__footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .profile-adjust-modal__reset {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.75rem;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .profile-adjust-modal__reset:hover {
+            color: #ef4444;
+        }
+
+        .profile-adjust-modal__actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Badge de modificaciones */
+        .profile-preview__modified {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #f59e0b;
+            margin-left: 0.75rem;
+        }
+
+        .profile-preview__modified i {
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 600px) {
+            .profile-adjust-modal {
+                width: 100%;
+                max-width: none;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .profile-adjust-modal__body {
+                max-height: calc(100vh - 160px);
+            }
+
+            .adjust-field-row {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-adjust-modal__footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .profile-adjust-modal__actions {
+                width: 100%;
+            }
+
+            .profile-adjust-modal__actions .btn {
+                flex: 1;
+            }
+
+            .profile-preview__actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -775,10 +1271,16 @@
                                             <!-- Tags de requisitos -->
                                         </div>
                                     </div>
-                                    <a href="/app/rrhh/profiles/editor.html" class="profile-preview__edit" id="editProfileLink">
-                                        <i class="fas fa-external-link-alt"></i>
-                                        Editar perfil
-                                    </a>
+                                    <div class="profile-preview__actions">
+                                        <button type="button" class="btn btn--secondary btn--sm" id="adjustProfileBtn">
+                                            <i class="fas fa-sliders-h"></i>
+                                            Ajustar para este proceso
+                                        </button>
+                                        <a href="/app/rrhh/profiles/editor.html" class="profile-preview__edit" id="editProfileLink">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            Editar perfil completo
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <!-- Mensaje cuando no hay perfil -->
@@ -1572,6 +2074,114 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         </div>
     </footer>
 
+    <!-- MODAL: EDITOR SIMPLIFICADO DE PERFIL -->
+    <div class="profile-adjust-overlay" id="profileAdjustOverlay">
+        <div class="profile-adjust-overlay__backdrop" id="profileAdjustBackdrop"></div>
+        <div class="profile-adjust-modal">
+            <div class="profile-adjust-modal__header">
+                <div class="profile-adjust-modal__header-left">
+                    <div class="profile-adjust-modal__icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <div>
+                        <h2 class="profile-adjust-modal__title">Ajustes para este proceso</h2>
+                        <p class="profile-adjust-modal__subtitle" id="adjustModalProfileName">Desarrollador Backend Senior</p>
+                    </div>
+                </div>
+                <button class="profile-adjust-modal__close" id="profileAdjustClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="profile-adjust-modal__body">
+                <!-- Nota informativa -->
+                <div class="profile-adjust-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Estos ajustes <strong>solo afectan a este proceso</strong>. El perfil original no se modificará. Puedes excluir requisitos o añadir otros específicos para esta búsqueda.</p>
+                </div>
+
+                <!-- Sección: Requisitos -->
+                <div class="profile-adjust-section">
+                    <h3 class="profile-adjust-section__title">
+                        <i class="fas fa-clipboard-check"></i>
+                        Requisitos del Perfil
+                    </h3>
+                    <div class="adjust-requirements" id="adjustRequirementsList">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+
+                    <!-- Añadir requisito extra -->
+                    <div class="adjust-add-requirement">
+                        <input type="text" id="adjustNewRequirement" placeholder="Añadir requisito específico para este proceso...">
+                        <button type="button" id="adjustAddReqBtn">
+                            <i class="fas fa-plus"></i> Añadir
+                        </button>
+                    </div>
+
+                    <!-- Requisitos añadidos -->
+                    <div class="adjust-extras" id="adjustExtras" style="display: none;">
+                        <div class="adjust-extras__title">
+                            <i class="fas fa-plus-circle"></i>
+                            Añadidos para este proceso:
+                        </div>
+                        <div id="adjustExtrasList">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección: Ajustes de condiciones -->
+                <div class="profile-adjust-section">
+                    <h3 class="profile-adjust-section__title">
+                        <i class="fas fa-cog"></i>
+                        Condiciones (solo para este proceso)
+                    </h3>
+                    <div class="adjust-field-row">
+                        <div class="adjust-field">
+                            <label>Salario mínimo (€/año)</label>
+                            <input type="number" id="adjustSalaryMin" placeholder="Heredado del perfil">
+                        </div>
+                        <div class="adjust-field">
+                            <label>Salario máximo (€/año)</label>
+                            <input type="number" id="adjustSalaryMax" placeholder="Heredado del perfil">
+                        </div>
+                    </div>
+                    <div class="adjust-field-row">
+                        <div class="adjust-field">
+                            <label>Experiencia mínima (años)</label>
+                            <input type="number" id="adjustExperience" placeholder="Heredado del perfil" min="0">
+                        </div>
+                        <div class="adjust-field">
+                            <label>Modalidad</label>
+                            <select id="adjustModality">
+                                <option value="">Heredado del perfil</option>
+                                <option value="onsite">Presencial</option>
+                                <option value="remote">Remoto</option>
+                                <option value="hybrid">Híbrido</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-adjust-modal__footer">
+                <button type="button" class="profile-adjust-modal__reset" id="adjustResetBtn">
+                    <i class="fas fa-undo"></i>
+                    Restablecer todo
+                </button>
+                <div class="profile-adjust-modal__actions">
+                    <button type="button" class="btn btn--secondary" id="adjustCancelBtn">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn--primary" id="adjustSaveBtn">
+                        <i class="fas fa-check"></i>
+                        Aplicar ajustes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/assets/js/app-dashboard.js"></script>
     <script src="/assets/js/rrhh-process-editor.js"></script>
     <script>
@@ -1638,6 +2248,255 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 this.dataset.autoGenerated = 'false';
             });
         }
+
+        // =====================================================
+        // MODAL EDITOR SIMPLIFICADO DE PERFIL
+        // =====================================================
+        (function() {
+            const overlay = document.getElementById('profileAdjustOverlay');
+            const backdrop = document.getElementById('profileAdjustBackdrop');
+            const closeBtn = document.getElementById('profileAdjustClose');
+            const cancelBtn = document.getElementById('adjustCancelBtn');
+            const saveBtn = document.getElementById('adjustSaveBtn');
+            const resetBtn = document.getElementById('adjustResetBtn');
+            const adjustBtn = document.getElementById('adjustProfileBtn');
+            const requirementsList = document.getElementById('adjustRequirementsList');
+            const extrasContainer = document.getElementById('adjustExtras');
+            const extrasList = document.getElementById('adjustExtrasList');
+            const newReqInput = document.getElementById('adjustNewRequirement');
+            const addReqBtn = document.getElementById('adjustAddReqBtn');
+            const profileNameEl = document.getElementById('adjustModalProfileName');
+
+            // Estado de ajustes
+            let profileAdjustments = {
+                excludedRequirements: [],
+                extraRequirements: [],
+                salaryMin: null,
+                salaryMax: null,
+                experience: null,
+                modality: null
+            };
+
+            // Datos mock del perfil (en producción vendrían del perfil seleccionado)
+            const mockProfileData = {
+                title: 'Desarrollador Backend Senior',
+                requirements: [
+                    { id: 1, name: 'Python 3+', type: 'essential' },
+                    { id: 2, name: 'SQL avanzado', type: 'essential' },
+                    { id: 3, name: 'APIs REST', type: 'essential' },
+                    { id: 4, name: 'Docker', type: 'essential' },
+                    { id: 5, name: 'Git', type: 'essential' },
+                    { id: 6, name: 'AWS/GCP', type: 'desired' },
+                    { id: 7, name: 'Kubernetes', type: 'desired' },
+                    { id: 8, name: 'Testing (pytest)', type: 'desired' },
+                    { id: 9, name: 'GraphQL', type: 'nice' },
+                    { id: 10, name: 'Redis', type: 'nice' }
+                ],
+                salaryMin: 45000,
+                salaryMax: 65000,
+                experience: 4,
+                modality: 'hybrid'
+            };
+
+            // Abrir modal
+            function openModal() {
+                profileNameEl.textContent = mockProfileData.title;
+                renderRequirements();
+                renderExtras();
+                loadConditions();
+                overlay.classList.add('profile-adjust-overlay--active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Cerrar modal
+            function closeModal() {
+                overlay.classList.remove('profile-adjust-overlay--active');
+                document.body.style.overflow = '';
+            }
+
+            // Renderizar requisitos
+            function renderRequirements() {
+                const typeLabels = {
+                    essential: 'Esencial',
+                    desired: 'Deseable',
+                    nice: 'Valorable'
+                };
+
+                requirementsList.innerHTML = mockProfileData.requirements.map(req => {
+                    const isExcluded = profileAdjustments.excludedRequirements.includes(req.id);
+                    return `
+                        <div class="adjust-requirement ${isExcluded ? 'adjust-requirement--excluded' : ''}" data-id="${req.id}">
+                            <input type="checkbox" class="adjust-requirement__checkbox"
+                                   ${!isExcluded ? 'checked' : ''}
+                                   data-req-id="${req.id}">
+                            <div class="adjust-requirement__info">
+                                <div class="adjust-requirement__name">${req.name}</div>
+                                <div class="adjust-requirement__type">Del perfil original</div>
+                            </div>
+                            <span class="adjust-requirement__badge adjust-requirement__badge--${req.type}">${typeLabels[req.type]}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                // Event listeners para checkboxes
+                requirementsList.querySelectorAll('.adjust-requirement__checkbox').forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        const reqId = parseInt(this.dataset.reqId);
+                        const reqEl = this.closest('.adjust-requirement');
+
+                        if (this.checked) {
+                            profileAdjustments.excludedRequirements = profileAdjustments.excludedRequirements.filter(id => id !== reqId);
+                            reqEl.classList.remove('adjust-requirement--excluded');
+                        } else {
+                            if (!profileAdjustments.excludedRequirements.includes(reqId)) {
+                                profileAdjustments.excludedRequirements.push(reqId);
+                            }
+                            reqEl.classList.add('adjust-requirement--excluded');
+                        }
+                    });
+                });
+            }
+
+            // Renderizar requisitos extras
+            function renderExtras() {
+                if (profileAdjustments.extraRequirements.length === 0) {
+                    extrasContainer.style.display = 'none';
+                    return;
+                }
+
+                extrasContainer.style.display = 'block';
+                extrasList.innerHTML = profileAdjustments.extraRequirements.map((req, index) => `
+                    <div class="adjust-extra-item" data-index="${index}">
+                        <span>${req}</span>
+                        <button type="button" class="adjust-extra-remove" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `).join('');
+
+                // Event listeners para eliminar
+                extrasList.querySelectorAll('.adjust-extra-remove').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        profileAdjustments.extraRequirements.splice(index, 1);
+                        renderExtras();
+                    });
+                });
+            }
+
+            // Cargar condiciones actuales
+            function loadConditions() {
+                document.getElementById('adjustSalaryMin').value = profileAdjustments.salaryMin || '';
+                document.getElementById('adjustSalaryMax').value = profileAdjustments.salaryMax || '';
+                document.getElementById('adjustExperience').value = profileAdjustments.experience || '';
+                document.getElementById('adjustModality').value = profileAdjustments.modality || '';
+
+                // Placeholders con valores del perfil
+                document.getElementById('adjustSalaryMin').placeholder = `${mockProfileData.salaryMin}€ (perfil)`;
+                document.getElementById('adjustSalaryMax').placeholder = `${mockProfileData.salaryMax}€ (perfil)`;
+                document.getElementById('adjustExperience').placeholder = `${mockProfileData.experience} años (perfil)`;
+            }
+
+            // Añadir requisito extra
+            function addExtraRequirement() {
+                const value = newReqInput.value.trim();
+                if (value) {
+                    profileAdjustments.extraRequirements.push(value);
+                    newReqInput.value = '';
+                    renderExtras();
+                }
+            }
+
+            // Guardar ajustes
+            function saveAdjustments() {
+                // Guardar valores de condiciones
+                const salaryMin = document.getElementById('adjustSalaryMin').value;
+                const salaryMax = document.getElementById('adjustSalaryMax').value;
+                const experience = document.getElementById('adjustExperience').value;
+                const modality = document.getElementById('adjustModality').value;
+
+                profileAdjustments.salaryMin = salaryMin ? parseInt(salaryMin) : null;
+                profileAdjustments.salaryMax = salaryMax ? parseInt(salaryMax) : null;
+                profileAdjustments.experience = experience ? parseInt(experience) : null;
+                profileAdjustments.modality = modality || null;
+
+                // Mostrar badge de modificado si hay cambios
+                updateModifiedBadge();
+
+                closeModal();
+                console.log('Ajustes guardados:', profileAdjustments);
+            }
+
+            // Resetear ajustes
+            function resetAdjustments() {
+                profileAdjustments = {
+                    excludedRequirements: [],
+                    extraRequirements: [],
+                    salaryMin: null,
+                    salaryMax: null,
+                    experience: null,
+                    modality: null
+                };
+                renderRequirements();
+                renderExtras();
+                loadConditions();
+            }
+
+            // Mostrar/ocultar badge de modificado
+            function updateModifiedBadge() {
+                const preview = document.getElementById('profilePreview');
+                const header = preview.querySelector('.profile-preview__header');
+                let badge = header.querySelector('.profile-preview__modified');
+
+                const hasChanges =
+                    profileAdjustments.excludedRequirements.length > 0 ||
+                    profileAdjustments.extraRequirements.length > 0 ||
+                    profileAdjustments.salaryMin !== null ||
+                    profileAdjustments.salaryMax !== null ||
+                    profileAdjustments.experience !== null ||
+                    profileAdjustments.modality !== null;
+
+                if (hasChanges && !badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'profile-preview__modified';
+                    badge.innerHTML = '<i class="fas fa-pen"></i> Ajustado';
+                    header.querySelector('h3').after(badge);
+                } else if (!hasChanges && badge) {
+                    badge.remove();
+                }
+            }
+
+            // Event listeners
+            if (adjustBtn) adjustBtn.addEventListener('click', openModal);
+            if (backdrop) backdrop.addEventListener('click', closeModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+            if (saveBtn) saveBtn.addEventListener('click', saveAdjustments);
+            if (resetBtn) resetBtn.addEventListener('click', resetAdjustments);
+            if (addReqBtn) addReqBtn.addEventListener('click', addExtraRequirement);
+            if (newReqInput) {
+                newReqInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addExtraRequirement();
+                    }
+                });
+            }
+
+            // Cerrar con ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && overlay.classList.contains('profile-adjust-overlay--active')) {
+                    closeModal();
+                }
+            });
+
+            // Exponer para debugging
+            window.profileAdjustModal = {
+                open: openModal,
+                close: closeModal,
+                getAdjustments: () => profileAdjustments
+            };
+        })();
     </script>
 </body>
 </html>
