@@ -2217,10 +2217,138 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         });
 
         // =====================================================
-        // NOMBRE PROCESO POR DEFECTO = PERFIL + MES
+        // API Y DATOS
+        // =====================================================
+        const API_URL = window.API_CONFIG?.API_URL || 'https://velvz-unified-backend-production.up.railway.app';
+        let profilesData = [];
+        let selectedProfile = null;
+        let currentProcessId = null;
+
+        // =====================================================
+        // CARGAR PERFILES DESDE BACKEND
         // =====================================================
         const profileSelect = document.getElementById('profileSelect');
         const processNameInput = document.getElementById('processName');
+        const profilePreview = document.getElementById('profilePreview');
+        const profileEmpty = document.getElementById('profileEmpty');
+
+        async function loadProfiles() {
+            try {
+                const token = window.velvzAuth?.getToken();
+                if (!token) {
+                    console.log('No hay sesión');
+                    return;
+                }
+
+                const response = await fetch(`${API_URL}/api/rrhh/profiles`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.message || 'Error al cargar perfiles');
+                }
+
+                profilesData = result.data.profiles;
+
+                // Limpiar y poblar el select
+                profileSelect.innerHTML = '<option value="">Selecciona un perfil existente...</option>';
+
+                if (profilesData.length === 0) {
+                    profileSelect.innerHTML += '<option value="new" disabled>No hay perfiles - Crea uno primero</option>';
+                } else {
+                    profilesData.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.id;
+                        opt.textContent = p.name;
+                        opt.dataset.profile = JSON.stringify(p);
+                        profileSelect.appendChild(opt);
+                    });
+                    profileSelect.innerHTML += '<option value="new">+ Crear nuevo perfil</option>';
+                }
+
+                console.log(`✅ ${profilesData.length} perfiles cargados`);
+
+            } catch (error) {
+                console.error('Error cargando perfiles:', error);
+            }
+        }
+
+        // Helpers de formato
+        function formatDepartment(dept) {
+            const labels = {
+                tech: 'Tecnología', product: 'Producto', design: 'Diseño',
+                sales: 'Ventas', marketing: 'Marketing', hr: 'RRHH',
+                finance: 'Finanzas', operations: 'Operaciones', other: 'Otro'
+            };
+            return labels[dept] || dept || 'Sin departamento';
+        }
+
+        function formatModality(mod) {
+            const labels = { onsite: 'Presencial', remote: 'Remoto', hybrid: 'Híbrido' };
+            return labels[mod] || mod || 'Sin especificar';
+        }
+
+        function formatSalary(min, max) {
+            if (!min && !max) return 'No especificado';
+            const fmt = n => n >= 1000 ? Math.round(n/1000) + 'k' : n;
+            if (min && max) return `${fmt(min)} - ${fmt(max)}€`;
+            if (min) return `Desde ${fmt(min)}€`;
+            return `Hasta ${fmt(max)}€`;
+        }
+
+        // Mostrar vista previa del perfil
+        function showProfilePreview(profile) {
+            selectedProfile = profile;
+
+            document.getElementById('previewTitle').textContent = profile.name;
+            document.getElementById('previewDept').textContent = formatDepartment(profile.department);
+            document.getElementById('previewLocation').textContent = profile.location || 'Sin especificar';
+            document.getElementById('previewModality').textContent = formatModality(profile.modality);
+            document.getElementById('previewSalary').textContent = formatSalary(profile.salary_min, profile.salary_max);
+            document.getElementById('previewExperience').textContent = profile.min_experience_years ? `${profile.min_experience_years}+ años` : 'Sin especificar';
+
+            // Requisitos
+            const requirements = typeof profile.requirements === 'string'
+                ? JSON.parse(profile.requirements)
+                : profile.requirements || {};
+
+            const reqContainer = document.getElementById('previewRequirements');
+            reqContainer.innerHTML = '';
+
+            const allReqs = [
+                ...(requirements.essential || []).map(r => ({ name: r, type: 'essential' })),
+                ...(requirements.desired || []).map(r => ({ name: r, type: 'desired' })),
+                ...(requirements.niceToHave || []).map(r => ({ name: r, type: 'nice' }))
+            ];
+
+            if (allReqs.length === 0) {
+                reqContainer.innerHTML = '<span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Sin requisitos definidos</span>';
+            } else {
+                allReqs.forEach(req => {
+                    const tag = document.createElement('span');
+                    tag.className = `profile-preview__tag profile-preview__tag--${req.type}`;
+                    tag.textContent = req.name;
+                    reqContainer.appendChild(tag);
+                });
+            }
+
+            // Actualizar enlace de editar perfil
+            document.getElementById('editProfileLink').href = `/app/rrhh/profiles/editor.html?id=${profile.id}`;
+
+            // Mostrar preview, ocultar empty
+            profilePreview.style.display = 'block';
+            profileEmpty.style.display = 'none';
+        }
+
+        function hideProfilePreview() {
+            selectedProfile = null;
+            profilePreview.style.display = 'none';
+            profileEmpty.style.display = 'block';
+        }
 
         function getMonthName() {
             const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -2231,13 +2359,26 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
         if (profileSelect && processNameInput) {
             profileSelect.addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                const profileTitle = selectedOption.text;
+                const value = this.value;
 
-                // Solo actualizar si el campo está vacío o tiene un valor generado automáticamente
-                if (!processNameInput.value || processNameInput.dataset.autoGenerated === 'true') {
-                    if (this.value && this.value !== 'new' && this.value !== '') {
-                        processNameInput.value = `${profileTitle} - ${getMonthName()}`;
+                if (value === 'new') {
+                    window.location.href = '/app/rrhh/profiles/editor.html?redirect=process';
+                    return;
+                }
+
+                if (!value) {
+                    hideProfilePreview();
+                    return;
+                }
+
+                // Buscar perfil en los datos cargados
+                const profile = profilesData.find(p => p.id == value);
+                if (profile) {
+                    showProfilePreview(profile);
+
+                    // Auto-generar nombre del proceso
+                    if (!processNameInput.value || processNameInput.dataset.autoGenerated === 'true') {
+                        processNameInput.value = `${profile.name} - ${getMonthName()}`;
                         processNameInput.dataset.autoGenerated = 'true';
                     }
                 }
@@ -2248,6 +2389,113 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 this.dataset.autoGenerated = 'false';
             });
         }
+
+        // =====================================================
+        // GUARDAR PROCESO
+        // =====================================================
+        const saveDraftBtn = document.getElementById('saveDraftBtn');
+        const publishBtn = document.getElementById('publishBtn');
+        let isSaving = false;
+
+        async function saveProcess(status = 'draft') {
+            if (isSaving) return;
+
+            // Validar perfil seleccionado
+            if (!selectedProfile) {
+                alert('Por favor, selecciona un perfil de puesto');
+                profileSelect.focus();
+                return;
+            }
+
+            // Validar nombre del proceso
+            const processName = document.getElementById('processName').value.trim();
+            if (!processName) {
+                alert('Por favor, introduce un nombre para el proceso');
+                document.getElementById('processName').focus();
+                return;
+            }
+
+            isSaving = true;
+            const btn = status === 'draft' ? saveDraftBtn : publishBtn;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            btn.disabled = true;
+
+            try {
+                const token = window.velvzAuth?.getToken();
+                if (!token) {
+                    alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                    window.location.href = '/auth/login.html';
+                    return;
+                }
+
+                // Recoger datos del formulario
+                const data = {
+                    title: processName,
+                    profile_id: selectedProfile.id,
+                    description: document.getElementById('processDescription')?.value || '',
+                    num_positions: parseInt(document.getElementById('numPositions')?.value) || 1,
+                    priority: document.getElementById('priority')?.value || 'normal',
+                    deadline: document.getElementById('deadline')?.value || null,
+                    location: selectedProfile.location,
+                    modality: selectedProfile.modality,
+                    salary_min: selectedProfile.salary_min,
+                    salary_max: selectedProfile.salary_max,
+                    salary_period: selectedProfile.salary_period || 'year',
+                    hiring_manager: document.getElementById('hiringManager')?.value || null,
+                    ai_interview_enabled: document.getElementById('aiInterviewToggle')?.checked || false,
+                    profile_adjustments: window.profileAdjustModal?.getAdjustments() || {},
+                    status: status
+                };
+
+                const isEditing = !!currentProcessId;
+                const url = isEditing
+                    ? `${API_URL}/api/rrhh/processes/${currentProcessId}`
+                    : `${API_URL}/api/rrhh/processes`;
+                const method = isEditing ? 'PUT' : 'POST';
+
+                console.log(`${isEditing ? 'Actualizando' : 'Creando'} proceso:`, data);
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log('Proceso guardado:', result.data.process);
+                    const message = status === 'draft'
+                        ? 'Borrador guardado correctamente'
+                        : 'Proceso publicado correctamente';
+                    alert(message);
+                    window.location.href = '/app/rrhh/processes/';
+                } else {
+                    throw new Error(result.message || 'Error al guardar el proceso');
+                }
+            } catch (error) {
+                console.error('Error guardando proceso:', error);
+                alert('Error al guardar el proceso: ' + error.message);
+            } finally {
+                isSaving = false;
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        if (saveDraftBtn) {
+            saveDraftBtn.addEventListener('click', () => saveProcess('draft'));
+        }
+        if (publishBtn) {
+            publishBtn.addEventListener('click', () => saveProcess('active'));
+        }
+
+        // Cargar perfiles al iniciar
+        loadProfiles();
 
         // =====================================================
         // MODAL EDITOR SIMPLIFICADO DE PERFIL
@@ -2277,30 +2525,47 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 modality: null
             };
 
-            // Datos mock del perfil (en producción vendrían del perfil seleccionado)
-            const mockProfileData = {
-                title: 'Desarrollador Backend Senior',
-                requirements: [
-                    { id: 1, name: 'Python 3+', type: 'essential' },
-                    { id: 2, name: 'SQL avanzado', type: 'essential' },
-                    { id: 3, name: 'APIs REST', type: 'essential' },
-                    { id: 4, name: 'Docker', type: 'essential' },
-                    { id: 5, name: 'Git', type: 'essential' },
-                    { id: 6, name: 'AWS/GCP', type: 'desired' },
-                    { id: 7, name: 'Kubernetes', type: 'desired' },
-                    { id: 8, name: 'Testing (pytest)', type: 'desired' },
-                    { id: 9, name: 'GraphQL', type: 'nice' },
-                    { id: 10, name: 'Redis', type: 'nice' }
-                ],
-                salaryMin: 45000,
-                salaryMax: 65000,
-                experience: 4,
-                modality: 'hybrid'
-            };
+            // Obtener datos del perfil seleccionado
+            function getProfileData() {
+                if (!selectedProfile) {
+                    return {
+                        title: 'Sin perfil seleccionado',
+                        requirements: [],
+                        salaryMin: null,
+                        salaryMax: null,
+                        experience: 0,
+                        modality: 'hybrid'
+                    };
+                }
+
+                const requirements = typeof selectedProfile.requirements === 'string'
+                    ? JSON.parse(selectedProfile.requirements)
+                    : selectedProfile.requirements || {};
+
+                const allReqs = [];
+                let id = 1;
+                (requirements.essential || []).forEach(r => allReqs.push({ id: id++, name: r, type: 'essential' }));
+                (requirements.desired || []).forEach(r => allReqs.push({ id: id++, name: r, type: 'desired' }));
+                (requirements.niceToHave || []).forEach(r => allReqs.push({ id: id++, name: r, type: 'nice' }));
+
+                return {
+                    title: selectedProfile.name,
+                    requirements: allReqs,
+                    salaryMin: selectedProfile.salary_min,
+                    salaryMax: selectedProfile.salary_max,
+                    experience: selectedProfile.min_experience_years || 0,
+                    modality: selectedProfile.modality || 'hybrid'
+                };
+            }
 
             // Abrir modal
             function openModal() {
-                profileNameEl.textContent = mockProfileData.title;
+                if (!selectedProfile) {
+                    alert('Por favor, selecciona un perfil primero');
+                    return;
+                }
+                const profileData = getProfileData();
+                profileNameEl.textContent = profileData.title;
                 renderRequirements();
                 renderExtras();
                 loadConditions();
@@ -2316,13 +2581,19 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
             // Renderizar requisitos
             function renderRequirements() {
+                const profileData = getProfileData();
                 const typeLabels = {
                     essential: 'Esencial',
                     desired: 'Deseable',
                     nice: 'Valorable'
                 };
 
-                requirementsList.innerHTML = mockProfileData.requirements.map(req => {
+                if (profileData.requirements.length === 0) {
+                    requirementsList.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 1rem;">Este perfil no tiene requisitos definidos</p>';
+                    return;
+                }
+
+                requirementsList.innerHTML = profileData.requirements.map(req => {
                     const isExcluded = profileAdjustments.excludedRequirements.includes(req.id);
                     return `
                         <div class="adjust-requirement ${isExcluded ? 'adjust-requirement--excluded' : ''}" data-id="${req.id}">
@@ -2386,15 +2657,16 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
             // Cargar condiciones actuales
             function loadConditions() {
+                const profileData = getProfileData();
                 document.getElementById('adjustSalaryMin').value = profileAdjustments.salaryMin || '';
                 document.getElementById('adjustSalaryMax').value = profileAdjustments.salaryMax || '';
                 document.getElementById('adjustExperience').value = profileAdjustments.experience || '';
                 document.getElementById('adjustModality').value = profileAdjustments.modality || '';
 
                 // Placeholders con valores del perfil
-                document.getElementById('adjustSalaryMin').placeholder = `${mockProfileData.salaryMin}€ (perfil)`;
-                document.getElementById('adjustSalaryMax').placeholder = `${mockProfileData.salaryMax}€ (perfil)`;
-                document.getElementById('adjustExperience').placeholder = `${mockProfileData.experience} años (perfil)`;
+                document.getElementById('adjustSalaryMin').placeholder = profileData.salaryMin ? `${profileData.salaryMin}€ (perfil)` : 'Sin especificar';
+                document.getElementById('adjustSalaryMax').placeholder = profileData.salaryMax ? `${profileData.salaryMax}€ (perfil)` : 'Sin especificar';
+                document.getElementById('adjustExperience').placeholder = profileData.experience ? `${profileData.experience} años (perfil)` : 'Sin especificar';
             }
 
             // Añadir requisito extra
