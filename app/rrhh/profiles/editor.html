@@ -1299,9 +1299,19 @@
             });
 
             // =====================================================
+            // API URL
+            // =====================================================
+            const API_URL = window.API_CONFIG?.API_URL || 'https://velvz-unified-backend-production.up.railway.app';
+
+            // =====================================================
             // Guardar / Cancelar
             // =====================================================
-            function saveProfile() {
+            let isSaving = false;
+            let currentProfileId = null;
+
+            async function saveProfile() {
+                if (isSaving) return;
+
                 const name = document.getElementById('profileName').value.trim();
                 if (!name) {
                     alert('Por favor, introduce el nombre del puesto');
@@ -1309,17 +1319,24 @@
                     return;
                 }
 
+                const department = document.getElementById('departmentSelect').value;
+                if (!department) {
+                    alert('Por favor, selecciona un departamento');
+                    document.getElementById('departmentSelect').focus();
+                    return;
+                }
+
                 const data = {
                     name: name,
-                    department: document.getElementById('departmentSelect').value,
+                    department: department,
                     location: document.getElementById('locationInput').value,
                     modality: document.querySelector('input[name="modality"]:checked')?.value || 'hybrid',
                     description: document.getElementById('jobDescription').value,
-                    salaryMin: parseInt(document.getElementById('salaryMin').value) || null,
-                    salaryMax: parseInt(document.getElementById('salaryMax').value) || null,
-                    salaryPeriod: document.getElementById('salaryPeriod').value,
-                    salaryVisible: document.getElementById('salaryVisible').checked,
-                    minExperienceYears: parseInt(document.getElementById('minExperience').value) || 0,
+                    salary_min: parseInt(document.getElementById('salaryMin').value) || null,
+                    salary_max: parseInt(document.getElementById('salaryMax').value) || null,
+                    salary_period: document.getElementById('salaryPeriod').value,
+                    salary_visible: document.getElementById('salaryVisible').checked,
+                    min_experience_years: parseInt(document.getElementById('minExperience').value) || 0,
                     requirements: {
                         essential: profileData.essential,
                         desired: profileData.desired,
@@ -1331,13 +1348,63 @@
                     })).filter(l => l.language)
                 };
 
-                console.log('Guardando perfil:', data);
-                alert('Perfil guardado correctamente (demo - sin backend)');
-                window.location.href = '/app/rrhh/profiles/';
+                isSaving = true;
+                const saveBtn = document.getElementById('saveBtn');
+                const saveBtnBottom = document.getElementById('saveBtnBottom');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+                saveBtnBottom.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+                saveBtn.disabled = true;
+                saveBtnBottom.disabled = true;
+
+                try {
+                    const token = window.velvzAuth?.getToken();
+                    if (!token) {
+                        alert('Tu sesion ha expirado. Por favor, inicia sesion de nuevo.');
+                        window.location.href = '/auth/login.html';
+                        return;
+                    }
+
+                    const isEditing = !!currentProfileId;
+                    const url = isEditing
+                        ? `${API_URL}/api/rrhh/profiles/${currentProfileId}`
+                        : `${API_URL}/api/rrhh/profiles`;
+                    const method = isEditing ? 'PUT' : 'POST';
+
+                    console.log(`${isEditing ? 'Actualizando' : 'Creando'} perfil:`, data);
+
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        console.log('Perfil guardado:', result.data.profile);
+                        alert(isEditing ? 'Perfil actualizado correctamente' : 'Perfil creado correctamente');
+                        window.location.href = '/app/rrhh/profiles/';
+                    } else {
+                        throw new Error(result.message || 'Error al guardar el perfil');
+                    }
+                } catch (error) {
+                    console.error('Error guardando perfil:', error);
+                    alert('Error al guardar el perfil: ' + error.message);
+                } finally {
+                    isSaving = false;
+                    saveBtn.innerHTML = originalText;
+                    saveBtnBottom.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                    saveBtnBottom.disabled = false;
+                }
             }
 
             function cancel() {
-                if (confirm('¿Estás seguro? Se perderán los cambios no guardados.')) {
+                if (confirm('¿Estas seguro? Se perderan los cambios no guardados.')) {
                     window.location.href = '/app/rrhh/profiles/';
                 }
             }
@@ -1353,10 +1420,86 @@
             const urlParams = new URLSearchParams(window.location.search);
             const profileId = urlParams.get('id');
 
+            async function loadProfile(id) {
+                try {
+                    const token = window.velvzAuth?.getToken();
+                    if (!token) {
+                        alert('Tu sesion ha expirado. Por favor, inicia sesion de nuevo.');
+                        window.location.href = '/auth/login.html';
+                        return;
+                    }
+
+                    const response = await fetch(`${API_URL}/api/rrhh/profiles/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        throw new Error(result.message || 'Perfil no encontrado');
+                    }
+
+                    const profile = result.data.profile;
+                    currentProfileId = profile.id;
+
+                    // Rellenar formulario
+                    document.getElementById('profileName').value = profile.name || '';
+                    document.getElementById('departmentSelect').value = profile.department || '';
+                    document.getElementById('locationInput').value = profile.location || '';
+                    document.getElementById('jobDescription').value = profile.description || '';
+                    document.getElementById('salaryMin').value = profile.salary_min || '';
+                    document.getElementById('salaryMax').value = profile.salary_max || '';
+                    document.getElementById('salaryPeriod').value = profile.salary_period || 'year';
+                    document.getElementById('salaryVisible').checked = profile.salary_visible !== false;
+                    document.getElementById('minExperience').value = profile.min_experience_years || 0;
+
+                    // Modalidad
+                    const modalityRadio = document.querySelector(`input[name="modality"][value="${profile.modality || 'hybrid'}"]`);
+                    if (modalityRadio) modalityRadio.checked = true;
+
+                    // Requisitos
+                    const requirements = typeof profile.requirements === 'string'
+                        ? JSON.parse(profile.requirements)
+                        : profile.requirements || {};
+
+                    profileData.essential = requirements.essential || [];
+                    profileData.desired = requirements.desired || [];
+                    profileData.niceToHave = requirements.niceToHave || [];
+
+                    renderTags('essentialTags', profileData.essential, 'essential');
+                    renderTags('desiredTags', profileData.desired, 'desired');
+                    renderTags('niceTags', profileData.niceToHave, 'nice');
+
+                    // Idiomas
+                    languagesList.innerHTML = '';
+                    const languages = typeof profile.languages === 'string'
+                        ? JSON.parse(profile.languages)
+                        : profile.languages || [];
+
+                    if (languages.length > 0) {
+                        languages.forEach(lang => addLanguage(lang.language, lang.level));
+                    } else {
+                        addLanguage('es', 'native');
+                    }
+
+                    // Actualizar contador
+                    descriptionCount.textContent = (profile.description || '').length;
+
+                    console.log('Perfil cargado:', profile.name);
+
+                } catch (error) {
+                    console.error('Error cargando perfil:', error);
+                    alert('Error al cargar el perfil: ' + error.message);
+                    window.location.href = '/app/rrhh/profiles/';
+                }
+            }
+
             if (profileId) {
                 document.getElementById('pageTitle').textContent = 'Editar Perfil';
                 document.getElementById('breadcrumbTitle').textContent = 'Editar Perfil';
-                // TODO: Cargar datos del perfil desde API
+                loadProfile(profileId);
             }
         });
     </script>
