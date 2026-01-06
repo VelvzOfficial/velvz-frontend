@@ -2525,8 +2525,8 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 currentProcessId = process.id;
 
                 // Actualizar título de la página
-                document.querySelector('.config-header__title h1').textContent = 'Editar Proceso';
-                document.getElementById('breadcrumbTitle').textContent = 'Editar Proceso';
+                document.getElementById('processTitle').textContent = 'Editar Proceso de Selección';
+                document.querySelector('.velvz-breadcrumbs__current').textContent = 'Editar Proceso';
 
                 // Rellenar formulario
                 document.getElementById('processName').value = process.title || '';
