@@ -795,76 +795,142 @@
     <script src="/assets/js/app-dashboard.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const processes = [
-                {
-                    id: 1,
-                    title: 'Desarrollador Full Stack Senior',
-                    department: 'Tecnología',
-                    status: 'active',
-                    candidates: 45,
-                    shortlisted: 8,
-                    forms: 2,
-                    createdAt: '2025-01-15'
-                },
-                {
-                    id: 2,
-                    title: 'Product Manager',
-                    department: 'Producto',
-                    status: 'active',
-                    candidates: 32,
-                    shortlisted: 5,
-                    forms: 1,
-                    createdAt: '2025-01-20'
-                },
-                {
-                    id: 3,
-                    title: 'Diseñador UX/UI',
-                    department: 'Diseño',
-                    status: 'paused',
-                    candidates: 18,
-                    shortlisted: 3,
-                    forms: 1,
-                    createdAt: '2025-01-10'
-                },
-                {
-                    id: 4,
-                    title: 'Data Analyst',
-                    department: 'Datos',
-                    status: 'active',
-                    candidates: 27,
-                    shortlisted: 6,
-                    forms: 2,
-                    createdAt: '2025-01-22'
-                },
-                {
-                    id: 5,
-                    title: 'Marketing Manager',
-                    department: 'Marketing',
-                    status: 'closed',
-                    candidates: 52,
-                    shortlisted: 10,
-                    forms: 3,
-                    createdAt: '2024-12-15'
-                },
-                {
-                    id: 6,
-                    title: 'DevOps Engineer',
-                    department: 'Tecnología',
-                    status: 'active',
-                    candidates: 15,
-                    shortlisted: 4,
-                    forms: 2,
-                    createdAt: '2025-01-25'
-                }
-            ];
+            const API_URL = window.API_CONFIG?.API_URL || 'https://velvz-unified-backend-production.up.railway.app';
+            let processes = [];
+            let currentFilter = 'all';
 
             const grid = document.getElementById('processesGrid');
             const emptyState = document.getElementById('emptyState');
 
+            // Helpers de formato
+            function formatDepartment(dept) {
+                const labels = {
+                    tech: 'Tecnología', product: 'Producto', design: 'Diseño',
+                    sales: 'Ventas', marketing: 'Marketing', hr: 'RRHH',
+                    finance: 'Finanzas', operations: 'Operaciones', other: 'Otro'
+                };
+                return labels[dept] || dept || 'Sin departamento';
+            }
+
+            function formatStatus(status) {
+                const labels = {
+                    active: 'Activo',
+                    paused: 'Pausado',
+                    closed: 'Cerrado',
+                    draft: 'Borrador'
+                };
+                return labels[status] || status;
+            }
+
+            // Cargar procesos desde el backend
+            async function loadProcesses() {
+                try {
+                    const token = window.velvzAuth?.getToken();
+                    if (!token) {
+                        console.log('No hay sesión, redirigiendo al login');
+                        window.location.href = '/auth/login.html';
+                        return;
+                    }
+
+                    grid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: rgba(255,255,255,0.5);">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>Cargando procesos...</p>
+                        </div>
+                    `;
+                    emptyState.style.display = 'none';
+
+                    const response = await fetch(`${API_URL}/api/rrhh/processes`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        throw new Error(result.message || 'Error al cargar procesos');
+                    }
+
+                    // Transformar datos del backend
+                    processes = result.data.processes.map(p => ({
+                        id: p.id,
+                        title: p.title,
+                        department: p.profile_department || formatDepartment(p.department),
+                        profileName: p.profile_name,
+                        status: p.status || 'draft',
+                        candidates: parseInt(p.candidates_count) || 0,
+                        shortlisted: 0,
+                        priority: p.priority || 'normal',
+                        createdAt: p.created_at
+                    }));
+
+                    // Actualizar estadísticas del header
+                    updateStats();
+
+                    // Renderizar
+                    renderProcesses(getFilteredProcesses());
+
+                    console.log(`✅ ${processes.length} procesos cargados`);
+
+                } catch (error) {
+                    console.error('Error cargando procesos:', error);
+                    grid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: rgba(255,255,255,0.5);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 1rem; color: #ef4444;"></i>
+                            <p>Error al cargar procesos</p>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">${error.message}</p>
+                            <button onclick="location.reload()" class="btn btn--secondary" style="margin-top: 1rem;">
+                                <i class="fas fa-redo"></i> Reintentar
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            function updateStats() {
+                const total = processes.length;
+                const active = processes.filter(p => p.status === 'active').length;
+                const totalCandidates = processes.reduce((sum, p) => sum + p.candidates, 0);
+
+                // Actualizar contadores si existen los elementos
+                const statTotal = document.getElementById('statTotal');
+                const statActive = document.getElementById('statActive');
+                const statCandidates = document.getElementById('statCandidates');
+
+                if (statTotal) statTotal.textContent = total;
+                if (statActive) statActive.textContent = active;
+                if (statCandidates) statCandidates.textContent = totalCandidates;
+            }
+
+            function getFilteredProcesses() {
+                const query = document.getElementById('searchProcesses')?.value.toLowerCase() || '';
+
+                return processes.filter(p => {
+                    const matchesFilter = currentFilter === 'all' || p.status === currentFilter;
+                    const matchesSearch = !query ||
+                        p.title.toLowerCase().includes(query) ||
+                        p.department.toLowerCase().includes(query) ||
+                        (p.profileName && p.profileName.toLowerCase().includes(query));
+                    return matchesFilter && matchesSearch;
+                });
+            }
+
             function renderProcesses(data) {
-                if (data.length === 0) {
+                if (data.length === 0 && processes.length === 0) {
                     grid.style.display = 'none';
                     emptyState.style.display = 'block';
+                    return;
+                }
+
+                if (data.length === 0) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: rgba(255,255,255,0.5);">
+                            <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>No se encontraron procesos con ese filtro</p>
+                        </div>
+                    `;
+                    emptyState.style.display = 'none';
                     return;
                 }
 
@@ -872,12 +938,17 @@
                 emptyState.style.display = 'none';
 
                 grid.innerHTML = data.map(process => `
-                    <a href="/app/rrhh/processes/${process.id}/" class="process-card" data-id="${process.id}">
+                    <a href="/app/rrhh/processes/editor.html?id=${process.id}" class="process-card" data-id="${process.id}">
                         <div class="process-card__header">
                             <span class="process-card__status process-card__status--${process.status}">
                                 <span class="process-card__status-dot"></span>
-                                ${process.status === 'active' ? 'Activo' : process.status === 'paused' ? 'Pausado' : 'Cerrado'}
+                                ${formatStatus(process.status)}
                             </span>
+                            ${process.priority === 'high' || process.priority === 'urgent' ? `
+                                <span class="process-card__priority process-card__priority--${process.priority}">
+                                    <i class="fas fa-flag"></i>
+                                </span>
+                            ` : ''}
                             <div class="process-card__icon">
                                 <i class="fas fa-briefcase"></i>
                             </div>
@@ -894,10 +965,6 @@
                             <div class="process-card__stat">
                                 <div class="process-card__stat-value">${process.shortlisted}</div>
                                 <div class="process-card__stat-label">Preselec.</div>
-                            </div>
-                            <div class="process-card__stat">
-                                <div class="process-card__stat-value">${process.forms}</div>
-                                <div class="process-card__stat-label">Forms</div>
                             </div>
                         </div>
                         <div class="process-card__footer">
@@ -916,26 +983,15 @@
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-btn--active'));
                     btn.classList.add('filter-btn--active');
 
-                    const filter = btn.dataset.filter;
-                    if (filter === 'all') {
-                        renderProcesses(processes);
-                    } else {
-                        renderProcesses(processes.filter(p => p.status === filter));
-                    }
+                    currentFilter = btn.dataset.filter;
+                    renderProcesses(getFilteredProcesses());
                 });
             });
 
             // Búsqueda
-            document.getElementById('searchProcesses').addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                renderProcesses(processes.filter(p =>
-                    p.title.toLowerCase().includes(query) ||
-                    p.department.toLowerCase().includes(query)
-                ));
+            document.getElementById('searchProcesses')?.addEventListener('input', () => {
+                renderProcesses(getFilteredProcesses());
             });
-
-            // Render inicial
-            renderProcesses(processes);
 
             // Botón nuevo proceso - redirigir al editor
             ['newProcessBtn', 'emptyNewProcess'].forEach(id => {
@@ -946,6 +1002,9 @@
                     });
                 }
             });
+
+            // Cargar procesos al iniciar
+            loadProcesses();
         });
     </script>
 </body>
