@@ -319,6 +319,18 @@
             color: #3b82f6;
         }
 
+        .profile-preview__tag--excluded {
+            text-decoration: line-through;
+            opacity: 0.5;
+            position: relative;
+        }
+
+        .profile-preview__tag--extra {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px dashed rgba(16, 185, 129, 0.4);
+        }
+
         .profile-preview__edit {
             display: inline-flex;
             align-items: center;
@@ -1022,6 +1034,91 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+        }
+
+        /* Input numérico custom con flechas */
+        .adjust-number-input {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .adjust-number-input input {
+            flex: 1;
+            padding-right: 2.5rem;
+            -moz-appearance: textfield;
+        }
+
+        .adjust-number-input input::-webkit-outer-spin-button,
+        .adjust-number-input input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .adjust-number-input__controls {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            bottom: 1px;
+            display: flex;
+            flex-direction: column;
+            width: 28px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 7px 7px 0;
+            overflow: hidden;
+        }
+
+        .adjust-number-input__btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 0.65rem;
+        }
+
+        .adjust-number-input__btn:hover {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .adjust-number-input__btn:active {
+            background: rgba(16, 185, 129, 0.3);
+        }
+
+        .adjust-number-input__btn:first-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Select custom para modalidad */
+        .adjust-select-custom {
+            position: relative;
+        }
+
+        .adjust-select-custom select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        .adjust-select-custom__arrow {
+            position: absolute;
+            right: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            pointer-events: none;
+            transition: transform 0.2s;
+        }
+
+        .adjust-select-custom select:focus + .adjust-select-custom__arrow {
+            color: #10b981;
         }
 
         /* Footer del modal */
@@ -2819,26 +2916,61 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     <div class="adjust-field-row">
                         <div class="adjust-field">
                             <label>Salario mínimo (€/año)</label>
-                            <input type="number" id="adjustSalaryMin" placeholder="Heredado del perfil">
+                            <div class="adjust-number-input">
+                                <input type="number" id="adjustSalaryMin" placeholder="Heredado del perfil" step="1000">
+                                <div class="adjust-number-input__controls">
+                                    <button type="button" class="adjust-number-input__btn" data-action="increment">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="adjust-number-input__btn" data-action="decrement">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="adjust-field">
                             <label>Salario máximo (€/año)</label>
-                            <input type="number" id="adjustSalaryMax" placeholder="Heredado del perfil">
+                            <div class="adjust-number-input">
+                                <input type="number" id="adjustSalaryMax" placeholder="Heredado del perfil" step="1000">
+                                <div class="adjust-number-input__controls">
+                                    <button type="button" class="adjust-number-input__btn" data-action="increment">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="adjust-number-input__btn" data-action="decrement">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="adjust-field-row">
                         <div class="adjust-field">
                             <label>Experiencia mínima (años)</label>
-                            <input type="number" id="adjustExperience" placeholder="Heredado del perfil" min="0">
+                            <div class="adjust-number-input">
+                                <input type="number" id="adjustExperience" placeholder="Heredado del perfil" min="0" step="1">
+                                <div class="adjust-number-input__controls">
+                                    <button type="button" class="adjust-number-input__btn" data-action="increment">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="adjust-number-input__btn" data-action="decrement">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="adjust-field">
                             <label>Modalidad</label>
-                            <select id="adjustModality">
-                                <option value="">Heredado del perfil</option>
-                                <option value="onsite">Presencial</option>
-                                <option value="remote">Remoto</option>
-                                <option value="hybrid">Híbrido</option>
-                            </select>
+                            <div class="adjust-select-custom">
+                                <select id="adjustModality">
+                                    <option value="">Heredado del perfil</option>
+                                    <option value="onsite">Presencial</option>
+                                    <option value="remote">Remoto</option>
+                                    <option value="hybrid">Híbrido</option>
+                                </select>
+                                <div class="adjust-select-custom__arrow">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2986,6 +3118,8 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 if (input.closest('.danger-zone-container')) return;
                 // Ignorar inputs dentro del modal de eliminación
                 if (input.closest('.velvz-delete-modal')) return;
+                // Ignorar inputs dentro del modal de ajustes de perfil
+                if (input.closest('.profile-adjust-overlay')) return;
 
                 input.addEventListener('input', () => markAsChanged());
                 input.addEventListener('change', () => markAsChanged());
@@ -3773,9 +3907,13 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         ? JSON.parse(process.profile_adjustments)
                         : process.profile_adjustments;
 
-                    if (window.profileAdjustModal) {
-                        // Los ajustes se cargarán cuando se abra el modal
-                    }
+                    // Cargar los ajustes en el modal después de un pequeño delay
+                    // para asegurar que el perfil ya se ha cargado
+                    setTimeout(() => {
+                        if (window.profileAdjustModal && Object.keys(adjustments).length > 0) {
+                            window.profileAdjustModal.setAdjustments(adjustments);
+                        }
+                    }, 500);
                 }
 
                 console.log('✅ Proceso cargado:', process.title);
@@ -4521,8 +4659,49 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 // Mostrar badge de modificado si hay cambios
                 updateModifiedBadge();
 
+                // Actualizar visualmente los requisitos en la tarjeta de preview
+                updatePreviewRequirements();
+
+                // Marcar como cambio pendiente SOLO al aplicar ajustes
+                if (typeof markAsChanged === 'function') {
+                    markAsChanged();
+                }
+
                 closeModal();
                 console.log('Ajustes guardados:', profileAdjustments);
+            }
+
+            // Actualizar visualmente los requisitos en la tarjeta de preview
+            function updatePreviewRequirements() {
+                const profileData = getProfileData();
+                const reqContainer = document.getElementById('previewRequirements');
+                if (!reqContainer) return;
+
+                reqContainer.innerHTML = '';
+
+                // Renderizar requisitos del perfil (con exclusiones tachadas)
+                profileData.requirements.forEach(req => {
+                    const tag = document.createElement('span');
+                    const isExcluded = profileAdjustments.excludedRequirements.includes(req.id);
+                    tag.className = `profile-preview__tag profile-preview__tag--${req.type}${isExcluded ? ' profile-preview__tag--excluded' : ''}`;
+                    tag.textContent = req.name;
+                    tag.dataset.reqId = req.id;
+                    reqContainer.appendChild(tag);
+                });
+
+                // Añadir requisitos extra (añadidos solo para este proceso)
+                profileAdjustments.extraRequirements.forEach((extraReq, index) => {
+                    const tag = document.createElement('span');
+                    tag.className = 'profile-preview__tag profile-preview__tag--extra';
+                    tag.textContent = extraReq;
+                    tag.title = 'Añadido para este proceso';
+                    reqContainer.appendChild(tag);
+                });
+
+                // Si no hay requisitos
+                if (profileData.requirements.length === 0 && profileAdjustments.extraRequirements.length === 0) {
+                    reqContainer.innerHTML = '<span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Sin requisitos definidos</span>';
+                }
             }
 
             // Resetear ajustes
@@ -4588,11 +4767,50 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 }
             });
 
-            // Exponer para debugging
+            // Botones de incremento/decremento para inputs numéricos custom
+            document.querySelectorAll('.adjust-number-input__btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const wrapper = this.closest('.adjust-number-input');
+                    const input = wrapper.querySelector('input[type="number"]');
+                    const step = parseFloat(input.step) || 1;
+                    const min = parseFloat(input.min) || 0;
+                    const currentValue = parseFloat(input.value) || 0;
+                    const action = this.dataset.action;
+
+                    if (action === 'increment') {
+                        input.value = currentValue + step;
+                    } else if (action === 'decrement') {
+                        const newValue = currentValue - step;
+                        input.value = newValue >= min ? newValue : min;
+                    }
+
+                    // Disparar evento change para que otros listeners lo detecten
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                });
+            });
+
+            // Exponer para debugging y carga de datos
             window.profileAdjustModal = {
                 open: openModal,
                 close: closeModal,
-                getAdjustments: () => profileAdjustments
+                getAdjustments: () => profileAdjustments,
+                setAdjustments: (adjustments) => {
+                    if (adjustments && typeof adjustments === 'object') {
+                        profileAdjustments = {
+                            excludedRequirements: adjustments.excludedRequirements || [],
+                            extraRequirements: adjustments.extraRequirements || [],
+                            salaryMin: adjustments.salaryMin || null,
+                            salaryMax: adjustments.salaryMax || null,
+                            experience: adjustments.experience || null,
+                            modality: adjustments.modality || null
+                        };
+                        // Actualizar la vista previa de requisitos
+                        updatePreviewRequirements();
+                        // Actualizar el badge de modificado
+                        updateModifiedBadge();
+                        console.log('📝 Ajustes cargados:', profileAdjustments);
+                    }
+                }
             };
         })();
     </script>
