@@ -331,6 +331,11 @@
             border: 1px dashed rgba(16, 185, 129, 0.4);
         }
 
+        .profile-preview__adjusted {
+            color: #10b981 !important;
+            font-weight: 500;
+        }
+
         .profile-preview__edit {
             display: inline-flex;
             align-items: center;
@@ -2911,7 +2916,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 <div class="profile-adjust-section">
                     <h3 class="profile-adjust-section__title">
                         <i class="fas fa-cog"></i>
-                        Condiciones (solo para este proceso)
+                        Condiciones específicas
                     </h3>
                     <div class="adjust-field-row">
                         <div class="adjust-field">
@@ -4671,7 +4676,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 console.log('Ajustes guardados:', profileAdjustments);
             }
 
-            // Actualizar visualmente los requisitos en la tarjeta de preview
+            // Actualizar visualmente la tarjeta de preview (requisitos y condiciones)
             function updatePreviewRequirements() {
                 const profileData = getProfileData();
                 const reqContainer = document.getElementById('previewRequirements');
@@ -4701,6 +4706,35 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 // Si no hay requisitos
                 if (profileData.requirements.length === 0 && profileAdjustments.extraRequirements.length === 0) {
                     reqContainer.innerHTML = '<span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Sin requisitos definidos</span>';
+                }
+
+                // Actualizar condiciones en la tarjeta si hay ajustes
+                const salaryEl = document.getElementById('previewSalary');
+                const experienceEl = document.getElementById('previewExperience');
+                const modalityEl = document.getElementById('previewModality');
+
+                // Usar valores ajustados si existen, sino los del perfil
+                const salaryMin = profileAdjustments.salaryMin !== null ? profileAdjustments.salaryMin : profileData.salaryMin;
+                const salaryMax = profileAdjustments.salaryMax !== null ? profileAdjustments.salaryMax : profileData.salaryMax;
+                const experience = profileAdjustments.experience !== null ? profileAdjustments.experience : profileData.experience;
+                const modality = profileAdjustments.modality || profileData.modality;
+
+                if (salaryEl) {
+                    const hasAdjustedSalary = profileAdjustments.salaryMin !== null || profileAdjustments.salaryMax !== null;
+                    salaryEl.textContent = formatSalary(salaryMin, salaryMax);
+                    salaryEl.classList.toggle('profile-preview__adjusted', hasAdjustedSalary);
+                }
+
+                if (experienceEl) {
+                    const hasAdjustedExp = profileAdjustments.experience !== null;
+                    experienceEl.textContent = experience ? `${experience}+ años` : 'Sin especificar';
+                    experienceEl.classList.toggle('profile-preview__adjusted', hasAdjustedExp);
+                }
+
+                if (modalityEl) {
+                    const hasAdjustedMod = profileAdjustments.modality !== null;
+                    modalityEl.textContent = formatModality(modality);
+                    modalityEl.classList.toggle('profile-preview__adjusted', hasAdjustedMod);
                 }
             }
 
