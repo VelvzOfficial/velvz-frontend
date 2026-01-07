@@ -1100,12 +1100,10 @@
         }
 
         /* =====================================================
-           ZONA DE PELIGRO - Nueva versión fuera de tabs
+           ZONA DE PELIGRO - Usa clases de chatbots (cfg-)
            ===================================================== */
         .danger-zone-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin-top: 2rem;
         }
 
         .danger-zone-wrapper {
@@ -2492,10 +2490,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         </div>
                     </section>
 
-                </div>
-            </div>
-
-            <!-- ZONA DE PELIGRO - Fuera del contenedor de tabs para que siempre sea visible -->
+                    <!-- ZONA DE PELIGRO - Siempre visible al final del contenido -->
             <div class="danger-zone-container" id="dangerZoneContainer" style="display: none;">
                 <div class="danger-zone-wrapper">
                     <div class="danger-zone-header">
@@ -2542,6 +2537,9 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+
                 </div>
             </div>
         </main>
@@ -2801,9 +2799,12 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
             const currentData = getFormData();
             const changed = JSON.stringify(currentData) !== JSON.stringify(originalFormData);
 
-            if (changed !== hasUnsavedChanges) {
-                hasUnsavedChanges = changed;
+            if (changed && !hasUnsavedChanges) {
+                markAsChanged();
+            } else if (!changed && hasUnsavedChanges) {
+                hasUnsavedChanges = false;
                 updateSaveButtonState();
+                hideUnsavedChangesWarning();
             }
         }
 
@@ -2840,6 +2841,219 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 }
             });
         }
+
+        // =====================================================
+        // SISTEMA DE CAMBIOS SIN GUARDAR (ESTILO CHATBOTS)
+        // =====================================================
+        function showUnsavedChangesWarning() {
+            let warningBar = document.getElementById('unsavedChangesWarning');
+
+            if (!warningBar) {
+                warningBar = document.createElement('div');
+                warningBar.id = 'unsavedChangesWarning';
+                warningBar.innerHTML = `
+                    <div class="unsaved-warning__main">
+                        <i class="fas fa-circle" style="font-size: 8px; color: #f59e0b;"></i>
+                        <span>Cambios sin guardar</span>
+                    </div>
+                    <div class="unsaved-warning__actions">
+                        <button type="button" class="unsaved-warning__btn unsaved-warning__btn--discard" id="discardChangesBtn">
+                            <i class="fas fa-times"></i>
+                            Descartar
+                        </button>
+                        <button type="button" class="unsaved-warning__btn unsaved-warning__btn--save" id="saveChangesQuickBtn">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                    </div>
+                `;
+                warningBar.style.cssText = `
+                    position: fixed !important;
+                    bottom: 20px !important;
+                    right: 20px !important;
+                    background: rgba(30, 41, 59, 0.98) !important;
+                    color: #e2e8f0 !important;
+                    padding: 12px 18px !important;
+                    border-radius: 10px !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    gap: 0px !important;
+                    z-index: 999999 !important;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+                    font-size: 14px !important;
+                    font-weight: 600 !important;
+                    border-left: 4px solid #f59e0b !important;
+                    pointer-events: auto !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    cursor: pointer !important;
+                    transition: all 0.25s ease !important;
+                    overflow: hidden !important;
+                `;
+
+                // Añadir estilos
+                if (!document.getElementById('unsavedChangesStyles')) {
+                    const style = document.createElement('style');
+                    style.id = 'unsavedChangesStyles';
+                    style.textContent = `
+                        @keyframes slideUp {
+                            from { opacity: 0; transform: translateY(10px); }
+                            to { opacity: 1; transform: translateY(0); }
+                        }
+                        #unsavedChangesWarning {
+                            animation: slideUp 0.3s ease forwards !important;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__main {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__actions {
+                            display: flex;
+                            gap: 8px;
+                            margin-top: 0;
+                            max-height: 0;
+                            opacity: 0;
+                            overflow: hidden;
+                            transition: all 0.25s ease;
+                        }
+                        #unsavedChangesWarning:hover .unsaved-warning__actions {
+                            max-height: 50px;
+                            opacity: 1;
+                            margin-top: 12px;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__btn {
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                            padding: 8px 14px;
+                            border: none;
+                            border-radius: 6px;
+                            font-size: 13px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+                            flex: 1;
+                            justify-content: center;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__btn--discard {
+                            background: rgba(255, 255, 255, 0.1);
+                            color: #e2e8f0;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__btn--discard:hover {
+                            background: rgba(239, 68, 68, 0.2);
+                            color: #fca5a5;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__btn--save {
+                            background: linear-gradient(135deg, #10b981, #059669);
+                            color: white;
+                        }
+                        #unsavedChangesWarning .unsaved-warning__btn--save:hover {
+                            background: linear-gradient(135deg, #059669, #047857);
+                            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                document.body.appendChild(warningBar);
+
+                // Event listeners
+                warningBar.querySelector('#discardChangesBtn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (confirm('¿Descartar cambios sin guardar?')) {
+                        window.location.reload();
+                    }
+                });
+
+                warningBar.querySelector('#saveChangesQuickBtn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const saveDraftBtn = document.getElementById('saveDraftBtn');
+                    if (saveDraftBtn) saveDraftBtn.click();
+                });
+            }
+
+            warningBar.style.display = 'flex';
+        }
+
+        function hideUnsavedChangesWarning() {
+            const warningBar = document.getElementById('unsavedChangesWarning');
+            if (warningBar) {
+                warningBar.style.display = 'none';
+            }
+        }
+
+        function markAsChanged() {
+            if (!hasUnsavedChanges) {
+                hasUnsavedChanges = true;
+                updateSaveButtonState();
+                showUnsavedChangesWarning();
+            }
+        }
+
+        // =====================================================
+        // NAVEGACIÓN POR TABS/SECCIONES
+        // =====================================================
+        function setupTabNavigation() {
+            const tabs = document.querySelectorAll('.velvz-config__tab');
+            const sections = document.querySelectorAll('.process-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+
+                    // Actualizar tabs activos
+                    tabs.forEach(t => t.classList.remove('velvz-config__tab--active'));
+                    this.classList.add('velvz-config__tab--active');
+
+                    // Mostrar sección correspondiente
+                    sections.forEach(section => {
+                        if (section.dataset.tab === targetTab) {
+                            section.classList.add('process-section--active');
+                            section.style.display = 'block';
+                        } else {
+                            section.classList.remove('process-section--active');
+                            section.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Botones siguiente/anterior dentro de secciones
+            document.querySelectorAll('.btn--next').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const nextTab = this.dataset.next;
+                    if (nextTab) {
+                        const targetTabBtn = document.querySelector(`.velvz-config__tab[data-tab="${nextTab}"]`);
+                        if (targetTabBtn) targetTabBtn.click();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn--prev').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const prevTab = this.dataset.prev;
+                    if (prevTab) {
+                        const targetTabBtn = document.querySelector(`.velvz-config__tab[data-tab="${prevTab}"]`);
+                        if (targetTabBtn) targetTabBtn.click();
+                    }
+                });
+            });
+
+            // Botones de editar en resumen
+            document.querySelectorAll('.summary-card__edit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.dataset.goto;
+                    if (targetTab) {
+                        const targetTabBtn = document.querySelector(`.velvz-config__tab[data-tab="${targetTab}"]`);
+                        if (targetTabBtn) targetTabBtn.click();
+                    }
+                });
+            });
+        }
+
+        // Inicializar navegación al cargar
+        setupTabNavigation();
 
         // =====================================================
         // CARGAR PERFILES DESDE BACKEND
@@ -3093,6 +3307,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     hasUnsavedChanges = false;
                     originalFormData = getFormData();
                     updateSaveButtonState();
+                    hideUnsavedChangesWarning();
 
                     const message = status === 'draft'
                         ? 'Borrador guardado correctamente'
@@ -3114,6 +3329,12 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
+        }
+
+        // Botón guardar del header
+        const headerSaveBtn = document.getElementById('saveBtn');
+        if (headerSaveBtn) {
+            headerSaveBtn.addEventListener('click', () => saveProcess('draft'));
         }
 
         if (saveDraftBtn) {
