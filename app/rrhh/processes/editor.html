@@ -48,10 +48,179 @@
             color: #10b981 !important;
         }
 
-        /* Estilos para selector de perfil grande */
-        .form-select--large {
-            padding: 1rem 2.5rem 1rem 1rem;
-            font-size: 1.1rem;
+        /* =====================================================
+           SELECTOR DE PERFIL CUSTOM
+           ===================================================== */
+        .profile-selector {
+            position: relative;
+            width: 100%;
+        }
+
+        .profile-selector__trigger {
+            width: 100%;
+            background: var(--dark-bg-tertiary, #252542);
+            border: 1px solid var(--dark-border, rgba(255, 255, 255, 0.1));
+            border-radius: 12px;
+            padding: 1rem 3rem 1rem 1.25rem;
+            color: var(--dark-text, #eee6ff);
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .profile-selector__trigger:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: var(--dark-bg-secondary, #1a1a2e);
+        }
+
+        .profile-selector__trigger--open {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        .profile-selector__trigger--has-value {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .profile-selector__placeholder {
+            color: var(--dark-text-secondary, #a5a5c9);
+        }
+
+        .profile-selector__value {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .profile-selector__arrow {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-text-secondary, #a5a5c9);
+            transition: transform 0.2s ease;
+            pointer-events: none;
+        }
+
+        .profile-selector__trigger--open .profile-selector__arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .profile-selector__dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--dark-bg-secondary, #1a1a2e);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            max-height: 350px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+
+        .profile-selector__dropdown--open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .profile-selector__option {
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.15s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .profile-selector__option:last-child {
+            border-bottom: none;
+        }
+
+        .profile-selector__option:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .profile-selector__option--selected {
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .profile-selector__option--selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #10b981;
+            margin-left: auto;
+        }
+
+        .profile-selector__option--new {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #10b981;
+            font-weight: 500;
+        }
+
+        .profile-selector__option--new i {
+            color: #10b981;
+        }
+
+        .profile-selector__option-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-selector__option-name {
+            font-weight: 500;
+            color: var(--dark-text, #eee6ff);
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-selector__option-meta {
+            font-size: 0.85rem;
+            color: var(--dark-text-secondary, #a5a5c9);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .profile-selector__option-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .profile-selector__option-meta i {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .profile-selector__empty {
+            padding: 2rem;
+            text-align: center;
+            color: var(--dark-text-secondary, #a5a5c9);
+        }
+
+        .profile-selector__empty i {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            opacity: 0.5;
+        }
+
+        /* Ocultar el select nativo pero mantenerlo para el form */
+        .profile-selector select {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            height: 0;
         }
 
         /* Vista previa del perfil */
@@ -1667,12 +1836,24 @@
                                         Perfil de Puesto
                                         <span class="form-required">*</span>
                                     </label>
-                                    <div class="form-select-wrapper">
-                                        <select class="form-select form-select--large" id="profileSelect">
+                                    <!-- Selector de perfil custom -->
+                                    <div class="profile-selector" id="profileSelectorContainer">
+                                        <!-- Select nativo oculto para compatibilidad -->
+                                        <select id="profileSelect" tabindex="-1">
                                             <option value="">Selecciona un perfil existente...</option>
-                                            <option value="new">+ Crear nuevo perfil</option>
                                         </select>
-                                        <i class="fas fa-chevron-down form-select-icon"></i>
+                                        <!-- Trigger visible -->
+                                        <button type="button" class="profile-selector__trigger" id="profileSelectorTrigger">
+                                            <span class="profile-selector__placeholder">Selecciona un perfil existente...</span>
+                                            <i class="fas fa-chevron-down profile-selector__arrow"></i>
+                                        </button>
+                                        <!-- Dropdown con opciones -->
+                                        <div class="profile-selector__dropdown" id="profileSelectorDropdown">
+                                            <div class="profile-selector__empty" id="profileSelectorEmpty">
+                                                <i class="fas fa-spinner fa-spin"></i>
+                                                <p>Cargando perfiles...</p>
+                                            </div>
+                                        </div>
                                     </div>
                                     <span class="form-hint">El perfil contiene toda la información del puesto (requisitos, salario, ubicación, etc.)</span>
                                 </div>
@@ -3058,6 +3239,11 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         const profilePreview = document.getElementById('profilePreview');
         const profileEmpty = document.getElementById('profileEmpty');
 
+        // Elementos del selector custom
+        const profileSelectorTrigger = document.getElementById('profileSelectorTrigger');
+        const profileSelectorDropdown = document.getElementById('profileSelectorDropdown');
+        const profileSelectorEmpty = document.getElementById('profileSelectorEmpty');
+
         async function loadProfiles() {
             try {
                 const token = window.velvzAuth?.getToken();
@@ -3080,26 +3266,166 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
                 profilesData = result.data.profiles;
 
-                // Limpiar y poblar el select
+                // Limpiar y poblar el select nativo (para compatibilidad)
                 profileSelect.innerHTML = '<option value="">Selecciona un perfil existente...</option>';
+
+                // Poblar dropdown custom
+                profileSelectorDropdown.innerHTML = '';
 
                 if (profilesData.length === 0) {
                     profileSelect.innerHTML += '<option value="new" disabled>No hay perfiles - Crea uno primero</option>';
+                    profileSelectorDropdown.innerHTML = `
+                        <div class="profile-selector__empty">
+                            <i class="fas fa-folder-open"></i>
+                            <p>No hay perfiles creados</p>
+                        </div>
+                        <div class="profile-selector__option profile-selector__option--new" data-value="new">
+                            <i class="fas fa-plus"></i>
+                            <span>Crear nuevo perfil</span>
+                        </div>
+                    `;
                 } else {
                     profilesData.forEach(p => {
+                        // Select nativo
                         const opt = document.createElement('option');
                         opt.value = p.id;
                         opt.textContent = p.name;
                         opt.dataset.profile = JSON.stringify(p);
                         profileSelect.appendChild(opt);
+
+                        // Dropdown custom
+                        const optionEl = document.createElement('div');
+                        optionEl.className = 'profile-selector__option';
+                        optionEl.dataset.value = p.id;
+                        optionEl.dataset.profile = JSON.stringify(p);
+                        optionEl.innerHTML = `
+                            <div class="profile-selector__option-content">
+                                <div class="profile-selector__option-name">${p.name}</div>
+                                <div class="profile-selector__option-meta">
+                                    <span><i class="fas fa-briefcase"></i> ${formatDepartment(p.department)}</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> ${p.location || 'Sin ubicación'}</span>
+                                </div>
+                            </div>
+                        `;
+                        profileSelectorDropdown.appendChild(optionEl);
                     });
+
                     profileSelect.innerHTML += '<option value="new">+ Crear nuevo perfil</option>';
+
+                    // Opción crear nuevo
+                    const newOption = document.createElement('div');
+                    newOption.className = 'profile-selector__option profile-selector__option--new';
+                    newOption.dataset.value = 'new';
+                    newOption.innerHTML = `
+                        <i class="fas fa-plus"></i>
+                        <span>Crear nuevo perfil</span>
+                    `;
+                    profileSelectorDropdown.appendChild(newOption);
                 }
+
+                // Configurar eventos del selector custom
+                setupProfileSelector();
 
                 console.log(`✅ ${profilesData.length} perfiles cargados`);
 
             } catch (error) {
                 console.error('Error cargando perfiles:', error);
+                profileSelectorDropdown.innerHTML = `
+                    <div class="profile-selector__empty">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Error al cargar perfiles</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Configurar selector de perfil custom
+        function setupProfileSelector() {
+            // Toggle dropdown
+            profileSelectorTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isOpen = profileSelectorDropdown.classList.contains('profile-selector__dropdown--open');
+
+                if (isOpen) {
+                    closeProfileSelector();
+                } else {
+                    openProfileSelector();
+                }
+            });
+
+            // Click en opciones
+            profileSelectorDropdown.addEventListener('click', function(e) {
+                const option = e.target.closest('.profile-selector__option');
+                if (!option) return;
+
+                const value = option.dataset.value;
+
+                if (value === 'new') {
+                    // Redirigir a crear perfil
+                    window.location.href = '/app/rrhh/profiles/editor.html';
+                    return;
+                }
+
+                selectProfile(value, option);
+                closeProfileSelector();
+            });
+
+            // Cerrar al hacer click fuera
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.profile-selector')) {
+                    closeProfileSelector();
+                }
+            });
+
+            // Cerrar con Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeProfileSelector();
+                }
+            });
+        }
+
+        function openProfileSelector() {
+            profileSelectorTrigger.classList.add('profile-selector__trigger--open');
+            profileSelectorDropdown.classList.add('profile-selector__dropdown--open');
+        }
+
+        function closeProfileSelector() {
+            profileSelectorTrigger.classList.remove('profile-selector__trigger--open');
+            profileSelectorDropdown.classList.remove('profile-selector__dropdown--open');
+        }
+
+        function selectProfile(value, optionEl) {
+            // Actualizar select nativo
+            profileSelect.value = value;
+
+            // Actualizar visual del trigger
+            const profileData = optionEl.dataset.profile ? JSON.parse(optionEl.dataset.profile) : null;
+
+            if (profileData) {
+                profileSelectorTrigger.innerHTML = `
+                    <span class="profile-selector__value">${profileData.name}</span>
+                    <i class="fas fa-chevron-down profile-selector__arrow"></i>
+                `;
+                profileSelectorTrigger.classList.add('profile-selector__trigger--has-value');
+            }
+
+            // Marcar opción como seleccionada
+            profileSelectorDropdown.querySelectorAll('.profile-selector__option').forEach(opt => {
+                opt.classList.remove('profile-selector__option--selected');
+            });
+            optionEl.classList.add('profile-selector__option--selected');
+
+            // Disparar evento change en el select nativo
+            profileSelect.dispatchEvent(new Event('change'));
+        }
+
+        // Función para seleccionar perfil programáticamente (usado al cargar proceso)
+        function selectProfileById(id) {
+            const option = profileSelectorDropdown.querySelector(`.profile-selector__option[data-value="${id}"]`);
+            if (option) {
+                selectProfile(id, option);
             }
         }
 
@@ -3433,7 +3759,8 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 await loadProfiles();
 
                 if (process.profile_id) {
-                    profileSelect.value = process.profile_id;
+                    // Usar el selector custom
+                    selectProfileById(process.profile_id);
                     const profile = profilesData.find(p => p.id == process.profile_id);
                     if (profile) {
                         showProfilePreview(profile);
@@ -3768,7 +4095,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         to { opacity: 1; transform: translateY(0); }
                     }
 
-                    /* Loading overlay */
+                    /* Loading overlay - Estilo igual que chatbots pero en verde */
                     .velvz-loading-overlay {
                         position: fixed;
                         top: 0;
@@ -3783,19 +4110,45 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         justify-content: center;
                         flex-direction: column;
                         gap: 1.5rem;
+                        animation: fadeIn 0.3s ease;
+                    }
+                    .velvz-loading-overlay__content {
+                        background: var(--dark-bg-secondary, #1a1a2e);
+                        border: 1px solid rgba(16, 185, 129, 0.3);
+                        border-radius: 20px;
+                        padding: 3rem;
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 1.5rem;
+                        animation: slideUp 0.4s ease;
+                        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(16, 185, 129, 0.1);
                     }
                     .velvz-loading-overlay__spinner {
-                        width: 60px;
-                        height: 60px;
+                        width: 70px;
+                        height: 70px;
                         border: 4px solid rgba(16, 185, 129, 0.2);
                         border-top-color: #10b981;
                         border-radius: 50%;
                         animation: spin 1s linear infinite;
                     }
+                    .velvz-loading-overlay__icon {
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, #10b981, #059669);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 2rem;
+                        color: white;
+                        box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+                    }
                     .velvz-loading-overlay__text {
                         color: #fff;
-                        font-size: 1.25rem;
-                        font-weight: 500;
+                        font-size: 1.35rem;
+                        font-weight: 600;
                     }
                     .velvz-loading-overlay__subtext {
                         color: rgba(255,255,255,0.6);
@@ -3803,6 +4156,14 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     }
                     @keyframes spin {
                         to { transform: rotate(360deg); }
+                    }
+                    @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                    }
+                    @keyframes slideUp {
+                        from { opacity: 0; transform: translateY(30px); }
+                        to { opacity: 1; transform: translateY(0); }
                     }
                 `;
                 document.head.appendChild(styles);
@@ -3889,13 +4250,15 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
             // Desactivar beforeunload
             hasUnsavedChanges = false;
 
-            // Mostrar loading overlay
+            // Mostrar loading overlay con estilo igual a chatbots
             const loadingOverlay = document.createElement('div');
             loadingOverlay.className = 'velvz-loading-overlay';
             loadingOverlay.innerHTML = `
-                <div class="velvz-loading-overlay__spinner"></div>
-                <div class="velvz-loading-overlay__text">Eliminando proceso...</div>
-                <div class="velvz-loading-overlay__subtext">Limpiando todos los datos asociados</div>
+                <div class="velvz-loading-overlay__content">
+                    <div class="velvz-loading-overlay__spinner"></div>
+                    <div class="velvz-loading-overlay__text">Eliminando proceso...</div>
+                    <div class="velvz-loading-overlay__subtext">Limpiando todos los datos asociados</div>
+                </div>
             `;
             document.body.appendChild(loadingOverlay);
 
@@ -3919,11 +4282,13 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
                 if (result.success) {
                     loadingOverlay.innerHTML = `
-                        <div style="width: 60px; height: 60px; border-radius: 50%; background: #10b981; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-check" style="font-size: 1.5rem; color: white;"></i>
+                        <div class="velvz-loading-overlay__content">
+                            <div class="velvz-loading-overlay__icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="velvz-loading-overlay__text">¡Proceso eliminado!</div>
+                            <div class="velvz-loading-overlay__subtext">Redirigiendo...</div>
                         </div>
-                        <div class="velvz-loading-overlay__text">¡Proceso eliminado!</div>
-                        <div class="velvz-loading-overlay__subtext">Redirigiendo...</div>
                     `;
 
                     setTimeout(() => {
