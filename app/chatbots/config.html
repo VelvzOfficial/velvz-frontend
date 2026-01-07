@@ -47,6 +47,25 @@
                 </a>
             </div>
 
+            <!-- SELECTOR DE SERVICIOS -->
+            <div class="velvz-header__island velvz-header__island--services">
+                <button class="svc-selector" id="svcSelector" data-current="chatbots">
+                    <i class="fas fa-robot svc-selector__icon" style="color: #667eea;"></i>
+                    <span class="svc-selector__text">Chatbots</span>
+                    <i class="fas fa-chevron-down svc-selector__arrow"></i>
+                </button>
+                <div class="svc-dropdown" id="svcDropdown">
+                    <a href="/app/chatbots/dashboard.html" class="svc-dropdown__item svc-dropdown__item--active" data-service="chatbots">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </a>
+                    <a href="/app/rrhh/" class="svc-dropdown__item" data-service="rrhh">
+                        <i class="fas fa-users"></i>
+                        <span>RRHH</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- BARRA DE BÚSQUEDA ISLAND - CENTRADA -->
             <div class="velvz-header__island velvz-header__island--search" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0 !important; animation: none !important;">
                 <div class="velvz-header__search">

@@ -793,11 +793,23 @@
     </footer>
 
     <script src="/assets/js/app-dashboard.js"></script>
+    <script src="/assets/js/notifications.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const API_URL = window.API_CONFIG?.API_URL || 'https://velvz-unified-backend-production.up.railway.app';
             let processes = [];
             let currentFilter = 'all';
+
+            // Mostrar notificación si viene de eliminar un proceso
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('deleted') === 'true') {
+                // Limpiar el parámetro de la URL sin recargar
+                window.history.replaceState({}, '', window.location.pathname);
+                // Mostrar notificación estandarizada
+                if (window.VelvzNotify) {
+                    VelvzNotify.deleted('proceso');
+                }
+            }
 
             const grid = document.getElementById('processesGrid');
             const emptyState = document.getElementById('emptyState');
