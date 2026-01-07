@@ -1760,7 +1760,7 @@
                                     <div class="form-field">
                                         <label class="form-label">Vacantes</label>
                                         <div class="number-input-custom">
-                                            <input type="number" class="form-input" id="vacancies" value="1" min="1">
+                                            <input type="number" class="form-input" id="numPositions" value="1" min="1">
                                             <div class="number-input-custom__controls">
                                                 <button type="button" class="number-input-custom__btn" data-action="increment">
                                                     <i class="fas fa-chevron-up"></i>
@@ -2457,15 +2457,6 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                             </div>
                         </div>
 
-                        <!-- Navegación -->
-                        <div class="section-nav">
-                            <button class="btn btn--secondary btn--prev" data-prev="documents">
-                                <i class="fas fa-arrow-left"></i>
-                                Anterior
-                            </button>
-                            <div></div>
-                        </div>
-
                         <!-- ZONA DE PELIGRO - Solo visible al editar proceso existente -->
                         <div class="danger-zone-container" id="dangerZoneContainer" style="display: none;">
                             <div class="danger-zone-wrapper">
@@ -2501,7 +2492,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
                                         <div class="danger-zone-box__confirm">
                                             <label class="danger-zone-checkbox">
-                                                <input type="checkbox" id="dangerConfirmCheckbox">
+                                                <input type="checkbox" id="dangerConfirmCheckbox" data-ignore-changes="true">
                                                 <span class="danger-zone-checkbox__box"></span>
                                                 <span class="danger-zone-checkbox__text">Entiendo que esta acción no se puede deshacer</span>
                                             </label>
@@ -2514,6 +2505,15 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Navegación -->
+                        <div class="section-nav">
+                            <button class="btn btn--secondary btn--prev" data-prev="documents">
+                                <i class="fas fa-arrow-left"></i>
+                                Anterior
+                            </button>
+                            <div></div>
                         </div>
                     </section>
 
@@ -2797,12 +2797,22 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 console.log('📝 Estado original guardado:', originalFormData);
             }, 1000);
 
-            // Escuchar cambios en todos los inputs actuales
-            const formInputs = document.querySelectorAll('input, select, textarea');
-            formInputs.forEach(input => {
+            // Función para añadir listener solo a inputs que no deben ignorarse
+            function addChangeListener(input) {
+                // Ignorar inputs marcados con data-ignore-changes
+                if (input.dataset.ignoreChanges === 'true') return;
+                // Ignorar inputs dentro de la zona de peligro
+                if (input.closest('.danger-zone-container')) return;
+                // Ignorar inputs dentro del modal de eliminación
+                if (input.closest('.velvz-delete-modal')) return;
+
                 input.addEventListener('input', () => markAsChanged());
                 input.addEventListener('change', () => markAsChanged());
-            });
+            }
+
+            // Escuchar cambios en todos los inputs actuales
+            const formInputs = document.querySelectorAll('input, select, textarea');
+            formInputs.forEach(input => addChangeListener(input));
 
             // Observer para detectar inputs dinámicos
             const observer = new MutationObserver((mutations) => {
@@ -2810,10 +2820,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     mutation.addedNodes.forEach((node) => {
                         if (node.nodeType === 1) {
                             const inputs = node.querySelectorAll ? node.querySelectorAll('input, select, textarea') : [];
-                            inputs.forEach(input => {
-                                input.addEventListener('input', () => markAsChanged());
-                                input.addEventListener('change', () => markAsChanged());
-                            });
+                            inputs.forEach(input => addChangeListener(input));
                         }
                     });
                 });
