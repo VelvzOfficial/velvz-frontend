@@ -1362,31 +1362,6 @@
             color: #fff;
         }
 
-        /* =====================================================
-           BOTÓN GUARDAR CON INDICADOR DE CAMBIOS
-           ===================================================== */
-        .btn--has-changes {
-            position: relative;
-        }
-
-        .btn--has-changes::after {
-            content: '';
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 10px;
-            height: 10px;
-            background: #f59e0b;
-            border-radius: 50%;
-            border: 2px solid var(--dark-bg-primary);
-            animation: pulse-dot 2s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
         /* Responsive para toast */
         @media (max-width: 768px) {
             .toast-notification {
@@ -2811,14 +2786,8 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         }
 
         function updateSaveButtonState() {
-            const saveBtn = document.getElementById('saveBtn');
-            if (saveBtn) {
-                if (hasUnsavedChanges) {
-                    saveBtn.classList.add('btn--has-changes');
-                } else {
-                    saveBtn.classList.remove('btn--has-changes');
-                }
-            }
+            // Función mantenida por compatibilidad pero sin indicador visual
+            // El estado de cambios sin guardar se maneja internamente
         }
 
         function initChangeDetection() {
@@ -3399,14 +3368,16 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         const processId = urlParams.get('id');
 
         async function loadProcess(id) {
+            console.log('📂 loadProcess iniciado con id:', id);
             try {
                 const token = window.velvzAuth?.getToken();
                 if (!token) {
                     alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
                     window.location.href = '/auth/login.html';
-                    return;
+                    return false;
                 }
 
+                console.log('📤 Fetching proceso desde:', `${API_URL}/api/rrhh/processes/${id}`);
                 const response = await fetch(`${API_URL}/api/rrhh/processes/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -3414,6 +3385,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 });
 
                 const result = await response.json();
+                console.log('📥 Respuesta del servidor:', result);
 
                 if (!result.success) {
                     throw new Error(result.message || 'Proceso no encontrado');
@@ -3421,6 +3393,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
                 const process = result.data.process;
                 currentProcessId = process.id;
+                console.log('✅ currentProcessId establecido a:', currentProcessId);
 
                 // Actualizar título de la página
                 document.getElementById('processTitle').textContent = 'Editar Proceso de Selección';
@@ -3471,12 +3444,15 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     }
                 }
 
-                console.log('Proceso cargado:', process.title);
+                console.log('✅ Proceso cargado:', process.title);
+                console.log('   - selectedProfile después de cargar:', selectedProfile);
+                return true;
 
             } catch (error) {
-                console.error('Error cargando proceso:', error);
+                console.error('❌ Error cargando proceso:', error);
                 alert('Error al cargar el proceso: ' + error.message);
                 window.location.href = '/app/rrhh/processes/';
+                return false;
             }
         }
 
@@ -3484,14 +3460,21 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         // ZONA DE PELIGRO - Inicializar con modal estilo chatbots
         // =====================================================
         function initDangerZone() {
+            console.log('🔴 initDangerZone llamado');
+            console.log('   - currentProcessId:', currentProcessId);
+
             const dangerContainer = document.getElementById('dangerZoneContainer');
             const confirmCheckbox = document.getElementById('dangerConfirmCheckbox');
             const deleteBtn = document.getElementById('dangerDeleteBtn');
 
+            console.log('   - dangerContainer encontrado:', !!dangerContainer);
+
             // Mostrar zona de peligro solo en modo edición (cuando hay un ID de proceso)
             if (currentProcessId && dangerContainer) {
                 dangerContainer.style.display = 'block';
-                console.log('✅ Zona de peligro visible para proceso:', currentProcessId);
+                console.log('✅ Zona de peligro VISIBLE para proceso:', currentProcessId);
+            } else {
+                console.log('❌ Zona de peligro NO mostrada - currentProcessId:', currentProcessId, 'dangerContainer:', !!dangerContainer);
             }
 
             // Habilitar/deshabilitar botón según checkbox
