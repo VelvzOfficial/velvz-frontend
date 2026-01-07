@@ -23,6 +23,8 @@
 
     <!-- Auth System -->
     <script src="/assets/js/auth-config.js"></script>
+    <!-- Sistema de notificaciones global -->
+    <script src="/assets/js/notifications.js"></script>
 
     <style>
         :root {
@@ -3320,27 +3322,38 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 if (result.success) {
                     console.log('Proceso guardado:', result.data.process);
 
+                    // Si es nuevo proceso, actualizar la URL y el ID
+                    if (!currentProcessId && result.data.process.id) {
+                        currentProcessId = result.data.process.id;
+                        // Actualizar URL sin recargar
+                        const newUrl = `${window.location.pathname}?id=${currentProcessId}`;
+                        window.history.replaceState({}, '', newUrl);
+                        // Mostrar zona de peligro ahora que tenemos ID
+                        initDangerZone();
+                    }
+
                     // Marcar como sin cambios pendientes
                     hasUnsavedChanges = false;
                     originalFormData = getFormData();
                     updateSaveButtonState();
                     hideUnsavedChangesWarning();
 
-                    const message = status === 'draft'
-                        ? 'Borrador guardado correctamente'
-                        : 'Proceso publicado correctamente';
-                    showToast(message);
-
-                    // Redirigir después de mostrar el toast
-                    setTimeout(() => {
-                        window.location.href = '/app/rrhh/processes/';
-                    }, 1500);
+                    // Usar sistema de notificaciones global (igual que chatbots)
+                    if (window.VelvzNotify) {
+                        VelvzNotify.saved();
+                    } else {
+                        showToast(status === 'draft' ? 'Borrador guardado' : 'Proceso publicado');
+                    }
                 } else {
                     throw new Error(result.message || 'Error al guardar el proceso');
                 }
             } catch (error) {
                 console.error('Error guardando proceso:', error);
-                showToast('Error al guardar: ' + error.message, true);
+                if (window.VelvzNotify) {
+                    VelvzNotify.error(error.message, 'Error al guardar');
+                } else {
+                    showToast('Error al guardar: ' + error.message, true);
+                }
             } finally {
                 isSaving = false;
                 btn.innerHTML = originalText;
@@ -3457,10 +3470,10 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
             const confirmCheckbox = document.getElementById('dangerConfirmCheckbox');
             const deleteBtn = document.getElementById('dangerDeleteBtn');
 
-            // Mostrar zona de peligro solo en modo edición
-            if (processId && dangerContainer) {
+            // Mostrar zona de peligro solo en modo edición (cuando hay un ID de proceso)
+            if (currentProcessId && dangerContainer) {
                 dangerContainer.style.display = 'block';
-                console.log('✅ Zona de peligro visible');
+                console.log('✅ Zona de peligro visible para proceso:', currentProcessId);
             }
 
             // Habilitar/deshabilitar botón según checkbox
@@ -3926,9 +3939,10 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
         // Inicializar
         if (processId) {
-            loadProcess(processId);
-            initDangerZone();
-            initChangeDetection();
+            loadProcess(processId).then(() => {
+                initDangerZone();
+                initChangeDetection();
+            });
         } else {
             // Cargar perfiles al iniciar (nuevo proceso)
             loadProfiles();
