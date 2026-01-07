@@ -270,6 +270,75 @@
             gap: 0.5rem;
         }
 
+        .filter-dropdown {
+            position: relative;
+        }
+
+        .filter-dropdown__menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            min-width: 220px;
+            background: var(--dark-bg-secondary, #1a1a2e);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 0.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            z-index: 100;
+            display: none;
+        }
+
+        .filter-dropdown--open .filter-dropdown__menu {
+            display: block;
+            animation: dropdownFadeIn 0.2s ease;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .filter-dropdown__item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+        }
+
+        .filter-dropdown__item i {
+            width: 16px;
+            opacity: 0;
+        }
+
+        .filter-dropdown__item:hover {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+
+        .filter-dropdown__item--active {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--profiles-color);
+        }
+
+        .filter-dropdown__item--active i {
+            opacity: 1;
+        }
+
+        .filter-dropdown__divider {
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: 0.5rem 0;
+        }
+
         .profiles-list__search {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -1036,9 +1105,21 @@
                             </div>
                         </div>
                         <div class="profiles-list__toolbar">
-                            <button class="btn btn--secondary btn--sm" id="filterProfilesBtn">
-                                <i class="fas fa-filter"></i> Filtrar
-                            </button>
+                            <div class="filter-dropdown" id="filterDropdown">
+                                <button class="btn btn--secondary btn--sm" id="filterProfilesBtn">
+                                    <i class="fas fa-filter"></i> <span id="filterLabel">Filtrar</span>
+                                    <i class="fas fa-chevron-down" style="margin-left: 0.5rem; font-size: 0.7rem;"></i>
+                                </button>
+                                <div class="filter-dropdown__menu" id="filterMenu">
+                                    <button class="filter-dropdown__item filter-dropdown__item--active" data-filter="all">
+                                        <i class="fas fa-check"></i> Todos los departamentos
+                                    </button>
+                                    <div class="filter-dropdown__divider"></div>
+                                    <div id="departmentFilters">
+                                        <!-- Se llena dinámicamente -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="profiles-list__search">
                             <div class="search-wrapper">
@@ -1338,9 +1419,9 @@
                             </div>
                         </div>
                         <div class="detail-header__actions">
-                            <button class="btn btn--primary">
+                            <a href="/app/rrhh/processes/editor.html?profile=${profile.id}" class="btn btn--primary">
                                 <i class="fas fa-plus"></i> Crear Proceso
-                            </button>
+                            </a>
                             <a href="/app/rrhh/profiles/editor.html?id=${profile.id}" class="btn btn--secondary">
                                 <i class="fas fa-edit"></i> Editar
                             </a>
@@ -1486,16 +1567,81 @@
             modal.querySelector('.profile-modal__backdrop').addEventListener('click', closeModal);
 
             // Search
-            document.getElementById('searchProfiles').addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                renderList(profiles.filter(p =>
-                    p.title.toLowerCase().includes(query) ||
-                    p.department.toLowerCase().includes(query) ||
-                    p.location.toLowerCase().includes(query) ||
-                    p.requirements.essential.some(r => r.toLowerCase().includes(query)) ||
-                    p.requirements.desired.some(r => r.toLowerCase().includes(query)) ||
-                    p.requirements.niceToHave.some(r => r.toLowerCase().includes(query))
-                ));
+            let currentFilter = 'all';
+            const searchInput = document.getElementById('searchProfiles');
+
+            function applyFilters() {
+                const query = searchInput.value.toLowerCase();
+                let filtered = profiles;
+
+                // Filtrar por departamento
+                if (currentFilter !== 'all') {
+                    filtered = filtered.filter(p => p.department === currentFilter);
+                }
+
+                // Filtrar por búsqueda
+                if (query) {
+                    filtered = filtered.filter(p =>
+                        p.title.toLowerCase().includes(query) ||
+                        p.department.toLowerCase().includes(query) ||
+                        p.location.toLowerCase().includes(query) ||
+                        p.requirements.essential.some(r => r.toLowerCase().includes(query)) ||
+                        p.requirements.desired.some(r => r.toLowerCase().includes(query)) ||
+                        p.requirements.niceToHave.some(r => r.toLowerCase().includes(query))
+                    );
+                }
+
+                renderList(filtered);
+            }
+
+            searchInput.addEventListener('input', applyFilters);
+
+            // Filtro por departamento
+            const filterDropdown = document.getElementById('filterDropdown');
+            const filterBtn = document.getElementById('filterProfilesBtn');
+            const filterLabel = document.getElementById('filterLabel');
+            const departmentFiltersContainer = document.getElementById('departmentFilters');
+
+            // Toggle dropdown
+            filterBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                filterDropdown.classList.toggle('filter-dropdown--open');
+
+                // Generar opciones de departamento dinámicamente
+                const departments = [...new Set(profiles.map(p => p.department))].filter(d => d);
+                departmentFiltersContainer.innerHTML = departments.map(dept => `
+                    <button class="filter-dropdown__item ${currentFilter === dept ? 'filter-dropdown__item--active' : ''}" data-filter="${dept}">
+                        <i class="fas fa-check"></i> ${dept}
+                    </button>
+                `).join('');
+            });
+
+            // Cerrar dropdown al hacer clic fuera
+            document.addEventListener('click', () => {
+                filterDropdown.classList.remove('filter-dropdown--open');
+            });
+
+            // Manejar selección de filtro
+            document.getElementById('filterMenu').addEventListener('click', (e) => {
+                const item = e.target.closest('.filter-dropdown__item');
+                if (!item) return;
+
+                e.stopPropagation();
+                const filter = item.dataset.filter;
+
+                // Actualizar estado activo
+                document.querySelectorAll('.filter-dropdown__item').forEach(i => i.classList.remove('filter-dropdown__item--active'));
+                item.classList.add('filter-dropdown__item--active');
+
+                // Actualizar filtro
+                currentFilter = filter;
+                filterLabel.textContent = filter === 'all' ? 'Filtrar' : filter;
+
+                // Aplicar filtros
+                applyFilters();
+
+                // Cerrar dropdown
+                filterDropdown.classList.remove('filter-dropdown--open');
             });
 
             // New profile button - ir al editor

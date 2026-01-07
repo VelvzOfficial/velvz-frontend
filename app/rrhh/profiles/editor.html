@@ -349,6 +349,76 @@
             flex-shrink: 0;
         }
 
+        /* Number input with custom controls */
+        .number-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .number-input-wrapper .form-input {
+            padding-right: 5rem;
+        }
+
+        .number-input-wrapper .form-input::-webkit-outer-spin-button,
+        .number-input-wrapper .form-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .number-input-wrapper .form-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .number-input-controls {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            bottom: 1px;
+            display: flex;
+            flex-direction: column;
+            width: 28px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 7px 7px 0;
+            overflow: hidden;
+        }
+
+        .number-input-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 0.65rem;
+        }
+
+        .number-input-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--profile-primary);
+        }
+
+        .number-input-btn:active {
+            background: rgba(139, 92, 246, 0.3);
+        }
+
+        .number-input-btn:first-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .number-input-suffix {
+            position: absolute;
+            right: 2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
         /* Toggle option */
         .toggle-option {
             display: flex;
@@ -986,14 +1056,30 @@
                         <div class="form-field">
                             <label class="form-label">Rango Salarial</label>
                             <div class="salary-range">
-                                <div class="salary-range__input">
+                                <div class="salary-range__input salary-range__input--with-controls">
                                     <span class="salary-range__currency">€</span>
-                                    <input type="number" class="form-input" id="salaryMin" placeholder="Mínimo">
+                                    <input type="number" class="form-input" id="salaryMin" placeholder="Mínimo" step="1000">
+                                    <div class="number-input-controls">
+                                        <button type="button" class="number-input-btn" data-action="increment" data-target="salaryMin">
+                                            <i class="fas fa-chevron-up"></i>
+                                        </button>
+                                        <button type="button" class="number-input-btn" data-action="decrement" data-target="salaryMin">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <span class="salary-range__separator">-</span>
-                                <div class="salary-range__input">
+                                <div class="salary-range__input salary-range__input--with-controls">
                                     <span class="salary-range__currency">€</span>
-                                    <input type="number" class="form-input" id="salaryMax" placeholder="Máximo">
+                                    <input type="number" class="form-input" id="salaryMax" placeholder="Máximo" step="1000">
+                                    <div class="number-input-controls">
+                                        <button type="button" class="number-input-btn" data-action="increment" data-target="salaryMax">
+                                            <i class="fas fa-chevron-up"></i>
+                                        </button>
+                                        <button type="button" class="number-input-btn" data-action="decrement" data-target="salaryMax">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="form-select-wrapper salary-range__period">
                                     <select class="form-select" id="salaryPeriod">
@@ -1028,20 +1114,20 @@
                         <div class="form-grid form-grid--2" style="margin-bottom: 1.5rem;">
                             <div class="form-field" style="margin-bottom: 0;">
                                 <label class="form-label">
-                                    Experiencia Mínima
+                                    Experiencia Mínima (años)
                                     <span class="form-required">*</span>
                                 </label>
-                                <div class="form-select-wrapper">
-                                    <select class="form-select" id="minExperience">
-                                        <option value="0">Sin experiencia</option>
-                                        <option value="1">1+ año</option>
-                                        <option value="2">2+ años</option>
-                                        <option value="3" selected>3+ años</option>
-                                        <option value="5">5+ años</option>
-                                        <option value="7">7+ años</option>
-                                        <option value="10">10+ años</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                <div class="number-input-wrapper">
+                                    <input type="number" class="form-input" id="minExperience" value="0" min="0" max="30" step="1">
+                                    <div class="number-input-controls">
+                                        <button type="button" class="number-input-btn" data-action="increment" data-target="minExperience">
+                                            <i class="fas fa-chevron-up"></i>
+                                        </button>
+                                        <button type="button" class="number-input-btn" data-action="decrement" data-target="minExperience">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                    <span class="number-input-suffix">años</span>
                                 </div>
                             </div>
                         </div>
@@ -1501,6 +1587,35 @@
                 document.getElementById('breadcrumbTitle').textContent = 'Editar Perfil';
                 loadProfile(profileId);
             }
+
+            // =====================================================
+            // Botones de incremento/decremento para inputs numéricos
+            // =====================================================
+            document.querySelectorAll('.number-input-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.dataset.action;
+                    const targetId = this.dataset.target;
+                    const input = document.getElementById(targetId);
+
+                    if (!input) return;
+
+                    const step = parseFloat(input.step) || 1;
+                    const min = parseFloat(input.min) || 0;
+                    const max = parseFloat(input.max) || Infinity;
+                    let value = parseFloat(input.value) || 0;
+
+                    if (action === 'increment') {
+                        value = Math.min(value + step, max);
+                    } else if (action === 'decrement') {
+                        value = Math.max(value - step, min);
+                    }
+
+                    input.value = value;
+
+                    // Disparar evento change para que otros listeners se enteren
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                });
+            });
         });
     </script>
 </body>
