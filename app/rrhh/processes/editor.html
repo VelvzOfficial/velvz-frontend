@@ -1098,6 +1098,307 @@
             color: white;
             border-color: #ef4444;
         }
+
+        /* =====================================================
+           ZONA DE PELIGRO - Nueva versión fuera de tabs
+           ===================================================== */
+        .danger-zone-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .danger-zone-wrapper {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.03) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .danger-zone-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .danger-zone-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-size: 1.25rem;
+        }
+
+        .danger-zone-title h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ef4444;
+            margin: 0 0 0.25rem;
+        }
+
+        .danger-zone-title p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .danger-zone-content {
+            padding: 1.5rem;
+        }
+
+        .danger-zone-box__header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .danger-zone-box__header > i {
+            font-size: 1.5rem;
+            color: #ef4444;
+            margin-top: 0.25rem;
+        }
+
+        .danger-zone-box__header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 0 0.25rem;
+        }
+
+        .danger-zone-box__header p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        .danger-zone-box__list {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .danger-zone-box__list-title {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .danger-zone-box__list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .danger-zone-box__list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .danger-zone-box__list li i {
+            color: #ef4444;
+            width: 16px;
+            font-size: 0.85rem;
+        }
+
+        .danger-zone-box__confirm {
+            margin-bottom: 1.25rem;
+        }
+
+        .danger-zone-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .danger-zone-checkbox input {
+            display: none;
+        }
+
+        .danger-zone-checkbox__box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .danger-zone-checkbox input:checked + .danger-zone-checkbox__box {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .danger-zone-checkbox input:checked + .danger-zone-checkbox__box::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .danger-zone-checkbox__text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .danger-zone-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            color: #ef4444;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: not-allowed;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .danger-zone-btn:not(:disabled) {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .danger-zone-btn:not(:disabled):hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* =====================================================
+           TOAST NOTIFICATION
+           ===================================================== */
+        .toast-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .toast-notification--visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast-notification--error {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .toast-notification__icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 1rem;
+        }
+
+        .toast-notification--error .toast-notification__icon {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .toast-notification__message {
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .toast-notification__close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            padding: 0.25rem;
+            margin-left: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .toast-notification__close:hover {
+            color: #fff;
+        }
+
+        /* =====================================================
+           BOTÓN GUARDAR CON INDICADOR DE CAMBIOS
+           ===================================================== */
+        .btn--has-changes {
+            position: relative;
+        }
+
+        .btn--has-changes::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 10px;
+            height: 10px;
+            background: #f59e0b;
+            border-radius: 50%;
+            border: 2px solid var(--dark-bg-primary);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* Responsive para toast */
+        @media (max-width: 768px) {
+            .toast-notification {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+            }
+
+            .danger-zone-box__list ul {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2191,59 +2492,72 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         </div>
                     </section>
 
-                    <!-- =====================================================
-                         ZONA DE PELIGRO (Solo visible en modo edición)
-                         ===================================================== -->
-                    <section class="process-section danger-section" id="dangerZoneSection" style="display: none;">
-                        <div class="section-header">
-                            <div class="section-header__icon section-header__icon--danger">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                            <div class="section-header__content">
-                                <h2>Zona de Peligro</h2>
-                                <p>Acciones irreversibles que afectarán permanentemente a este proceso</p>
-                            </div>
+                </div>
+            </div>
+
+            <!-- ZONA DE PELIGRO - Fuera del contenedor de tabs para que siempre sea visible -->
+            <div class="danger-zone-container" id="dangerZoneContainer" style="display: none;">
+                <div class="danger-zone-wrapper">
+                    <div class="danger-zone-header">
+                        <div class="danger-zone-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
                         </div>
-
-                        <div class="section-body">
-                            <div class="danger-box">
-                                <div class="danger-box__header">
-                                    <i class="fas fa-trash-alt"></i>
-                                    <div>
-                                        <h3>Eliminar Proceso</h3>
-                                        <p>Esta acción eliminará permanentemente este proceso de selección y toda su información.</p>
-                                    </div>
-                                </div>
-
-                                <div class="danger-box__list">
-                                    <span class="danger-box__list-title">Se eliminará:</span>
-                                    <ul>
-                                        <li><i class="fas fa-clipboard-list"></i> Configuración del proceso</li>
-                                        <li><i class="fas fa-users"></i> Todos los candidatos asociados</li>
-                                        <li><i class="fas fa-comments"></i> Entrevistas y evaluaciones</li>
-                                        <li><i class="fas fa-chart-line"></i> Estadísticas e historial</li>
-                                    </ul>
-                                </div>
-
-                                <div class="danger-box__confirm">
-                                    <label class="danger-checkbox">
-                                        <input type="checkbox" id="confirmDeletion">
-                                        <span class="danger-checkbox__box"></span>
-                                        <span class="danger-checkbox__text">Entiendo que esta acción no se puede deshacer</span>
-                                    </label>
-                                </div>
-
-                                <button type="button" class="danger-btn" id="deleteProcessBtn" disabled>
-                                    <i class="fas fa-trash-alt"></i>
-                                    Eliminar Proceso Permanentemente
-                                </button>
-                            </div>
+                        <div class="danger-zone-title">
+                            <h2>Zona de Peligro</h2>
+                            <p>Acciones irreversibles que afectarán permanentemente a este proceso</p>
                         </div>
-                    </section>
+                    </div>
 
+                    <div class="danger-zone-content">
+                        <div class="danger-zone-box">
+                            <div class="danger-zone-box__header">
+                                <i class="fas fa-trash-alt"></i>
+                                <div>
+                                    <h3>Eliminar Proceso de Selección</h3>
+                                    <p>Esta acción eliminará permanentemente este proceso y toda su información asociada.</p>
+                                </div>
+                            </div>
+
+                            <div class="danger-zone-box__list">
+                                <span class="danger-zone-box__list-title">Se eliminará permanentemente:</span>
+                                <ul>
+                                    <li><i class="fas fa-clipboard-list"></i> Configuración del proceso</li>
+                                    <li><i class="fas fa-users"></i> Todos los candidatos asociados</li>
+                                    <li><i class="fas fa-comments"></i> Entrevistas y evaluaciones</li>
+                                    <li><i class="fas fa-chart-line"></i> Estadísticas e historial</li>
+                                </ul>
+                            </div>
+
+                            <div class="danger-zone-box__confirm">
+                                <label class="danger-zone-checkbox">
+                                    <input type="checkbox" id="dangerConfirmCheckbox">
+                                    <span class="danger-zone-checkbox__box"></span>
+                                    <span class="danger-zone-checkbox__text">Entiendo que esta acción no se puede deshacer</span>
+                                </label>
+                            </div>
+
+                            <button type="button" class="danger-zone-btn" id="dangerDeleteBtn" disabled>
+                                <i class="fas fa-trash-alt"></i>
+                                Eliminar Proceso Permanentemente
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST -->
+    <div class="toast-notification" id="toastNotification">
+        <div class="toast-notification__icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-notification__content">
+            <span class="toast-notification__message">Cambios guardados correctamente</span>
+        </div>
+        <button class="toast-notification__close" onclick="hideToast()">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <!-- FOOTER -->
@@ -2433,6 +2747,100 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         let profilesData = [];
         let selectedProfile = null;
         let currentProcessId = null;
+        let hasUnsavedChanges = false;
+        let originalFormData = null;
+
+        // =====================================================
+        // TOAST NOTIFICATIONS
+        // =====================================================
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toastNotification');
+            const messageEl = toast.querySelector('.toast-notification__message');
+            const iconEl = toast.querySelector('.toast-notification__icon i');
+
+            messageEl.textContent = message;
+
+            if (isError) {
+                toast.classList.add('toast-notification--error');
+                iconEl.className = 'fas fa-exclamation-circle';
+            } else {
+                toast.classList.remove('toast-notification--error');
+                iconEl.className = 'fas fa-check-circle';
+            }
+
+            toast.classList.add('toast-notification--visible');
+
+            setTimeout(() => {
+                hideToast();
+            }, 4000);
+        }
+
+        function hideToast() {
+            const toast = document.getElementById('toastNotification');
+            toast.classList.remove('toast-notification--visible');
+        }
+
+        // =====================================================
+        // SISTEMA DE DETECCIÓN DE CAMBIOS
+        // =====================================================
+        function getFormData() {
+            return {
+                title: document.getElementById('processName')?.value || '',
+                description: document.getElementById('processDescription')?.value || '',
+                num_positions: document.getElementById('numPositions')?.value || '1',
+                priority: document.getElementById('priority')?.value || 'normal',
+                deadline: document.getElementById('deadline')?.value || '',
+                hiring_manager: document.getElementById('hiringManager')?.value || '',
+                profile_id: document.getElementById('profileSelect')?.value || '',
+                ai_interview_enabled: document.getElementById('aiInterviewToggle')?.checked || false
+            };
+        }
+
+        function checkForChanges() {
+            if (!originalFormData) return;
+
+            const currentData = getFormData();
+            const changed = JSON.stringify(currentData) !== JSON.stringify(originalFormData);
+
+            if (changed !== hasUnsavedChanges) {
+                hasUnsavedChanges = changed;
+                updateSaveButtonState();
+            }
+        }
+
+        function updateSaveButtonState() {
+            const saveBtn = document.getElementById('saveBtn');
+            if (saveBtn) {
+                if (hasUnsavedChanges) {
+                    saveBtn.classList.add('btn--has-changes');
+                } else {
+                    saveBtn.classList.remove('btn--has-changes');
+                }
+            }
+        }
+
+        function initChangeDetection() {
+            // Guardar estado original después de cargar
+            setTimeout(() => {
+                originalFormData = getFormData();
+            }, 500);
+
+            // Escuchar cambios en todos los inputs
+            const formInputs = document.querySelectorAll('input, select, textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('input', checkForChanges);
+                input.addEventListener('change', checkForChanges);
+            });
+
+            // Prevenir salir con cambios sin guardar
+            window.addEventListener('beforeunload', (e) => {
+                if (hasUnsavedChanges) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    return '';
+                }
+            });
+        }
 
         // =====================================================
         // CARGAR PERFILES DESDE BACKEND
@@ -2612,7 +3020,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
             // Validar perfil seleccionado
             if (!selectedProfile) {
-                alert('Por favor, selecciona un perfil de puesto');
+                showToast('Por favor, selecciona un perfil de puesto', true);
                 profileSelect.focus();
                 return;
             }
@@ -2620,21 +3028,23 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
             // Validar nombre del proceso
             const processName = document.getElementById('processName').value.trim();
             if (!processName) {
-                alert('Por favor, introduce un nombre para el proceso');
+                showToast('Por favor, introduce un nombre para el proceso', true);
                 document.getElementById('processName').focus();
                 return;
             }
 
             isSaving = true;
             const btn = status === 'draft' ? saveDraftBtn : publishBtn;
+            const saveBtn = document.getElementById('saveBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
             btn.disabled = true;
+            if (saveBtn) saveBtn.disabled = true;
 
             try {
                 const token = window.velvzAuth?.getToken();
                 if (!token) {
-                    alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                    showToast('Tu sesión ha expirado', true);
                     window.location.href = '/auth/login.html';
                     return;
                 }
@@ -2679,17 +3089,27 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
                 if (result.success) {
                     console.log('Proceso guardado:', result.data.process);
+
+                    // Marcar como sin cambios pendientes
+                    hasUnsavedChanges = false;
+                    originalFormData = getFormData();
+                    updateSaveButtonState();
+
                     const message = status === 'draft'
                         ? 'Borrador guardado correctamente'
                         : 'Proceso publicado correctamente';
-                    alert(message);
-                    window.location.href = '/app/rrhh/processes/';
+                    showToast(message);
+
+                    // Redirigir después de mostrar el toast
+                    setTimeout(() => {
+                        window.location.href = '/app/rrhh/processes/';
+                    }, 1500);
                 } else {
                     throw new Error(result.message || 'Error al guardar el proceso');
                 }
             } catch (error) {
                 console.error('Error guardando proceso:', error);
-                alert('Error al guardar el proceso: ' + error.message);
+                showToast('Error al guardar: ' + error.message, true);
             } finally {
                 isSaving = false;
                 btn.innerHTML = originalText;
@@ -2793,16 +3213,17 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         }
 
         // =====================================================
-        // ZONA DE PELIGRO - Inicializar
+        // ZONA DE PELIGRO - Inicializar (nueva versión fuera de tabs)
         // =====================================================
         function initDangerZone() {
-            const dangerSection = document.getElementById('dangerZoneSection');
-            const confirmCheckbox = document.getElementById('confirmDeletion');
-            const deleteBtn = document.getElementById('deleteProcessBtn');
+            const dangerContainer = document.getElementById('dangerZoneContainer');
+            const confirmCheckbox = document.getElementById('dangerConfirmCheckbox');
+            const deleteBtn = document.getElementById('dangerDeleteBtn');
 
-            // Mostrar sección solo en modo edición
-            if (processId && dangerSection) {
-                dangerSection.style.display = 'block';
+            // Mostrar zona de peligro solo en modo edición
+            if (processId && dangerContainer) {
+                dangerContainer.style.display = 'block';
+                console.log('✅ Zona de peligro visible');
             }
 
             // Habilitar/deshabilitar botón según checkbox
@@ -2831,13 +3252,16 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
                     if (!confirmed) return;
 
+                    // Desactivar beforeunload para permitir la redirección
+                    hasUnsavedChanges = false;
+
                     try {
                         deleteBtn.disabled = true;
                         deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
 
                         const token = window.velvzAuth?.getToken();
                         if (!token) {
-                            alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                            showToast('Tu sesión ha expirado', true);
                             window.location.href = '/auth/login.html';
                             return;
                         }
@@ -2852,14 +3276,16 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                         const result = await response.json();
 
                         if (result.success) {
-                            alert('Proceso eliminado correctamente');
-                            window.location.href = '/app/rrhh/processes/';
+                            showToast('Proceso eliminado correctamente');
+                            setTimeout(() => {
+                                window.location.href = '/app/rrhh/processes/';
+                            }, 1000);
                         } else {
                             throw new Error(result.message || 'Error al eliminar el proceso');
                         }
                     } catch (error) {
                         console.error('Error eliminando proceso:', error);
-                        alert('Error al eliminar el proceso: ' + error.message);
+                        showToast('Error al eliminar: ' + error.message, true);
                         deleteBtn.disabled = false;
                         deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Eliminar Proceso Permanentemente';
                     }
@@ -2871,9 +3297,11 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         if (processId) {
             loadProcess(processId);
             initDangerZone();
+            initChangeDetection();
         } else {
             // Cargar perfiles al iniciar (nuevo proceso)
             loadProfiles();
+            initChangeDetection();
         }
 
         // =====================================================
