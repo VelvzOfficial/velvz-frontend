@@ -1,0 +1,246 @@
+{
+  "ES": {
+    "name": "España",
+    "regions": {
+      "AN": {
+        "name": "Andalucía",
+        "cities": ["Sevilla", "Málaga", "Córdoba", "Granada", "Almería", "Cádiz", "Huelva", "Jaén", "Jerez de la Frontera", "Marbella"]
+      },
+      "AR": {
+        "name": "Aragón",
+        "cities": ["Zaragoza", "Huesca", "Teruel"]
+      },
+      "AS": {
+        "name": "Asturias",
+        "cities": ["Oviedo", "Gijón", "Avilés"]
+      },
+      "IB": {
+        "name": "Islas Baleares",
+        "cities": ["Palma de Mallorca", "Ibiza", "Mahón", "Manacor"]
+      },
+      "CN": {
+        "name": "Canarias",
+        "cities": ["Las Palmas de Gran Canaria", "Santa Cruz de Tenerife", "La Laguna", "Arrecife", "Puerto del Rosario"]
+      },
+      "CB": {
+        "name": "Cantabria",
+        "cities": ["Santander", "Torrelavega"]
+      },
+      "CM": {
+        "name": "Castilla-La Mancha",
+        "cities": ["Toledo", "Albacete", "Ciudad Real", "Guadalajara", "Cuenca", "Talavera de la Reina"]
+      },
+      "CL": {
+        "name": "Castilla y León",
+        "cities": ["Valladolid", "Burgos", "Salamanca", "León", "Palencia", "Zamora", "Ávila", "Segovia", "Soria"]
+      },
+      "CT": {
+        "name": "Cataluña",
+        "cities": ["Barcelona", "Hospitalet de Llobregat", "Terrassa", "Badalona", "Sabadell", "Tarragona", "Lleida", "Girona", "Mataró", "Reus"]
+      },
+      "EX": {
+        "name": "Extremadura",
+        "cities": ["Badajoz", "Cáceres", "Mérida", "Plasencia"]
+      },
+      "GA": {
+        "name": "Galicia",
+        "cities": ["Vigo", "A Coruña", "Ourense", "Lugo", "Santiago de Compostela", "Pontevedra", "Ferrol"]
+      },
+      "MD": {
+        "name": "Comunidad de Madrid",
+        "cities": ["Madrid", "Móstoles", "Alcalá de Henares", "Fuenlabrada", "Leganés", "Getafe", "Alcorcón", "Torrejón de Ardoz", "Parla", "Alcobendas", "Las Rozas", "Pozuelo de Alarcón", "San Sebastián de los Reyes", "Rivas-Vaciamadrid", "Coslada", "Majadahonda"]
+      },
+      "MC": {
+        "name": "Región de Murcia",
+        "cities": ["Murcia", "Cartagena", "Lorca", "Molina de Segura"]
+      },
+      "NC": {
+        "name": "Navarra",
+        "cities": ["Pamplona", "Tudela", "Barañáin"]
+      },
+      "PV": {
+        "name": "País Vasco",
+        "cities": ["Bilbao", "Vitoria-Gasteiz", "San Sebastián", "Barakaldo", "Getxo", "Irún"]
+      },
+      "RI": {
+        "name": "La Rioja",
+        "cities": ["Logroño", "Calahorra", "Arnedo"]
+      },
+      "VC": {
+        "name": "Comunidad Valenciana",
+        "cities": ["Valencia", "Alicante", "Elche", "Castellón de la Plana", "Torrevieja", "Orihuela", "Benidorm", "Gandía", "Paterna", "Sagunto"]
+      },
+      "CE": {
+        "name": "Ceuta",
+        "cities": ["Ceuta"]
+      },
+      "ML": {
+        "name": "Melilla",
+        "cities": ["Melilla"]
+      }
+    }
+  },
+  "PT": {
+    "name": "Portugal",
+    "regions": {
+      "LI": {
+        "name": "Lisboa",
+        "cities": ["Lisboa", "Sintra", "Cascais", "Loures", "Amadora", "Almada", "Oeiras"]
+      },
+      "PO": {
+        "name": "Porto",
+        "cities": ["Porto", "Vila Nova de Gaia", "Matosinhos", "Maia", "Gondomar"]
+      },
+      "BR": {
+        "name": "Braga",
+        "cities": ["Braga", "Guimarães", "Barcelos", "Famalicão"]
+      },
+      "FA": {
+        "name": "Faro",
+        "cities": ["Faro", "Portimão", "Albufeira", "Loulé", "Lagos"]
+      },
+      "CO": {
+        "name": "Coimbra",
+        "cities": ["Coimbra", "Figueira da Foz"]
+      },
+      "AV": {
+        "name": "Aveiro",
+        "cities": ["Aveiro", "Santa Maria da Feira", "Oliveira de Azeméis"]
+      },
+      "SE": {
+        "name": "Setúbal",
+        "cities": ["Setúbal", "Seixal", "Barreiro", "Sesimbra"]
+      }
+    }
+  },
+  "MX": {
+    "name": "México",
+    "regions": {
+      "CDMX": {
+        "name": "Ciudad de México",
+        "cities": ["Ciudad de México"]
+      },
+      "JAL": {
+        "name": "Jalisco",
+        "cities": ["Guadalajara", "Zapopan", "Tlaquepaque", "Puerto Vallarta", "Tonalá"]
+      },
+      "NL": {
+        "name": "Nuevo León",
+        "cities": ["Monterrey", "San Nicolás de los Garza", "Guadalupe", "Apodaca", "San Pedro Garza García"]
+      },
+      "PUE": {
+        "name": "Puebla",
+        "cities": ["Puebla", "Tehuacán", "San Andrés Cholula"]
+      },
+      "QRO": {
+        "name": "Querétaro",
+        "cities": ["Santiago de Querétaro", "San Juan del Río", "Corregidora"]
+      },
+      "YUC": {
+        "name": "Yucatán",
+        "cities": ["Mérida", "Valladolid", "Tizimín"]
+      },
+      "BCN": {
+        "name": "Baja California",
+        "cities": ["Tijuana", "Mexicali", "Ensenada"]
+      }
+    }
+  },
+  "AR": {
+    "name": "Argentina",
+    "regions": {
+      "BA": {
+        "name": "Buenos Aires",
+        "cities": ["Buenos Aires", "La Plata", "Mar del Plata", "Bahía Blanca", "Quilmes", "Lanús"]
+      },
+      "CBA": {
+        "name": "Córdoba",
+        "cities": ["Córdoba", "Villa María", "Río Cuarto"]
+      },
+      "SF": {
+        "name": "Santa Fe",
+        "cities": ["Rosario", "Santa Fe", "Rafaela"]
+      },
+      "MZA": {
+        "name": "Mendoza",
+        "cities": ["Mendoza", "San Rafael", "Godoy Cruz"]
+      }
+    }
+  },
+  "CO": {
+    "name": "Colombia",
+    "regions": {
+      "DC": {
+        "name": "Bogotá D.C.",
+        "cities": ["Bogotá"]
+      },
+      "ANT": {
+        "name": "Antioquia",
+        "cities": ["Medellín", "Bello", "Envigado", "Itagüí"]
+      },
+      "VAC": {
+        "name": "Valle del Cauca",
+        "cities": ["Cali", "Buenaventura", "Palmira"]
+      },
+      "ATL": {
+        "name": "Atlántico",
+        "cities": ["Barranquilla", "Soledad", "Malambo"]
+      }
+    }
+  },
+  "CL": {
+    "name": "Chile",
+    "regions": {
+      "RM": {
+        "name": "Región Metropolitana",
+        "cities": ["Santiago", "Puente Alto", "Maipú", "Las Condes", "La Florida", "Providencia"]
+      },
+      "VAL": {
+        "name": "Valparaíso",
+        "cities": ["Valparaíso", "Viña del Mar", "Quilpué"]
+      },
+      "BIO": {
+        "name": "Biobío",
+        "cities": ["Concepción", "Talcahuano", "Los Ángeles"]
+      }
+    }
+  },
+  "US": {
+    "name": "Estados Unidos",
+    "regions": {
+      "CA": {
+        "name": "California",
+        "cities": ["Los Angeles", "San Francisco", "San Diego", "San Jose", "Sacramento", "Oakland", "Palo Alto", "Mountain View"]
+      },
+      "NY": {
+        "name": "New York",
+        "cities": ["New York City", "Buffalo", "Rochester", "Albany"]
+      },
+      "TX": {
+        "name": "Texas",
+        "cities": ["Houston", "Dallas", "Austin", "San Antonio", "Fort Worth"]
+      },
+      "FL": {
+        "name": "Florida",
+        "cities": ["Miami", "Orlando", "Tampa", "Jacksonville"]
+      },
+      "WA": {
+        "name": "Washington",
+        "cities": ["Seattle", "Tacoma", "Spokane", "Bellevue", "Redmond"]
+      },
+      "MA": {
+        "name": "Massachusetts",
+        "cities": ["Boston", "Cambridge", "Worcester"]
+      }
+    }
+  },
+  "REMOTE": {
+    "name": "Remoto",
+    "regions": {
+      "FULL": {
+        "name": "100% Remoto",
+        "cities": ["Sin ubicación física"]
+      }
+    }
+  }
+}
