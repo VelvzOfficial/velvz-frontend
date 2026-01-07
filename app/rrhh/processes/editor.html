@@ -4399,16 +4399,20 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         }
 
         async function deleteProcessWithLoading() {
+            console.log('🔴 deleteProcessWithLoading() iniciado');
+
             // Desactivar beforeunload
             hasUnsavedChanges = false;
 
             // Asegurar que los estilos del loading overlay estén disponibles
             ensureLoadingStyles();
+            console.log('🔴 Estilos inyectados');
 
             // Mostrar loading overlay con estilo igual a chatbots pero en verde
             const loadingOverlay = document.createElement('div');
             loadingOverlay.id = 'processLoadingOverlay';
             loadingOverlay.className = 'velvz-loading-overlay';
+            console.log('🔴 Overlay creado');
             loadingOverlay.innerHTML = `
                 <div class="velvz-loading-overlay__content">
                     <div class="velvz-loading-overlay__spinner"></div>
@@ -4417,9 +4421,11 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 </div>
             `;
             document.body.appendChild(loadingOverlay);
+            console.log('🔴 Overlay añadido al DOM');
 
             // Forzar reflow para que la animación funcione
             loadingOverlay.offsetHeight;
+            console.log('🔴 Reflow forzado, overlay visible');
 
             try {
                 const token = window.velvzAuth?.getToken();
