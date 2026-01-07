@@ -3248,11 +3248,24 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         let isSaving = false;
 
         async function saveProcess(status = 'draft') {
-            if (isSaving) return;
+            console.log('🔄 Iniciando saveProcess con status:', status);
+            console.log('   - currentProcessId:', currentProcessId);
+            console.log('   - selectedProfile:', selectedProfile);
+            console.log('   - isSaving:', isSaving);
+
+            if (isSaving) {
+                console.log('❌ Ya hay un guardado en proceso');
+                return;
+            }
 
             // Validar perfil seleccionado
             if (!selectedProfile) {
-                showToast('Por favor, selecciona un perfil de puesto', true);
+                console.log('❌ No hay perfil seleccionado');
+                if (window.VelvzNotify) {
+                    VelvzNotify.warning('Por favor, selecciona un perfil de puesto');
+                } else {
+                    showToast('Por favor, selecciona un perfil de puesto', true);
+                }
                 profileSelect.focus();
                 return;
             }
@@ -3306,7 +3319,10 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     : `${API_URL}/api/rrhh/processes`;
                 const method = isEditing ? 'PUT' : 'POST';
 
-                console.log(`${isEditing ? 'Actualizando' : 'Creando'} proceso:`, data);
+                console.log(`📤 ${isEditing ? 'Actualizando' : 'Creando'} proceso:`);
+                console.log('   - URL:', url);
+                console.log('   - Method:', method);
+                console.log('   - Data:', data);
 
                 const response = await fetch(url, {
                     method: method,
@@ -3317,10 +3333,12 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     body: JSON.stringify(data)
                 });
 
+                console.log('📥 Response status:', response.status);
                 const result = await response.json();
+                console.log('📥 Response body:', result);
 
                 if (result.success) {
-                    console.log('Proceso guardado:', result.data.process);
+                    console.log('✅ Proceso guardado:', result.data.process);
 
                     // Si es nuevo proceso, actualizar la URL y el ID
                     if (!currentProcessId && result.data.process.id) {
