@@ -4427,8 +4427,8 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
             // Mostrar loading overlay con estilo igual a chatbots pero en verde
             const loadingOverlay = document.createElement('div');
             loadingOverlay.id = 'processLoadingOverlay';
-            loadingOverlay.className = 'velvz-loading-overlay';
-            console.log('🔴 Overlay creado');
+            loadingOverlay.className = 'velvz-loading-overlay velvz-loading-overlay--active';
+            console.log('🔴 Overlay creado con clase --active');
             loadingOverlay.innerHTML = `
                 <div class="velvz-loading-overlay__content">
                     <div class="velvz-loading-overlay__spinner"></div>
