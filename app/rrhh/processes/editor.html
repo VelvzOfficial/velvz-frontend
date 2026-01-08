@@ -4336,40 +4336,97 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         }
 
         async function deleteProcessWithLoading() {
-            console.log('🔴 deleteProcessWithLoading() iniciado');
-
             // Desactivar beforeunload
             hasUnsavedChanges = false;
 
-            // Usar el overlay existente de chatbot-config.css pero con clase --visible
-            // y color verde en el icono
-            const loadingOverlay = document.getElementById('loadingOverlay') || document.createElement('div');
+            // Crear overlay exactamente igual que showGlobalLoading de chatbots
+            let overlay = document.getElementById('globalLoadingOverlay');
 
-            if (!document.getElementById('loadingOverlay')) {
-                loadingOverlay.id = 'loadingOverlay';
-                loadingOverlay.className = 'velvz-loading-overlay';
-                document.body.appendChild(loadingOverlay);
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'globalLoadingOverlay';
+                overlay.className = 'velvz-loading-overlay';
+                document.body.appendChild(overlay);
+
+                // Agregar estilos idénticos a chatbots pero con color verde
+                if (!document.getElementById('rrhh-loading-overlay-styles')) {
+                    const styles = document.createElement('style');
+                    styles.id = 'rrhh-loading-overlay-styles';
+                    styles.innerHTML = `
+                        .velvz-loading-overlay {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background: rgba(15, 15, 35, 0.95);
+                            backdrop-filter: blur(8px);
+                            z-index: 10000;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 1.5rem;
+                            opacity: 0;
+                            visibility: hidden;
+                            transition: all 0.3s ease;
+                        }
+
+                        .velvz-loading-overlay--show {
+                            opacity: 1;
+                            visibility: visible;
+                        }
+
+                        .velvz-loading-overlay__spinner {
+                            width: 60px;
+                            height: 60px;
+                            border: 4px solid rgba(255, 255, 255, 0.1);
+                            border-top: 4px solid #10b981;
+                            border-radius: 50%;
+                            animation: spin 1s linear infinite;
+                        }
+
+                        .velvz-loading-overlay__text {
+                            color: #fff;
+                            font-size: 1.1rem;
+                            font-weight: 500;
+                            text-align: center;
+                            max-width: 300px;
+                            line-height: 1.5;
+                        }
+
+                        .velvz-loading-overlay__subtitle {
+                            color: rgba(255, 255, 255, 0.7);
+                            font-size: 0.9rem;
+                            text-align: center;
+                            max-width: 400px;
+                        }
+
+                        @keyframes spin {
+                            to { transform: rotate(360deg); }
+                        }
+                    `;
+                    document.head.appendChild(styles);
+                }
             }
 
-            // Estructura exacta de chatbots pero con icono verde
-            loadingOverlay.innerHTML = `
-                <div class="velvz-loading-spinner">
-                    <div class="velvz-loading-spinner__icon" style="color: #10b981;">
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
-                    <div class="velvz-loading-spinner__text">
-                        Eliminando proceso...
-                    </div>
-                </div>
+            // Estructura idéntica a chatbots
+            overlay.innerHTML = `
+                <div class="velvz-loading-overlay__spinner"></div>
+                <div class="velvz-loading-overlay__text" id="loadingText">Eliminando proceso...</div>
+                <div class="velvz-loading-overlay__subtitle" id="loadingSubtitle">Limpiando todos los recursos asociados. Esto puede tardar unos momentos...</div>
             `;
 
             // Mostrar overlay
-            loadingOverlay.classList.add('velvz-loading-overlay--visible');
+            setTimeout(() => {
+                overlay.classList.add('velvz-loading-overlay--show');
+                document.body.style.overflow = 'hidden';
+            }, 10);
 
             try {
                 const token = window.velvzAuth?.getToken();
                 if (!token) {
-                    document.body.removeChild(loadingOverlay);
+                    hideGlobalLoading();
                     showToast('Tu sesión ha expirado', true);
                     window.location.href = '/auth/login.html';
                     return;
@@ -4398,20 +4455,13 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 }
 
                 if (result.success) {
-                    // Cambiar a icono de éxito (sin animación de spin)
-                    loadingOverlay.innerHTML = `
-                        <div class="velvz-loading-spinner">
-                            <div class="velvz-loading-spinner__icon" style="color: #10b981; animation: none;">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="velvz-loading-spinner__text">
-                                ¡Proceso eliminado!
-                            </div>
-                        </div>
-                    `;
+                    // Actualizar textos para éxito (igual que chatbots)
+                    const textEl = document.getElementById('loadingText');
+                    const subtitleEl = document.getElementById('loadingSubtitle');
+                    if (textEl) textEl.textContent = '¡Proceso eliminado!';
+                    if (subtitleEl) subtitleEl.textContent = 'Redirigiendo a la lista de procesos...';
 
                     setTimeout(() => {
-                        // Añadir parámetro para mostrar notificación en la página de destino
                         window.location.href = '/app/rrhh/processes/?deleted=true';
                     }, 1200);
                 } else {
@@ -4419,7 +4469,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 }
             } catch (error) {
                 console.error('Error eliminando proceso:', error);
-                loadingOverlay.classList.remove('velvz-loading-overlay--visible');
+                hideGlobalLoading();
                 showToast('Error al eliminar: ' + error.message, true);
 
                 // Restaurar checkbox
@@ -4427,6 +4477,15 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 if (confirmCheckbox) confirmCheckbox.checked = false;
                 const deleteBtn = document.getElementById('dangerDeleteBtn');
                 if (deleteBtn) deleteBtn.disabled = true;
+            }
+        }
+
+        // Función para ocultar el overlay (igual que chatbots)
+        function hideGlobalLoading() {
+            const overlay = document.getElementById('globalLoadingOverlay');
+            if (overlay) {
+                overlay.classList.remove('velvz-loading-overlay--show');
+                document.body.style.overflow = '';
             }
         }
 
