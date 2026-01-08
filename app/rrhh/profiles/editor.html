@@ -74,7 +74,7 @@
         }
 
         .velvz-breadcrumbs__link:hover {
-            color: var(--profile-primary);
+            color: var(--rrhh-primary);
         }
 
         .velvz-breadcrumbs__separator {
@@ -730,6 +730,186 @@
         }
 
         /* =====================================================
+           SEARCHABLE SELECT (Custom dropdown con búsqueda)
+           ===================================================== */
+        .searchable-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .searchable-select__trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .searchable-select__trigger:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .searchable-select__trigger--open {
+            border-color: var(--rrhh-primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        .searchable-select__trigger--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .searchable-select__placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .searchable-select__icon {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        .searchable-select__trigger--open .searchable-select__icon {
+            transform: rotate(180deg);
+        }
+
+        .searchable-select__dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: var(--dark-bg-secondary, #1a1a2e);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s ease;
+            max-height: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .searchable-select__dropdown--open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .searchable-select__search {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .searchable-select__search-input {
+            width: 100%;
+            padding: 0.6rem 0.875rem;
+            padding-left: 2.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .searchable-select__search-input:focus {
+            border-color: var(--rrhh-primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .searchable-select__search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .searchable-select__search-wrapper {
+            position: relative;
+        }
+
+        .searchable-select__search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        .searchable-select__options {
+            overflow-y: auto;
+            max-height: 240px;
+            padding: 0.5rem;
+        }
+
+        .searchable-select__option {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+        }
+
+        .searchable-select__option:hover {
+            background: rgba(16, 185, 129, 0.15);
+            color: #fff;
+        }
+
+        .searchable-select__option--selected {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--rrhh-primary);
+        }
+
+        .searchable-select__option--category {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0.75rem;
+            margin-top: 0.5rem;
+            cursor: default;
+        }
+
+        .searchable-select__option--category:hover {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .searchable-select__option--category:first-child {
+            margin-top: 0;
+        }
+
+        .searchable-select__no-results {
+            padding: 1rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+        }
+
+        .searchable-select__option-icon {
+            margin-right: 0.5rem;
+            width: 16px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* =====================================================
            IDIOMAS
            ===================================================== */
         .language-item {
@@ -1248,21 +1428,21 @@
                             </div>
                             <div class="requirements-tags" id="essentialTags"></div>
                             <div class="add-requirement-row">
-                                <div class="form-select-wrapper requirement-category-select">
-                                    <select class="form-select" id="essentialCategory">
-                                        <option value="">Categoría...</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                <div class="searchable-select" id="essentialSelect" data-type="essential">
+                                    <div class="searchable-select__trigger">
+                                        <span class="searchable-select__placeholder">Buscar requisito...</span>
+                                        <i class="fas fa-chevron-down searchable-select__icon"></i>
+                                    </div>
+                                    <div class="searchable-select__dropdown">
+                                        <div class="searchable-select__search">
+                                            <div class="searchable-select__search-wrapper">
+                                                <i class="fas fa-search searchable-select__search-icon"></i>
+                                                <input type="text" class="searchable-select__search-input" placeholder="Buscar...">
+                                            </div>
+                                        </div>
+                                        <div class="searchable-select__options"></div>
+                                    </div>
                                 </div>
-                                <div class="form-select-wrapper requirement-item-select">
-                                    <select class="form-select" id="essentialItem" disabled>
-                                        <option value="">Seleccionar requisito...</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
-                                </div>
-                                <button class="btn btn--secondary" id="addEssentialBtn">
-                                    <i class="fas fa-plus"></i>
-                                </button>
                             </div>
                         </div>
 
@@ -1279,21 +1459,21 @@
                             </div>
                             <div class="requirements-tags" id="desiredTags"></div>
                             <div class="add-requirement-row">
-                                <div class="form-select-wrapper requirement-category-select">
-                                    <select class="form-select" id="desiredCategory">
-                                        <option value="">Categoría...</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                <div class="searchable-select" id="desiredSelect" data-type="desired">
+                                    <div class="searchable-select__trigger">
+                                        <span class="searchable-select__placeholder">Buscar requisito...</span>
+                                        <i class="fas fa-chevron-down searchable-select__icon"></i>
+                                    </div>
+                                    <div class="searchable-select__dropdown">
+                                        <div class="searchable-select__search">
+                                            <div class="searchable-select__search-wrapper">
+                                                <i class="fas fa-search searchable-select__search-icon"></i>
+                                                <input type="text" class="searchable-select__search-input" placeholder="Buscar...">
+                                            </div>
+                                        </div>
+                                        <div class="searchable-select__options"></div>
+                                    </div>
                                 </div>
-                                <div class="form-select-wrapper requirement-item-select">
-                                    <select class="form-select" id="desiredItem" disabled>
-                                        <option value="">Seleccionar requisito...</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
-                                </div>
-                                <button class="btn btn--secondary" id="addDesiredBtn">
-                                    <i class="fas fa-plus"></i>
-                                </button>
                             </div>
                         </div>
 
@@ -1310,21 +1490,21 @@
                             </div>
                             <div class="requirements-tags" id="niceTags"></div>
                             <div class="add-requirement-row">
-                                <div class="form-select-wrapper requirement-category-select">
-                                    <select class="form-select" id="niceCategory">
-                                        <option value="">Categoría...</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                <div class="searchable-select" id="niceSelect" data-type="nice">
+                                    <div class="searchable-select__trigger">
+                                        <span class="searchable-select__placeholder">Buscar requisito...</span>
+                                        <i class="fas fa-chevron-down searchable-select__icon"></i>
+                                    </div>
+                                    <div class="searchable-select__dropdown">
+                                        <div class="searchable-select__search">
+                                            <div class="searchable-select__search-wrapper">
+                                                <i class="fas fa-search searchable-select__search-icon"></i>
+                                                <input type="text" class="searchable-select__search-input" placeholder="Buscar...">
+                                            </div>
+                                        </div>
+                                        <div class="searchable-select__options"></div>
+                                    </div>
                                 </div>
-                                <div class="form-select-wrapper requirement-item-select">
-                                    <select class="form-select" id="niceItem" disabled>
-                                        <option value="">Seleccionar requisito...</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
-                                </div>
-                                <button class="btn btn--secondary" id="addNiceBtn">
-                                    <i class="fas fa-plus"></i>
-                                </button>
                             </div>
                         </div>
 
@@ -1556,7 +1736,7 @@
             }
 
             // =====================================================
-            // Diccionario de requisitos
+            // Diccionario de requisitos con Searchable Select
             // =====================================================
             let requirementsData = {};
 
@@ -1564,81 +1744,116 @@
                 try {
                     const response = await fetch('/assets/data/requirements.json');
                     requirementsData = await response.json();
-                    // Poblar selectores de categorías
-                    populateRequirementCategories('essentialCategory');
-                    populateRequirementCategories('desiredCategory');
-                    populateRequirementCategories('niceCategory');
+                    // Inicializar searchable selects
+                    initSearchableSelect('essentialSelect', 'essentialTags', profileData.essential, 'essential');
+                    initSearchableSelect('desiredSelect', 'desiredTags', profileData.desired, 'desired');
+                    initSearchableSelect('niceSelect', 'niceTags', profileData.niceToHave, 'nice');
                 } catch (error) {
                     console.error('Error cargando requisitos:', error);
                 }
             }
 
-            function populateRequirementCategories(selectId) {
-                const select = document.getElementById(selectId);
-                select.innerHTML = '<option value="">Categoría...</option>';
-                Object.entries(requirementsData).forEach(([key, category]) => {
-                    const option = document.createElement('option');
-                    option.value = key;
-                    option.innerHTML = `${category.label}`;
-                    select.appendChild(option);
-                });
-            }
+            function initSearchableSelect(selectId, tagsContainerId, array, type) {
+                const container = document.getElementById(selectId);
+                const trigger = container.querySelector('.searchable-select__trigger');
+                const dropdown = container.querySelector('.searchable-select__dropdown');
+                const searchInput = container.querySelector('.searchable-select__search-input');
+                const optionsContainer = container.querySelector('.searchable-select__options');
 
-            function populateRequirementItems(categorySelectId, itemSelectId) {
-                const categorySelect = document.getElementById(categorySelectId);
-                const itemSelect = document.getElementById(itemSelectId);
-                const categoryKey = categorySelect.value;
+                // Poblar opciones
+                function renderOptions(filter = '') {
+                    optionsContainer.innerHTML = '';
+                    const filterLower = filter.toLowerCase();
+                    let hasResults = false;
 
-                itemSelect.innerHTML = '<option value="">Seleccionar requisito...</option>';
-                itemSelect.disabled = true;
+                    Object.entries(requirementsData).forEach(([categoryKey, category]) => {
+                        const filteredItems = category.items.filter(item =>
+                            item.toLowerCase().includes(filterLower) && !array.includes(item)
+                        );
 
-                if (!categoryKey || !requirementsData[categoryKey]) return;
+                        if (filteredItems.length > 0) {
+                            hasResults = true;
+                            // Cabecera de categoría
+                            const categoryHeader = document.createElement('div');
+                            categoryHeader.className = 'searchable-select__option searchable-select__option--category';
+                            categoryHeader.innerHTML = `<i class="fas ${category.icon} searchable-select__option-icon" style="color: ${category.color}"></i>${category.label}`;
+                            optionsContainer.appendChild(categoryHeader);
 
-                const items = requirementsData[categoryKey].items;
-                items.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item;
-                    option.textContent = item;
-                    itemSelect.appendChild(option);
-                });
-                itemSelect.disabled = false;
-            }
+                            // Items de la categoría
+                            filteredItems.forEach(item => {
+                                const option = document.createElement('div');
+                                option.className = 'searchable-select__option';
+                                option.dataset.value = item;
+                                option.textContent = item;
+                                option.addEventListener('click', () => selectOption(item));
+                                optionsContainer.appendChild(option);
+                            });
+                        }
+                    });
 
-            function setupRequirementSelects(categoryId, itemId, btnId, containerId, array, type) {
-                const categorySelect = document.getElementById(categoryId);
-                const itemSelect = document.getElementById(itemId);
-                const btn = document.getElementById(btnId);
-
-                categorySelect.addEventListener('change', () => {
-                    populateRequirementItems(categoryId, itemId);
-                });
-
-                const addItem = () => {
-                    const text = itemSelect.value;
-                    if (text && !array.includes(text)) {
-                        array.push(text);
-                        renderTags(containerId, array, type);
-                        // Reset selects
-                        categorySelect.value = '';
-                        itemSelect.innerHTML = '<option value="">Seleccionar requisito...</option>';
-                        itemSelect.disabled = true;
+                    if (!hasResults) {
+                        optionsContainer.innerHTML = '<div class="searchable-select__no-results">No se encontraron resultados</div>';
                     }
-                };
+                }
 
-                btn.addEventListener('click', addItem);
-                itemSelect.addEventListener('change', () => {
-                    if (itemSelect.value) {
-                        addItem();
+                function selectOption(value) {
+                    if (!array.includes(value)) {
+                        array.push(value);
+                        renderTags(tagsContainerId, array, type);
+                    }
+                    closeDropdown();
+                    searchInput.value = '';
+                    renderOptions();
+                }
+
+                function openDropdown() {
+                    trigger.classList.add('searchable-select__trigger--open');
+                    dropdown.classList.add('searchable-select__dropdown--open');
+                    searchInput.focus();
+                    renderOptions();
+                }
+
+                function closeDropdown() {
+                    trigger.classList.remove('searchable-select__trigger--open');
+                    dropdown.classList.remove('searchable-select__dropdown--open');
+                }
+
+                // Event listeners
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (dropdown.classList.contains('searchable-select__dropdown--open')) {
+                        closeDropdown();
+                    } else {
+                        // Cerrar otros dropdowns abiertos
+                        document.querySelectorAll('.searchable-select__dropdown--open').forEach(d => {
+                            d.classList.remove('searchable-select__dropdown--open');
+                            d.closest('.searchable-select').querySelector('.searchable-select__trigger').classList.remove('searchable-select__trigger--open');
+                        });
+                        openDropdown();
                     }
                 });
+
+                searchInput.addEventListener('input', (e) => {
+                    renderOptions(e.target.value);
+                });
+
+                searchInput.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+
+                // Cerrar al hacer clic fuera
+                document.addEventListener('click', (e) => {
+                    if (!container.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+
+                // Inicializar opciones
+                renderOptions();
             }
 
-            // Cargar requisitos y configurar selectores
-            loadRequirements().then(() => {
-                setupRequirementSelects('essentialCategory', 'essentialItem', 'addEssentialBtn', 'essentialTags', profileData.essential, 'essential');
-                setupRequirementSelects('desiredCategory', 'desiredItem', 'addDesiredBtn', 'desiredTags', profileData.desired, 'desired');
-                setupRequirementSelects('niceCategory', 'niceItem', 'addNiceBtn', 'niceTags', profileData.niceToHave, 'nice');
-            });
+            // Cargar requisitos
+            loadRequirements();
 
             // =====================================================
             // Idiomas
