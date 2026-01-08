@@ -4452,6 +4452,10 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     return;
                 }
 
+                // Tiempo mínimo de visualización del loading (800ms)
+                const startTime = Date.now();
+                const MIN_LOADING_TIME = 800;
+
                 const response = await fetch(`${API_URL}/api/rrhh/processes/${currentProcessId}?force=true`, {
                     method: 'DELETE',
                     headers: {
@@ -4460,6 +4464,15 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 });
 
                 const result = await response.json();
+
+                // Calcular tiempo restante para mostrar el loading mínimo
+                const elapsed = Date.now() - startTime;
+                const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsed);
+
+                // Esperar el tiempo restante si la API fue muy rápida
+                if (remainingTime > 0) {
+                    await new Promise(resolve => setTimeout(resolve, remainingTime));
+                }
 
                 if (result.success) {
                     loadingOverlay.innerHTML = `
@@ -4475,7 +4488,7 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                     setTimeout(() => {
                         // Añadir parámetro para mostrar notificación en la página de destino
                         window.location.href = '/app/rrhh/processes/?deleted=true';
-                    }, 1500);
+                    }, 1200);
                 } else {
                     throw new Error(result.message || 'Error al eliminar el proceso');
                 }
