@@ -1541,11 +1541,6 @@
                         </div>
                     </div>
 
-                    <div class="detail-section" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06);">
-                        <button class="btn btn--danger" onclick="deleteProfile(${profile.id})">
-                            <i class="fas fa-trash"></i> Eliminar perfil
-                        </button>
-                    </div>
                 `;
             }
 
@@ -1663,46 +1658,6 @@
             document.getElementById('newProfileBtn').addEventListener('click', () => {
                 window.location.href = '/app/rrhh/profiles/editor.html';
             });
-
-            // Eliminar perfil
-            window.deleteProfile = async function(id) {
-                if (!confirm('Estas seguro de que quieres eliminar este perfil? Esta accion no se puede deshacer.')) {
-                    return;
-                }
-
-                try {
-                    const token = window.velvzAuth?.getToken();
-                    const response = await fetch(`${API_URL}/api/rrhh/profiles/${id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-
-                    const result = await response.json();
-
-                    if (result.success) {
-                        alert('Perfil eliminado correctamente');
-                        loadProfiles();
-                        // Limpiar panel de detalle
-                        detailContainer.classList.add('profile-detail--empty');
-                        detailContainer.innerHTML = `
-                            <div class="detail-empty">
-                                <div class="detail-empty__icon">
-                                    <i class="fas fa-id-badge"></i>
-                                </div>
-                                <p class="detail-empty__text">Selecciona un perfil para ver sus detalles</p>
-                            </div>
-                        `;
-                        selectedId = null;
-                    } else {
-                        throw new Error(result.message || 'Error al eliminar');
-                    }
-                } catch (error) {
-                    console.error('Error eliminando perfil:', error);
-                    alert('Error al eliminar el perfil: ' + error.message);
-                }
-            };
 
             // Initial load from backend
             loadProfiles();

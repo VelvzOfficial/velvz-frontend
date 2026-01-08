@@ -758,8 +758,14 @@
         }
 
         .searchable-select__trigger--open {
-            border-color: var(--rrhh-primary);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            border-color: var(--profile-primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+        }
+
+        .searchable-select--disabled .searchable-select__trigger {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
         .searchable-select__trigger--disabled {
@@ -826,7 +832,7 @@
         }
 
         .searchable-select__search-input:focus {
-            border-color: var(--rrhh-primary);
+            border-color: var(--profile-primary);
             background: rgba(255, 255, 255, 0.08);
         }
 
@@ -866,13 +872,13 @@
         }
 
         .searchable-select__option:hover {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(139, 92, 246, 0.15);
             color: #fff;
         }
 
         .searchable-select__option--selected {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--rrhh-primary);
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--profile-primary);
         }
 
         .searchable-select__option--category {
@@ -941,6 +947,39 @@
             color: #ef4444;
         }
 
+        /* =====================================================
+           GRADOS UNIVERSITARIOS
+           ===================================================== */
+        .degree-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .degree-item .form-select-wrapper,
+        .degree-item .form-input-wrapper {
+            flex: 1;
+        }
+
+        .degree-item__remove {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .degree-item__remove:hover {
+            color: #ef4444;
+        }
+
         .btn--add {
             width: 100%;
             justify-content: center;
@@ -985,6 +1024,94 @@
                 width: 100%;
                 justify-content: center;
             }
+        }
+
+        /* =====================================================
+           ZONA DE PELIGRO
+           ===================================================== */
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .danger-zone__header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .danger-zone__icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(239, 68, 68, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-size: 1rem;
+        }
+
+        .danger-zone__title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ef4444;
+        }
+
+        .danger-zone__content {
+            padding-left: calc(40px + 0.75rem);
+        }
+
+        .danger-zone__text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .danger-zone__confirm {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .danger-zone__checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .danger-zone__checkbox input {
+            width: 18px;
+            height: 18px;
+            accent-color: #ef4444;
+            cursor: pointer;
+        }
+
+        .danger-zone__checkbox-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+
+        .btn--danger {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn--danger:hover:not(:disabled) {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.35);
+        }
+
+        .btn--danger:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -1244,20 +1371,21 @@
                                     Departamento
                                     <span class="form-required">*</span>
                                 </label>
-                                <div class="form-select-wrapper">
-                                    <select class="form-select" id="departmentSelect">
-                                        <option value="">Seleccionar...</option>
-                                        <option value="tech">Tecnología</option>
-                                        <option value="product">Producto</option>
-                                        <option value="design">Diseño</option>
-                                        <option value="sales">Ventas</option>
-                                        <option value="marketing">Marketing</option>
-                                        <option value="hr">Recursos Humanos</option>
-                                        <option value="finance">Finanzas</option>
-                                        <option value="operations">Operaciones</option>
-                                        <option value="other">Otro</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                <div class="searchable-select" id="departmentSearchable">
+                                    <input type="hidden" id="departmentSelect" value="">
+                                    <div class="searchable-select__trigger">
+                                        <span class="searchable-select__value">Seleccionar departamento...</span>
+                                        <i class="fas fa-chevron-down searchable-select__arrow"></i>
+                                    </div>
+                                    <div class="searchable-select__dropdown">
+                                        <div class="searchable-select__search">
+                                            <div class="searchable-select__search-wrapper">
+                                                <i class="fas fa-search searchable-select__search-icon"></i>
+                                                <input type="text" class="searchable-select__search-input" placeholder="Buscar departamento...">
+                                            </div>
+                                        </div>
+                                        <div class="searchable-select__options" id="departmentOptions"></div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1267,23 +1395,56 @@
                                     <span class="form-required">*</span>
                                 </label>
                                 <div class="location-selects">
-                                    <div class="form-select-wrapper">
-                                        <select class="form-select" id="locationCountry">
-                                            <option value="">País...</option>
-                                        </select>
-                                        <i class="fas fa-chevron-down form-select-icon"></i>
+                                    <!-- País -->
+                                    <div class="searchable-select" id="countrySearchable">
+                                        <input type="hidden" id="locationCountry" value="">
+                                        <div class="searchable-select__trigger">
+                                            <span class="searchable-select__value">País...</span>
+                                            <i class="fas fa-chevron-down searchable-select__arrow"></i>
+                                        </div>
+                                        <div class="searchable-select__dropdown">
+                                            <div class="searchable-select__search">
+                                                <div class="searchable-select__search-wrapper">
+                                                    <i class="fas fa-search searchable-select__search-icon"></i>
+                                                    <input type="text" class="searchable-select__search-input" placeholder="Buscar país...">
+                                                </div>
+                                            </div>
+                                            <div class="searchable-select__options" id="countryOptions"></div>
+                                        </div>
                                     </div>
-                                    <div class="form-select-wrapper">
-                                        <select class="form-select" id="locationRegion" disabled>
-                                            <option value="">Región...</option>
-                                        </select>
-                                        <i class="fas fa-chevron-down form-select-icon"></i>
+                                    <!-- Región -->
+                                    <div class="searchable-select searchable-select--disabled" id="regionSearchable">
+                                        <input type="hidden" id="locationRegion" value="">
+                                        <div class="searchable-select__trigger">
+                                            <span class="searchable-select__value">Región...</span>
+                                            <i class="fas fa-chevron-down searchable-select__arrow"></i>
+                                        </div>
+                                        <div class="searchable-select__dropdown">
+                                            <div class="searchable-select__search">
+                                                <div class="searchable-select__search-wrapper">
+                                                    <i class="fas fa-search searchable-select__search-icon"></i>
+                                                    <input type="text" class="searchable-select__search-input" placeholder="Buscar región...">
+                                                </div>
+                                            </div>
+                                            <div class="searchable-select__options" id="regionOptions"></div>
+                                        </div>
                                     </div>
-                                    <div class="form-select-wrapper">
-                                        <select class="form-select" id="locationCity" disabled>
-                                            <option value="">Ciudad...</option>
-                                        </select>
-                                        <i class="fas fa-chevron-down form-select-icon"></i>
+                                    <!-- Ciudad -->
+                                    <div class="searchable-select searchable-select--disabled" id="citySearchable">
+                                        <input type="hidden" id="locationCity" value="">
+                                        <div class="searchable-select__trigger">
+                                            <span class="searchable-select__value">Ciudad...</span>
+                                            <i class="fas fa-chevron-down searchable-select__arrow"></i>
+                                        </div>
+                                        <div class="searchable-select__dropdown">
+                                            <div class="searchable-select__search">
+                                                <div class="searchable-select__search-wrapper">
+                                                    <i class="fas fa-search searchable-select__search-icon"></i>
+                                                    <input type="text" class="searchable-select__search-input" placeholder="Buscar ciudad...">
+                                                </div>
+                                            </div>
+                                            <div class="searchable-select__options" id="cityOptions"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Campo oculto para mantener compatibilidad -->
@@ -1533,6 +1694,19 @@
                                 Añadir idioma
                             </button>
                         </div>
+
+                        <!-- Grados Universitarios -->
+                        <div class="form-field" style="margin-top: 1.5rem;">
+                            <label class="form-label">
+                                <i class="fas fa-graduation-cap" style="margin-right: 0.5rem; color: #f59e0b;"></i>
+                                Grados Universitarios Requeridos
+                            </label>
+                            <div id="degreesList"></div>
+                            <button class="btn btn--add" id="addDegreeBtn">
+                                <i class="fas fa-plus"></i>
+                                Añadir grado
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1546,6 +1720,32 @@
                         <i class="fas fa-save"></i>
                         Guardar Perfil
                     </button>
+                </div>
+
+                <!-- ZONA DE PELIGRO (solo en edición) -->
+                <div class="danger-zone" id="dangerZone" style="display: none;">
+                    <div class="danger-zone__header">
+                        <div class="danger-zone__icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="danger-zone__title">Zona de Peligro</h3>
+                    </div>
+                    <div class="danger-zone__content">
+                        <p class="danger-zone__text">
+                            Eliminar este perfil eliminará permanentemente toda la información asociada.
+                            Esta acción no se puede deshacer.
+                        </p>
+                        <div class="danger-zone__confirm">
+                            <label class="danger-zone__checkbox">
+                                <input type="checkbox" id="dangerConfirmCheckbox">
+                                <span class="danger-zone__checkbox-label">Entiendo que esta acción es irreversible</span>
+                            </label>
+                            <button class="btn btn--danger" id="dangerDeleteBtn" disabled>
+                                <i class="fas fa-trash"></i>
+                                Eliminar Perfil
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -1625,54 +1825,235 @@
             const citySelect = document.getElementById('locationCity');
             const locationInput = document.getElementById('locationInput');
 
-            function populateCountries() {
-                countrySelect.innerHTML = '<option value="">País...</option>';
-                Object.entries(locationsData).forEach(([code, country]) => {
-                    const option = document.createElement('option');
-                    option.value = code;
-                    option.textContent = country.name;
-                    countrySelect.appendChild(option);
+            // =====================================================
+            // SEARCHABLE SELECT - Utilidad general
+            // =====================================================
+            function initSearchableSelect(containerId, options, placeholder, onSelect) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const trigger = container.querySelector('.searchable-select__trigger');
+                const valueSpan = container.querySelector('.searchable-select__value');
+                const dropdown = container.querySelector('.searchable-select__dropdown');
+                const searchInput = container.querySelector('.searchable-select__search-input');
+                const optionsContainer = container.querySelector('.searchable-select__options');
+                const hiddenInput = container.querySelector('input[type="hidden"]');
+
+                function renderOptions(filter = '') {
+                    optionsContainer.innerHTML = '';
+                    const filtered = options.filter(opt =>
+                        opt.label.toLowerCase().includes(filter.toLowerCase())
+                    );
+
+                    if (filtered.length === 0) {
+                        optionsContainer.innerHTML = '<div class="searchable-select__no-results">No se encontraron resultados</div>';
+                        return;
+                    }
+
+                    filtered.forEach(opt => {
+                        const optEl = document.createElement('div');
+                        optEl.className = 'searchable-select__option';
+                        if (hiddenInput.value === opt.value) {
+                            optEl.classList.add('searchable-select__option--selected');
+                        }
+                        optEl.textContent = opt.label;
+                        optEl.dataset.value = opt.value;
+                        optEl.addEventListener('click', () => {
+                            hiddenInput.value = opt.value;
+                            valueSpan.textContent = opt.label;
+                            valueSpan.classList.remove('searchable-select__placeholder');
+                            closeDropdown();
+                            if (onSelect) onSelect(opt.value);
+                            hasUnsavedChanges = true;
+                        });
+                        optionsContainer.appendChild(optEl);
+                    });
+                }
+
+                function openDropdown() {
+                    dropdown.classList.add('searchable-select__dropdown--open');
+                    trigger.classList.add('searchable-select__trigger--open');
+                    searchInput.value = '';
+                    renderOptions();
+                    setTimeout(() => searchInput.focus(), 50);
+                }
+
+                function closeDropdown() {
+                    dropdown.classList.remove('searchable-select__dropdown--open');
+                    trigger.classList.remove('searchable-select__trigger--open');
+                }
+
+                trigger.addEventListener('click', () => {
+                    if (container.classList.contains('searchable-select--disabled')) return;
+                    if (dropdown.classList.contains('searchable-select__dropdown--open')) {
+                        closeDropdown();
+                    } else {
+                        openDropdown();
+                    }
                 });
+
+                searchInput.addEventListener('input', (e) => {
+                    renderOptions(e.target.value);
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!container.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+
+                // Método para actualizar opciones
+                container.updateOptions = (newOptions) => {
+                    options = newOptions;
+                    renderOptions();
+                };
+
+                // Método para establecer valor
+                container.setValue = (value, label) => {
+                    hiddenInput.value = value;
+                    valueSpan.textContent = label || placeholder;
+                    if (value) {
+                        valueSpan.classList.remove('searchable-select__placeholder');
+                    } else {
+                        valueSpan.classList.add('searchable-select__placeholder');
+                    }
+                };
+
+                // Método para habilitar/deshabilitar
+                container.setDisabled = (disabled) => {
+                    if (disabled) {
+                        container.classList.add('searchable-select--disabled');
+                    } else {
+                        container.classList.remove('searchable-select--disabled');
+                    }
+                };
+
+                // Método para obtener valor
+                container.getValue = () => hiddenInput.value;
+
+                // Inicializar
+                renderOptions();
+                valueSpan.textContent = placeholder;
+                valueSpan.classList.add('searchable-select__placeholder');
+
+                return container;
+            }
+
+            // =====================================================
+            // DEPARTAMENTOS - Searchable Select
+            // =====================================================
+            const departments = [
+                { value: 'tech', label: 'Tecnología' },
+                { value: 'product', label: 'Producto' },
+                { value: 'design', label: 'Diseño' },
+                { value: 'sales', label: 'Ventas' },
+                { value: 'marketing', label: 'Marketing' },
+                { value: 'hr', label: 'Recursos Humanos' },
+                { value: 'finance', label: 'Finanzas' },
+                { value: 'operations', label: 'Operaciones' },
+                { value: 'legal', label: 'Legal' },
+                { value: 'customer_service', label: 'Atención al Cliente' },
+                { value: 'logistics', label: 'Logística' },
+                { value: 'quality', label: 'Calidad' },
+                { value: 'research', label: 'I+D' },
+                { value: 'other', label: 'Otro' }
+            ];
+
+            const departmentSearchable = initSearchableSelect(
+                'departmentSearchable',
+                departments,
+                'Seleccionar departamento...',
+                null
+            );
+
+            // =====================================================
+            // UBICACIONES - Searchable Selects
+            // =====================================================
+            let countrySearchable, regionSearchable, citySearchable;
+
+            function populateCountries() {
+                const options = Object.entries(locationsData).map(([code, country]) => ({
+                    value: code,
+                    label: country.name
+                }));
+
+                countrySearchable = initSearchableSelect(
+                    'countrySearchable',
+                    options,
+                    'País...',
+                    (countryCode) => {
+                        populateRegions(countryCode);
+                        updateLocationInput();
+                    }
+                );
             }
 
             function populateRegions(countryCode) {
-                regionSelect.innerHTML = '<option value="">Región...</option>';
-                citySelect.innerHTML = '<option value="">Ciudad...</option>';
-                regionSelect.disabled = true;
-                citySelect.disabled = true;
+                const regionContainer = document.getElementById('regionSearchable');
+                const cityContainer = document.getElementById('citySearchable');
+
+                // Reset region y city
+                regionContainer.setValue('', 'Región...');
+                cityContainer.setValue('', 'Ciudad...');
+                regionContainer.setDisabled(true);
+                cityContainer.setDisabled(true);
 
                 if (!countryCode || !locationsData[countryCode]) return;
 
                 const regions = locationsData[countryCode].regions;
-                Object.entries(regions).forEach(([code, region]) => {
-                    const option = document.createElement('option');
-                    option.value = code;
-                    option.textContent = region.name;
-                    regionSelect.appendChild(option);
-                });
-                regionSelect.disabled = false;
+                const options = Object.entries(regions).map(([code, region]) => ({
+                    value: code,
+                    label: region.name
+                }));
+
+                regionContainer.updateOptions(options);
+                regionContainer.setDisabled(false);
+
+                // Re-init con nuevo callback
+                regionSearchable = initSearchableSelect(
+                    'regionSearchable',
+                    options,
+                    'Región...',
+                    (regionCode) => {
+                        populateCities(countryCode, regionCode);
+                        updateLocationInput();
+                    }
+                );
             }
 
             function populateCities(countryCode, regionCode) {
-                citySelect.innerHTML = '<option value="">Ciudad...</option>';
-                citySelect.disabled = true;
+                const cityContainer = document.getElementById('citySearchable');
+
+                cityContainer.setValue('', 'Ciudad...');
+                cityContainer.setDisabled(true);
 
                 if (!countryCode || !regionCode || !locationsData[countryCode]) return;
 
                 const cities = locationsData[countryCode].regions[regionCode]?.cities || [];
-                cities.forEach(city => {
-                    const option = document.createElement('option');
-                    option.value = city;
-                    option.textContent = city;
-                    citySelect.appendChild(option);
-                });
-                citySelect.disabled = false;
+                const options = cities.map(city => ({
+                    value: city,
+                    label: city
+                }));
+
+                cityContainer.updateOptions(options);
+                cityContainer.setDisabled(false);
+
+                citySearchable = initSearchableSelect(
+                    'citySearchable',
+                    options,
+                    'Ciudad...',
+                    () => updateLocationInput()
+                );
             }
 
             function updateLocationInput() {
-                const city = citySelect.value;
-                const regionCode = regionSelect.value;
-                const countryCode = countrySelect.value;
+                const countryContainer = document.getElementById('countrySearchable');
+                const regionContainer = document.getElementById('regionSearchable');
+                const cityContainer = document.getElementById('citySearchable');
+
+                const countryCode = countryContainer?.getValue() || '';
+                const regionCode = regionContainer?.getValue() || '';
+                const city = cityContainer?.getValue() || '';
 
                 if (!countryCode) {
                     locationInput.value = '';
@@ -1682,7 +2063,6 @@
                 const countryName = locationsData[countryCode]?.name || '';
                 const regionName = regionCode ? locationsData[countryCode]?.regions[regionCode]?.name : '';
 
-                // Construir ubicación con los valores disponibles
                 const parts = [];
                 if (city) parts.push(city);
                 if (regionName) parts.push(regionName);
@@ -1691,33 +2071,24 @@
                 locationInput.value = parts.join(', ');
             }
 
-            countrySelect.addEventListener('change', function() {
-                populateRegions(this.value);
-                updateLocationInput();
-            });
-
-            regionSelect.addEventListener('change', function() {
-                populateCities(countrySelect.value, this.value);
-                updateLocationInput();
-            });
-
-            citySelect.addEventListener('change', updateLocationInput);
-
             // Función para establecer ubicación desde string (para edición)
             function setLocationFromString(locationStr) {
                 if (!locationStr) return;
 
                 const parts = locationStr.split(',').map(p => p.trim());
+                const countryContainer = document.getElementById('countrySearchable');
+                const regionContainer = document.getElementById('regionSearchable');
+                const cityContainer = document.getElementById('citySearchable');
 
                 // Primero intentar encontrar por ciudad (formato completo: "Ciudad, Región, País")
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     for (const [regionCode, region] of Object.entries(country.regions)) {
                         if (region.cities.includes(parts[0])) {
-                            countrySelect.value = countryCode;
+                            countryContainer.setValue(countryCode, country.name);
                             populateRegions(countryCode);
-                            regionSelect.value = regionCode;
+                            regionContainer.setValue(regionCode, region.name);
                             populateCities(countryCode, regionCode);
-                            citySelect.value = parts[0];
+                            cityContainer.setValue(parts[0], parts[0]);
                             updateLocationInput();
                             return;
                         }
@@ -1728,9 +2099,9 @@
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     for (const [regionCode, region] of Object.entries(country.regions)) {
                         if (region.name === parts[0]) {
-                            countrySelect.value = countryCode;
+                            countryContainer.setValue(countryCode, country.name);
                             populateRegions(countryCode);
-                            regionSelect.value = regionCode;
+                            regionContainer.setValue(regionCode, region.name);
                             populateCities(countryCode, regionCode);
                             updateLocationInput();
                             return;
@@ -1741,7 +2112,7 @@
                 // Si no encontró región, buscar por país (formato: "País")
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     if (country.name === parts[0] || country.name === parts[parts.length - 1]) {
-                        countrySelect.value = countryCode;
+                        countryContainer.setValue(countryCode, country.name);
                         populateRegions(countryCode);
                         updateLocationInput();
                         return;
@@ -1974,6 +2345,103 @@
             addLanguage('es', 'native');
 
             // =====================================================
+            // Grados Universitarios
+            // =====================================================
+            const degreesList = document.getElementById('degreesList');
+
+            const degreeTypes = [
+                { value: '', label: 'Seleccionar tipo...' },
+                { value: 'bachelor', label: 'Grado / Licenciatura' },
+                { value: 'master', label: 'Máster' },
+                { value: 'phd', label: 'Doctorado (PhD)' },
+                { value: 'associate', label: 'Técnico Superior / FP' },
+                { value: 'postgraduate', label: 'Postgrado / Especialización' },
+                { value: 'mba', label: 'MBA' },
+                { value: 'other', label: 'Otro' }
+            ];
+
+            const degreeFields = [
+                { value: '', label: 'Seleccionar campo...' },
+                { value: 'computer_science', label: 'Informática / Computación' },
+                { value: 'software_engineering', label: 'Ingeniería de Software' },
+                { value: 'data_science', label: 'Ciencia de Datos' },
+                { value: 'engineering', label: 'Ingeniería (General)' },
+                { value: 'electrical_engineering', label: 'Ingeniería Eléctrica/Electrónica' },
+                { value: 'mechanical_engineering', label: 'Ingeniería Mecánica' },
+                { value: 'industrial_engineering', label: 'Ingeniería Industrial' },
+                { value: 'civil_engineering', label: 'Ingeniería Civil' },
+                { value: 'business', label: 'Administración de Empresas' },
+                { value: 'economics', label: 'Economía' },
+                { value: 'finance', label: 'Finanzas' },
+                { value: 'accounting', label: 'Contabilidad' },
+                { value: 'marketing', label: 'Marketing' },
+                { value: 'law', label: 'Derecho' },
+                { value: 'psychology', label: 'Psicología' },
+                { value: 'hr', label: 'Recursos Humanos' },
+                { value: 'communications', label: 'Comunicación / Periodismo' },
+                { value: 'design', label: 'Diseño' },
+                { value: 'architecture', label: 'Arquitectura' },
+                { value: 'mathematics', label: 'Matemáticas' },
+                { value: 'physics', label: 'Física' },
+                { value: 'chemistry', label: 'Química' },
+                { value: 'biology', label: 'Biología' },
+                { value: 'medicine', label: 'Medicina' },
+                { value: 'nursing', label: 'Enfermería' },
+                { value: 'pharmacy', label: 'Farmacia' },
+                { value: 'education', label: 'Educación / Pedagogía' },
+                { value: 'languages', label: 'Filología / Idiomas' },
+                { value: 'other', label: 'Otro campo' }
+            ];
+
+            function addDegree(type = '', field = '', required = 'required') {
+                const item = document.createElement('div');
+                item.className = 'degree-item';
+                item.innerHTML = `
+                    <div class="form-select-wrapper">
+                        <select class="form-select degree-type-select">
+                            ${degreeTypes.map(d => `<option value="${d.value}" ${type === d.value ? 'selected' : ''}>${d.label}</option>`).join('')}
+                        </select>
+                        <i class="fas fa-chevron-down form-select-icon"></i>
+                    </div>
+                    <div class="form-select-wrapper">
+                        <select class="form-select degree-field-select">
+                            ${degreeFields.map(d => `<option value="${d.value}" ${field === d.value ? 'selected' : ''}>${d.label}</option>`).join('')}
+                        </select>
+                        <i class="fas fa-chevron-down form-select-icon"></i>
+                    </div>
+                    <div class="form-select-wrapper" style="max-width: 140px;">
+                        <select class="form-select degree-requirement-select">
+                            <option value="required" ${required === 'required' ? 'selected' : ''}>Requerido</option>
+                            <option value="preferred" ${required === 'preferred' ? 'selected' : ''}>Preferible</option>
+                        </select>
+                        <i class="fas fa-chevron-down form-select-icon"></i>
+                    </div>
+                    <button class="degree-item__remove" title="Eliminar">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+
+                item.querySelector('.degree-item__remove').addEventListener('click', () => {
+                    item.remove();
+                    hasUnsavedChanges = true;
+                });
+
+                // Marcar cambios
+                item.querySelectorAll('select').forEach(select => {
+                    select.addEventListener('change', () => {
+                        hasUnsavedChanges = true;
+                    });
+                });
+
+                degreesList.appendChild(item);
+            }
+
+            document.getElementById('addDegreeBtn').addEventListener('click', () => {
+                addDegree();
+                hasUnsavedChanges = true;
+            });
+
+            // =====================================================
             // Contador de caracteres
             // =====================================================
             const descriptionInput = document.getElementById('jobDescription');
@@ -2203,7 +2671,12 @@
                     languages: Array.from(document.querySelectorAll('.language-item')).map(item => ({
                         language: item.querySelector('.lang-select').value,
                         level: item.querySelector('.level-select').value
-                    })).filter(l => l.language)
+                    })).filter(l => l.language),
+                    degrees: Array.from(document.querySelectorAll('.degree-item')).map(item => ({
+                        type: item.querySelector('.degree-type-select').value,
+                        field: item.querySelector('.degree-field-select').value,
+                        requirement: item.querySelector('.degree-requirement-select').value
+                    })).filter(d => d.type && d.field)
                 };
 
                 isSaving = true;
@@ -2333,7 +2806,14 @@
 
                     // Rellenar formulario
                     document.getElementById('profileName').value = profile.name || '';
-                    document.getElementById('departmentSelect').value = profile.department || '';
+
+                    // Departamento - usar searchable select
+                    if (profile.department) {
+                        const deptContainer = document.getElementById('departmentSearchable');
+                        const deptLabel = departments.find(d => d.value === profile.department)?.label || profile.department;
+                        deptContainer.setValue(profile.department, deptLabel);
+                    }
+
                     setLocationFromString(profile.location || '');
                     document.getElementById('jobDescription').value = profile.description || '';
                     document.getElementById('salaryMin').value = profile.salary_min || '';
@@ -2370,6 +2850,16 @@
                         addLanguage('es', 'native');
                     }
 
+                    // Grados universitarios
+                    degreesList.innerHTML = '';
+                    const degrees = typeof profile.degrees === 'string'
+                        ? JSON.parse(profile.degrees)
+                        : profile.degrees || [];
+
+                    if (degrees.length > 0) {
+                        degrees.forEach(deg => addDegree(deg.type, deg.field, deg.requirement));
+                    }
+
                     // Actualizar contador
                     descriptionCount.textContent = (profile.description || '').length;
 
@@ -2386,6 +2876,168 @@
                 document.getElementById('pageTitle').textContent = 'Editar Perfil';
                 document.getElementById('breadcrumbTitle').textContent = 'Editar Perfil';
                 loadProfile(profileId);
+
+                // Mostrar zona de peligro solo en edición
+                document.getElementById('dangerZone').style.display = 'block';
+                initDangerZone();
+            }
+
+            // =====================================================
+            // ZONA DE PELIGRO - Eliminar perfil
+            // =====================================================
+            function initDangerZone() {
+                const confirmCheckbox = document.getElementById('dangerConfirmCheckbox');
+                const deleteBtn = document.getElementById('dangerDeleteBtn');
+
+                confirmCheckbox.addEventListener('change', function() {
+                    deleteBtn.disabled = !this.checked;
+                });
+
+                deleteBtn.addEventListener('click', deleteProfileWithLoading);
+            }
+
+            async function deleteProfileWithLoading() {
+                // Desactivar beforeunload
+                hasUnsavedChanges = false;
+
+                // Crear overlay exactamente igual que showGlobalLoading de chatbots
+                let overlay = document.getElementById('globalLoadingOverlay');
+
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.id = 'globalLoadingOverlay';
+                    overlay.className = 'velvz-loading-overlay';
+                    document.body.appendChild(overlay);
+
+                    // Agregar estilos idénticos a chatbots pero con color morado
+                    if (!document.getElementById('profile-loading-overlay-styles')) {
+                        const styles = document.createElement('style');
+                        styles.id = 'profile-loading-overlay-styles';
+                        styles.innerHTML = `
+                            .velvz-loading-overlay {
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                background: rgba(15, 15, 35, 0.95);
+                                backdrop-filter: blur(8px);
+                                z-index: 10000;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 1.5rem;
+                                opacity: 0;
+                                visibility: hidden;
+                                transition: all 0.3s ease;
+                            }
+
+                            .velvz-loading-overlay--show {
+                                opacity: 1;
+                                visibility: visible;
+                            }
+
+                            .velvz-loading-overlay__spinner {
+                                width: 60px;
+                                height: 60px;
+                                border: 4px solid rgba(255, 255, 255, 0.1);
+                                border-top: 4px solid #8b5cf6;
+                                border-radius: 50%;
+                                animation: spin 1s linear infinite;
+                            }
+
+                            .velvz-loading-overlay__text {
+                                color: #fff;
+                                font-size: 1.1rem;
+                                font-weight: 500;
+                                text-align: center;
+                                max-width: 300px;
+                                line-height: 1.5;
+                            }
+
+                            .velvz-loading-overlay__subtitle {
+                                color: rgba(255, 255, 255, 0.7);
+                                font-size: 0.9rem;
+                                text-align: center;
+                                max-width: 400px;
+                            }
+
+                            @keyframes spin {
+                                to { transform: rotate(360deg); }
+                            }
+                        `;
+                        document.head.appendChild(styles);
+                    }
+                }
+
+                // Estructura idéntica a chatbots
+                overlay.innerHTML = `
+                    <div class="velvz-loading-overlay__spinner"></div>
+                    <div class="velvz-loading-overlay__text" id="loadingText">Eliminando perfil...</div>
+                    <div class="velvz-loading-overlay__subtitle" id="loadingSubtitle">Limpiando todos los datos asociados...</div>
+                `;
+
+                // Mostrar overlay
+                setTimeout(() => {
+                    overlay.classList.add('velvz-loading-overlay--show');
+                    document.body.style.overflow = 'hidden';
+                }, 10);
+
+                try {
+                    const token = window.velvzAuth?.getToken();
+                    if (!token) {
+                        hideGlobalLoading();
+                        if (window.VelvzNotify) VelvzNotify.error('Tu sesión ha expirado');
+                        window.location.href = '/auth/login.html';
+                        return;
+                    }
+
+                    const response = await fetch(`${API_URL}/api/rrhh/profiles/${currentProfileId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Actualizar textos para éxito
+                        const textEl = document.getElementById('loadingText');
+                        const subtitleEl = document.getElementById('loadingSubtitle');
+                        if (textEl) textEl.textContent = '¡Perfil eliminado!';
+                        if (subtitleEl) subtitleEl.textContent = 'Redirigiendo a la lista de perfiles...';
+
+                        setTimeout(() => {
+                            window.location.href = '/app/rrhh/profiles/?deleted=true';
+                        }, 1200);
+                    } else {
+                        throw new Error(result.message || 'Error al eliminar el perfil');
+                    }
+                } catch (error) {
+                    console.error('Error eliminando perfil:', error);
+                    hideGlobalLoading();
+                    if (window.VelvzNotify) {
+                        VelvzNotify.error(error.message, 'Error al eliminar');
+                    } else {
+                        alert('Error al eliminar el perfil: ' + error.message);
+                    }
+
+                    // Restaurar checkbox
+                    const confirmCheckbox = document.getElementById('dangerConfirmCheckbox');
+                    if (confirmCheckbox) confirmCheckbox.checked = false;
+                    const deleteBtn = document.getElementById('dangerDeleteBtn');
+                    if (deleteBtn) deleteBtn.disabled = true;
+                }
+            }
+
+            function hideGlobalLoading() {
+                const overlay = document.getElementById('globalLoadingOverlay');
+                if (overlay) {
+                    overlay.classList.remove('velvz-loading-overlay--show');
+                    document.body.style.overflow = '';
+                }
             }
 
             // =====================================================
