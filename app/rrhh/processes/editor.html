@@ -3964,10 +3964,19 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
             // Manejar click en eliminar - Abrir modal de confirmación
             if (deleteBtn) {
+                console.log('🔴 Añadiendo event listener al botón de eliminar');
                 deleteBtn.addEventListener('click', function() {
-                    if (!confirmCheckbox || !confirmCheckbox.checked) return;
+                    console.log('🔴 Botón eliminar clickeado!');
+                    console.log('🔴 confirmCheckbox:', confirmCheckbox, 'checked:', confirmCheckbox?.checked);
+                    if (!confirmCheckbox || !confirmCheckbox.checked) {
+                        console.log('🔴 Checkbox no marcado, abortando');
+                        return;
+                    }
+                    console.log('🔴 Llamando a showDeleteProcessModal()');
                     showDeleteProcessModal();
                 });
+            } else {
+                console.log('❌ deleteBtn NO encontrado!');
             }
         }
 
@@ -4246,13 +4255,17 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
         }
 
         function showDeleteProcessModal() {
+            console.log('🟡 showDeleteProcessModal() llamado');
             const modal = createDeleteProcessModal();
+            console.log('🟡 Modal creado:', modal);
             const input = document.getElementById('deleteConfirmInput');
             const confirmBtn = document.getElementById('deleteModalConfirm');
             const cancelBtn = document.getElementById('deleteModalCancel');
             const closeBtn = document.getElementById('deleteModalClose');
             const nameEl = document.getElementById('processNameToDelete');
             const hintEl = document.getElementById('deleteHint');
+
+            console.log('🟡 Elementos encontrados:', { input: !!input, confirmBtn: !!confirmBtn, cancelBtn: !!cancelBtn });
 
             // Establecer nombre del proceso
             const processName = document.getElementById('processName')?.value || 'Este proceso';
@@ -4313,7 +4326,9 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
             // Confirmar eliminación
             confirmBtn.onclick = async function() {
+                console.log('🟢 Botón confirmar clickeado, disabled:', this.disabled);
                 if (this.disabled) return;
+                console.log('🟢 Cerrando modal y llamando a deleteProcessWithLoading...');
                 closeModal();
                 await deleteProcessWithLoading();
             };
