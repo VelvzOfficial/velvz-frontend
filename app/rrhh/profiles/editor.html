@@ -1230,7 +1230,7 @@
             gap: 0.75rem;
             padding: 1rem 1.25rem;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             z-index: 9999;
@@ -1254,11 +1254,11 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: rgba(139, 92, 246, 0.2);
+            background: rgba(16, 185, 129, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #8b5cf6;
+            color: #10b981;
             font-size: 1rem;
         }
 
@@ -2080,6 +2080,8 @@
             // =====================================================
             // SEARCHABLE SELECT - Utilidad general
             // =====================================================
+            const searchableSelectInstances = {};
+
             function initSearchableSelect(containerId, options, placeholder, onSelect) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
@@ -2091,9 +2093,25 @@
                 const optionsContainer = container.querySelector('.searchable-select__options');
                 const hiddenInput = container.querySelector('input[type="hidden"]');
 
+                // Si ya existe una instancia, solo actualizar opciones y callback
+                if (searchableSelectInstances[containerId]) {
+                    searchableSelectInstances[containerId].options = options;
+                    searchableSelectInstances[containerId].onSelect = onSelect;
+                    searchableSelectInstances[containerId].renderOptions();
+                    return container;
+                }
+
+                // Guardar estado en el objeto de instancia
+                const instance = {
+                    options: options,
+                    onSelect: onSelect,
+                    placeholder: placeholder,
+                    renderOptions: null
+                };
+
                 function renderOptions(filter = '') {
                     optionsContainer.innerHTML = '';
-                    const filtered = options.filter(opt =>
+                    const filtered = instance.options.filter(opt =>
                         opt.label.toLowerCase().includes(filter.toLowerCase())
                     );
 
@@ -2115,14 +2133,24 @@
                             valueSpan.textContent = opt.label;
                             valueSpan.classList.remove('searchable-select__placeholder');
                             closeDropdown();
-                            if (onSelect) onSelect(opt.value);
+                            if (instance.onSelect) instance.onSelect(opt.value);
                             hasUnsavedChanges = true;
                         });
                         optionsContainer.appendChild(optEl);
                     });
                 }
 
+                instance.renderOptions = renderOptions;
+
                 function openDropdown() {
+                    // Cerrar otros dropdowns abiertos
+                    document.querySelectorAll('.searchable-select__dropdown--open').forEach(d => {
+                        d.classList.remove('searchable-select__dropdown--open');
+                    });
+                    document.querySelectorAll('.searchable-select__trigger--open').forEach(t => {
+                        t.classList.remove('searchable-select__trigger--open');
+                    });
+
                     dropdown.classList.add('searchable-select__dropdown--open');
                     trigger.classList.add('searchable-select__trigger--open');
                     searchInput.value = '';
@@ -2135,7 +2163,9 @@
                     trigger.classList.remove('searchable-select__trigger--open');
                 }
 
-                trigger.addEventListener('click', () => {
+                // Event listeners (solo se agregan una vez)
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     if (container.classList.contains('searchable-select--disabled')) return;
                     if (dropdown.classList.contains('searchable-select__dropdown--open')) {
                         closeDropdown();
@@ -2144,26 +2174,24 @@
                     }
                 });
 
+                searchInput.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+
                 searchInput.addEventListener('input', (e) => {
                     renderOptions(e.target.value);
                 });
 
-                document.addEventListener('click', (e) => {
-                    if (!container.contains(e.target)) {
-                        closeDropdown();
-                    }
-                });
-
                 // Método para actualizar opciones
                 container.updateOptions = (newOptions) => {
-                    options = newOptions;
+                    instance.options = newOptions;
                     renderOptions();
                 };
 
                 // Método para establecer valor
                 container.setValue = (value, label) => {
                     hiddenInput.value = value;
-                    valueSpan.textContent = label || placeholder;
+                    valueSpan.textContent = label || instance.placeholder;
                     if (value) {
                         valueSpan.classList.remove('searchable-select__placeholder');
                     } else {
@@ -2183,6 +2211,9 @@
                 // Método para obtener valor
                 container.getValue = () => hiddenInput.value;
 
+                // Guardar instancia
+                searchableSelectInstances[containerId] = instance;
+
                 // Inicializar
                 renderOptions();
                 valueSpan.textContent = placeholder;
@@ -2190,6 +2221,18 @@
 
                 return container;
             }
+
+            // Cerrar dropdowns al hacer click fuera
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.searchable-select')) {
+                    document.querySelectorAll('.searchable-select__dropdown--open').forEach(d => {
+                        d.classList.remove('searchable-select__dropdown--open');
+                    });
+                    document.querySelectorAll('.searchable-select__trigger--open').forEach(t => {
+                        t.classList.remove('searchable-select__trigger--open');
+                    });
+                }
+            });
 
             // =====================================================
             // DEPARTAMENTOS - Searchable Select
