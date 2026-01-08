@@ -1372,11 +1372,6 @@
                                     <i class="fas fa-chevron-down form-select-icon"></i>
                                 </div>
                             </div>
-                            <label class="toggle-option" style="margin-top: 0.75rem;">
-                                <input type="checkbox" id="salaryVisible" checked>
-                                <span class="toggle-option__slider"></span>
-                                <span class="toggle-option__label">Mostrar salario en la oferta pública</span>
-                            </label>
                         </div>
                     </div>
                 </div>
@@ -1658,14 +1653,21 @@
                 const regionCode = regionSelect.value;
                 const countryCode = countrySelect.value;
 
-                if (city && regionCode && countryCode) {
-                    const countryName = locationsData[countryCode]?.name || '';
-                    const regionName = locationsData[countryCode]?.regions[regionCode]?.name || '';
-                    // Formato: "Ciudad, Región, País"
-                    locationInput.value = `${city}, ${regionName}, ${countryName}`;
-                } else {
+                if (!countryCode) {
                     locationInput.value = '';
+                    return;
                 }
+
+                const countryName = locationsData[countryCode]?.name || '';
+                const regionName = regionCode ? locationsData[countryCode]?.regions[regionCode]?.name : '';
+
+                // Construir ubicación con los valores disponibles
+                const parts = [];
+                if (city) parts.push(city);
+                if (regionName) parts.push(regionName);
+                if (countryName) parts.push(countryName);
+
+                locationInput.value = parts.join(', ');
             }
 
             countrySelect.addEventListener('change', function() {
@@ -1684,10 +1686,9 @@
             function setLocationFromString(locationStr) {
                 if (!locationStr) return;
 
-                // Buscar en el diccionario la coincidencia
                 const parts = locationStr.split(',').map(p => p.trim());
 
-                // Intentar encontrar la ciudad
+                // Primero intentar encontrar por ciudad (formato completo: "Ciudad, Región, País")
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     for (const [regionCode, region] of Object.entries(country.regions)) {
                         if (region.cities.includes(parts[0])) {
@@ -1699,6 +1700,30 @@
                             updateLocationInput();
                             return;
                         }
+                    }
+                }
+
+                // Si no encontró ciudad, buscar por región (formato: "Región, País")
+                for (const [countryCode, country] of Object.entries(locationsData)) {
+                    for (const [regionCode, region] of Object.entries(country.regions)) {
+                        if (region.name === parts[0]) {
+                            countrySelect.value = countryCode;
+                            populateRegions(countryCode);
+                            regionSelect.value = regionCode;
+                            populateCities(countryCode, regionCode);
+                            updateLocationInput();
+                            return;
+                        }
+                    }
+                }
+
+                // Si no encontró región, buscar por país (formato: "País")
+                for (const [countryCode, country] of Object.entries(locationsData)) {
+                    if (country.name === parts[0] || country.name === parts[parts.length - 1]) {
+                        countrySelect.value = countryCode;
+                        populateRegions(countryCode);
+                        updateLocationInput();
+                        return;
                     }
                 }
             }
@@ -1948,7 +1973,7 @@
                     salary_min: parseInt(document.getElementById('salaryMin').value) || null,
                     salary_max: parseInt(document.getElementById('salaryMax').value) || null,
                     salary_period: document.getElementById('salaryPeriod').value,
-                    salary_visible: document.getElementById('salaryVisible').checked,
+                    salary_visible: true,
                     min_experience_years: parseInt(document.getElementById('minExperience').value) || 0,
                     requirements: {
                         essential: profileData.essential,
@@ -2065,7 +2090,6 @@
                     document.getElementById('salaryMin').value = profile.salary_min || '';
                     document.getElementById('salaryMax').value = profile.salary_max || '';
                     document.getElementById('salaryPeriod').value = profile.salary_period || 'year';
-                    document.getElementById('salaryVisible').checked = profile.salary_visible !== false;
                     document.getElementById('minExperience').value = profile.min_experience_years || 0;
 
                     // Modalidad

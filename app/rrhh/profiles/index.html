@@ -437,6 +437,21 @@
             display: flex;
             align-items: center;
             gap: 0.35rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .profile-item__department span,
+        .profile-item__department i {
+            flex-shrink: 0;
+        }
+
+        .profile-item__location {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80px;
         }
 
         .profile-item__count {
@@ -1377,9 +1392,9 @@
                         <div class="profile-item__info">
                             <div class="profile-item__title">${p.title}</div>
                             <div class="profile-item__department">
-                                <i class="fas fa-building"></i> ${p.department}
+                                <i class="fas fa-building"></i> <span>${p.department}</span>
                                 <span style="margin-left: 0.5rem; color: rgba(255,255,255,0.3);">|</span>
-                                <i class="fas fa-map-marker-alt" style="margin-left: 0.5rem;"></i> ${p.location}
+                                <i class="fas fa-map-marker-alt" style="margin-left: 0.5rem;"></i> <span class="profile-item__location">${p.location}</span>
                             </div>
                         </div>
                         <div class="profile-item__count">
