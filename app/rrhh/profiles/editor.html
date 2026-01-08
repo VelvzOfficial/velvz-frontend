@@ -1969,22 +1969,46 @@
             // =====================================================
             // UBICACIONES - Searchable Selects
             // =====================================================
-            let countrySearchable, regionSearchable, citySearchable;
+            let currentCountryCode = '';
+            let currentRegionCode = '';
 
             function populateCountries() {
-                const options = Object.entries(locationsData).map(([code, country]) => ({
+                const countryOptions = Object.entries(locationsData).map(([code, country]) => ({
                     value: code,
                     label: country.name
                 }));
 
-                countrySearchable = initSearchableSelect(
+                // Inicializar país
+                initSearchableSelect(
                     'countrySearchable',
-                    options,
+                    countryOptions,
                     'País...',
                     (countryCode) => {
+                        currentCountryCode = countryCode;
+                        currentRegionCode = '';
                         populateRegions(countryCode);
                         updateLocationInput();
                     }
+                );
+
+                // Inicializar región (vacío al principio)
+                initSearchableSelect(
+                    'regionSearchable',
+                    [],
+                    'Región...',
+                    (regionCode) => {
+                        currentRegionCode = regionCode;
+                        populateCities(currentCountryCode, regionCode);
+                        updateLocationInput();
+                    }
+                );
+
+                // Inicializar ciudad (vacío al principio)
+                initSearchableSelect(
+                    'citySearchable',
+                    [],
+                    'Ciudad...',
+                    () => updateLocationInput()
                 );
             }
 
@@ -1992,11 +2016,27 @@
                 const regionContainer = document.getElementById('regionSearchable');
                 const cityContainer = document.getElementById('citySearchable');
 
-                // Reset region y city
-                regionContainer.setValue('', 'Región...');
-                cityContainer.setValue('', 'Ciudad...');
-                regionContainer.setDisabled(true);
-                cityContainer.setDisabled(true);
+                if (!regionContainer || !cityContainer) return;
+
+                // Reset valores
+                const regionHidden = regionContainer.querySelector('input[type="hidden"]');
+                const regionValue = regionContainer.querySelector('.searchable-select__value');
+                const cityHidden = cityContainer.querySelector('input[type="hidden"]');
+                const cityValue = cityContainer.querySelector('.searchable-select__value');
+
+                if (regionHidden) regionHidden.value = '';
+                if (regionValue) {
+                    regionValue.textContent = 'Región...';
+                    regionValue.classList.add('searchable-select__placeholder');
+                }
+                if (cityHidden) cityHidden.value = '';
+                if (cityValue) {
+                    cityValue.textContent = 'Ciudad...';
+                    cityValue.classList.add('searchable-select__placeholder');
+                }
+
+                regionContainer.classList.add('searchable-select--disabled');
+                cityContainer.classList.add('searchable-select--disabled');
 
                 if (!countryCode || !locationsData[countryCode]) return;
 
@@ -2006,26 +2046,36 @@
                     label: region.name
                 }));
 
-                regionContainer.updateOptions(options);
-                regionContainer.setDisabled(false);
-
-                // Re-init con nuevo callback
-                regionSearchable = initSearchableSelect(
+                // Re-init región con nuevas opciones
+                initSearchableSelect(
                     'regionSearchable',
                     options,
                     'Región...',
                     (regionCode) => {
+                        currentRegionCode = regionCode;
                         populateCities(countryCode, regionCode);
                         updateLocationInput();
                     }
                 );
+                regionContainer.classList.remove('searchable-select--disabled');
             }
 
             function populateCities(countryCode, regionCode) {
                 const cityContainer = document.getElementById('citySearchable');
 
-                cityContainer.setValue('', 'Ciudad...');
-                cityContainer.setDisabled(true);
+                if (!cityContainer) return;
+
+                // Reset ciudad
+                const cityHidden = cityContainer.querySelector('input[type="hidden"]');
+                const cityValue = cityContainer.querySelector('.searchable-select__value');
+
+                if (cityHidden) cityHidden.value = '';
+                if (cityValue) {
+                    cityValue.textContent = 'Ciudad...';
+                    cityValue.classList.add('searchable-select__placeholder');
+                }
+
+                cityContainer.classList.add('searchable-select--disabled');
 
                 if (!countryCode || !regionCode || !locationsData[countryCode]) return;
 
@@ -2035,15 +2085,14 @@
                     label: city
                 }));
 
-                cityContainer.updateOptions(options);
-                cityContainer.setDisabled(false);
-
-                citySearchable = initSearchableSelect(
+                // Re-init ciudad con nuevas opciones
+                initSearchableSelect(
                     'citySearchable',
                     options,
                     'Ciudad...',
                     () => updateLocationInput()
                 );
+                cityContainer.classList.remove('searchable-select--disabled');
             }
 
             function updateLocationInput() {
@@ -2051,9 +2100,9 @@
                 const regionContainer = document.getElementById('regionSearchable');
                 const cityContainer = document.getElementById('citySearchable');
 
-                const countryCode = countryContainer?.getValue() || '';
-                const regionCode = regionContainer?.getValue() || '';
-                const city = cityContainer?.getValue() || '';
+                const countryCode = countryContainer?.querySelector('input[type="hidden"]')?.value || '';
+                const regionCode = regionContainer?.querySelector('input[type="hidden"]')?.value || '';
+                const city = cityContainer?.querySelector('input[type="hidden"]')?.value || '';
 
                 if (!countryCode) {
                     locationInput.value = '';
@@ -2080,15 +2129,29 @@
                 const regionContainer = document.getElementById('regionSearchable');
                 const cityContainer = document.getElementById('citySearchable');
 
+                // Helper para establecer valor en un searchable select
+                function setSelectValue(container, value, label) {
+                    if (!container) return;
+                    const hidden = container.querySelector('input[type="hidden"]');
+                    const valueSpan = container.querySelector('.searchable-select__value');
+                    if (hidden) hidden.value = value;
+                    if (valueSpan) {
+                        valueSpan.textContent = label;
+                        valueSpan.classList.remove('searchable-select__placeholder');
+                    }
+                }
+
                 // Primero intentar encontrar por ciudad (formato completo: "Ciudad, Región, País")
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     for (const [regionCode, region] of Object.entries(country.regions)) {
                         if (region.cities.includes(parts[0])) {
-                            countryContainer.setValue(countryCode, country.name);
+                            currentCountryCode = countryCode;
+                            currentRegionCode = regionCode;
+                            setSelectValue(countryContainer, countryCode, country.name);
                             populateRegions(countryCode);
-                            regionContainer.setValue(regionCode, region.name);
+                            setSelectValue(regionContainer, regionCode, region.name);
                             populateCities(countryCode, regionCode);
-                            cityContainer.setValue(parts[0], parts[0]);
+                            setSelectValue(cityContainer, parts[0], parts[0]);
                             updateLocationInput();
                             return;
                         }
@@ -2099,9 +2162,11 @@
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     for (const [regionCode, region] of Object.entries(country.regions)) {
                         if (region.name === parts[0]) {
-                            countryContainer.setValue(countryCode, country.name);
+                            currentCountryCode = countryCode;
+                            currentRegionCode = regionCode;
+                            setSelectValue(countryContainer, countryCode, country.name);
                             populateRegions(countryCode);
-                            regionContainer.setValue(regionCode, region.name);
+                            setSelectValue(regionContainer, regionCode, region.name);
                             populateCities(countryCode, regionCode);
                             updateLocationInput();
                             return;
@@ -2112,7 +2177,8 @@
                 // Si no encontró región, buscar por país (formato: "País")
                 for (const [countryCode, country] of Object.entries(locationsData)) {
                     if (country.name === parts[0] || country.name === parts[parts.length - 1]) {
-                        countryContainer.setValue(countryCode, country.name);
+                        currentCountryCode = countryCode;
+                        setSelectValue(countryContainer, countryCode, country.name);
                         populateRegions(countryCode);
                         updateLocationInput();
                         return;
