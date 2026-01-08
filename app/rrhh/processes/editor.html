@@ -2786,10 +2786,6 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                                             Eliminar Proceso Permanentemente
                                         </button>
 
-                                        <!-- BOTÓN DE DEBUG - BORRAR DESPUÉS -->
-                                        <button type="button" style="margin-top: 1rem; padding: 0.5rem 1rem; background: orange; color: black; border: none; border-radius: 5px; cursor: pointer;" onclick="window.testDeleteOverlay()">
-                                            🧪 TEST: Mostrar overlay directamente
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -4427,13 +4423,30 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
 
             // Asegurar que los estilos del loading overlay estén disponibles
             ensureLoadingStyles();
-            console.log('🔴 Estilos inyectados');
 
-            // Mostrar loading overlay con estilo igual a chatbots pero en verde
+            // Crear overlay con estilos inline para evitar conflictos CSS con chatbot-config.css
             const loadingOverlay = document.createElement('div');
             loadingOverlay.id = 'processLoadingOverlay';
-            loadingOverlay.className = 'velvz-loading-overlay velvz-loading-overlay--active';
-            console.log('🔴 Overlay creado con clase --active');
+
+            // Aplicar estilos inline directamente (override de cualquier CSS)
+            loadingOverlay.style.cssText = `
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                background: rgba(0, 0, 0, 0.9) !important;
+                backdrop-filter: blur(10px) !important;
+                z-index: 999999 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+
             loadingOverlay.innerHTML = `
                 <div class="velvz-loading-overlay__content">
                     <div class="velvz-loading-overlay__spinner"></div>
@@ -4442,11 +4455,6 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
                 </div>
             `;
             document.body.appendChild(loadingOverlay);
-            console.log('🔴 Overlay añadido al DOM');
-
-            // Forzar reflow para que la animación funcione
-            loadingOverlay.offsetHeight;
-            console.log('🔴 Reflow forzado, overlay visible');
 
             try {
                 const token = window.velvzAuth?.getToken();
@@ -4919,57 +4927,6 @@ Ejemplo: 'Eres un entrevistador amable pero profesional. Tu objetivo es evaluar 
             };
         })();
 
-        // =====================================================
-        // FUNCIÓN DE TEST PARA DEBUGGING - BORRAR DESPUÉS
-        // =====================================================
-        window.testDeleteOverlay = function() {
-            console.log('🧪 TEST: Iniciando test de overlay directo');
-
-            // Crear overlay exactamente como lo hace deleteProcessWithLoading
-            const loadingOverlay = document.createElement('div');
-            loadingOverlay.id = 'testLoadingOverlay';
-            loadingOverlay.className = 'velvz-loading-overlay velvz-loading-overlay--active';
-            loadingOverlay.innerHTML = `
-                <div class="velvz-loading-overlay__content">
-                    <div class="velvz-loading-overlay__spinner"></div>
-                    <div class="velvz-loading-overlay__text">TEST - Overlay de prueba</div>
-                    <div class="velvz-loading-overlay__subtext">Se cerrará en 3 segundos...</div>
-                </div>
-            `;
-            document.body.appendChild(loadingOverlay);
-
-            // Log de estilos computados
-            const styles = window.getComputedStyle(loadingOverlay);
-            console.log('🧪 Estilos del overlay:');
-            console.log('   opacity:', styles.opacity);
-            console.log('   visibility:', styles.visibility);
-            console.log('   display:', styles.display);
-            console.log('   z-index:', styles.zIndex);
-            console.log('   position:', styles.position);
-            console.log('   top:', styles.top);
-            console.log('   left:', styles.left);
-
-            // Verificar si el overlay está en el DOM
-            console.log('🧪 Overlay en DOM:', document.getElementById('testLoadingOverlay') !== null);
-            console.log('🧪 Overlay parent:', loadingOverlay.parentElement?.tagName);
-
-            setTimeout(() => {
-                loadingOverlay.innerHTML = `
-                    <div class="velvz-loading-overlay__content">
-                        <div class="velvz-loading-overlay__icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="velvz-loading-overlay__text">¡TEST completado!</div>
-                        <div class="velvz-loading-overlay__subtext">Cerrando...</div>
-                    </div>
-                `;
-
-                setTimeout(() => {
-                    document.body.removeChild(loadingOverlay);
-                    console.log('🧪 Overlay removido');
-                }, 1500);
-            }, 2000);
-        };
     </script>
 </body>
 </html>
