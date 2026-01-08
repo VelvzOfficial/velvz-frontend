@@ -1423,9 +1423,15 @@
                             </div>
                             <div class="requirements-tags" id="essentialTags"></div>
                             <div class="add-requirement-row">
-                                <div class="searchable-select" id="essentialSelect" data-type="essential">
-                                    <div class="searchable-select__trigger">
-                                        <span class="searchable-select__placeholder">Buscar requisito...</span>
+                                <div class="form-select-wrapper requirement-category-select">
+                                    <select class="form-select" id="essentialCategory">
+                                        <option value="">Categoría...</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                </div>
+                                <div class="searchable-select requirement-item-select" id="essentialSelect" data-type="essential">
+                                    <div class="searchable-select__trigger searchable-select__trigger--disabled">
+                                        <span class="searchable-select__placeholder">Selecciona categoría...</span>
                                         <i class="fas fa-chevron-down searchable-select__icon"></i>
                                     </div>
                                     <div class="searchable-select__dropdown">
@@ -1454,9 +1460,15 @@
                             </div>
                             <div class="requirements-tags" id="desiredTags"></div>
                             <div class="add-requirement-row">
-                                <div class="searchable-select" id="desiredSelect" data-type="desired">
-                                    <div class="searchable-select__trigger">
-                                        <span class="searchable-select__placeholder">Buscar requisito...</span>
+                                <div class="form-select-wrapper requirement-category-select">
+                                    <select class="form-select" id="desiredCategory">
+                                        <option value="">Categoría...</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                </div>
+                                <div class="searchable-select requirement-item-select" id="desiredSelect" data-type="desired">
+                                    <div class="searchable-select__trigger searchable-select__trigger--disabled">
+                                        <span class="searchable-select__placeholder">Selecciona categoría...</span>
                                         <i class="fas fa-chevron-down searchable-select__icon"></i>
                                     </div>
                                     <div class="searchable-select__dropdown">
@@ -1485,9 +1497,15 @@
                             </div>
                             <div class="requirements-tags" id="niceTags"></div>
                             <div class="add-requirement-row">
-                                <div class="searchable-select" id="niceSelect" data-type="nice">
-                                    <div class="searchable-select__trigger">
-                                        <span class="searchable-select__placeholder">Buscar requisito...</span>
+                                <div class="form-select-wrapper requirement-category-select">
+                                    <select class="form-select" id="niceCategory">
+                                        <option value="">Categoría...</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down form-select-icon"></i>
+                                </div>
+                                <div class="searchable-select requirement-item-select" id="niceSelect" data-type="nice">
+                                    <div class="searchable-select__trigger searchable-select__trigger--disabled">
+                                        <span class="searchable-select__placeholder">Selecciona categoría...</span>
                                         <i class="fas fa-chevron-down searchable-select__icon"></i>
                                     </div>
                                     <div class="searchable-select__dropdown">
@@ -1573,6 +1591,9 @@
 
     <script src="/assets/js/app-dashboard.js"></script>
     <script>
+        // Variables globales para sistema de cambios sin guardar
+        let hasUnsavedChanges = false;
+
         document.addEventListener('DOMContentLoaded', async function() {
             // =====================================================
             // Estado del perfil
@@ -1761,7 +1782,7 @@
             }
 
             // =====================================================
-            // Diccionario de requisitos con Searchable Select
+            // Diccionario de requisitos con Categoría + Searchable Select
             // =====================================================
             let requirementsData = {};
 
@@ -1769,54 +1790,76 @@
                 try {
                     const response = await fetch('/assets/data/requirements.json');
                     requirementsData = await response.json();
+                    // Poblar categorías en los selects
+                    populateCategories('essentialCategory');
+                    populateCategories('desiredCategory');
+                    populateCategories('niceCategory');
                     // Inicializar searchable selects
-                    initSearchableSelect('essentialSelect', 'essentialTags', profileData.essential, 'essential');
-                    initSearchableSelect('desiredSelect', 'desiredTags', profileData.desired, 'desired');
-                    initSearchableSelect('niceSelect', 'niceTags', profileData.niceToHave, 'nice');
+                    initCategorySearchableSelect('essentialCategory', 'essentialSelect', 'essentialTags', profileData.essential, 'essential');
+                    initCategorySearchableSelect('desiredCategory', 'desiredSelect', 'desiredTags', profileData.desired, 'desired');
+                    initCategorySearchableSelect('niceCategory', 'niceSelect', 'niceTags', profileData.niceToHave, 'nice');
                 } catch (error) {
                     console.error('Error cargando requisitos:', error);
                 }
             }
 
-            function initSearchableSelect(selectId, tagsContainerId, array, type) {
+            function populateCategories(selectId) {
+                const select = document.getElementById(selectId);
+                select.innerHTML = '<option value="">Categoría...</option>';
+                Object.entries(requirementsData).forEach(([key, category]) => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = category.label;
+                    select.appendChild(option);
+                });
+            }
+
+            function initCategorySearchableSelect(categorySelectId, selectId, tagsContainerId, array, type) {
+                const categorySelect = document.getElementById(categorySelectId);
                 const container = document.getElementById(selectId);
                 const trigger = container.querySelector('.searchable-select__trigger');
                 const dropdown = container.querySelector('.searchable-select__dropdown');
                 const searchInput = container.querySelector('.searchable-select__search-input');
                 const optionsContainer = container.querySelector('.searchable-select__options');
+                const placeholder = trigger.querySelector('.searchable-select__placeholder');
 
-                // Poblar opciones
+                let currentCategory = '';
+
+                // Al cambiar categoría
+                categorySelect.addEventListener('change', function() {
+                    currentCategory = this.value;
+                    if (currentCategory) {
+                        trigger.classList.remove('searchable-select__trigger--disabled');
+                        placeholder.textContent = 'Buscar requisito...';
+                        renderOptions();
+                    } else {
+                        trigger.classList.add('searchable-select__trigger--disabled');
+                        placeholder.textContent = 'Selecciona categoría...';
+                        optionsContainer.innerHTML = '';
+                    }
+                });
+
+                // Poblar opciones de la categoría seleccionada
                 function renderOptions(filter = '') {
                     optionsContainer.innerHTML = '';
+                    if (!currentCategory || !requirementsData[currentCategory]) return;
+
                     const filterLower = filter.toLowerCase();
-                    let hasResults = false;
+                    const category = requirementsData[currentCategory];
+                    const filteredItems = category.items.filter(item =>
+                        item.toLowerCase().includes(filterLower) && !array.includes(item)
+                    );
 
-                    Object.entries(requirementsData).forEach(([categoryKey, category]) => {
-                        const filteredItems = category.items.filter(item =>
-                            item.toLowerCase().includes(filterLower) && !array.includes(item)
-                        );
-
-                        if (filteredItems.length > 0) {
-                            hasResults = true;
-                            // Cabecera de categoría
-                            const categoryHeader = document.createElement('div');
-                            categoryHeader.className = 'searchable-select__option searchable-select__option--category';
-                            categoryHeader.innerHTML = `<i class="fas ${category.icon} searchable-select__option-icon" style="color: ${category.color}"></i>${category.label}`;
-                            optionsContainer.appendChild(categoryHeader);
-
-                            // Items de la categoría
-                            filteredItems.forEach(item => {
-                                const option = document.createElement('div');
-                                option.className = 'searchable-select__option';
-                                option.dataset.value = item;
-                                option.textContent = item;
-                                option.addEventListener('click', () => selectOption(item));
-                                optionsContainer.appendChild(option);
-                            });
-                        }
-                    });
-
-                    if (!hasResults) {
+                    if (filteredItems.length > 0) {
+                        filteredItems.forEach(item => {
+                            const option = document.createElement('div');
+                            option.className = 'searchable-select__option';
+                            option.dataset.value = item;
+                            option.textContent = item;
+                            option.addEventListener('click', () => selectOption(item));
+                            optionsContainer.appendChild(option);
+                        });
+                    } else {
                         optionsContainer.innerHTML = '<div class="searchable-select__no-results">No se encontraron resultados</div>';
                     }
                 }
@@ -1825,13 +1868,19 @@
                     if (!array.includes(value)) {
                         array.push(value);
                         renderTags(tagsContainerId, array, type);
+                        markAsChanged();
                     }
                     closeDropdown();
                     searchInput.value = '';
-                    renderOptions();
+                    // Reset categoría y searchable select
+                    categorySelect.value = '';
+                    currentCategory = '';
+                    trigger.classList.add('searchable-select__trigger--disabled');
+                    placeholder.textContent = 'Selecciona categoría...';
                 }
 
                 function openDropdown() {
+                    if (!currentCategory) return;
                     trigger.classList.add('searchable-select__trigger--open');
                     dropdown.classList.add('searchable-select__dropdown--open');
                     searchInput.focus();
@@ -1845,6 +1894,7 @@
 
                 // Event listeners
                 trigger.addEventListener('click', (e) => {
+                    if (trigger.classList.contains('searchable-select__trigger--disabled')) return;
                     e.stopPropagation();
                     if (dropdown.classList.contains('searchable-select__dropdown--open')) {
                         closeDropdown();
@@ -1872,9 +1922,6 @@
                         closeDropdown();
                     }
                 });
-
-                // Inicializar opciones
-                renderOptions();
             }
 
             // Cargar requisitos
@@ -1947,19 +1994,192 @@
             let isSaving = false;
             let currentProfileId = null;
 
+            // =====================================================
+            // SISTEMA DE CAMBIOS SIN GUARDAR
+            // =====================================================
+            function markAsChanged() {
+                if (!hasUnsavedChanges) {
+                    hasUnsavedChanges = true;
+                    showUnsavedChangesWarning();
+                }
+            }
+
+            function showUnsavedChangesWarning() {
+                let warningBar = document.getElementById('unsavedChangesWarning');
+
+                if (!warningBar) {
+                    warningBar = document.createElement('div');
+                    warningBar.id = 'unsavedChangesWarning';
+                    warningBar.innerHTML = `
+                        <div class="unsaved-warning__main">
+                            <i class="fas fa-circle" style="font-size: 8px; color: #f59e0b;"></i>
+                            <span>Cambios sin guardar</span>
+                        </div>
+                        <div class="unsaved-warning__actions">
+                            <button type="button" class="unsaved-warning__btn unsaved-warning__btn--discard" id="discardChangesBtn">
+                                <i class="fas fa-times"></i>
+                                Descartar
+                            </button>
+                            <button type="button" class="unsaved-warning__btn unsaved-warning__btn--save" id="saveChangesQuickBtn">
+                                <i class="fas fa-save"></i>
+                                Guardar
+                            </button>
+                        </div>
+                    `;
+                    warningBar.style.cssText = `
+                        position: fixed !important;
+                        bottom: 20px !important;
+                        right: 20px !important;
+                        background: rgba(30, 41, 59, 0.98) !important;
+                        color: #e2e8f0 !important;
+                        padding: 12px 18px !important;
+                        border-radius: 10px !important;
+                        display: flex !important;
+                        flex-direction: column !important;
+                        gap: 0px !important;
+                        z-index: 999999 !important;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+                        font-size: 14px !important;
+                        font-weight: 600 !important;
+                        border-left: 4px solid #f59e0b !important;
+                        pointer-events: auto !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        cursor: pointer !important;
+                        transition: all 0.25s ease !important;
+                        overflow: hidden !important;
+                    `;
+
+                    // Añadir estilos
+                    if (!document.getElementById('unsavedChangesStyles')) {
+                        const style = document.createElement('style');
+                        style.id = 'unsavedChangesStyles';
+                        style.textContent = `
+                            @keyframes slideUp {
+                                from { opacity: 0; transform: translateY(10px); }
+                                to { opacity: 1; transform: translateY(0); }
+                            }
+                            #unsavedChangesWarning {
+                                animation: slideUp 0.3s ease forwards !important;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__main {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__actions {
+                                display: flex;
+                                gap: 8px;
+                                margin-top: 0;
+                                max-height: 0;
+                                opacity: 0;
+                                overflow: hidden;
+                                transition: all 0.25s ease;
+                            }
+                            #unsavedChangesWarning:hover .unsaved-warning__actions {
+                                max-height: 50px;
+                                opacity: 1;
+                                margin-top: 12px;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__btn {
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                padding: 8px 14px;
+                                border: none;
+                                border-radius: 6px;
+                                font-size: 13px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.2s ease;
+                                flex: 1;
+                                justify-content: center;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__btn--discard {
+                                background: rgba(255, 255, 255, 0.1);
+                                color: #e2e8f0;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__btn--discard:hover {
+                                background: rgba(239, 68, 68, 0.2);
+                                color: #fca5a5;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__btn--save {
+                                background: linear-gradient(135deg, #10b981, #059669);
+                                color: white;
+                            }
+                            #unsavedChangesWarning .unsaved-warning__btn--save:hover {
+                                background: linear-gradient(135deg, #059669, #047857);
+                                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+
+                    document.body.appendChild(warningBar);
+
+                    // Event listeners
+                    warningBar.querySelector('#discardChangesBtn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (confirm('¿Descartar cambios sin guardar?')) {
+                            window.location.reload();
+                        }
+                    });
+
+                    warningBar.querySelector('#saveChangesQuickBtn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        saveProfile();
+                    });
+                }
+
+                warningBar.style.display = 'flex';
+            }
+
+            function hideUnsavedChangesWarning() {
+                const warningBar = document.getElementById('unsavedChangesWarning');
+                if (warningBar) {
+                    warningBar.style.display = 'none';
+                }
+            }
+
+            // Prevenir salir con cambios sin guardar
+            window.addEventListener('beforeunload', (e) => {
+                if (hasUnsavedChanges) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    return '';
+                }
+            });
+
+            // Detectar cambios en inputs
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                el.addEventListener('change', markAsChanged);
+                el.addEventListener('input', markAsChanged);
+            });
+
+            // =====================================================
+            // GUARDAR PERFIL
+            // =====================================================
             async function saveProfile() {
                 if (isSaving) return;
 
                 const name = document.getElementById('profileName').value.trim();
                 if (!name) {
-                    alert('Por favor, introduce el nombre del puesto');
+                    if (window.VelvzNotify) {
+                        VelvzNotify.warning('Por favor, introduce el nombre del puesto');
+                    } else {
+                        alert('Por favor, introduce el nombre del puesto');
+                    }
                     document.getElementById('profileName').focus();
                     return;
                 }
 
                 const department = document.getElementById('departmentSelect').value;
                 if (!department) {
-                    alert('Por favor, selecciona un departamento');
+                    if (window.VelvzNotify) {
+                        VelvzNotify.warning('Por favor, selecciona un departamento');
+                    } else {
+                        alert('Por favor, selecciona un departamento');
+                    }
                     document.getElementById('departmentSelect').focus();
                     return;
                 }
@@ -1998,7 +2218,9 @@
                 try {
                     const token = window.velvzAuth?.getToken();
                     if (!token) {
-                        alert('Tu sesion ha expirado. Por favor, inicia sesion de nuevo.');
+                        if (window.VelvzNotify) {
+                            VelvzNotify.error('Tu sesión ha expirado');
+                        }
                         window.location.href = '/auth/login.html';
                         return;
                     }
@@ -2024,14 +2246,36 @@
 
                     if (result.success) {
                         console.log('Perfil guardado:', result.data.profile);
-                        alert(isEditing ? 'Perfil actualizado correctamente' : 'Perfil creado correctamente');
-                        window.location.href = '/app/rrhh/profiles/';
+
+                        // Si es nuevo, actualizar URL
+                        if (!currentProfileId && result.data.profile.id) {
+                            currentProfileId = result.data.profile.id;
+                            const newUrl = `${window.location.pathname}?id=${currentProfileId}`;
+                            window.history.replaceState({}, '', newUrl);
+                            document.getElementById('pageTitle').textContent = 'Editar Perfil';
+                            document.getElementById('breadcrumbTitle').textContent = 'Editar Perfil';
+                        }
+
+                        // Marcar como sin cambios
+                        hasUnsavedChanges = false;
+                        hideUnsavedChangesWarning();
+
+                        // Notificación de éxito
+                        if (window.VelvzNotify) {
+                            VelvzNotify.saved();
+                        } else {
+                            alert('Perfil guardado correctamente');
+                        }
                     } else {
                         throw new Error(result.message || 'Error al guardar el perfil');
                     }
                 } catch (error) {
                     console.error('Error guardando perfil:', error);
-                    alert('Error al guardar el perfil: ' + error.message);
+                    if (window.VelvzNotify) {
+                        VelvzNotify.error(error.message, 'Error al guardar');
+                    } else {
+                        alert('Error al guardar el perfil: ' + error.message);
+                    }
                 } finally {
                     isSaving = false;
                     saveBtn.innerHTML = originalText;
@@ -2042,7 +2286,12 @@
             }
 
             function cancel() {
-                if (confirm('¿Estas seguro? Se perderan los cambios no guardados.')) {
+                if (hasUnsavedChanges) {
+                    if (confirm('¿Estás seguro? Se perderán los cambios no guardados.')) {
+                        hasUnsavedChanges = false;
+                        window.location.href = '/app/rrhh/profiles/';
+                    }
+                } else {
                     window.location.href = '/app/rrhh/profiles/';
                 }
             }
